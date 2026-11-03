@@ -1,4 +1,5 @@
-name: Pokestock V32 Evidence Collector
+
+name: Pokestock V32 Optimized Evidence Collector
 
 on:
   workflow_dispatch:
@@ -15,19 +16,21 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 8
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install parser
+      - name: Install dependencies
         run: pip install requests beautifulsoup4
 
       - name: Inspect and collect public reports
@@ -35,153 +38,146 @@ jobs:
         run: |
           mkdir -p data
 
-          cat > /tmp/v32.py <<'PY'
+          cat > /tmp/v32_fast.py <<'PY'
           import json
           import re
+          import time
           import hashlib
-          import html
-          from collections import Counter, defaultdict
-          from datetime import datetime, timedelta, timezone
+          import signal
           from pathlib import Path
-          from urllib.parse import urlparse
+          from datetime import datetime, timedelta, timezone
+          from collections import defaultdict, Counter
           import requests
           from bs4 import BeautifulSoup
 
-          D = Path("data")
+          ROOT = Path("data")
           NOW = datetime.now(timezone.utc)
           TODAY = NOW.date()
+          START = time.monotonic()
 
-          SOURCES = [
+          SOURCE = (
               "https://restockd.app/pokemon-in-store"
-          ]
-
-          GAME_PATTERNS = {
-              "Pokémon": r"pokemon|pokémon",
-              "Union Arena": r"union arena",
-              "Gundam": r"gundam",
-              "One Piece": r"one piece",
-              "Magic: The Gathering": r"magic.{0,5}gathering|\bmtg\b",
-              "Yu-Gi-Oh!": r"yu.?gi.?oh",
-              "Disney Lorcana": r"lorcana",
-              "Digimon": r"digimon",
-              "Dragon Ball Super": r"dragon ball",
-              "Star Wars: Unlimited": r"star wars.{0,5}unlimited",
-              "Riftbound": r"riftbound",
-              "Flesh and Blood": r"flesh and blood",
-              "Weiss Schwarz": r"weiss schwarz",
-              "Cardfight Vanguard": r"cardfight|vanguard"
-          }
-
-          POSITIVE = re.compile(
-              r"\b(in.stock|restocked|available|"
-              r"on.shelf|shelf.sighting|found.in.store)\b",
-              re.I
           )
 
-          NEGATIVE = re.compile(
-              r"\b(out.of.stock|sold.out|unavailable|"
-              r"not.available|no.stock)\b",
-              re.I
+          # Hard limits prevent another runaway parser.
+          MAX_SECONDS = 100
+          MAX_HTML_BYTES = 2000000
+          MAX_SCRIPTS = 100
+          MAX_SCRIPT_BYTES = 500000
+          MAX_OBJECTS = 12000
+          MAX_DEPTH = 8
+          MAX_SAMPLES = 30
+
+          def timeout_handler(signum, frame):
+              raise TimeoutError(
+                  "Collector exceeded time budget"
+              )
+
+          signal.signal(
+              signal.SIGALRM, timeout_handler
           )
+          signal.alarm(MAX_SECONDS)
 
           def load(name, fallback):
               try:
                   return json.loads(
-                      (D / name).read_text(
+                      (ROOT / name).read_text(
                           encoding="utf-8"
                       )
                   )
               except (OSError, ValueError):
                   return fallback
 
-          def save(name, value):
-              path = D / name
-              tmp = path.with_suffix(".tmp")
-              tmp.write_text(
+          def save(name, obj):
+              path = ROOT / name
+              temp = path.with_suffix(".tmp")
+              temp.write_text(
                   json.dumps(
-                      value, ensure_ascii=False,
-                      indent=2
+                      obj, indent=2,
+                      ensure_ascii=False
                   ),
                   encoding="utf-8"
               )
-              tmp.replace(path)
+              temp.replace(path)
 
-          def text(x):
-              return " ".join(str(x or "").split())
+          def clean(value):
+              return " ".join(
+                  str(value or "").split()
+              )
 
-          def norm(x):
-              x = text(x).lower()
-              x = x.replace("&", " and ")
+          def norm(value):
               return re.sub(
-                  r"[^a-z0-9]+", " ", x
+                  r"[^a-z0-9]+", " ",
+                  clean(value).lower()
               ).strip()
 
-          def date_of(x):
-              if not x:
+          def date_of(value):
+              if not value:
                   return None
-
               try:
-                  if isinstance(x, (int, float)):
-                      if x > 100000000000:
-                          x /= 1000
+                  if isinstance(value, (int, float)):
+                      n = float(value)
+                      if n > 100000000000:
+                          n /= 1000
                       return datetime.fromtimestamp(
-                          x, timezone.utc
+                          n, timezone.utc
                       ).date()
-
-                  v = str(x)
-                  if re.fullmatch(r"\d{10,13}", v):
-                      return date_of(int(v))
-
                   return datetime.fromisoformat(
-                      v.replace("Z", "+00:00")
+                      str(value).replace(
+                          "Z", "+00:00"
+                      )
                   ).date()
-              except (ValueError, OverflowError,
-                      TypeError, OSError):
+              except (
+                  ValueError, TypeError,
+                  OverflowError, OSError
+              ):
                   return None
 
-          def get(obj, names):
+          def field(obj, names):
               if not isinstance(obj, dict):
                   return None
-
-              lowered = {
-                  str(k).lower(): v
-                  for k, v in obj.items()
-              }
-
               for name in names:
-                  value = lowered.get(name.lower())
-                  if value is not None and value != "":
-                      return value
+                  if name in obj and obj[name] is not None:
+                      return obj[name]
               return None
 
-          def as_dict(x):
-              return x if isinstance(x, dict) else {}
+          GAME_TERMS = {
+              "Pokémon": [
+                  "pokemon", "pokémon"
+              ],
+              "Gundam": ["gundam"],
+              "Union Arena": ["union arena"],
+              "One Piece": ["one piece"],
+              "Magic: The Gathering": [
+                  "magic the gathering", "mtg"
+              ],
+              "Yu-Gi-Oh!": [
+                  "yu-gi-oh", "yugioh"
+              ],
+              "Disney Lorcana": ["lorcana"],
+              "Digimon": ["digimon"],
+              "Dragon Ball Super": [
+                  "dragon ball"
+              ],
+              "Star Wars: Unlimited": [
+                  "star wars unlimited"
+              ],
+              "Riftbound": ["riftbound"],
+              "Flesh and Blood": [
+                  "flesh and blood"
+              ],
+              "Weiss Schwarz": [
+                  "weiss schwarz"
+              ],
+              "Cardfight Vanguard": [
+                  "cardfight", "vanguard"
+              ]
+          }
 
-          def walk(obj, depth=0):
-              if depth > 16:
-                  return
-
-              if isinstance(obj, dict):
-                  yield obj
-                  for value in obj.values():
-                      if isinstance(value, (dict, list)):
-                          yield from walk(
-                              value, depth + 1
-                          )
-
-              elif isinstance(obj, list):
-                  for item in obj:
-                      if isinstance(item, (dict, list)):
-                          yield from walk(
-                              item, depth + 1
-                          )
-
-          def game_of(value):
-              x = text(value)
-              for game, pattern in GAME_PATTERNS.items():
-                  if re.search(
-                      pattern, x, re.I
-                  ):
+          def identify_game(title):
+              value = clean(title).lower()
+              for game, terms in GAME_TERMS.items():
+                  if any(t in value for t in terms):
                       return game
               return None
 
@@ -193,82 +189,48 @@ jobs:
                   ).encode()
               ).hexdigest()[:20]
 
-          def store_address(s):
-              return norm(
-                  s.get("address") or
-                  s.get("street_address")
-              )
-
           stores = load(
               "physical_inventory_sources.json", []
           )
           if not isinstance(stores, list):
               stores = []
 
-          store_index = defaultdict(list)
-          store_ids = {}
+          store_by_id = {
+              s["source_id"]: s
+              for s in stores
+              if isinstance(s, dict)
+              and s.get("source_id")
+          }
 
-          for store in stores:
-              if not isinstance(store, dict):
-                  continue
-
-              sid = store.get("source_id")
-              if not sid:
-                  continue
-
-              store_ids[sid] = store
-
-              key = (
-                  norm(
-                      store.get("chain") or
-                      store.get("name")
-                  ),
-                  norm(store.get("address")),
-                  norm(store.get("city")),
-                  norm(store.get("state"))
+          # Store identity requires chain, street,
+          # city and state. No city-only matches.
+          def store_match(obj):
+              location = field(
+                  obj, ["store", "location"]
               )
-              store_index[key].append(sid)
+              if not isinstance(location, dict):
+                  location = {}
 
-          def match_store(report):
-              # Exact physical address is required.
-              # City alone never identifies a store.
-              retailer = get(report, [
-                  "retailer", "chain", "storeName",
-                  "store_name"
+              def loc(names):
+                  return (
+                      field(obj, names)
+                      or field(location, names)
+                  )
+
+              retailer = loc([
+                  "retailer", "chain",
+                  "storeName", "store_name"
               ])
-              address = get(report, [
-                  "address", "streetAddress",
+              address = loc([
+                  "streetAddress", "address",
                   "street_address"
               ])
-              city = get(report, [
+              city = loc([
                   "city", "storeCity"
               ])
-              state = get(report, [
+              state = loc([
                   "state", "storeState"
               ])
-
-              location = as_dict(
-                  get(report, [
-                      "location", "store",
-                      "storeLocation"
-                  ])
-              )
-
-              if not address:
-                  address = get(location, [
-                      "address", "streetAddress"
-                  ])
-
-              if not city:
-                  city = get(location, ["city"])
-
-              if not state:
-                  state = get(location, ["state"])
-
-              if not retailer:
-                  retailer = get(location, [
-                      "name", "chain", "retailer"
-                  ])
 
               if not all([
                   retailer, address, city, state
@@ -277,27 +239,22 @@ jobs:
 
               matches = []
 
-              for sid, store in store_ids.items():
-                  if (
-                      norm(store.get("city"))
-                      != norm(city)
-                      or norm(store.get("state"))
-                      != norm(state)
-                  ):
+              for sid, s in store_by_id.items():
+                  if norm(s.get("city")) != norm(city):
+                      continue
+                  if norm(s.get("state")) != norm(state):
+                      continue
+                  if norm(s.get("address")) != norm(address):
                       continue
 
-                  if store_address(store) != norm(address):
-                      continue
-
-                  chain_name = norm(
-                      store.get("chain") or
-                      store.get("name")
+                  name = norm(
+                      s.get("chain") or s.get("name")
                   )
                   reported = norm(retailer)
 
-                  if (
-                      reported in chain_name
-                      or chain_name in reported
+                  if name and reported and (
+                      name in reported
+                      or reported in name
                   ):
                       matches.append(sid)
 
@@ -307,438 +264,464 @@ jobs:
                   else None
               )
 
-          def parse_candidate(obj, source_url):
-              if not isinstance(obj, dict):
-                  return None, "not_object"
-
-              product = get(obj, [
+          def candidate_to_event(obj, source):
+              title = field(obj, [
                   "product_name", "productName",
-                  "productTitle", "title"
+                  "productTitle"
               ])
 
-              product_obj = as_dict(
-                  get(obj, ["product", "item"])
-              )
-
-              if not product:
-                  product = get(
-                      product_obj,
-                      ["name", "title"]
-                  )
-
-              if not isinstance(product, str):
+              if not isinstance(title, str):
                   return None, "missing_product"
 
-              game = get(obj, [
-                  "game", "tcg", "category"
-              ]) or game_of(product)
+              game = field(obj, [
+                  "game", "tcg"
+              ]) or identify_game(title)
 
+              if not isinstance(game, str):
+                  return None, "missing_game"
+
+              # Keep recognized TCG titles only.
+              known = {
+                  norm(g): g
+                  for g in GAME_TERMS
+              }
+              game = known.get(norm(game))
               if not game:
-                  return None, "unknown_game"
+                  return None, "unsupported_game"
 
-              status = get(obj, [
-                  "availability", "stockStatus",
-                  "status", "reportType"
+              status = field(obj, [
+                  "stockStatus", "availability",
+                  "reportType", "status"
               ])
 
               if not isinstance(status, str):
                   return None, "missing_status"
 
-              if NEGATIVE.search(status):
-                  return None, "negative_report"
+              status_key = norm(status)
 
-              if not POSITIVE.search(status):
-                  return None, "unverified_status"
+              if status_key not in {
+                  "in stock", "restocked",
+                  "shelf sighting",
+                  "delivery confirmed"
+              }:
+                  return None, "not_positive"
 
-              observed = date_of(get(obj, [
+              date = date_of(field(obj, [
                   "observed_at", "observedAt",
                   "reportedAt", "createdAt",
                   "timestamp", "date"
               ]))
 
-              if not observed:
-                  return None, "missing_absolute_date"
+              if not date:
+                  return None, "missing_date"
 
               if not (
                   TODAY - timedelta(days=180)
-                  <= observed <= TODAY
+                  <= date <= TODAY
               ):
                   return None, "date_out_of_range"
 
-              sid = match_store(obj)
-
-              if not sid:
-                  return None, "unmatched_exact_store"
-
-              # Never accept an online inventory
-              # record as physical shelf evidence.
-              scope = get(obj, [
+              scope = field(obj, [
                   "inventory_scope",
-                  "inventoryScope",
-                  "channel"
+                  "inventoryScope", "channel"
               ])
 
-              if scope and norm(scope) in [
-                  "online", "shipping",
-                  "delivery"
-              ]:
-                  return None, "online_only"
+              if scope and norm(scope) in {
+                  "online", "shipping", "delivery"
+              }:
+                  return None, "online_report"
 
-              pid = product_id(game, product)
+              sid = store_match(obj)
 
-              event_id = hashlib.sha256(
+              if not sid:
+                  return None, "unmatched_store"
+
+              pid = product_id(game, title)
+
+              eid = hashlib.sha256(
                   (
                       sid + "|" + pid + "|" +
-                      observed.isoformat() + "|" +
-                      source_url
+                      date.isoformat() + "|" +
+                      source
                   ).encode()
               ).hexdigest()[:24]
 
               return {
-                  "event_id": event_id,
+                  "event_id": eid,
                   "store_id": sid,
                   "game": game,
                   "product_id": pid,
-                  "product_name": text(product),
-                  "observed_at": observed.isoformat(),
-                  "source_url": source_url,
+                  "product_name": clean(title),
+                  "observed_at": date.isoformat(),
+                  "source_url": source,
                   "status": "Reported in stock",
                   "inventory_scope": "physical_store",
                   "evidence_level":
-                      "public third-party report",
+                      "third_party_report",
                   "current_stock_verified": False
               }, None
 
-          def decode_embedded(raw):
-              # Parse only genuine JSON structures,
-              # not arbitrary text fragments.
-              raw = html.unescape(raw.strip())
+          # Iterative bounded traversal.
+          # No recursive JSON-fragment regex.
+          def walk_bounded(root, budget):
+              stack = [(root, 0)]
 
-              if not raw or len(raw) > 5000000:
-                  return []
+              while stack and budget[0] > 0:
+                  obj, depth = stack.pop()
+                  budget[0] -= 1
 
-              results = []
+                  if isinstance(obj, dict):
+                      yield obj
 
-              try:
-                  results.append(json.loads(raw))
-              except (ValueError, TypeError):
-                  pass
+                      if depth < MAX_DEPTH:
+                          for value in obj.values():
+                              if isinstance(
+                                  value, (dict, list)
+                              ):
+                                  stack.append(
+                                      (value, depth + 1)
+                                  )
 
-              # Next.js flight chunks can contain
-              # escaped serialized JSON strings.
-              for match in re.finditer(
-                  r'(\{(?:\\.|[^{}]){30,20000}\})',
-                  raw
-              ):
-                  fragment = match.group(1)
+                  elif isinstance(obj, list):
+                      if depth < MAX_DEPTH:
+                          for value in obj[:1000]:
+                              if isinstance(
+                                  value, (dict, list)
+                              ):
+                                  stack.append(
+                                      (value, depth + 1)
+                                  )
 
-                  for candidate in [
-                      fragment,
-                      fragment.replace(
-                          '\\"', '"'
-                      )
-                  ]:
-                      try:
-                          parsed = json.loads(candidate)
-                          if isinstance(
-                              parsed, (dict, list)
-                          ):
-                              results.append(parsed)
-                              break
-                      except ValueError:
-                          pass
+          diagnostics = {
+              "source": SOURCE,
+              "checked_at": NOW.isoformat(),
+              "http_status": None,
+              "html_bytes": 0,
+              "scripts_seen": 0,
+              "scripts_parsed": 0,
+              "scripts_skipped": 0,
+              "objects_inspected": 0,
+              "candidate_records": 0,
+              "new_events": 0,
+              "errors": []
+          }
 
-                  if len(results) >= 100:
-                      break
+          rejection = Counter()
+          samples = []
+          collected = {}
 
-              return results
-
-          session = requests.Session()
-          session.headers.update({
-              "User-Agent":
-                  "Mozilla/5.0 (compatible; "
-                  "PokestockPublicResearch/32)",
-              "Accept": "text/html,application/json"
-          })
-
-          diagnostics = []
-          extracted = []
-          rejected = Counter()
-          found = {}
-
-          for url in SOURCES:
-              try:
-                  response = session.get(
-                      url, timeout=35
-                  )
-                  response.raise_for_status()
-              except requests.RequestException as e:
-                  diagnostics.append({
-                      "url": url,
-                      "error": str(e)[:250]
-                  })
-                  continue
-
-              soup = BeautifulSoup(
-                  response.text, "html.parser"
+          try:
+              response = requests.get(
+                  SOURCE,
+                  timeout=(8, 20),
+                  headers={
+                      "User-Agent":
+                          "Mozilla/5.0",
+                      "Accept":
+                          "text/html,application/json"
+                  }
               )
 
-              scripts = soup.find_all("script")
-              types = Counter()
-              structured = []
+              diagnostics["http_status"] = (
+                  response.status_code
+              )
+              diagnostics["html_bytes"] = (
+                  len(response.content)
+              )
 
-              for script in scripts:
-                  typ = script.get("type", "")
-                  sid = script.get("id", "")
-
-                  types[typ or "default"] += 1
-                  raw = script.string or script.text
-
-                  if not raw:
-                      continue
-
-                  if (
-                      "json" in typ.lower()
-                      or sid == "__NEXT_DATA__"
-                      or "__next_f.push" in raw
-                      or "restock" in raw.lower()
-                  ):
-                      structured.extend(
-                          decode_embedded(raw)
+              if response.status_code == 200:
+                  if len(response.content) > MAX_HTML_BYTES:
+                      diagnostics["errors"].append(
+                          "HTML exceeded size limit"
+                      )
+                  else:
+                      soup = BeautifulSoup(
+                          response.content,
+                          "html.parser"
                       )
 
-              # Inspect explicit HTML attributes,
-              # without guessing a store from
-              # unrelated page text.
-              for el in soup.select(
-                  "[data-product-name]"
-                  "[data-store-address]"
-              ):
-                  structured.append({
-                      "product_name": el.get(
-                          "data-product-name"
-                      ),
-                      "retailer": el.get(
-                          "data-retailer"
-                      ),
-                      "address": el.get(
-                          "data-store-address"
-                      ),
-                      "city": el.get(
-                          "data-store-city"
-                      ),
-                      "state": el.get(
-                          "data-store-state"
-                      ),
-                      "observed_at": el.get(
-                          "data-observed-at"
-                      ),
-                      "status": el.get(
-                          "data-status"
-                      )
-                  })
-
-              inspected = 0
-              potential = 0
-
-              for structure in structured:
-                  for obj in walk(structure):
-                      inspected += 1
-
-                      if inspected > 100000:
-                          break
-
-                      # Only inspect records with
-                      # some product/store semantics.
-                      keys = " ".join(
-                          str(k).lower()
-                          for k in obj.keys()
+                      scripts = soup.find_all(
+                          "script", limit=MAX_SCRIPTS
                       )
 
-                      if not re.search(
-                          r"product|store|restock|"
-                          r"availability|report",
-                          keys
-                      ):
-                          continue
-
-                      potential += 1
-
-                      event, reason = parse_candidate(
-                          obj, url
+                      diagnostics["scripts_seen"] = (
+                          len(scripts)
                       )
 
-                      if event:
-                          found[
-                              event["event_id"]
-                          ] = event
-                      else:
-                          rejected[reason] += 1
+                      budget = [MAX_OBJECTS]
 
-                      # Keep a bounded diagnostic
-                      # sample, without publishing
-                      # full untrusted page content.
-                      if len(extracted) < 30:
-                          extracted.append({
-                              "source": url,
-                              "keys": list(
-                                  obj.keys()
-                              )[:25],
-                              "rejection": reason,
-                              "sample": str(obj)[:500]
-                          })
+                      for script in scripts:
+                          if budget[0] <= 0:
+                              break
 
-              diagnostics.append({
-                  "url": url,
-                  "http_status":
-                      response.status_code,
-                  "html_bytes":
-                      len(response.content),
-                  "script_count": len(scripts),
-                  "script_types": dict(types),
-                  "parsed_structures":
-                      len(structured),
-                  "objects_inspected": inspected,
-                  "potential_records": potential,
-                  "accepted_records":
-                      len(found)
-              })
+                          if (
+                              time.monotonic() - START
+                              > MAX_SECONDS - 15
+                          ):
+                              diagnostics["errors"].append(
+                                  "Stopped at time budget"
+                              )
+                              break
 
-          # Preserve previously collected reports.
+                          raw = (
+                              script.string
+                              or script.get_text()
+                              or ""
+                          )
+
+                          typ = (
+                              script.get("type", "")
+                              .lower()
+                          )
+
+                          if (
+                              not raw
+                              or len(raw.encode("utf-8"))
+                              > MAX_SCRIPT_BYTES
+                          ):
+                              diagnostics[
+                                  "scripts_skipped"
+                              ] += 1
+                              continue
+
+                          # Only directly parse JSON
+                          # scripts. Do not scan JS
+                          # source with nested regex.
+                          if (
+                              "json" not in typ
+                              and script.get("id")
+                              != "__NEXT_DATA__"
+                          ):
+                              diagnostics[
+                                  "scripts_skipped"
+                              ] += 1
+                              continue
+
+                          try:
+                              parsed = json.loads(raw)
+                          except (ValueError, TypeError):
+                              diagnostics[
+                                  "scripts_skipped"
+                              ] += 1
+                              continue
+
+                          diagnostics[
+                              "scripts_parsed"
+                          ] += 1
+
+                          for obj in walk_bounded(
+                              parsed, budget
+                          ):
+                              diagnostics[
+                                  "objects_inspected"
+                              ] += 1
+
+                              keys = set(obj)
+
+                              if not keys.intersection({
+                                  "product_name",
+                                  "productName",
+                                  "productTitle",
+                                  "stockStatus",
+                                  "reportType"
+                              }):
+                                  continue
+
+                              diagnostics[
+                                  "candidate_records"
+                              ] += 1
+
+                              event, reason = (
+                                  candidate_to_event(
+                                      obj, SOURCE
+                                  )
+                              )
+
+                              if event:
+                                  collected[
+                                      event["event_id"]
+                                  ] = event
+                              else:
+                                  rejection[reason] += 1
+
+                              if len(samples) < MAX_SAMPLES:
+                                  samples.append({
+                                      "keys": list(
+                                          obj.keys()
+                                      )[:20],
+                                      "rejection": reason
+                                  })
+
+          except (
+              requests.RequestException,
+              TimeoutError
+          ) as e:
+              diagnostics["errors"].append(
+                  str(e)[:250]
+              )
+
+          # Preserve previously accepted sightings.
           existing = load(
-              "v31_sightings.json", []
+              "v32_sightings.json", []
           )
 
           if not isinstance(existing, list):
               existing = []
 
+          older = load(
+              "v31_sightings.json", []
+          )
+
+          if isinstance(older, list):
+              existing += older
+
           for event in existing:
               if not isinstance(event, dict):
                   continue
 
-              eid = event.get("event_id")
               sid = event.get("store_id")
-              d = date_of(event.get("observed_at"))
+              pid = event.get("product_id")
+              date = date_of(
+                  event.get("observed_at")
+              )
+              source = event.get("source_url")
 
-              if (
-                  eid and sid in store_ids
-                  and d
+              if not (
+                  sid in store_by_id
+                  and pid and date and source
                   and TODAY - timedelta(days=180)
-                  <= d <= TODAY
-                  and event.get("source_url")
+                  <= date <= TODAY
               ):
-                  found.setdefault(eid, event)
+                  continue
 
-          sightings = list(found.values())
+              if event.get(
+                  "inventory_scope"
+              ) != "physical_store":
+                  continue
 
-          save("v32_sightings.json", sightings)
-          save(
-              "v32_diagnostic_samples.json",
-              extracted
+              eid = event.get("event_id")
+              if not eid:
+                  continue
+
+              collected.setdefault(eid, event)
+
+          sightings = list(collected.values())
+
+          diagnostics["new_events"] = (
+              len(collected) -
+              len({
+                  x.get("event_id")
+                  for x in existing
+                  if isinstance(x, dict)
+                  and x.get("event_id")
+                  in collected
+              })
           )
 
-          # Forecast only from repeated reports
-          # of the SAME product at the SAME store.
-          history = defaultdict(set)
+          # Independent histories by store,
+          # TCG game, and exact product.
+          product_history = defaultdict(set)
+          game_history = defaultdict(set)
+          latest_product = {}
 
           for event in sightings:
               sid = event.get("store_id")
               pid = event.get("product_id")
-              d = date_of(event.get("observed_at"))
+              game = event.get("game")
+              d = date_of(
+                  event.get("observed_at")
+              )
 
-              if sid and pid and d:
-                  history[(sid, pid)].add(d)
+              if not all([sid, pid, game, d]):
+                  continue
 
-          product_forecasts = []
-          game_forecasts = []
-          game_history = defaultdict(set)
+              product_history[
+                  (sid, game, pid)
+              ].add(d)
 
-          for event in sightings:
-              d = date_of(event.get("observed_at"))
+              game_history[
+                  (sid, game)
+              ].add(d)
 
-              if d:
-                  game_history[
-                      (
-                          event.get("store_id"),
-                          event.get("game")
-                      )
-                  ].add(d)
+              key = (sid, game, pid)
+              old = latest_product.get(key)
 
-          def forecast(dates):
+              if (
+                  old is None
+                  or event["observed_at"]
+                  > old["observed_at"]
+              ):
+                  latest_product[key] = event
+
+          def predict(dates):
               dates = sorted(dates)
               n = len(dates)
 
+              result = {
+                  "observations": n,
+                  "predicted_date": None,
+                  "confidence":
+                      "Insufficient evidence"
+              }
+
               if n < 3:
-                  return {
-                      "predicted_date": None,
-                      "confidence":
-                          "Insufficient history",
-                      "observations": n
-                  }
+                  return result
 
-              counts = Counter(
-                  d.weekday() for d in dates
-              )
-              weekday, hits = counts.most_common(1)[0]
-
-              weeks = len({
+              weeks = {
                   d.isocalendar()[:2]
                   for d in dates
-              })
+              }
 
-              if weeks < 3:
-                  return {
-                      "predicted_date": None,
-                      "confidence":
-                          "Insufficient independent weeks",
-                      "observations": n
-                  }
+              if len(weeks) < 3:
+                  return result
+
+              counts = Counter(
+                  d.weekday()
+                  for d in dates
+              )
+
+              weekday, hits = (
+                  counts.most_common(1)[0]
+              )
 
               agreement = hits / n
 
               if agreement < 0.5:
-                  return {
-                      "predicted_date": None,
-                      "confidence":
-                          "No consistent weekday",
-                      "observations": n
-                  }
-
-              next_date = None
+                  result["confidence"] = (
+                      "No consistent pattern"
+                  )
+                  return result
 
               for offset in range(8):
-                  candidate = TODAY + timedelta(
-                      days=offset
+                  candidate = (
+                      TODAY +
+                      timedelta(days=offset)
                   )
 
                   if candidate.weekday() == weekday:
-                      next_date = candidate.isoformat()
+                      result["predicted_date"] = (
+                          candidate.isoformat()
+                      )
                       break
 
-              return {
-                  "predicted_date": next_date,
-                  "confidence": (
-                      "Moderate"
-                      if n >= 6 and agreement >= 0.7
-                      else "Low"
-                  ),
-                  "observations": n,
-                  "weekday_agreement":
-                      round(agreement, 3)
-              }
+              result["confidence"] = (
+                  "Moderate"
+                  if n >= 6 and agreement >= 0.7
+                  else "Low"
+              )
 
-          for (sid, pid), dates in history.items():
-              matching = [
-                  x for x in sightings
-                  if x.get("store_id") == sid
-                  and x.get("product_id") == pid
-              ]
+              result["weekday_agreement"] = (
+                  round(agreement, 3)
+              )
 
-              if not matching:
-                  continue
+              return result
 
-              item = matching[-1]
-              store = store_ids[sid]
+          product_forecasts = []
+
+          for key, dates in product_history.items():
+              sid, game, pid = key
+              event = latest_product[key]
+              store = store_by_id[sid]
 
               product_forecasts.append({
                   "store_id": sid,
@@ -746,20 +729,26 @@ jobs:
                       store.get("name"),
                   "address":
                       store.get("address"),
-                  "city": store.get("city"),
-                  "state": store.get("state"),
-                  "game": item.get("game"),
+                  "city":
+                      store.get("city"),
+                  "state":
+                      store.get("state"),
+                  "game": game,
                   "product_id": pid,
                   "product_name":
-                      item.get("product_name"),
-                  **forecast(dates),
+                      event.get("product_name"),
+                  **predict(dates),
                   "source_url":
-                      item.get("source_url"),
+                      event.get("source_url"),
                   "current_stock_verified": False
               })
 
-          for (sid, game), dates in game_history.items():
-              store = store_ids[sid]
+          game_forecasts = []
+
+          for (sid, game), dates in (
+              game_history.items()
+          ):
+              store = store_by_id[sid]
 
               game_forecasts.append({
                   "store_id": sid,
@@ -767,13 +756,19 @@ jobs:
                       store.get("name"),
                   "address":
                       store.get("address"),
-                  "city": store.get("city"),
-                  "state": store.get("state"),
+                  "city":
+                      store.get("city"),
+                  "state":
+                      store.get("state"),
                   "game": game,
-                  **forecast(dates),
+                  **predict(dates),
                   "current_stock_verified": False
               })
 
+          save(
+              "v32_sightings.json",
+              sightings
+          )
           save(
               "v32_store_product_forecasts.json",
               product_forecasts
@@ -782,10 +777,13 @@ jobs:
               "v32_store_game_forecasts.json",
               game_forecasts
           )
+          save(
+              "v32_diagnostic_samples.json",
+              samples
+          )
 
-          # Do not delete V30 data.
-          # Only V32 forecasts with enough history
-          # are added to the shipment display.
+          # Preserve V30 and V31 shipment records.
+          # Replace only prior V32 entries.
           shipments = load(
               "shipments.json",
               {"events": [], "forecasts": []}
@@ -793,7 +791,8 @@ jobs:
 
           if not isinstance(shipments, dict):
               shipments = {
-                  "events": [], "forecasts": []
+                  "events": [],
+                  "forecasts": []
               }
 
           previous = shipments.get(
@@ -820,8 +819,10 @@ jobs:
                       str(row["store_name"]) +
                       " — " +
                       str(row["address"]) +
-                      ", " + str(row["city"]) +
-                      ", " + str(row["state"])
+                      ", " +
+                      str(row["city"]) +
+                      ", " +
+                      str(row["state"])
                   ),
                   "game": row["game"],
                   "product_id":
@@ -843,37 +844,47 @@ jobs:
           save("shipments.json", shipments)
 
           report = {
-              "version": "32",
+              "version": "32.1",
               "checked_at": NOW.isoformat(),
-              "stores_indexed": len(store_ids),
+              "elapsed_seconds": round(
+                  time.monotonic() - START, 2
+              ),
+              "stores_indexed": len(store_by_id),
+              "games_supported": len(GAME_TERMS),
               "source_diagnostics": diagnostics,
-              "rejection_reasons": dict(rejected),
-              "total_sightings": len(sightings),
+              "rejection_reasons": dict(rejection),
+              "sightings_preserved":
+                  len(sightings),
               "store_product_records":
                   len(product_forecasts),
               "store_game_records":
                   len(game_forecasts),
               "dated_product_predictions": sum(
-                  bool(x["predicted_date"])
+                  bool(
+                      x.get("predicted_date")
+                  )
                   for x in product_forecasts
               ),
-              "limitations": [
-                  "Public reports are not live stock",
-                  "Exact store address matching required",
-                  "No forecast from fewer than 3 dates",
-                  "No forecast from fewer than 3 weeks",
-                  "V30 research windows remain separate",
-                  "Source access does not guarantee usable data"
-              ]
+              "note": (
+                  "A successful run does not "
+                  "confirm stock. Only source-backed "
+                  "exact-store observations may "
+                  "train predictions."
+              )
           }
 
           save("v32_report.json", report)
-          print(json.dumps(report, indent=2))
+
+          signal.alarm(0)
+          print(
+              json.dumps(report, indent=2),
+              flush=True
+          )
           PY
 
-          python /tmp/v32.py
+          python -u /tmp/v32_fast.py
 
-      - name: Validate files
+      - name: Validate outputs
         shell: bash
         run: |
           python - <<'PY'
@@ -883,23 +894,23 @@ jobs:
           names = [
               "v32_report.json",
               "v32_sightings.json",
-              "v32_diagnostic_samples.json",
               "v32_store_product_forecasts.json",
               "v32_store_game_forecasts.json",
+              "v32_diagnostic_samples.json",
               "shipments.json"
           ]
 
           for name in names:
-              path = Path("data") / name
-              assert path.exists(), name
-              json.loads(path.read_text(
-                  encoding="utf-8"
-              ))
+              p = Path("data") / name
+              assert p.exists(), name
+              json.loads(
+                  p.read_text(encoding="utf-8")
+              )
 
-          print("V32 data validation passed")
+          print("V32.1 validation passed")
           PY
 
-      - name: Publish
+      - name: Commit and publish
         shell: bash
         run: |
           set -euo pipefail
@@ -908,30 +919,33 @@ jobs:
           git config user.email \
             "actions@users.noreply.github.com"
 
-          git add data/v32_*.json data/shipments.json
+          git add \
+            data/v32_*.json \
+            data/shipments.json
 
           if git diff --cached --quiet; then
-            echo "No data changes"
+            echo "No changes"
             exit 0
           fi
 
-          git commit -m "V32 collect store product evidence"
+          git commit -m \
+            "V32.1 optimized evidence collection"
 
           for attempt in 1 2 3; do
             git fetch origin main
 
             if ! git rebase origin/main; then
-              git rebase --abort || true
+              git rebase --abort
               exit 1
             fi
 
             if git push origin HEAD:main; then
-              echo "V32 published"
+              echo "V32.1 published"
               exit 0
             fi
 
             sleep 5
           done
 
-          echo "Unable to publish V32"
+          echo "Publishing failed"
           exit 1
