@@ -1,0 +1,26 @@
+{
+  "version": "32.1",
+  "checked_at": "2026-11-03T23:49:15.536865+00:00",
+  "elapsed_seconds": 0.39,
+  "stores_indexed": 1173,
+  "games_supported": 14,
+  "source_diagnostics": {
+    "source": "https://restockd.app/pokemon-in-store",
+    "checked_at": "2026-11-03T23:49:15.536865+00:00",
+    "http_status": 200,
+    "html_bytes": 433820,
+    "scripts_seen": 40,
+    "scripts_parsed": 3,
+    "scripts_skipped": 37,
+    "objects_inspected": 28,
+    "candidate_records": 0,
+    "new_events": 0,
+    "errors": []
+  },
+  "rejection_reasons": {},
+  "sightings_preserved": 0,
+  "store_product_records": 0,
+  "store_game_records": 0,
+  "dated_product_predictions": 0,
+  "note": "A successful run does not confirm stock. Only source-backed exact-store observations may train predictions."
+}
