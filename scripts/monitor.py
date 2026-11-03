@@ -2,863 +2,408 @@
 import json
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
-from concurrent.futures import ThreadPoolExecutor
 
 import requests
 from bs4 import BeautifulSoup
 
-# POKESTOCK V5
-# Official catalogue and release discovery.
-# Does not claim real-time retail inventory.
-
-DATA_FILE = Path("data/status.json")
-
-SOURCES = {
-    "Pokemon Press":
-        "https://press.pokemon.com/en/Items/Schedule?period=All&types=3&sortAsc=False&sortBy=Date",
-    "Pokemon News":
-        "https://www.pokemon.com/us/pokemon-news",
-    "Union Arena":
-        "https://www.unionarena-tcg.com/na/products/",
-}
-
-HEADERS = {
-    "User-Agent":
-        "Mozilla/5.0 (compatible; PokeStockCatalog/5.0)",
-    "Accept-Language": "en-US,en;q=0.9",
-}
-
-MONTHS = (
-    r"January|February|March|April|May|June|"
-    r"July|August|September|October|November|December"
-)
-
-DATE_PATTERN = (
-    r"(?:%s)\s+\d{1,2},?\s+\d{4}" % MONTHS
-)
-
-SEALED_WORDS = (
-    "booster", "elite trainer", "collection",
-    "battle deck", "starter deck", "advanced deck",
-    "premium", "bundle", "tin", "blister",
-    "battle academy", "toolkit", "chest",
-    "build & battle", "build and battle",
-    "display", "battle box",
-)
-
-EXCLUDED_WORDS = (
-    "sleeve", "binder", "playmat", "plush",
-    "figure", "portfolio", "deck box",
-    "costume", "apparel", "shirt",
-    "video game", "tcg pocket",
-)
-
-session = requests.Session()
-session.headers.update(HEADERS)
+DATA = Path('data/status.json')
+PRESS = 'https://press.pokemon.com/en/Items/Schedule?period=All&types=3&sortAsc=False&sortBy=Date'
+UNION = 'https://www.unionarena-tcg.com/na/products/'
+NEWS = 'https://www.pokemon.com/us/pokemon-news'
+HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'Accept-Language': 'en-US,en;q=0.9'}
+RETAIL_DOMAINS = ('bestbuy.com', 'target.com', 'walmart.com', 'gamestop.com', 'pokemoncenter.com')
+SEALED = ('booster', 'elite trainer', 'collection', 'tin', 'blister', 'battle deck', 'starter deck', 'advanced deck', 'bundle', 'premium', 'battle academy', 'build & battle', 'build and battle', 'toolkit', 'chest', 'display', 'battle box', 'battle kit', 'battle stadium')
+EXCLUDE = ('sleeves', 'binder', 'playmat', 'plush', 'figure', 'portfolio', 'deck box', 'costume', 'apparel', 'shirt', 'video game', 'tcg pocket')
+DATE_RE = r'(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}'
 
 
-def timestamp():
+def now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def clean(value):
-    return re.sub(
-        r"\s+", " ", str(value or "")
-    ).strip()
+def clean(s):
+    return re.sub(r'\s+', ' ', str(s or '')).strip()
 
 
-def load_database():
-    if not DATA_FILE.exists():
-        return {
-            "products": [],
-            "releases": [],
-            "drawings": [],
-            "history": [],
-        }
-
+def date_from(s):
+    m = re.search(DATE_RE, s or '', re.I)
+    if not m:
+        return ''
     try:
-        return json.loads(
-            DATA_FILE.read_text(encoding="utf-8")
-        )
-    except Exception as error:
-        print("Database error:", error)
-        raise
+        return datetime.strptime(m.group().replace(',', ''), '%B %d %Y').strftime('%Y-%m-%d')
+    except ValueError:
+        return ''
 
 
 def fetch(url):
     error = None
-
     for attempt in range(2):
         try:
-            response = session.get(
-                url,
-                timeout=(10, 20),
-            )
-            response.raise_for_status()
-
-            if not response.text.strip():
-                raise ValueError("Empty response")
-
-            return BeautifulSoup(
-                response.text,
-                "html.parser",
-            )
-
-        except (
-            requests.RequestException,
-            ValueError,
-        ) as exc:
+            r = requests.get(url, headers=HEADERS, timeout=(8, 16), allow_redirects=True)
+            r.raise_for_status()
+            if not r.text.strip():
+                raise ValueError('Empty page')
+            return BeautifulSoup(r.text, 'html.parser'), r.url
+        except (requests.RequestException, ValueError) as exc:
             error = exc
-
             if attempt == 0:
-                time.sleep(2)
-
+                time.sleep(1)
     raise error
 
 
-def parse_date(text):
-    match = re.search(
-        DATE_PATTERN,
-        text or "",
-        flags=re.I,
-    )
-
-    if not match:
-        return ""
-
-    try:
-        return datetime.strptime(
-            match.group().replace(",", ""),
-            "%B %d %Y",
-        ).strftime("%Y-%m-%d")
-    except ValueError:
-        return ""
+def nodes(value):
+    if isinstance(value, list):
+        for x in value:
+            yield from nodes(x)
+    elif isinstance(value, dict):
+        yield value
+        for x in value.values():
+            if isinstance(x, (dict, list)):
+                yield from nodes(x)
 
 
-def parse_msrp(text):
-    match = re.search(
-        r"MSRP\s*:?\s*\$?\s*(\d+(?:\.\d{1,2})?)",
-        text or "",
-        re.I,
-    )
-
-    if match:
-        return "$" + match.group(1)
-
-    return ""
+def structured(soup):
+    for script in soup.find_all('script', type='application/ld+json'):
+        try:
+            yield from nodes(json.loads(script.string or script.get_text()))
+        except (ValueError, TypeError):
+            continue
 
 
-def classify(name, game):
-    value = name.lower()
-
-    if game == "Union Arena":
-        if "advanced deck" in value:
-            return "Advanced Deck"
-        if "starter deck" in value:
-            return "Starter Deck"
-        return "Booster Pack"
-
-    if "elite trainer" in value:
-        return "Elite Trainer Box"
-    if "booster box" in value or "booster display" in value:
-        return "Booster Box"
-    if "booster bundle" in value:
-        return "Booster Bundle"
-    if "booster" in value:
-        return "Booster Pack"
-    if "tin" in value:
-        return "Tin"
-    if "blister" in value:
-        return "Blister"
-    if "deck" in value:
-        return "Starter Deck"
-    if "collection" in value:
-        return "Collection Box"
-    if "premium" in value:
-        return "Premium Box"
-
-    return "Other Sealed"
+def is_product(node):
+    t = node.get('@type', '')
+    return 'Product' in (t if isinstance(t, list) else [t])
 
 
-def sealed_title(name):
-    value = clean(name).lower()
-
-    if not (
-        "pokemon" in value
-        or "pokémon" in value
-    ):
-        return False
-
-    if any(
-        word in value
-        for word in EXCLUDED_WORDS
-    ):
-        return False
-
-    return any(
-        word in value
-        for word in SEALED_WORDS
-    )
+def is_sealed(name):
+    s = clean(name).lower()
+    return ('pokemon' in s or 'pokémon' in s) and any(x in s for x in SEALED) and not any(x in s for x in EXCLUDE)
 
 
-def new_product(name, game, url, kind):
-    return {
-        "name": clean(name),
-        "game": game,
-        "type": kind,
-        "set": "",
-        "stock_status": "Not checked",
-        "image": "",
-        "image_source": "",
-        "msrp": "",
-        "market_price": "",
-        "retailer_price": "",
-        "retailer": "",
-        "source": "",
-        "release_date": "",
-        "sku": "",
-        "url": url,
-    }
+def kind(name):
+    s = name.lower()
+    if 'elite trainer' in s: return 'Elite Trainer Box'
+    if 'booster box' in s or 'booster display' in s: return 'Booster Box'
+    if 'booster bundle' in s: return 'Booster Bundle'
+    if 'booster' in s: return 'Booster Pack'
+    if 'blister' in s: return 'Blister'
+    if 'tin' in s: return 'Tin'
+    if 'build & battle' in s or 'build and battle' in s: return 'Build & Battle'
+    if 'deck' in s: return 'Starter Deck'
+    if 'collection' in s or 'chest' in s: return 'Collection Box'
+    if 'premium' in s: return 'Premium Box'
+    return 'Other Sealed'
 
 
-def valid_image(src, base):
-    if not src:
-        return ""
-
-    url = urljoin(base, str(src))
-
-    if not url.startswith(
-        ("http://", "https://")
-    ):
-        return ""
-
-    lower = url.lower()
-
-    if any(
-        word in lower
-        for word in (
-            "placeholder",
-            "favicon",
-            "sprite",
-            "logo",
-        )
-    ):
-        return ""
-
-    return url
+def product(name, game, url, type_name):
+    return {'name': clean(name), 'game': game, 'type': type_name, 'set': '', 'stock_status': 'Not checked', 'image': '', 'image_source': '', 'msrp': '', 'market_price': '', 'retailer_price': '', 'retailer': '', 'source': '', 'release_date': '', 'sku': '', 'url': url}
 
 
-def extract_image(soup, base):
-    # Prefer product photography.
-    for img in soup.find_all("img"):
-        src = (
-            img.get("src")
-            or img.get("data-src")
-            or img.get("data-lazy-src")
-        )
-
-        url = valid_image(src, base)
-
-        if url and any(
-            word in url.lower()
-            for word in (
-                "product",
-                "packaging",
-                "booster",
-                "deck",
-            )
-        ):
-            return url
-
-    # Fallback to page preview artwork.
-    for meta in soup.find_all("meta"):
-        if meta.get("property") in (
-            "og:image",
-            "og:image:secure_url",
-        ):
-            return valid_image(
-                meta.get("content"),
-                base,
-            )
-
-    return ""
+def image(value, base):
+    if isinstance(value, list): value = next((v for v in value if v), '')
+    if isinstance(value, dict): value = value.get('url') or value.get('contentUrl')
+    if not isinstance(value, str) or not value: return ''
+    u = urljoin(base, value)
+    if not u.startswith(('https://', 'http://')) or any(x in u.lower() for x in ('sprite', 'favicon', 'placeholder', 'logo')): return ''
+    return u
 
 
-def surrounding_text(link):
+def page_image(soup, base):
+    for n in soup.find_all('img'):
+        src = n.get('src') or n.get('data-src') or n.get('data-lazy-src')
+        u = image(src, base)
+        if u and any(t in u.lower() for t in ('product', 'booster', 'deck', 'packaging')):
+            return u
+    for n in soup.find_all('meta'):
+        if n.get('property') in ('og:image', 'og:image:secure_url'):
+            return image(n.get('content'), base)
+    return ''
+
+
+def context(link):
     node = link
-
     for _ in range(5):
-        if node.parent is None:
-            break
-
+        if node.parent is None: break
         node = node.parent
-        text = clean(
-            node.get_text(" ", strip=True)
-        )
-
-        if parse_date(text):
-            return text
-
-    return clean(
-        link.get_text(" ", strip=True)
-    )
+        txt = clean(node.get_text(' ', strip=True))
+        if date_from(txt) and len(txt) < 1500: return txt
+    return clean(link.get_text(' ', strip=True))
 
 
-def discover_pokemon_press():
-    url = SOURCES["Pokemon Press"]
-    soup = fetch(url)
+def press_discovery():
+    soup, _ = fetch(PRESS)
+    found = {}
+    for a in soup.find_all('a', href=True):
+        name = clean(a.get_text(' ', strip=True))
+        if not re.search(r'Pok[eé]mon\s+TCG\s*:', name, re.I) or '/products/' not in a['href']: continue
+        url = urljoin(PRESS, a['href'])
+        found[url] = {'name': name, 'game': 'Pokémon', 'type': 'Set Release', 'date': date_from(context(a)), 'msrp': '', 'url': url}
+    if not found: raise RuntimeError('No Pokémon Press release entries parsed')
+    return list(found.values())
 
-    releases = []
+
+def press_detail(release):
+    soup, url = fetch(release['url'])
+    # Official product detail pages can describe multiple formats. Keep each
+    # named format as an announcement, never as a retailer stock listing.
+    found = []
     seen = set()
-
-    for link in soup.find_all(
-        "a", href=True
-    ):
-        name = clean(
-            link.get_text(" ", strip=True)
-        )
-
-        href = link["href"]
-
-        if not re.search(
-            r"Pok[eé]mon\s+TCG\s*:",
-            name,
-            re.I,
-        ):
-            continue
-
-        if "/products/" not in href:
-            continue
-
-        target = urljoin(url, href)
-
-        if target in seen:
-            continue
-
-        seen.add(target)
-
-        releases.append({
-            "name": name,
-            "game": "Pokémon",
-            "type": "Set Release",
-            "date": parse_date(
-                surrounding_text(link)
-            ),
-            "msrp": "",
-            "url": target,
-        })
-
-    if not releases:
-        raise RuntimeError(
-            "No official Pokémon release entries parsed"
-        )
-
-    return releases
+    for node in structured(soup):
+        if not is_product(node): continue
+        name = clean(node.get('name'))
+        if not is_sealed(name): continue
+        key = name.casefold()
+        if key in seen: continue
+        seen.add(key)
+        p = product(name, 'Pokémon', url + '#product-' + str(len(found)+1), kind(name))
+        p['source'] = 'Pokémon Press product detail'
+        p['release_date'] = release.get('date', '')
+        p['image'] = image(node.get('image'), url)
+        p['image_source'] = 'Pokémon Press' if p['image'] else ''
+        p['discovery_confidence'] = 'official_structured_product'
+        found.append(p)
+    # Some official detail pages are announcements for one sealed format.
+    if not found and is_sealed(release['name']):
+        p = product(release['name'], 'Pokémon', url, kind(release['name']))
+        p['source'] = 'Pokémon Press product announcement'
+        p['release_date'] = release.get('date', '')
+        p['image'] = page_image(soup, url)
+        p['image_source'] = 'Pokémon Press' if p['image'] else ''
+        p['discovery_confidence'] = 'official_announcement'
+        found.append(p)
+    return found
 
 
-def discover_pokemon_news():
-    # News is a discovery signal, not proof
-    # of an individual retail SKU.
-    url = SOURCES["Pokemon News"]
-    soup = fetch(url)
-
-    candidates = []
-    seen = set()
-
-    for link in soup.find_all(
-        "a", href=True
-    ):
-        title = clean(
-            link.get_text(" ", strip=True)
-        )
-
-        if not sealed_title(title):
-            continue
-
-        target = urljoin(
-            url, link["href"]
-        )
-
-        if urlparse(target).netloc not in (
-            "www.pokemon.com",
-            "pokemon.com",
-        ):
-            continue
-
-        if target in seen:
-            continue
-
-        seen.add(target)
-
-        candidates.append({
-            "name": title,
-            "url": target,
-            "source": "Pokemon News",
-        })
-
-    # Empty is a valid response from a
-    # general news page. Do not invent items.
-    return candidates
-
-
-def discover_union_arena():
-    url = SOURCES["Union Arena"]
-    soup = fetch(url)
-
-    products = []
-    seen = set()
-
-    for link in soup.find_all(
-        "a", href=True
-    ):
-        href = link["href"]
-
-        is_booster = (
-            "/products/boosters/" in href
-        )
-        is_deck = (
-            "/products/decks/" in href
-        )
-
-        if not (
-            is_booster or is_deck
-        ):
-            continue
-
-        target = urljoin(url, href)
-
-        if target in seen:
-            continue
-
-        seen.add(target)
-
-        raw_name = clean(
-            link.get_text(" ", strip=True)
-        )
-
-        if not raw_name:
-            continue
-
-        name = re.sub(
-            r"^(BOOSTERS|PRECONSTRUCTED DECKS)\s+",
-            "",
-            raw_name,
-            flags=re.I,
-        )
-
-        kind = (
-            "Booster Pack"
-            if is_booster
-            else "Starter Deck"
-        )
-
-        if "advanced deck" in name.lower():
-            kind = "Advanced Deck"
-
-        product = new_product(
-            name,
-            "Union Arena",
-            target,
-            kind,
-        )
-
-        product["source"] = (
-            "Union Arena official catalogue"
-        )
-
-        context = surrounding_text(link)
-
-        product["release_date"] = (
-            parse_date(context)
-        )
-        product["msrp"] = (
-            parse_msrp(context)
-        )
-
-        node = link
-
+def union_discovery():
+    soup, _ = fetch(UNION)
+    found = {}
+    for a in soup.find_all('a', href=True):
+        href = a['href']
+        if '/products/boosters/' not in href and '/products/decks/' not in href: continue
+        name = clean(a.get_text(' ', strip=True))
+        if not name: continue
+        name = re.sub(r'^(BOOSTERS|PRECONSTRUCTED DECKS)\s+', '', name, flags=re.I)
+        url = urljoin(UNION, href)
+        k = 'Advanced Deck' if 'advanced deck' in name.lower() else ('Starter Deck' if '/decks/' in href else 'Booster Pack')
+        p = product(name, 'Union Arena', url, k)
+        p['source'] = 'Union Arena official catalogue'
+        txt = context(a)
+        p['release_date'] = date_from(txt)
+        m = re.search(r'MSRP\s*:?\s*\$?\s*(\d+(?:\.\d{1,2})?)', txt, re.I)
+        if m: p['msrp'] = '$' + m.group(1)
+        node = a
         for _ in range(4):
-            if node.parent is None:
-                break
-
+            if node.parent is None: break
             node = node.parent
-
-            for img in node.find_all("img"):
-                src = (
-                    img.get("src")
-                    or img.get("data-src")
-                )
-
-                image = valid_image(
-                    src, url
-                )
-
-                if (
-                    image
-                    and "/images/products/"
-                    in image.lower()
-                ):
-                    product["image"] = image
-                    product["image_source"] = (
-                        "Union Arena official catalogue"
-                    )
+            for img in node.find_all('img'):
+                u = image(img.get('src') or img.get('data-src'), UNION)
+                if u and '/images/products/' in u.lower():
+                    p['image'], p['image_source'] = u, 'Union Arena official catalogue'
                     break
-
-            if product["image"]:
-                break
-
-        products.append(product)
-
-    if not products:
-        raise RuntimeError(
-            "No official Union Arena products parsed"
-        )
-
-    return products
+            if p['image']: break
+        found[url] = p
+    if not found: raise RuntimeError('No Union Arena catalogue products parsed')
+    return list(found.values())
 
 
-def refresh_image(product):
-    url = product.get("url", "")
+def host(url):
+    return (urlparse(url).hostname or '').lower()
 
-    if not url.startswith(
-        ("https://", "http://")
-    ):
-        return ""
 
+def retailer_name(url):
+    domain = host(url)
+    for domain_suffix, name in (('bestbuy.com', 'Best Buy'), ('target.com', 'Target'), ('walmart.com', 'Walmart'), ('gamestop.com', 'GameStop'), ('pokemoncenter.com', 'Pokémon Center')):
+        if domain == domain_suffix or domain.endswith('.' + domain_suffix): return name
+    return ''
+
+
+def normalize_availability(value):
+    if not isinstance(value, str): return ''
+    token = value.rstrip('/').split('/')[-1].lower()
+    if token == 'instock': return 'In stock'
+    if token in ('outofstock', 'soldout'): return 'Out of stock'
+    if token == 'preorder': return 'Preorder'
+    if token == 'backorder': return 'Backorder'
+    return ''
+
+
+def offer_records(value):
+    if isinstance(value, list):
+        for v in value: yield from offer_records(v)
+    elif isinstance(value, dict):
+        yield value
+        for v in value.get('offers', []) if isinstance(value.get('offers'), list) else []:
+            yield from offer_records(v)
+
+
+def check_retailer(p):
+    url = p.get('url', '')
+    retailer = retailer_name(url)
+    if not retailer: return None
+    result = {'retailer': retailer, 'url': url, 'checked_at': now(), 'status': 'Unknown', 'method': 'JSON-LD Product offers', 'reason': ''}
     try:
-        soup = fetch(url)
-        return extract_image(soup, url)
-    except Exception as error:
-        print(
-            "Image lookup failed:",
-            url,
-            str(error)[:100],
-        )
-        return ""
-
-
-def merge_products(previous, discovered):
-    # URL-based identity avoids accidentally
-    # merging different sealed formats.
-    merged = {}
-
-    for item in previous:
-        url = item.get("url", "")
-
-        if not url:
-            continue
-
-        # Remove only the known, unverified
-        # hardcoded Valentine's Box fallback.
-        if (
-            item.get("sku") == "20038675"
-            and "valentine" in
-            item.get("name", "").lower()
-        ):
-            continue
-
-        key = (
-            item.get("game", ""),
-            url.rstrip("/"),
-        )
-
-        merged[key] = item.copy()
-
-    for item in discovered:
-        url = item.get("url", "")
-
-        if not url:
-            continue
-
-        key = (
-            item.get("game", ""),
-            url.rstrip("/"),
-        )
-
-        if key in merged:
-            old = merged[key]
-
-            for field, value in item.items():
-                if value and field not in (
-                    "stock_status",
-                    "first_seen",
-                    "last_seen",
-                ):
-                    old[field] = value
-
-            old["last_seen"] = timestamp()
+        soup, final_url = fetch(url)
+        if retailer_name(final_url) != retailer:
+            raise ValueError('Unexpected redirect outside retailer domain')
+        matches = []
+        for node in structured(soup):
+            if not is_product(node): continue
+            name = clean(node.get('name'))
+            # Require title evidence that this is the product, not a related item.
+            expected = clean(p.get('name', '')).casefold()
+            actual = name.casefold()
+            if not name or not expected or (expected not in actual and actual not in expected): continue
+            for offer in offer_records(node.get('offers')):
+                availability = normalize_availability(offer.get('availability'))
+                if availability: matches.append(availability)
+        distinct = set(matches)
+        if len(distinct) == 1:
+            result['status'] = distinct.pop()
+            result['reason'] = 'Explicit structured offer availability on matching product page'
+        elif len(distinct) > 1:
+            result['reason'] = 'Conflicting offer availability values'
         else:
-            fresh = item.copy()
-            fresh["first_seen"] = timestamp()
-            fresh["last_seen"] = timestamp()
-            merged[key] = fresh
-
-    products = list(merged.values())
-
-    # No inventory source is connected.
-    for product in products:
-        product["stock_status"] = "Not checked"
-
-    return products
+            result['reason'] = 'No matching structured Product offer availability'
+    except Exception as exc:
+        result['reason'] = str(exc)[:240]
+        result['check_failed'] = True
+    return result
 
 
-def make_releases(
-    press_releases,
-    products,
-    previous_releases,
-):
-    releases = {}
-    
-    for item in previous_releases:
-        if item.get("url"):
-            key = (
-                item.get("game", ""),
-                item["url"],
-            )
-            releases[key] = item.copy()
-
-    for item in press_releases:
-        key = (
-            item["game"],
-            item["url"],
-        )
-
-        if key in releases:
-            old = releases[key]
-
-            for field, value in item.items():
-                if value:
-                    old[field] = value
+def merge(old, fresh):
+    combined = {}
+    for p in old:
+        url = p.get('url', '')
+        if not url: continue
+        if p.get('sku') == '20038675' and 'valentine' in p.get('name', '').lower(): continue
+        combined[(p.get('game', ''), url.rstrip('/'))] = p.copy()
+    new_count = 0
+    for p in fresh:
+        key = (p.get('game', ''), p.get('url', '').rstrip('/'))
+        if not key[1]: continue
+        if key not in combined:
+            p['first_seen'] = now()
+            new_count += 1
+            combined[key] = p.copy()
         else:
-            releases[key] = item.copy()
-
-    for product in products:
-        date = product.get(
-            "release_date", ""
-        )
-
-        if not date:
-            continue
-
-        key = (
-            product.get("game", ""),
-            product.get("url", ""),
-        )
-
-        if key in releases:
-            continue
-
-        releases[key] = {
-            "name": product["name"],
-            "game": product["game"],
-            "type": product["type"],
-            "date": date,
-            "msrp": product.get(
-                "msrp", ""
-            ),
-            "url": product["url"],
-        }
-
-    return list(releases.values())
+            existing = combined[key]
+            for field, val in p.items():
+                if val and field not in ('stock_status', 'first_seen', 'last_seen'):
+                    existing[field] = val
+        combined[key]['last_seen'] = now()
+    return list(combined.values()), new_count
 
 
 def main():
-    print("Starting PokeStock V5")
+    old = json.loads(DATA.read_text(encoding='utf-8')) if DATA.exists() else {'products': [], 'releases': []}
+    old_products = old.get('products', [])
+    statuses, errors, discovered = {}, [], []
 
-    data = load_database()
-
-    previous = data.get(
-        "products", []
-    )
-
-    discovered = []
-    press_releases = []
-    errors = []
-    statuses = {}
-
-    def run_source(name, function):
-        checked = timestamp()
-
+    def source(name, fn):
         try:
-            result = function()
-
-            statuses[name] = {
-                "status": (
-                    "ok" if result
-                    else "no_results"
-                ),
-                "products_found": len(result),
-                "checked_at": checked,
-            }
-
-            print(
-                name,
-                "results:",
-                len(result),
-            )
-
-            return result
-
-        except Exception as error:
-            message = str(error)[:300]
-
-            statuses[name] = {
-                "status": "error",
-                "error": message,
-                "checked_at": checked,
-            }
-
-            errors.append(
-                name + ": " + message
-            )
-
-            print(
-                name,
-                "ERROR:",
-                message,
-            )
-
+            records = fn()
+            statuses[name] = {'status': 'ok' if records else 'no_results', 'products_found': len(records), 'checked_at': now()}
+            print(name, len(records))
+            return records
+        except Exception as exc:
+            msg = str(exc)[:250]
+            statuses[name] = {'status': 'error', 'error': msg, 'checked_at': now()}
+            errors.append(name + ': ' + msg)
+            print(name, 'ERROR', msg)
             return []
 
-    press_releases = run_source(
-        "Pokemon Press",
-        discover_pokemon_press,
-    )
+    press = source('Pokemon Press', press_discovery)
+    discovered.extend(source('Union Arena', union_discovery))
 
-    news = run_source(
-        "Pokemon News",
-        discover_pokemon_news,
-    )
+    # Scan a bounded number of official detail pages per run.
+    # Rotate through pages across runs, so later pages are not starved.
+    cursor = int(old.get('v6_press_cursor', 0))
+    if press:
+        count = min(12, len(press))
+        selected = [press[(cursor + i) % len(press)] for i in range(count)]
+        old['v6_press_cursor'] = (cursor + count) % len(press)
+        details_ok, details_fail = 0, 0
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            futures = {pool.submit(press_detail, r): r for r in selected}
+            for future in as_completed(futures):
+                try:
+                    discovered.extend(future.result())
+                    details_ok += 1
+                except Exception as exc:
+                    details_fail += 1
+                    errors.append('Press detail: ' + str(exc)[:150])
+        statuses['Pokemon Press detail pages'] = {'status': 'ok' if not details_fail else 'partial_error', 'pages_checked': count, 'pages_succeeded': details_ok, 'pages_failed': details_fail, 'checked_at': now()}
 
-    union = run_source(
-        "Union Arena",
-        discover_union_arena,
-    )
+    products, new_count = merge(old_products, discovered)
 
-    discovered.extend(union)
+    # Check only genuine, previously discovered retailer product URLs.
+    # No general search-page availability or invented per-store claims.
+    retailer_items = [p for p in products if retailer_name(p.get('url', ''))]
+    stock_cursor = int(old.get('v6_stock_cursor', 0))
+    selected_stock = [retailer_items[(stock_cursor + i) % len(retailer_items)] for i in range(min(10, len(retailer_items)))] if retailer_items else []
+    if retailer_items:
+        old['v6_stock_cursor'] = (stock_cursor + len(selected_stock)) % len(retailer_items)
+    checks = []
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = {pool.submit(check_retailer, p): p for p in selected_stock}
+        for future in as_completed(futures):
+            result = future.result()
+            if result: checks.append(result)
 
-    # News links are retained as discovery
-    # candidates, not as verified SKUs.
-    data["discovery_candidates"] = news
+    by_url = {c['url']: c for c in checks}
+    for p in products:
+        check = by_url.get(p.get('url', ''))
+        if check:
+            p['retailer_stock_check'] = check
+            p['stock_status'] = check['status']
+        else:
+            # Never carry forward an old in-stock assertion as current.
+            p['stock_status'] = 'Not checked'
 
-    # Preserve all previous verified and
-    # previously collected product records.
-    products = merge_products(
-        previous,
-        discovered,
-    )
+    releases = {(r.get('game', ''), r.get('url', '')): r.copy() for r in old.get('releases', []) if r.get('url')}
+    for r in press:
+        key = (r['game'], r['url'])
+        if key in releases:
+            releases[key].update({k: v for k, v in r.items() if v})
+        else:
+            releases[key] = r
+    for p in products:
+        if not p.get('release_date'): continue
+        key = (p.get('game', ''), p.get('url', ''))
+        if key not in releases:
+            releases[key] = {'name': p['name'], 'game': p['game'], 'type': p['type'], 'date': p['release_date'], 'msrp': p.get('msrp', ''), 'url': p['url']}
 
-    # Retry only a small number of missing
-    # images per run to avoid timeouts.
-    missing = [
-        product
-        for product in products
-        if not product.get("image")
-    ][:6]
-
-    with ThreadPoolExecutor(
-        max_workers=3
-    ) as executor:
-        images = list(
-            executor.map(
-                refresh_image,
-                missing,
-            )
-        )
-
-    for product, image in zip(
-        missing, images
-    ):
-        if image:
-            product["image"] = image
-            product["image_source"] = (
-                "Product detail page"
-            )
-
-    releases = make_releases(
-        press_releases,
-        products,
-        data.get("releases", []),
-    )
-
-    old_urls = {
-        p.get("url")
-        for p in previous
+    old['products'] = products
+    old['releases'] = list(releases.values())
+    old['last_updated'] = now()
+    old['check_interval_minutes'] = 5
+    old['catalogue_source_status'] = statuses
+    old['monitor_errors'] = errors
+    old['retailer_stock_checks'] = 'partial_product_page_checks' if retailer_items else 'not_connected'
+    old['v6_stock_checks'] = checks
+    old['discovery_summary'] = {
+        'new_products_this_run': new_count,
+        'total_products': len(products),
+        'pokemon_products': sum(p.get('game') == 'Pokémon' for p in products),
+        'union_arena_products': sum(p.get('game') == 'Union Arena' for p in products),
+        'products_with_images': sum(bool(p.get('image')) for p in products),
+        'retailer_urls_available': len(retailer_items),
+        'retailer_urls_checked_this_run': len(checks),
+        'confirmed_availability_signals': sum(c['status'] != 'Unknown' for c in checks),
+        'source_errors': len(errors),
+        'updated_at': now(),
     }
-
-    new_products = [
-        p for p in discovered
-        if p.get("url") not in old_urls
-    ]
-
-    data["products"] = products
-    data["releases"] = releases
-    data["last_updated"] = timestamp()
-    data["check_interval_minutes"] = 5
-    data["release_sources"] = list(
-        SOURCES.values()
-    )
-    data["catalogue_source_status"] = (
-        statuses
-    )
-    data["monitor_errors"] = errors
-    data["retailer_stock_checks"] = (
-        "not_connected"
-    )
-
-    data["discovery_summary"] = {
-        "new_products_this_run": len(
-            new_products
-        ),
-        "total_products": len(
-            products
-        ),
-        "pokemon_products": sum(
-            p.get("game") == "Pokémon"
-            for p in products
-        ),
-        "union_arena_products": sum(
-            p.get("game") == "Union Arena"
-            for p in products
-        ),
-        "products_with_images": sum(
-            bool(p.get("image"))
-            for p in products
-        ),
-        "source_errors": len(errors),
-        "updated_at": timestamp(),
-    }
-
-    DATA_FILE.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    DATA_FILE.write_text(
-        json.dumps(
-            data,
-            indent=2,
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
-    )
-
-    print("PokeStock V5 finished")
-    print(
-        json.dumps(
-            data["discovery_summary"],
-            indent=2,
-        )
-    )
-
+    DATA.parent.mkdir(parents=True, exist_ok=True)
+    DATA.write_text(json.dumps(old, indent=2, ensure_ascii=False), encoding='utf-8')
+    print('PokéStock V6 finished')
+    print(json.dumps(old['discovery_summary'], indent=2))
     if errors:
-        print("Source failures:")
-        for error in errors:
-            print("-", error)
+        print('Errors:', *errors, sep='\n- ')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
