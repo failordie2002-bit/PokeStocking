@@ -7,1615 +7,1138 @@
 <meta name="theme-color" content="#090d1b">
 <title>PokéStock | Collector Edition</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  color-scheme: dark;
-  --bg: #090d1b;
-  --panel: #141b2d;
-  --panel2: #1c253b;
-  --text: #f7f8ff;
-  --muted: #a1aec7;
-  --border: #34415e;
-  --gold: #ffc94b;
-  --red: #ff5773;
-  --blue: #42b9ff;
-  --cyan: #57eadb;
-  --purple: #bc80ff;
+:root{
+  --bg:#090d1b;
+  --panel:#151d30;
+  --panel2:#222d46;
+  --border:#3a4b6b;
+  --text:#f5f8ff;
+  --muted:#a9b8d2;
+  --gold:#ffc94b;
+  --blue:#48b9ff;
+  --green:#31e4a0;
+  --red:#ff647d;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
+*{box-sizing:border-box}
+body{
+  margin:0;
   background:
-    radial-gradient(ellipse at 90% 0%,#25205877,transparent 40%),
-    radial-gradient(ellipse at 0% 35%,#0a466055,transparent 45%),
+    radial-gradient(ellipse at 95% 0%,#29214a,transparent 40%),
+    radial-gradient(ellipse at 0% 50%,#0a3544,transparent 45%),
     var(--bg);
-  color: var(--text);
-  font: 15px 'Outfit',system-ui,sans-serif;
+  color:var(--text);
+  font:15px Outfit,system-ui,sans-serif;
 }
-
-button,
-input,
-select {
-  font: inherit;
+button,input,select{font:inherit}
+button,input,select{
+  background:#202d47;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:11px 13px;
 }
-
-button,
-select,
-input {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #202a42;
-  color: white;
-  padding: 12px 14px;
+button{cursor:pointer;font-weight:700}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,
+input:focus-visible,select:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
 }
-
-button {
-  cursor: pointer;
-  font-weight: 700;
+a{color:#96cfff}
+header{
+  position:sticky;top:0;z-index:1000;
+  background:#0d1424f4;
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  justify-content:space-between;
+  gap:12px;padding:12px 4%;
+  flex-wrap:wrap;
 }
-
-button:hover {
-  border-color: var(--blue);
+.brand{display:flex;align-items:center;gap:11px}
+.brand-icon{
+  display:grid;place-items:center;
+  height:46px;width:46px;
+  border-radius:14px;font-size:25px;
+  background:linear-gradient(135deg,#ffc94b,#fa5579,#815cf8);
 }
-
-button:focus-visible,
-a:focus-visible,
-select:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+.brand strong{
+  font-size:27px;font-weight:900;
+  letter-spacing:-1px;
 }
-
-a {
-  color: #93cfff;
+.brand strong span{color:var(--gold)}
+.brand small{
+  display:block;color:var(--muted);
+  font-size:10px;letter-spacing:2px;
 }
-
-a:hover {
-  color: white;
+nav{
+  display:flex;gap:5px;
+  overflow-x:auto;max-width:100%;
 }
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-  padding: 14px 4%;
-  background: #0d1323ed;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid #364362;
-  box-shadow: 0 8px 24px #0005;
+nav button{
+  background:transparent;border:0;
+  color:#b3c2dd;white-space:nowrap;
+  font-size:13px;
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
+nav button.active{
+  background:#2a4069;color:white;
+  border-radius:10px;
 }
-
-.brand-icon {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  font-size: 25px;
-  border-radius: 13px;
-  background: linear-gradient(135deg,#f6ae2d,#f6506a 50%,#8061ff);
-  box-shadow: 0 0 25px #fd70434f;
-}
-
-.brand-name {
-  font-weight: 900;
-  font-size: 27px;
-  letter-spacing: -1px;
-  line-height: 1;
-}
-
-.brand-name span {
-  color: var(--gold);
-}
-
-.brand-sub {
-  margin-top: 4px;
-  font-size: 10px;
-  letter-spacing: 2px;
-  font-weight: 800;
-  color: #9eacca;
-}
-
-nav {
-  display: flex;
-  gap: 7px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-nav::-webkit-scrollbar {
-  display: none;
-}
-
-nav button {
-  white-space: nowrap;
-  border-color: transparent;
-  background: transparent;
-  color: #b5c2dc;
-  font-size: 13px;
-}
-
-nav button.active {
-  border-color: #5576bc;
-  background: #273c64;
-  color: white;
-}
-
-main {
-  max-width: 1450px;
-  margin: auto;
-  padding: 25px 4%;
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  border-radius: 27px;
-  padding: clamp(25px,5vw,55px);
-  min-height: 300px;
+main{max-width:1450px;margin:auto;padding:20px 4%}
+.hero{
+  padding:clamp(24px,5vw,50px);
+  border-radius:25px;
   background:
-    radial-gradient(circle at 87% 20%,#ee5a7777,transparent 30%),
-    radial-gradient(circle at 65% 90%,#3f73e688,transparent 45%),
-    linear-gradient(120deg,#2a1745,#111f3b 65%,#103a43);
-  border: 1px solid #896fa8;
-  box-shadow: 0 18px 55px #0007;
-}
-
-.hero::before {
-  content: "✦";
-  position: absolute;
-  right: 6%;
-  top: -60px;
-  font-size: 300px;
-  color: #ffffff0b;
-  pointer-events: none;
-  transform: rotate(-15deg);
-}
-
-.eyebrow {
-  font-size: 12px;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.hero h1 {
-  position: relative;
-  max-width: 750px;
-  font-size: clamp(35px,5vw,64px);
-  line-height: 1.06;
-  letter-spacing: -1.8px;
-  margin: 15px 0;
-  font-weight: 900;
-}
-
-.hero h1 span {
-  background: linear-gradient(90deg,#ffc94b,#ff758f,#8bc7ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.hero p {
-  max-width: 650px;
-  line-height: 1.7;
-  color: #d4ddf2;
-  font-size: 16px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 25px 0 18px;
-}
-
-.cta {
-  padding: 14px 21px;
-  border-radius: 13px;
-  border: 1px solid #ffc94b;
-  background: linear-gradient(120deg,#ffd15a,#f59c43);
-  color: #191b2b;
-  font-weight: 900;
-  box-shadow: 0 7px 25px #f3ad3455;
-}
-
-.cta.secondary {
-  color: white;
-  background: #ffffff17;
-  border-color: #ffffff55;
-  box-shadow: none;
-}
-
-.pill {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 30px;
-  border: 1px solid #536586;
-  background: #2b3856;
-  color: #d8e4fc;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 14px;
-  margin: 25px 0 30px;
-}
-
-.stat {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(145deg,#222943,#11192c);
-  border: 1px solid #43516f;
-  border-radius: 20px;
-  padding: 23px;
-}
-
-.stat::before {
-  content: "";
-  position: absolute;
-  height: 3px;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: var(--stripe,#ffc94b);
-}
-
-.stat strong {
-  display: block;
-  font-size: clamp(27px,3vw,39px);
-  font-weight: 900;
-}
-
-.stat small {
-  display: block;
-  margin-top: 5px;
-  color: var(--muted);
-  font-weight: 700;
-  font-size: 12px;
-}
-
-.section-heading {
-  margin: 34px 0 17px;
-}
-
-.section-heading h2 {
-  font-size: 27px;
-  font-weight: 900;
-  margin: 0 0 7px;
-}
-
-.section-heading p {
-  margin: 0;
-  color: var(--muted);
-}
-
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 14px;
-  margin-bottom: 34px;
-}
-
-.game-card {
-  position: relative;
-  overflow: hidden;
-  min-height: 175px;
-  border-radius: 22px;
-  padding: 20px;
-  text-align: left;
-  border: 1px solid #ffffff50;
-  color: white;
-  transition: transform .2s,box-shadow .2s;
-}
-
-.game-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 35px #0008;
-}
-
-.game-card::after {
-  content: "✦";
-  position: absolute;
-  font-size: 170px;
-  right: -15px;
-  bottom: -55px;
-  color: #ffffff16;
-  pointer-events: none;
-}
-
-.game-card.pokemon {
-  background: linear-gradient(135deg,#a62b40,#f19c28);
-}
-
-.game-card.union {
-  background: linear-gradient(135deg,#1848a4,#2bbce5);
-}
-
-.game-card.gundam {
-  background: linear-gradient(135deg,#165f62,#13b69b);
-}
-
-.game-card.onepiece {
-  background: linear-gradient(135deg,#5936ac,#d34c91);
-}
-
-.game-symbol {
-  font-size: 36px;
-  margin-bottom: 18px;
-  display: block;
-}
-
-.game-name {
-  display: block;
-  font-size: 21px;
-  font-weight: 900;
-}
-
-.game-caption {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: #fffdf0;
-}
-
-.tab {
-  display: none;
-}
-
-.tab.active {
-  display: block;
-}
-
-.panel {
-  padding: clamp(18px,3vw,30px);
-  background: #151c2ddc;
-  border: 1px solid #3b4968;
-  border-radius: 23px;
-  box-shadow: 0 15px 40px #0003;
-}
-
-.panel h2 {
-  font-size: 27px;
-  margin: 0 0 10px;
-  font-weight: 900;
-}
-
-.muted {
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 22px 0;
-}
-
-.controls input {
-  flex: 1;
-  min-width: 180px;
-}
-
-.controls select {
-  min-width: 125px;
-}
-
-.primary {
-  background: linear-gradient(120deg,#2773d9,#48b5ee);
-  border-color: #53bbfa;
-  color: white;
-}
-
-#map {
-  height: 480px;
-  border-radius: 18px;
-  background: #152235;
-  border: 1px solid #516385;
-  overflow: hidden;
-  z-index: 1;
-}
-
-#mapInfo,
-#locationInfo {
-  color: #b6c5df;
-  margin: 12px 0;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.tile {
-  position: relative;
-  background: linear-gradient(155deg,#25304b,#161e33 80%);
-  border: 1px solid #42526f;
-  border-radius: 19px;
-  padding: 15px;
-  transition: transform .2s,border-color .2s,box-shadow .2s;
-}
-
-.tile:hover {
-  transform: translateY(-4px);
-  border-color: #7ebcff;
-  box-shadow: 0 15px 30px #0005;
-}
-
-.tile h3 {
-  font-size: 16px;
-  line-height: 1.4;
-  margin: 13px 0;
-  overflow-wrap: anywhere;
-}
-
-.tile p {
-  color: #c3cee2;
-  line-height: 1.55;
-}
-
-.tile[data-game="Pokémon"] {
-  border-top: 3px solid var(--gold);
-}
-
-.tile[data-game="Union Arena"] {
-  border-top: 3px solid var(--blue);
-}
-
-.tile[data-game="Gundam"] {
-  border-top: 3px solid var(--cyan);
-}
-
-.tile[data-game="One Piece"] {
-  border-top: 3px solid var(--purple);
-}
-
-.product-photo {
-  height: 205px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 14px;
-  background:
-    radial-gradient(circle,#34466b,#111a2d 72%);
-  border: 1px solid #ffffff18;
-  padding: 12px;
-}
-
-.product-photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 9px 10px #0006);
-}
-
-.placeholder {
-  color: #a7b5d1;
-  text-align: center;
-  font-weight: 700;
-  font-size: 13px;
-}
-
-.action {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 11px 14px;
-  background: linear-gradient(120deg,#286fcb,#5c66dc);
-  color: white;
-  border-radius: 11px;
-  text-align: center;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.action:hover {
-  color: white;
-  filter: brightness(1.18);
-}
-
-.store-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
-  gap: 13px;
-  margin-top: 18px;
-}
-
-.store-list .tile {
-  border-left: 3px solid #55c9fb;
-}
-
-.store-list .action {
-  display: block;
-}
-
-.section-label {
-  font-size: 13px;
-  letter-spacing: 1px;
-  font-weight: 900;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-.empty {
-  padding: 35px;
-  text-align: center;
-  color: var(--muted);
-  background: #202a4055;
-  border: 1px dashed #586887;
-  border-radius: 16px;
-}
-
-.leaflet-popup-content {
-  color: #172238;
-}
-
-.leaflet-popup-content a {
-  color: #1757a0;
-}
-
-.leaflet-popup-content .action {
-  color: white;
-}
-
-footer {
-  margin-top: 50px;
-  text-align: center;
-  padding: 30px 4%;
-  color: #a9b7d0;
-  border-top: 1px solid #35415e;
-  font-size: 13px;
-}
-
-@media(max-width:950px) {
-  header {
-    gap: 10px;
-  }
-
-  nav {
-    width: 100%;
-  }
-
-  .game-grid {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-
-  .stats {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-}
-
-@media(max-width:600px) {
-  header {
-    padding: 12px 15px;
-  }
-
-  main {
-    padding: 15px;
-  }
-
-  .hero {
-    border-radius: 20px;
-    min-height: 0;
-  }
-
-  .hero h1 {
-    font-size: 38px;
-  }
-
-  .hero p {
-    font-size: 14px;
-  }
-
-  .brand-name {
-    font-size: 24px;
-  }
-
-  nav button {
-    padding: 10px 12px;
-    font-size: 12px;
-  }
-
-  .game-grid {
-    gap: 10px;
-  }
-
-  .game-card {
-    min-height: 150px;
-    padding: 15px;
-  }
-
-  .game-name {
-    font-size: 17px;
-  }
-
-  .stat {
-    padding: 16px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 10px;
-  }
-
-  .tile {
-    padding: 11px;
-  }
-
-  .product-photo {
-    height: 155px;
-    padding: 7px;
-  }
-
-  #map {
-    height: 360px;
-  }
-
-  .controls input {
-    min-width: 100%;
-  }
-}
-
-@media(max-width:380px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+    radial-gradient(circle at 90% 12%,#ef537b66,transparent 30%),
+    linear-gradient(120deg,#30204e,#122640,#0b3b41);
+  border:1px solid #786798;
+}
+.eyebrow{
+  color:var(--gold);font-weight:900;
+  letter-spacing:2px;font-size:12px;
+}
+.hero h1{
+  font-size:clamp(35px,5vw,62px);
+  letter-spacing:-2px;line-height:1.1;
+  max-width:760px;margin:16px 0;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,#ffcf52,#fa7797,#89c5ff);
+  background-clip:text;color:transparent;
+}
+.hero p{max-width:650px;color:#d0dcf1;line-height:1.7}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.cta{
+  background:linear-gradient(110deg,#ffcc52,#f7a64a);
+  border:0;color:#1a1c2b;font-weight:900;
+}
+.cta.secondary{
+  color:white;background:#ffffff25;
+  border:1px solid #ffffff65;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;margin:22px 0;
+}
+.stat{
+  background:linear-gradient(145deg,#222e48,#121a2c);
+  border:1px solid var(--border);
+  border-top:3px solid var(--stripe,var(--blue));
+  border-radius:18px;padding:20px;
+}
+.stat strong{display:block;font-size:34px;font-weight:900}
+.stat small{color:var(--muted);font-weight:700}
+.tabs>section{display:none}
+.tabs>section.active{display:block}
+.panel{
+  background:#151d30ed;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:clamp(15px,3vw,28px);
+  margin-top:20px;
+}
+.panel h2{font-size:26px;margin:5px 0 12px}
+.section-label{
+  color:var(--gold);font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:1.5px;font-size:12px;
+}
+.muted{color:var(--muted);line-height:1.6}
+.controls{
+  display:flex;flex-wrap:wrap;
+  gap:10px;margin:18px 0;
+}
+.controls input{flex:1;min-width:160px}
+.controls select{min-width:115px}
+.primary{
+  background:linear-gradient(100deg,#246bd2,#43a9e7);
+  border-color:#61c2ff;
+}
+#map{
+  height:480px;border-radius:17px;
+  overflow:hidden;border:1px solid #526381;
+  background:#16253b;z-index:1;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(225px,1fr));
+  gap:14px;margin-top:17px;
+}
+.tile{
+  background:linear-gradient(150deg,#25324e,#161e32);
+  border:1px solid #425370;
+  border-radius:17px;
+  padding:15px;overflow:hidden;
+}
+.tile h3{font-size:16px;line-height:1.4;overflow-wrap:anywhere}
+.tile p{color:#c1cee4;line-height:1.5}
+.photo{
+  height:185px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,#344666,#121b2d);
+  overflow:hidden;border:1px solid #ffffff20;
+  color:#a7b9d4;text-align:center;padding:8px;
+}
+.photo img{
+  width:100%;height:100%;
+  object-fit:contain;
+}
+.pill{
+  display:inline-block;
+  border:1px solid #536887;
+  background:#2b3b57;
+  border-radius:30px;
+  padding:5px 9px;
+  font-size:11px;font-weight:800;
+}
+.pill.in{color:#89ffcc;border-color:#278a65}
+.pill.out{color:#ff9eaf;border-color:#9b4357}
+.pill.unknown{color:#cad5e8}
+.action{
+  display:inline-block;
+  background:linear-gradient(110deg,#2876ce,#605fd4);
+  border-radius:10px;
+  padding:10px 12px;color:white;
+  text-decoration:none;font-weight:800;
+  margin:5px 5px 0 0;
+}
+.empty{
+  padding:32px;text-align:center;
+  border:1px dashed #546787;
+  border-radius:16px;color:var(--muted);
+}
+.note{
+  border-left:3px solid var(--gold);
+  background:#29334a;
+  border-radius:9px;
+  padding:12px 15px;
+  margin:12px 0;color:#e0e7f5;
+}
+.store-pin{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  border:3px solid #71b9ff!important;
+  background:white!important;
+  box-shadow:0 3px 11px #0008!important;
+  overflow:hidden!important;
+}
+.store-pin.stock{border-color:var(--green)!important}
+.store-pin img{
+  width:75%;height:75%;
+  object-fit:contain;
+  border-radius:50%;
+  background:white;
+}
+.store-pin span{
+  color:#17253a;
+  font-size:11px;
+  font-weight:900;
+  text-align:center;
+}
+.leaflet-popup-content{color:#182239}
+.leaflet-popup-content a{color:#1b60b7}
+.leaflet-popup-content .action{color:white}
+.game-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;margin:20px 0;
+}
+.game-card{
+  border-radius:19px;
+  min-height:130px;
+  text-align:left;
+  color:white;
+  background:linear-gradient(135deg,#284b91,#7352b6);
+  border:1px solid #ffffff55;
+  font-size:17px;font-weight:900;
+}
+.game-card:nth-child(4n+1){
+  background:linear-gradient(135deg,#b33d4d,#ef9b31)
+}
+.game-card:nth-child(4n+2){
+  background:linear-gradient(135deg,#1849a2,#24a8d0)
+}
+.game-card:nth-child(4n+3){
+  background:linear-gradient(135deg,#17616a,#1aa68c)
+}
+.game-card span{display:block;font-size:28px;margin-bottom:8px}
+footer{
+  text-align:center;color:var(--muted);
+  padding:30px 4%;border-top:1px solid var(--border);
+  margin-top:40px;
+}
+@media(max-width:900px){
+  .stats,.game-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  header{padding:12px}
+  nav{width:100%}
+  main{padding:13px}
+  .stats{gap:8px}
+  .stat{padding:13px}
+  .stat strong{font-size:26px}
+  .stat small{font-size:11px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .tile{padding:10px}
+  .photo{height:145px}
+  #map{height:370px}
+  .controls input{min-width:100%}
+  .hero h1{letter-spacing:-1px}
+}
+@media(max-width:380px){
+  .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
 <header>
   <div class="brand">
     <div class="brand-icon">✦</div>
     <div>
-      <div class="brand-name">
-        Poké<span>Stock</span>
-      </div>
-      <div class="brand-sub">COLLECTOR EDITION</div>
+      <strong>Poké<span>Stock</span></strong>
+      <small>COLLECTOR EDITION</small>
     </div>
   </div>
-
   <nav>
-    <button data-tab="maptab" class="active">
-      📍 Stores
-    </button>
+    <button class="active" data-tab="stores">📍 Stores</button>
+    <button data-tab="online">🛒 Online Stock</button>
     <button data-tab="products">📦 Products</button>
     <button data-tab="releases">✨ Releases</button>
     <button data-tab="shipments">🚚 Shipments</button>
-    <button data-tab="health">📡 Sources</button>
+    <button data-tab="sources">📡 Sources</button>
   </nav>
 </header>
 
 <main>
-
-<section class="hero">
-  <div class="eyebrow">
-    ✦ Your TCG command center
+  <div class="hero">
+    <div class="eyebrow">✦ YOUR TCG COMMAND CENTER</div>
+    <h1>Find your next <span>legendary pull.</span></h1>
+    <p>
+      Discover non-sports trading cards, explore retailers
+      across the United States, check evidence-backed
+      online availability, and track new releases.
+    </p>
+    <div class="hero-actions">
+      <button class="cta" data-go="online">Find Online Stock</button>
+      <button class="cta secondary" data-go="stores">Explore Stores</button>
+    </div>
+    <span class="pill" id="updated">Loading data...</span>
   </div>
 
-  <h1>
-    Find your next
-    <span>legendary pull.</span>
-  </h1>
-
-  <p>
-    Discover trading card products, explore nationwide
-    retailers, track new releases, and find verified
-    inventory evidence.
-  </p>
-
-  <div class="hero-actions">
-    <button class="cta" data-go="products">
-      Explore Products
-    </button>
-    <button class="cta secondary" data-go="maptab">
-      Find Card Stores
-    </button>
+  <div class="stats">
+    <div class="stat" style="--stripe:#ffc94b">
+      <strong id="productCount">—</strong>
+      <small>Catalogue Products</small>
+    </div>
+    <div class="stat" style="--stripe:#48b9ff">
+      <strong id="storeCount">—</strong>
+      <small>Store Candidates</small>
+    </div>
+    <div class="stat" style="--stripe:#31e4a0">
+      <strong id="onlineCount">—</strong>
+      <small>Fresh Online Offers</small>
+    </div>
+    <div class="stat" style="--stripe:#bb84ff">
+      <strong id="localCount">—</strong>
+      <small>Verified Local Stock</small>
+    </div>
   </div>
 
-  <span id="updated" class="pill">
-    Loading live catalogue...
-  </span>
-</section>
-
-<div class="stats">
-  <div class="stat" style="--stripe:#ffc94b">
-    <strong id="productCount">—</strong>
-    <small>Catalogue Products</small>
-  </div>
-
-  <div class="stat" style="--stripe:#42b9ff">
-    <strong id="storeCount">—</strong>
-    <small>Discovered Stores</small>
-  </div>
-
-  <div class="stat" style="--stripe:#57eadb">
-    <strong id="stockCount">—</strong>
-    <small>Verified Stock Records</small>
-  </div>
-
-  <div class="stat" style="--stripe:#bc80ff">
-    <strong id="shipmentCount">—</strong>
-    <small>Shipment Events</small>
-  </div>
-</div>
-
-<div class="section-heading">
   <h2>Explore the TCG Universe</h2>
-  <p>
-    Choose your game to browse matching catalogue items.
+  <p class="muted">
+    Browse supported card games and collectible card series.
+    Sports cards are excluded.
   </p>
-</div>
+  <div class="game-grid" id="gameCards"></div>
 
-<div class="game-grid">
-  <button class="game-card pokemon" data-game-pick="Pokémon">
-    <span class="game-symbol">⚡</span>
-    <span class="game-name">Pokémon</span>
-    <span class="game-caption">Catch the next drop</span>
-  </button>
+  <div class="tabs">
 
-  <button class="game-card union" data-game-pick="Union Arena">
-    <span class="game-symbol">⚔️</span>
-    <span class="game-name">Union Arena</span>
-    <span class="game-caption">Anime legends await</span>
-  </button>
+    <section id="stores" class="panel active">
+      <div class="section-label">Nationwide Store Radar</div>
+      <h2>Find Card Stores Near You</h2>
+      <p class="muted">
+        Major chains and independent shop candidates.
+        A map pin does not confirm that a store sells TCGs
+        or currently has any cards in stock.
+      </p>
+      <div class="controls">
+        <button class="primary" id="locate">📍 My GPS</button>
+        <input id="zip" placeholder="ZIP code" maxlength="5" inputmode="numeric">
+        <button id="findZip">Search ZIP</button>
+        <select id="radius">
+          <option value="10">10 miles</option>
+          <option value="25">25 miles</option>
+          <option value="50" selected>50 miles</option>
+          <option value="100">100 miles</option>
+          <option value="250">250 miles</option>
+          <option value="10000">Nationwide</option>
+        </select>
+        <select id="mapGame">
+          <option value="">All Games</option>
+        </select>
+      </div>
+      <p id="locationInfo" class="muted">
+        Use GPS or ZIP to show nearby stores, or navigate the map.
+      </p>
+      <div id="map"></div>
+      <p id="mapInfo" class="muted"></p>
+      <h2>Nearby Store Results</h2>
+      <div class="grid" id="storeList"></div>
+    </section>
 
-  <button class="game-card gundam" data-game-pick="Gundam">
-    <span class="game-symbol">🤖</span>
-    <span class="game-name">Gundam</span>
-    <span class="game-caption">Launch your collection</span>
-  </button>
+    <section id="online" class="panel">
+      <div class="section-label">Evidence-backed Availability</div>
+      <h2>Online TCG Stock</h2>
+      <p class="muted">
+        Listings from participating retailer websites.
+        Online stock does not establish in-store availability.
+        Prices and availability can change after the last check.
+      </p>
+      <div class="controls">
+        <input id="onlineSearch" placeholder="Search products or sets">
+        <select id="onlineGame">
+          <option value="">All Games</option>
+        </select>
+        <select id="onlineRetailer">
+          <option value="">All Retailers</option>
+        </select>
+        <select id="onlineAvailability">
+          <option value="">All Availability</option>
+          <option value="In stock">In Stock</option>
+          <option value="Out of stock">Out of Stock</option>
+          <option value="Preorder">Preorder</option>
+          <option value="Backorder">Backorder</option>
+        </select>
+      </div>
+      <p class="muted" id="onlineInfo"></p>
+      <div class="grid" id="onlineGrid"></div>
+    </section>
 
-  <button class="game-card onepiece" data-game-pick="One Piece">
-    <span class="game-symbol">🏴‍☠️</span>
-    <span class="game-name">One Piece</span>
-    <span class="game-caption">Hunt legendary treasure</span>
-  </button>
-</div>
+    <section id="products" class="panel">
+      <div class="section-label">Collector Catalogue</div>
+      <h2>Trading Card Products</h2>
+      <p class="muted">
+        Official catalogue listings and discovered products.
+        Some photographs are unverified image candidates.
+        A catalogue listing is not a stock confirmation.
+      </p>
+      <div class="controls">
+        <input id="productSearch" placeholder="Search products, releases, sets">
+        <select id="productGame">
+          <option value="">All Games</option>
+        </select>
+        <select id="productFormat">
+          <option value="">All Formats</option>
+          <option value="Booster bundle display case">Bundle Display Cases</option>
+          <option value="Factory-sealed case">Factory-Sealed Cases</option>
+          <option value="Booster bundle">Booster Bundles</option>
+          <option value="Booster box">Booster Boxes</option>
+          <option value="Booster pack">Booster Packs</option>
+          <option value="Elite Trainer Box">ETBs</option>
+          <option value="Starter deck">Starter Decks</option>
+          <option value="Collection">Collections</option>
+          <option value="Tin">Tins</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <p id="productInfo" class="muted"></p>
+      <div class="grid" id="productGrid"></div>
+    </section>
 
-<section id="maptab" class="tab active">
-  <div class="panel">
-    <div class="section-label">Nationwide Radar</div>
-    <h2>Find Card Stores Near You</h2>
+    <section id="releases" class="panel">
+      <div class="section-label">Upcoming and Recent</div>
+      <h2>TCG Release Tracker</h2>
+      <p class="muted">Dates appear only when present in source records.</p>
+      <div class="grid" id="releaseGrid"></div>
+    </section>
 
-    <p class="muted">
-      Explore independent card shops and major retailers.
-      A listed location does not guarantee TCG availability
-      or current inventory.
-    </p>
+    <section id="shipments" class="panel">
+      <div class="section-label">Inventory Intelligence</div>
+      <h2>Shipment Catcher</h2>
+      <p class="muted">
+        Confirmed delivery events and evidence-based forecasts
+        appear here. Unknown shipments are never treated as confirmed.
+      </p>
+      <div id="shipmentList"></div>
+    </section>
 
-    <div class="controls">
-      <button id="locate" class="primary">
-        📍 Use My GPS
-      </button>
+    <section id="sources" class="panel">
+      <div class="section-label">Data Transparency</div>
+      <h2>Source Monitoring</h2>
+      <div id="sourceList"></div>
+    </section>
 
-      <input id="zip"
-        placeholder="Enter ZIP code"
-        inputmode="numeric"
-        maxlength="5">
-
-      <button id="findZip">Search ZIP</button>
-
-      <select id="radius">
-        <option value="10">10 miles</option>
-        <option value="25">25 miles</option>
-        <option value="50" selected>50 miles</option>
-        <option value="100">100 miles</option>
-        <option value="250">250 miles</option>
-        <option value="10000">Nationwide</option>
-      </select>
-
-      <select id="mapGame">
-        <option value="">All Games</option>
-        <option>Pokémon</option>
-        <option>Union Arena</option>
-        <option>Gundam</option>
-        <option>One Piece</option>
-      </select>
-    </div>
-
-    <p id="locationInfo">
-      GPS is optional. Use your location or ZIP code
-      to find the closest mapped stores.
-    </p>
-
-    <div id="map"></div>
-    <p id="mapInfo"></p>
-
-    <h2>Nearby Store Results</h2>
-    <div id="storeList" class="store-list"></div>
   </div>
-</section>
-
-<section id="products" class="tab">
-  <div class="panel">
-    <div class="section-label">Collector Catalogue</div>
-    <h2>Sealed TCG Products</h2>
-
-    <p class="muted">
-      Explore product listings across all four games.
-      Images are sourced from catalogue records;
-      packaging-image verification is still being improved.
-    </p>
-
-    <div class="controls">
-      <input id="search"
-        placeholder="Search products, sets, retailers...">
-
-      <select id="game">
-        <option value="">All Games</option>
-        <option>Pokémon</option>
-        <option>Union Arena</option>
-        <option>Gundam</option>
-        <option>One Piece</option>
-      </select>
-
-      <select id="format">
-        <option value="">All Formats</option>
-        <option value="booster box">Booster Boxes</option>
-        <option value="booster bundle">Booster Bundles</option>
-        <option value="booster pack">Single Packs</option>
-        <option value="elite trainer">ETBs</option>
-        <option value="collection">Collections</option>
-        <option value="tin">Tins</option>
-        <option value="deck">Decks</option>
-        <option value="other">Other Products</option>
-      </select>
-    </div>
-
-    <p id="productInfo" class="muted"></p>
-    <div id="productGrid" class="grid"></div>
-  </div>
-</section>
-
-<section id="releases" class="tab">
-  <div class="panel">
-    <div class="section-label">Upcoming & Recent</div>
-    <h2>TCG Release Tracker</h2>
-    <p class="muted">
-      Dates are shown only when they exist in
-      the source catalogue. Missing dates are labeled.
-    </p>
-    <div id="releaseList" class="grid"></div>
-  </div>
-</section>
-
-<section id="shipments" class="tab">
-  <div class="panel">
-    <div class="section-label">Inventory Intelligence</div>
-    <h2>Shipment Catcher</h2>
-    <p class="muted">
-      Confirmed shipment events and evidence-based
-      forecasts. Shipment information does not guarantee
-      products are currently on shelves.
-    </p>
-    <div id="shipmentList"></div>
-  </div>
-</section>
-
-<section id="health" class="tab">
-  <div class="panel">
-    <div class="section-label">Data Transparency</div>
-    <h2>Source Monitoring</h2>
-    <div id="healthList"></div>
-  </div>
-</section>
-
 </main>
 
 <footer>
   ✦ PokéStock Collector Edition
   <p>
-    Pokémon · Union Arena · Gundam · One Piece
+    Independent nationwide TCG discovery project.
+    Always verify current stock before traveling.
   </p>
-  Inventory status must be verified before traveling.
-  PokéStock is an independent collector discovery project.
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
 "use strict";
 
 const $ = id => document.getElementById(id);
 
-let db = {
-  products: [],
-  releases: [],
-  store_inventory: []
-};
-
+let database = {products:[],releases:[],store_inventory:[]};
 let stores = [];
-let shipments = {
-  events: [],
-  forecasts: []
-};
-
-let map;
-let layer;
-let userLayer;
+let offers = [];
+let shipments = {events:[],forecasts:[]};
+let stockReport = {};
+let map, markerLayer, userLayer;
 let userPoint = null;
 
-const esc = value =>
-  String(value ?? "").replace(
-    /[&<>"']/g,
-    char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    }[char])
-  );
+const escapeHTML = value => String(value ?? "").replace(
+  /[&<>"']/g,
+  c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c])
+);
 
 function safeURL(value) {
   try {
-    const url = new URL(value);
-    return url.protocol === "https:"
-      ? url.href
-      : "";
+    const u = new URL(value);
+    return u.protocol === "https:" ? u.href : "";
   } catch {
     return "";
   }
 }
 
-function link(url, text) {
+function hyperlink(url,label,cls="action") {
   const href = safeURL(url);
   return href
-    ? `<a href="${esc(href)}"
-         target="_blank"
-         rel="noopener noreferrer">${esc(text)}</a>`
+    ? `<a class="${cls}" href="${escapeHTML(href)}"
+        target="_blank" rel="noopener noreferrer">
+        ${escapeHTML(label)}</a>`
     : "";
 }
 
-function validCoords(store) {
-  const lat = Number(store.lat);
-  const lon = Number(store.lon);
-
-  return (
-    store.lat != null &&
-    store.lon != null &&
-    Number.isFinite(lat) &&
-    Number.isFinite(lon) &&
-    Math.abs(lat) <= 90 &&
-    Math.abs(lon) <= 180
-  );
-}
-
-function directionsURL(store) {
-  if (!validCoords(store)) return "";
-
-  const destination =
-    Number(store.lat) + "," + Number(store.lon);
-
-  return (
-    "https://www.google.com/maps/dir/?api=1" +
-    "&destination=" +
-    encodeURIComponent(destination) +
-    "&travelmode=driving"
-  );
-}
-
-function navigationLink(store) {
-  const url = directionsURL(store);
-
-  return url
-    ? `<a class="action"
-         href="${esc(url)}"
-         target="_blank"
-         rel="noopener noreferrer">
-         🧭 Navigate to Store
-       </a>`
-    : "";
-}
-
-function miles(a,b,c,d) {
-  const rad = Math.PI / 180;
-  const x = (c-a)*rad;
-  const y = (d-b)*rad;
-
-  const z =
-    Math.sin(x/2)**2 +
-    Math.cos(a*rad) *
-    Math.cos(c*rad) *
-    Math.sin(y/2)**2;
-
-  return 3958.8 * 2 *
-    Math.asin(Math.sqrt(z));
-}
-
-function distance(store) {
-  if (!userPoint || !validCoords(store)) {
-    return null;
-  }
-
-  return miles(
-    userPoint[0],
-    userPoint[1],
-    Number(store.lat),
-    Number(store.lon)
-  );
-}
-
-function verifiedRecord(record) {
-  const timestamp = Date.parse(
-    record.verified_at || ""
-  );
-
-  return (
-    record.status === "In stock" &&
-    Number.isFinite(timestamp) &&
-    Date.now() >= timestamp &&
-    Date.now()-timestamp <= 21600000 &&
-    Boolean(safeURL(record.source_url))
-  );
-}
-
-function verifiedFor(store) {
-  return (db.store_inventory || []).filter(
-    record =>
-      String(record.store_id) ===
-        String(store.id) &&
-      verifiedRecord(record)
-  );
-}
-
-function switchTab(id) {
-  document.querySelectorAll(".tab").forEach(
-    tab => tab.classList.toggle(
-      "active",
-      tab.id === id
-    )
-  );
-
-  document.querySelectorAll("nav [data-tab]").forEach(
-    button => button.classList.toggle(
-      "active",
-      button.dataset.tab === id
-    )
-  );
-
-  if (id === "maptab" && map) {
-    setTimeout(
-      () => map.invalidateSize(),
-      100
-    );
-  }
-}
-
-document.querySelectorAll("[data-tab]").forEach(
-  button => {
-    button.onclick = () =>
-      switchTab(button.dataset.tab);
-  }
-);
-
-document.querySelectorAll("[data-go]").forEach(
-  button => {
-    button.onclick = () => {
-      switchTab(button.dataset.go);
-      document.querySelector("main").scrollIntoView();
-    };
-  }
-);
-
-document.querySelectorAll("[data-game-pick]").forEach(
-  button => {
-    button.onclick = () => {
-      $("game").value = button.dataset.gamePick;
-      switchTab("products");
-      renderProducts();
-      document.querySelector("main").scrollIntoView();
-    };
-  }
-);
-
-function renderStores() {
-  if (!layer) return;
-
-  layer.clearLayers();
-
-  const radius = Number($("radius").value);
-  const game = $("mapGame").value;
-  let visible = [];
-
-  for (const store of stores) {
-    if (!validCoords(store)) continue;
-
-    const dist = distance(store);
-
-    if (dist !== null && dist > radius) {
-      continue;
-    }
-
-    const confirmed = verifiedFor(store);
-
-    const matching = confirmed.filter(
-      record => !game || record.game === game
-    );
-
-    const supported = Array.isArray(store.games)
-      ? store.games
-      : [];
-
-    if (
-      game &&
-      supported.length &&
-      !supported.includes(game) &&
-      !matching.length
-    ) {
-      continue;
-    }
-
-    visible.push({
-      store,
-      dist,
-      matching
-    });
-  }
-
-  visible.sort((a,b) => {
-    if (a.dist === null && b.dist === null) {
-      return String(a.store.name).localeCompare(
-        String(b.store.name)
-      );
-    }
-
-    if (a.dist === null) return 1;
-    if (b.dist === null) return -1;
-
-    return a.dist - b.dist;
-  });
-
-  for (const entry of visible) {
-    const s = entry.store;
-    const hasStock = entry.matching.length > 0;
-
-    const marker = L.circleMarker(
-      [Number(s.lat),Number(s.lon)],
-      {
-        radius: hasStock ? 9 : 6,
-        color: hasStock ? "#13845e" : "#667a9e",
-        fillColor: hasStock ? "#24dc91" : "#73b9ff",
-        fillOpacity: .9,
-        weight: 2
-      }
-    );
-
-    const distanceText =
-      entry.dist === null
-        ? ""
-        : `<p>${entry.dist.toFixed(1)} miles away
-           (straight-line distance)</p>`;
-
-    const stockText = hasStock
-      ? `${entry.matching.length}
-         recently verified stock record(s)`
-      : "In-store inventory unknown";
-
-    const evidence = entry.matching
-      .slice(0,5)
-      .map(record =>
-        `<p>${esc(record.product_name)}
-         ${link(record.source_url,"Evidence")}</p>`
-      ).join("");
-
-    marker.bindPopup(
-      `<strong>${esc(s.name)}</strong>` +
-      `<p>${esc(
-        [s.city,s.state]
-          .filter(Boolean)
-          .join(", ")
-      )}</p>` +
-      distanceText +
-      `<p>${stockText}</p>` +
-      evidence +
-      `<p>${link(s.url,"Store website")}</p>` +
-      navigationLink(s)
-    ).addTo(layer);
-  }
-
-  $("mapInfo").textContent =
-    visible.length +
-    " mapped stores shown. " +
-    stores.length +
-    " total directory records. " +
-    "Distances are straight-line estimates.";
-
-  $("storeList").innerHTML = visible
-    .slice(0,100)
-    .map(entry => {
-      const s = entry.store;
-
-      const dist = entry.dist === null
-        ? "Distance unavailable"
-        : entry.dist.toFixed(1) +
-          " miles (straight-line)";
-
-      const stock = entry.matching.length
-        ? entry.matching.length +
-          " verified stock record(s)"
-        : "Inventory not verified";
-
-      const kind = s.retailer_chain
-        ? s.retailer_chain + " · Major retailer"
-        : s.retailer_type === "chain"
-          ? "Major retailer"
-          : "Card / hobby store candidate";
-
-      return (
-        `<article class="tile">` +
-        `<span class="pill">${esc(kind)}</span>` +
-        `<h3>${esc(s.name)}</h3>` +
-        `<p>${esc(
-          [s.city,s.state]
-            .filter(Boolean)
-            .join(", ")
-        )}</p>` +
-        `<p>📍 ${esc(dist)}</p>` +
-        `<span class="pill">${esc(stock)}</span>` +
-        `<p>${link(s.url,"Store website")}</p>` +
-        navigationLink(s) +
-        `</article>`
-      );
-    }).join("") ||
-    `<p class="empty">
-      No mapped stores match these filters.
-    </p>`;
-}
-
-function showUserLocation(lat,lon) {
-  userPoint = [lat,lon];
-
-  if (userLayer) {
-    map.removeLayer(userLayer);
-  }
-
-  userLayer = L.circleMarker(
-    userPoint,
-    {
-      radius: 9,
-      color: "#ffffff",
-      fillColor: "#ffb63d",
-      fillOpacity: 1,
-      weight: 3
-    }
-  ).addTo(map);
-
-  userLayer.bindPopup("Your selected location");
-
-  map.setView(userPoint,11);
-
-  $("locationInfo").textContent =
-    "Location selected. Store distances " +
-    "are straight-line estimates. " +
-    "Navigation opens Google Maps.";
-
-  renderStores();
-}
-
-$("locate").onclick = () => {
-  if (!navigator.geolocation) {
-    $("locationInfo").textContent =
-      "GPS is unavailable in this browser.";
-    return;
-  }
-
-  $("locationInfo").textContent =
-    "Requesting your location...";
-
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      showUserLocation(
-        position.coords.latitude,
-        position.coords.longitude
-      );
-    },
-    error => {
-      $("locationInfo").textContent =
-        "Location unavailable: " +
-        error.message +
-        ". Try ZIP search.";
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 15000,
-      maximumAge: 60000
-    }
-  );
-};
-
-$("findZip").onclick = async () => {
-  const zip = $("zip").value.trim();
-
-  if (!/^\d{5}$/.test(zip)) {
-    $("locationInfo").textContent =
-      "Enter a valid five-digit ZIP code.";
-    return;
-  }
-
+async function jsonFile(path,fallback) {
   try {
-    const response = await fetch(
-      "https://api.zippopotam.us/us/" +
-      encodeURIComponent(zip)
-    );
-
-    if (!response.ok) {
-      throw new Error("ZIP not found");
-    }
-
-    const result = await response.json();
-    const place = result.places[0];
-
-    showUserLocation(
-      Number(place.latitude),
-      Number(place.longitude)
-    );
-
-    $("locationInfo").textContent =
-      "Showing stores near ZIP " + zip +
-      ". ZIP coordinates represent an " +
-      "approximate area, not your GPS position.";
-
-  } catch {
-    $("locationInfo").textContent =
-      "ZIP lookup failed. Try GPS.";
-  }
-};
-
-function productFormat(product) {
-  const name = String(
-    product.name || ""
-  ).toLowerCase();
-
-  if (/elite trainer box|\betb\b/.test(name)) {
-    return "elite trainer";
-  }
-
-  if (/booster bundle/.test(name)) {
-    return "booster bundle";
-  }
-
-  if (/booster box|booster display/.test(name)) {
-    return "booster box";
-  }
-
-  if (/booster pack|sleeved booster|single pack/.test(name)) {
-    return "booster pack";
-  }
-
-  if (/collection|premium card/.test(name)) {
-    return "collection";
-  }
-
-  if (/\btin\b/.test(name)) {
-    return "tin";
-  }
-
-  if (/starter deck|battle deck|structure deck/.test(name)) {
-    return "deck";
-  }
-
-  return "other";
-}
-
-function renderProducts() {
-  const query = $("search").value
-    .trim().toLowerCase();
-
-  const game = $("game").value;
-  const format = $("format").value;
-
-  const matches = db.products.filter(
-    product => {
-      const text = [
-        product.name,
-        product.game,
-        product.type,
-        product.retailer
-      ].join(" ").toLowerCase();
-
-      return (
-        (!game || product.game === game) &&
-        (!query || text.includes(query)) &&
-        (!format || productFormat(product) === format)
-      );
-    }
-  );
-
-  $("productInfo").textContent =
-    matches.length +
-    " matching products. " +
-    "Images reflect existing catalogue records.";
-
-  $("productGrid").innerHTML =
-    matches.slice(0,300).map(product => {
-      const image = safeURL(
-        product.product_image ||
-        product.image
-      );
-
-      const photo = image
-        ? `<img loading="lazy"
-             src="${esc(image)}"
-             alt="${esc(product.name)}"
-             onerror="this.hidden=true;this.nextElementSibling.hidden=false">
-           <span class="placeholder" hidden>
-             Product image unavailable
-           </span>`
-        : `<span class="placeholder">
-             Product image unavailable
-           </span>`;
-
-      const stock = product.online_stock_status
-        ? "Online: " +
-          product.online_stock_status
-        : "Inventory not checked";
-
-      return (
-        `<article class="tile"
-           data-game="${esc(product.game)}">` +
-        `<div class="product-photo">${photo}</div>` +
-        `<h3>${esc(product.name)}</h3>` +
-        `<p><small>${esc(product.game)}
-          · ${esc(product.type || "Product")}</small></p>` +
-        `<p><span class="pill">
-          ${esc(productFormat(product))}
-        </span></p>` +
-        `<p><span class="pill">
-          ${esc(stock)}
-        </span></p>` +
-        `<p>${link(product.url,"View product source")}</p>` +
-        `</article>`
-      );
-    }).join("") ||
-    `<p class="empty">
-      No matching products.
-    </p>`;
-}
-
-function renderReleases() {
-  const releases = db.releases.slice()
-    .sort((a,b) =>
-      String(
-        b.date || b.release_date || ""
-      ).localeCompare(
-        String(a.date || a.release_date || "")
-      )
-    );
-
-  $("releaseList").innerHTML =
-    releases.slice(0,150).map(item =>
-      `<article class="tile"
-         data-game="${esc(item.game)}">` +
-      `<span class="pill">${esc(item.game)}</span>` +
-      `<h3>${esc(item.name)}</h3>` +
-      `<p>📅 ${esc(
-        item.date ||
-        item.release_date ||
-        "Date not published"
-      )}</p>` +
-      link(item.url,"Official source") +
-      `</article>`
-    ).join("") ||
-    `<p class="empty">No release records.</p>`;
-}
-
-function renderShipments() {
-  const events = shipments.events || [];
-  const forecasts = shipments.forecasts || [];
-
-  $("shipmentList").innerHTML =
-    events.length
-      ? events.map(event =>
-        `<article class="tile">` +
-        `<h3>${esc(
-          event.store_name || "Store"
-        )}</h3>` +
-        `<p>${esc(
-          event.product_name || "Product unspecified"
-        )}</p>` +
-        `<p>${esc(
-          event.date || "Date unknown"
-        )}</p>` +
-        link(event.source_url,"Evidence") +
-        `</article>`
-      ).join("")
-      : `<p class="empty">
-          No confirmed shipment events recorded.
-        </p>`;
-
-  if (forecasts.length) {
-    const note = document.createElement("p");
-    note.className = "muted";
-    note.textContent =
-      forecasts.length +
-      " forecast records. Forecasts are not confirmed shipments.";
-
-    $("shipmentList").appendChild(note);
-  }
-}
-
-function renderHealth() {
-  const health = db.catalogue_source_status || {};
-
-  $("healthList").innerHTML =
-    Object.entries(health).map(
-      ([name,value]) =>
-        `<p><strong>${esc(name)}</strong>:
-        ${esc(value.status || "unknown")}
-        ${value.error
-          ? " — " + esc(value.error)
-          : ""}
-        </p>`
-    ).join("") +
-    `<p>Monitor version:
-      ${esc(db.monitor_version || "unknown")}
-    </p>` +
-    (db.monitor_errors || []).map(
-      error =>
-        `<p class="muted">${esc(error)}</p>`
-    ).join("");
-}
-
-async function getJSON(path,fallback) {
-  try {
-    const response = await fetch(
+    const r = await fetch(
       path + "?v=" + Date.now(),
       {cache:"no-store"}
     );
-
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-
-    return await response.json();
-  } catch(error) {
-    console.warn(path,error);
+    if (!r.ok) throw Error("HTTP " + r.status);
+    return await r.json();
+  } catch(e) {
+    console.warn(path,e);
     return fallback;
   }
 }
 
-async function init() {
-  if (typeof L === "undefined") {
-    throw new Error("Map library unavailable");
+function freshTime(value,hours=8) {
+  const time = Date.parse(value || "");
+  const age = Date.now() - time;
+  return Number.isFinite(time)
+    && age >= 0
+    && age <= hours*3600000;
+}
+
+function currentLocalStock(record) {
+  return record.status === "In stock"
+    && freshTime(record.verified_at,6)
+    && Boolean(safeURL(record.source_url));
+}
+
+function validCoords(s) {
+  const a = Number(s.lat), b = Number(s.lon);
+  return s.lat != null && s.lon != null
+    && Number.isFinite(a) && Number.isFinite(b)
+    && Math.abs(a)<=90 && Math.abs(b)<=180;
+}
+
+function distanceMiles(a,b,c,d) {
+  const toRad = Math.PI/180;
+  const x=(c-a)*toRad;
+  const y=(d-b)*toRad;
+  const h=Math.sin(x/2)**2
+    + Math.cos(a*toRad)*Math.cos(c*toRad)
+    * Math.sin(y/2)**2;
+  return 3958.8*2*Math.asin(Math.sqrt(h));
+}
+
+function distanceTo(s) {
+  if (!userPoint || !validCoords(s)) return null;
+  return distanceMiles(
+    userPoint[0],userPoint[1],
+    Number(s.lat),Number(s.lon)
+  );
+}
+
+function navigation(s) {
+  if (!validCoords(s)) return "";
+  const dest=Number(s.lat)+","+Number(s.lon);
+  return hyperlink(
+    "https://www.google.com/maps/dir/?api=1"
+    +"&destination="+encodeURIComponent(dest)
+    +"&travelmode=driving",
+    "🧭 Navigate"
+  );
+}
+
+function tab(name) {
+  document.querySelectorAll(".tabs>section").forEach(el=>{
+    el.classList.toggle("active",el.id===name);
+  });
+  document.querySelectorAll("nav button").forEach(el=>{
+    el.classList.toggle("active",el.dataset.tab===name);
+  });
+  if(name==="stores" && map){
+    setTimeout(()=>map.invalidateSize(),100);
+  }
+}
+
+document.querySelectorAll("[data-tab]").forEach(b=>{
+  b.onclick=()=>tab(b.dataset.tab);
+});
+document.querySelectorAll("[data-go]").forEach(b=>{
+  b.onclick=()=>{
+    tab(b.dataset.go);
+    document.querySelector("main").scrollIntoView();
+  };
+});
+
+function allGames() {
+  return [...new Set([
+    ...database.products.map(x=>x.game),
+    ...offers.map(x=>x.game),
+    ...database.releases.map(x=>x.game)
+  ].filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+}
+
+function addOptions(id,items) {
+  const select=$(id);
+  for(const item of items){
+    const option=document.createElement("option");
+    option.value=item;
+    option.textContent=item;
+    select.append(option);
+  }
+}
+
+function prepareFilters() {
+  const games=allGames();
+  for(const id of [
+    "productGame","onlineGame","mapGame"
+  ]){
+    addOptions(id,games);
   }
 
-  map = L.map("map").setView([39,-98],4);
+  addOptions(
+    "onlineRetailer",
+    [...new Set(
+      offers.map(o=>o.retailer).filter(Boolean)
+    )].sort()
+  );
+
+  const icons={
+    "Pokémon":"⚡",
+    "Union Arena":"⚔️",
+    "Gundam":"🤖",
+    "One Piece":"🏴‍☠️",
+    "Kayou":"✨",
+    "Yu-Gi-Oh!":"🃏",
+    "Magic: The Gathering":"🪄",
+    "Disney Lorcana":"🏰",
+    "Digimon":"🐉",
+    "Dragon Ball Super":"💥",
+    "Star Wars: Unlimited":"🌌"
+  };
+
+  $("gameCards").innerHTML=games.map(game=>`
+    <button class="game-card" data-pick="${escapeHTML(game)}">
+      <span>${icons[game]||"🎴"}</span>
+      ${escapeHTML(game)}
+    </button>
+  `).join("");
+
+  document.querySelectorAll("[data-pick]").forEach(b=>{
+    b.onclick=()=>{
+      $("productGame").value=b.dataset.pick;
+      tab("products");
+      renderProducts();
+      document.querySelector("main").scrollIntoView();
+    };
+  });
+}
+
+function formatOf(p) {
+  const text=String(
+    (p.name||"")+" "+(p.type||"")
+  ).toLowerCase();
+
+  if(/booster bundle display|booster bundle case/.test(text))
+    return "Booster bundle display case";
+  if(/factory.sealed case|sealed case|booster box case/.test(text))
+    return "Factory-sealed case";
+  if(/booster bundle/.test(text))
+    return "Booster bundle";
+  if(/booster box|booster display/.test(text))
+    return "Booster box";
+  if(/booster pack|sleeved booster/.test(text))
+    return "Booster pack";
+  if(/elite trainer|\betb\b/.test(text))
+    return "Elite Trainer Box";
+  if(/starter deck|trial deck|structure deck/.test(text))
+    return "Starter deck";
+  if(/collection|collector box|premium card/.test(text))
+    return "Collection";
+  if(/\btin\b/.test(text))
+    return "Tin";
+  return "Other";
+}
+
+function imageHTML(url,name) {
+  const src=safeURL(url);
+  return `<div class="photo">`+(
+    src
+      ? `<img loading="lazy"
+          src="${escapeHTML(src)}"
+          alt="${escapeHTML(name)}"
+          onerror="this.hidden=true;this.parentNode.append('Image unavailable')">`
+      : "Image unavailable"
+  )+"</div>";
+}
+
+function badge(value) {
+  const cls=value==="In stock"?"in":
+    value==="Out of stock"?"out":"unknown";
+  return `<span class="pill ${cls}">
+    ${escapeHTML(value||"Unknown")}</span>`;
+}
+
+function renderProducts() {
+  const q=$("productSearch").value.trim().toLowerCase();
+  const game=$("productGame").value;
+  const format=$("productFormat").value;
+
+  const matched=database.products.filter(p=>{
+    const text=[
+      p.name,p.game,p.type,p.set,p.retailer,p.franchise
+    ].join(" ").toLowerCase();
+
+    return (!q||text.includes(q))
+      && (!game||p.game===game)
+      && (!format||formatOf(p)===format);
+  });
+
+  $("productInfo").textContent=
+    matched.length+" matching catalogue products.";
+
+  $("productGrid").innerHTML=matched.slice(0,400).map(p=>`
+    <article class="tile">
+      ${imageHTML(p.product_image||p.image,p.name)}
+      <h3>${escapeHTML(p.name)}</h3>
+      <p>${escapeHTML(p.game||"Unknown game")}</p>
+      <span class="pill">${escapeHTML(formatOf(p))}</span>
+      ${p.release_date?
+        `<p>Release: ${escapeHTML(p.release_date)}</p>`:""}
+      <p class="muted">Availability not confirmed by catalogue.</p>
+      ${hyperlink(p.url,"View Product")}
+    </article>
+  `).join("")||
+  `<div class="empty">No matching products.</div>`;
+}
+
+function validOffer(o) {
+  if(!o || o.inventory_scope!=="online") return false;
+  if(!freshTime(o.checked_at,8)) return false;
+  if(!["In stock","Out of stock","Preorder","Backorder"]
+    .includes(o.availability)) return false;
+  if(!safeURL(o.product_url)||!safeURL(o.evidence_url)) return false;
+
+  // Filter obvious merchandise and inaccurate
+  // catalogue-name matches, not legitimate cards.
+  const name=String(o.product_name||"").toLowerCase();
+  const url=String(o.product_url||"").toLowerCase();
+
+  if(/figurine|blind box|keychain|plush|acrylic|sleeves|binder|playmat|figure|t-shirt/.test(name))
+    return false;
+
+  if(/figurine|blind-box|keychain|plush|acrylic|playmat/.test(url))
+    return false;
+
+  return true;
+}
+
+function renderOnline() {
+  const q=$("onlineSearch").value.trim().toLowerCase();
+  const game=$("onlineGame").value;
+  const retailer=$("onlineRetailer").value;
+  const state=$("onlineAvailability").value;
+
+  const rows=offers.filter(o=>
+    validOffer(o)
+    && (!q||[
+      o.product_name,o.variant,o.retailer,o.game
+    ].join(" ").toLowerCase().includes(q))
+    && (!game||o.game===game)
+    && (!retailer||o.retailer===retailer)
+    && (!state||o.availability===state)
+  ).sort((a,b)=>
+    (a.availability==="In stock"?0:1)
+    -(b.availability==="In stock"?0:1)
+  );
+
+  $("onlineInfo").textContent=
+    rows.length+" matching fresh online offers. "+
+    "Not physical-store stock. "+
+    "Availability applies to the reported listing or variant.";
+
+  $("onlineGrid").innerHTML=rows.slice(0,400).map(o=>{
+    const price=o.price&&o.currency
+      ? `<p><strong>${escapeHTML(o.currency)}
+        ${escapeHTML(o.price)}</strong></p>`
+      : "";
+    return `
+      <article class="tile">
+        ${imageHTML(o.image_candidate,o.product_name)}
+        <h3>${escapeHTML(o.product_name)}</h3>
+        <p>${escapeHTML(o.retailer)}</p>
+        <p>${escapeHTML(o.game)}</p>
+        ${badge(o.availability)}
+        <span class="pill">${escapeHTML(o.format||"Sealed cards")}</span>
+        <p>Variant: ${escapeHTML(o.variant||"Listing")}</p>
+        ${price}
+        <p class="muted">Checked:
+          ${escapeHTML(new Date(o.checked_at).toLocaleString())}
+        </p>
+        ${hyperlink(o.product_url,"Shop Product")}
+        ${hyperlink(o.evidence_url,"Source")}
+      </article>
+    `;
+  }).join("")||
+  `<div class="empty">
+    No fresh evidence-backed offers match these filters.
+  </div>`;
+}
+
+function renderReleases() {
+  const items=[...database.releases].sort((a,b)=>
+    String(b.date||"").localeCompare(String(a.date||""))
+  );
+
+  $("releaseGrid").innerHTML=items.slice(0,200).map(r=>`
+    <article class="tile">
+      <span class="pill">${escapeHTML(r.game||"TCG")}</span>
+      <h3>${escapeHTML(r.name)}</h3>
+      <p>Release: ${escapeHTML(r.date||"Not announced")}</p>
+      ${hyperlink(r.url,"Official Details")}
+    </article>
+  `).join("")||
+  `<div class="empty">No releases recorded yet.</div>`;
+}
+
+function renderShipments() {
+  const events=Array.isArray(shipments.events)
+    ? shipments.events:[];
+  const forecasts=Array.isArray(shipments.forecasts)
+    ? shipments.forecasts:[];
+
+  const rows=[
+    ...events.map(e=>({...e,kind:"Confirmed event"})),
+    ...forecasts.map(e=>({...e,kind:"Forecast"}))
+  ];
+
+  $("shipmentList").innerHTML=rows.map(e=>`
+    <article class="tile">
+      <span class="pill">${escapeHTML(e.kind)}</span>
+      <h3>${escapeHTML(e.product_name||e.name||"Shipment")}</h3>
+      <p>${escapeHTML(e.store_name||e.retailer||"")}</p>
+      <p>${escapeHTML(e.date||e.predicted_date||"Date unavailable")}</p>
+      ${hyperlink(e.source_url,"Evidence")}
+    </article>
+  `).join("")||
+  `<div class="empty">
+    No confirmed shipment events or evidence-based forecasts.
+  </div>`;
+}
+
+function renderSources() {
+  const health=database.catalogue_source_status||{};
+  const reports=stockReport.checks||[];
+
+  $("sourceList").innerHTML=`
+    <div class="note">
+      Online stock evidence and physical-store inventory are separate.
+      Missing evidence means Unknown, not Out of stock.
+    </div>
+    <h3>Online Monitoring</h3>
+    <p class="muted">
+      Last check:
+      ${escapeHTML(stockReport.checked_at||"Not available")}
+    </p>
+    <p>Fresh offers reported:
+      ${escapeHTML(stockReport.total_fresh_offers??0)}
+    </p>
+    ${reports.filter(r=>r.retailer&&r.page).map(r=>`
+      <p>
+        <strong>${escapeHTML(r.retailer)}</strong>:
+        ${escapeHTML(r.status)}
+        ${r.reason?" — "+escapeHTML(r.reason):""}
+        ${r.offers!=null?" · Offers: "+escapeHTML(r.offers):""}
+      </p>
+    `).join("")}
+    <h3>Publisher Source Health</h3>
+    ${Object.entries(health).map(([k,v])=>`
+      <p><strong>${escapeHTML(k)}</strong>:
+      ${escapeHTML(v.status||"Unknown")}
+      ${v.error?" — "+escapeHTML(v.error):""}
+      </p>
+    `).join("")}
+  `;
+}
+
+// Official chain website icons.
+// These are favicon images, not custom-made logos.
+const CHAINS=[
+  [/walmart/i,"walmart.com"],
+  [/\btarget\b/i,"target.com"],
+  [/gamestop/i,"gamestop.com"],
+  [/best buy/i,"bestbuy.com"],
+  [/barnes.*noble/i,"barnesandnoble.com"],
+  [/dollar general/i,"dollargeneral.com"],
+  [/dollar tree/i,"dollartree.com"],
+  [/five below/i,"fivebelow.com"],
+  [/\bcvs\b/i,"cvs.com"],
+  [/walgreens/i,"walgreens.com"],
+  [/costco/i,"costco.com"],
+  [/sam.s club/i,"samsclub.com"],
+  [/meijer/i,"meijer.com"],
+  [/hobby lobby/i,"hobbylobby.com"],
+  [/big lots/i,"biglots.com"]
+];
+
+function storeIcon(s,hasStock) {
+  const name=String(s.retailer_chain||s.name||"");
+  const matched=CHAINS.find(([pattern])=>pattern.test(name));
+
+  let domain=matched?matched[1]:"";
+
+  if(!domain){
+    const url=safeURL(s.url||s.website);
+    if(url) domain=new URL(url).hostname;
+  }
+
+  const icon=domain
+    ?"https://www.google.com/s2/favicons?domain="
+      +encodeURIComponent(domain)+"&sz=64"
+    :"";
+
+  const initials=String(s.name||"?").trim()
+    .split(/\s+/).slice(0,2)
+    .map(x=>x[0]||"").join("").toUpperCase();
+
+  const content=icon
+    ? `<span>${escapeHTML(initials)}</span>
+       <img src="${escapeHTML(icon)}" alt=""
+       onload="this.previousElementSibling.hidden=true"
+       onerror="this.remove()"
+       style="position:absolute">`
+    : `<span>${escapeHTML(initials)}</span>`;
+
+  return L.divIcon({
+    html:content,
+    className:"store-pin"+(hasStock?" stock":""),
+    iconSize:[34,34],
+    iconAnchor:[17,17],
+    popupAnchor:[0,-17]
+  });
+}
+
+function showLocation(lat,lon) {
+  userPoint=[lat,lon];
+  if(userLayer) map.removeLayer(userLayer);
+
+  userLayer=L.circleMarker(userPoint,{
+    radius:9,color:"#fff",weight:3,
+    fillColor:"#ffca52",fillOpacity:1
+  }).addTo(map).bindPopup("Your search location");
+
+  map.setView(userPoint,11);
+  renderStores();
+}
+
+function renderStores() {
+  if(!map||!markerLayer) return;
+  markerLayer.clearLayers();
+
+  const radius=Number($("radius").value);
+  const game=$("mapGame").value;
+  const center=userPoint||[
+    map.getCenter().lat,map.getCenter().lng
+  ];
+
+  const visible=[];
+
+  for(const s of stores){
+    if(!validCoords(s)) continue;
+
+    const dist=distanceMiles(
+      center[0],center[1],
+      Number(s.lat),Number(s.lon)
+    );
+
+    if(userPoint && dist>radius) continue;
+
+    const confirmed=(database.store_inventory||[])
+      .filter(r=>String(r.store_id)===String(s.id)
+        && currentLocalStock(r)
+        && (!game||r.game===game));
+
+    const declared=Array.isArray(s.games)?s.games:[];
+
+    if(game&&declared.length
+      && !declared.includes(game)
+      && !confirmed.length) continue;
+
+    visible.push({s,dist,confirmed});
+  }
+
+  visible.sort((a,b)=>a.dist-b.dist);
+
+  // Limit pin rendering for performance on phones.
+  // Panning the map refreshes nearest candidates.
+  const shown=visible.slice(0,800);
+
+  for(const item of shown){
+    const s=item.s;
+    const hasStock=item.confirmed.length>0;
+
+    const marker=L.marker(
+      [Number(s.lat),Number(s.lon)],
+      {icon:storeIcon(s,hasStock)}
+    );
+
+    const evidence=item.confirmed.slice(0,4).map(r=>`
+      <p>${escapeHTML(r.product_name)}
+      ${hyperlink(r.source_url,"Evidence")}</p>
+    `).join("");
+
+    marker.bindPopup(`
+      <strong>${escapeHTML(s.name||"Store")}</strong>
+      <p>${escapeHTML(
+        [s.city,s.state].filter(Boolean).join(", ")
+      )}</p>
+      <p>${hasStock
+        ? item.confirmed.length+" verified local stock records"
+        : "In-store inventory unknown"}</p>
+      ${evidence}
+      ${hyperlink(s.url||s.website,"Store Website")}
+      ${navigation(s)}
+    `);
+
+    marker.addTo(markerLayer);
+  }
+
+  $("mapInfo").textContent=
+    shown.length+" map pins displayed from "+
+    visible.length+" matching store candidates. "+
+    "Pin colors: green = verified local stock; "+
+    "blue = inventory unknown.";
+
+  $("storeList").innerHTML=shown.slice(0,80).map(item=>{
+    const s=item.s;
+    return `
+      <article class="tile">
+        <span class="pill">
+          ${escapeHTML(s.retailer_chain||s.retailer_type||"Store candidate")}
+        </span>
+        <h3>${escapeHTML(s.name||"Store")}</h3>
+        <p>${escapeHTML(
+          [s.city,s.state].filter(Boolean).join(", ")
+        )}</p>
+        <p>${item.dist.toFixed(1)} miles
+        (straight-line estimate)</p>
+        ${badge(item.confirmed.length?
+          "In stock":"Unknown")}
+        ${hyperlink(s.url||s.website,"Website")}
+        ${navigation(s)}
+      </article>
+    `;
+  }).join("")||
+  `<div class="empty">No mapped stores match your search.</div>`;
+}
+
+$("locate").onclick=()=>{
+  if(!navigator.geolocation){
+    $("locationInfo").textContent="GPS is unavailable.";
+    return;
+  }
+
+  $("locationInfo").textContent="Requesting GPS location...";
+
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      showLocation(
+        pos.coords.latitude,
+        pos.coords.longitude
+      );
+      $("locationInfo").textContent=
+        "Showing stores around your GPS location.";
+    },
+    ()=>{
+      $("locationInfo").textContent=
+        "GPS unavailable or denied. Try a ZIP code.";
+    },
+    {enableHighAccuracy:true,timeout:15000}
+  );
+};
+
+$("findZip").onclick=async()=>{
+  const zip=$("zip").value.trim();
+
+  if(!/^\d{5}$/.test(zip)){
+    $("locationInfo").textContent="Enter a five-digit ZIP.";
+    return;
+  }
+
+  try{
+    const r=await fetch(
+      "https://api.zippopotam.us/us/"
+      +encodeURIComponent(zip)
+    );
+    if(!r.ok)throw Error("ZIP lookup failed");
+    const data=await r.json();
+    const p=data.places[0];
+
+    showLocation(
+      Number(p.latitude),Number(p.longitude)
+    );
+
+    $("locationInfo").textContent=
+      "Showing stores near ZIP "+zip+
+      ". ZIP locations are approximate.";
+  }catch(e){
+    $("locationInfo").textContent=
+      "ZIP lookup failed. Try GPS or another ZIP.";
+  }
+};
+
+async function init() {
+  if(typeof L==="undefined"){
+    throw Error("Map library unavailable");
+  }
+
+  map=L.map("map").setView([39,-98],4);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -1625,85 +1148,74 @@ async function init() {
     }
   ).addTo(map);
 
-  layer = L.layerGroup().addTo(map);
+  markerLayer=L.layerGroup().addTo(map);
 
-  [db,stores,shipments] = await Promise.all([
-    getJSON("data/status.json",db),
-    getJSON("data/stores.json",[]),
-    getJSON("data/shipments.json",shipments)
+  const data=await Promise.all([
+    jsonFile("data/status.json",database),
+    jsonFile("data/stores.json",[]),
+    jsonFile("data/online_offers.json",[]),
+    jsonFile("data/online_inventory_report.json",{}),
+    jsonFile("data/shipments.json",shipments)
   ]);
 
-  if (!db || typeof db !== "object" || Array.isArray(db)) {
-    db = {
-      products: [],
-      releases: [],
-      store_inventory: []
-    };
-  }
+  database=data[0]||database;
+  stores=Array.isArray(data[1])?data[1]:[];
+  offers=Array.isArray(data[2])?data[2]:[];
+  stockReport=data[3]||{};
+  shipments=data[4]||shipments;
 
-  if (!Array.isArray(stores)) {
-    stores = [];
-  }
+  if(!Array.isArray(database.products))
+    database.products=[];
+  if(!Array.isArray(database.releases))
+    database.releases=[];
+  if(!Array.isArray(database.store_inventory))
+    database.store_inventory=[];
 
-  if (!Array.isArray(db.products)) {
-    db.products = [];
-  }
+  $("updated").textContent=
+    "Catalogue updated: "+
+    (database.last_updated
+      || database.v9_catalogue?.updated_at
+      || "Unknown");
 
-  if (!Array.isArray(db.releases)) {
-    db.releases = [];
-  }
+  $("productCount").textContent=database.products.length;
+  $("storeCount").textContent=stores.length;
+  $("onlineCount").textContent=offers.filter(validOffer).length;
+  $("localCount").textContent=
+    database.store_inventory.filter(currentLocalStock).length;
 
-  if (!Array.isArray(db.store_inventory)) {
-    db.store_inventory = [];
-  }
-
-  if (!shipments || typeof shipments !== "object") {
-    shipments = {events:[],forecasts:[]};
-  }
-
-  if (!Array.isArray(shipments.events)) {
-    shipments.events = [];
-  }
-
-  if (!Array.isArray(shipments.forecasts)) {
-    shipments.forecasts = [];
-  }
-
-  $("updated").textContent =
-    "Data updated: " +
-    (db.last_updated || "unknown");
-
-  $("productCount").textContent =
-    db.products.length;
-
-  $("storeCount").textContent =
-    stores.length;
-
-  $("stockCount").textContent =
-    db.store_inventory.filter(
-      verifiedRecord
-    ).length;
-
-  $("shipmentCount").textContent =
-    shipments.events.length;
-
-  renderStores();
+  prepareFilters();
   renderProducts();
+  renderOnline();
   renderReleases();
   renderShipments();
-  renderHealth();
+  renderSources();
+  renderStores();
+
+  // Map movement refreshes available map candidates
+  // when no GPS or ZIP search origin is active.
+  map.on("moveend",()=>{
+    if(!userPoint)renderStores();
+  });
 }
 
-$("search").oninput = renderProducts;
-$("game").onchange = renderProducts;
-$("format").onchange = renderProducts;
-$("radius").onchange = renderStores;
-$("mapGame").onchange = renderStores;
+for(const id of [
+  "productSearch","productGame","productFormat"
+]){
+  $(id).addEventListener("input",renderProducts);
+}
+for(const id of [
+  "onlineSearch","onlineGame",
+  "onlineRetailer","onlineAvailability"
+]){
+  $(id).addEventListener("input",renderOnline);
+}
+for(const id of ["radius","mapGame"]){
+  $(id).addEventListener("change",renderStores);
+}
 
-init().catch(error => {
+init().catch(error=>{
   console.error(error);
-
-  $("updated").textContent =
+  $("updated").textContent=
     "Unable to initialize PokéStock.";
 });
 </script>
