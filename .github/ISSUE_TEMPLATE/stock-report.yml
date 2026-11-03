@@ -1,0 +1,70 @@
+name: In-store stock report
+description: Report a Pokémon or Union Arena sighting at a physical store.
+title: "[Stock report] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit only a real store visit or a clearly identified employee/pickup check. Reports are public and start as **unverified**. Do not include personal information.
+  - type: dropdown
+    id: game
+    attributes:
+      label: Game
+      options:
+        - Pokémon
+        - Union Arena
+    validations:
+      required: true
+  - type: input
+    id: product
+    attributes:
+      label: Product
+      description: Exact product name.
+      placeholder: Product name
+    validations:
+      required: true
+  - type: dropdown
+    id: store
+    attributes:
+      label: Store
+      options:
+        - Walmart — Staunton, VA
+        - GameStop — Staunton, VA
+        - Walmart — Waynesboro, VA
+        - Target — Waynesboro, VA
+        - GameStop — Waynesboro, VA
+        - Walmart — Harrisonburg, VA
+        - Target — Harrisonburg, VA
+        - GameStop — Harrisonburg, VA
+        - Best Buy — Harrisonburg, VA
+        - Other store (include name and address below)
+    validations:
+      required: true
+  - type: input
+    id: other_store
+    attributes:
+      label: Other store name and full street address
+      description: Required only when you selected Other store.
+      placeholder: Store name, street address, city, state, ZIP
+  - type: dropdown
+    id: report_type
+    attributes:
+      label: What did you find?
+      options:
+        - Personally saw product on the shelf
+        - Personally saw shelf empty / product sold out
+        - Store employee confirmed inventory
+        - Store pickup availability only
+    validations:
+      required: true
+  - type: input
+    id: quantity
+    attributes:
+      label: Quantity seen (optional)
+      placeholder: "e.g. 3"
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional details (optional)
+      description: Include useful context such as aisle or purchase limit. Do not include employee names.
+      render: text
