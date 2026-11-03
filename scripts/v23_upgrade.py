@@ -1,9 +1,16 @@
 
 #!/usr/bin/env python3
-"""PokéStock V23: pickup checks + website enhancement.
+"""
+PokéStock V23.1
+Complete Shopify Pickup Monitor + Website Upgrade
 
-No API keys. No invented store inventory.
-Preserves the existing PokéStock website and datasets.
+- Corrects Shopify Dawn pickup selectors
+- Checks publicly available product variants
+- Detects explicit pickup availability by location
+- Keeps online, pickup, and shelf stock separate
+- Adds a Pickup tab to the existing website
+- Rotates product checks between runs
+- Requires no API key
 """
 
 import json
@@ -18,123 +25,144 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
-HTML = ROOT / "index.html"
 
-OFFERS = DATA / "online_offers.json"
-RETAILERS = DATA / "online_retailers.json"
-RESULTS = DATA / "v23_pickup_observations.json"
-REPORT = DATA / "v23_pickup_report.json"
+OFFERS_FILE = DATA / "online_offers.json"
+RETAILERS_FILE = DATA / "online_retailers.json"
+RESULTS_FILE = DATA / "v23_pickup_observations.json"
+REPORT_FILE = DATA / "v23_pickup_report.json"
+HTML_FILE = ROOT / "index.html"
 
 NOW = datetime.now(timezone.utc).isoformat()
 MAX_CHECKS = 36
 
 SESSION = requests.Session()
 SESSION.headers.update({
-    "User-Agent": "PokeStock/23 public product checker",
+    "User-Agent": "PokeStock/23.1 public availability checker",
     "Accept": "text/html,application/json",
 })
 
 POSITIVE = re.compile(
     r"\b(ready for pickup|available for pickup|"
     r"pickup available|pick up today|"
-    r"available to pick up)\b",
+    r"available to pick up|pickup ready)\b",
     re.I,
 )
+
 NEGATIVE = re.compile(
     r"\b(unavailable for pickup|"
     r"not available for pickup|"
     r"pickup unavailable|"
     r"not ready for pickup|"
-    r"out of stock)\b",
+    r"out of stock|not available)\b",
     re.I,
 )
 
 
-def read(path, fallback):
+def load_json(path, default):
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(
+            path.read_text(encoding="utf-8")
+        )
     except (OSError, ValueError):
-        return fallback
+        return default
 
 
-def save(path, data):
+def save_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_suffix(".tmp")
-    temp.write_text(
-        json.dumps(data, indent=2, ensure_ascii=False),
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(
+        json.dumps(
+            value,
+            indent=2,
+            ensure_ascii=False,
+        ),
         encoding="utf-8",
     )
-    temp.replace(path)
+    temporary.replace(path)
 
 
 def clean(value):
     return " ".join(str(value or "").split())
 
 
-def origin(url):
+def safe_origin(value):
     try:
-        p = urlparse(url)
+        parsed = urlparse(value)
+
         if (
-            p.scheme != "https"
-            or not p.hostname
-            or p.username
-            or p.password
-            or p.port not in (None, 443)
+            parsed.scheme != "https"
+            or not parsed.hostname
+            or parsed.username
+            or parsed.password
+            or parsed.port not in (None, 443)
         ):
             return None
-        return "https://" + p.hostname.lower()
-    except ValueError:
+
+        return "https://" + parsed.hostname.lower()
+
+    except (ValueError, TypeError):
         return None
 
 
-def get(url, as_json=False):
+def fetch(url, as_json=False):
     try:
         response = SESSION.get(
             url,
-            timeout=(7, 14),
+            timeout=(7, 15),
             allow_redirects=False,
         )
+
         if response.status_code != 200:
             return None
-        if len(response.content) > 1500000:
+
+        if len(response.content) > 1_500_000:
             return None
-        time.sleep(0.25)
+
+        time.sleep(0.3)
+
         return (
             response.json()
-            if as_json else response.text
+            if as_json
+            else response.text
         )
+
     except (requests.RequestException, ValueError):
         return None
 
 
-def candidates():
-    offers = read(OFFERS, [])
-    retailers = read(RETAILERS, [])
+def discover_candidates():
+    offers = load_json(OFFERS_FILE, [])
+    retailers = load_json(RETAILERS_FILE, [])
 
     domains = {}
 
     for retailer in retailers:
         if not isinstance(retailer, dict):
             continue
-        base = origin(retailer.get("base", ""))
+
+        base = safe_origin(
+            retailer.get("base", "")
+        )
+
         if base:
             domains[retailer.get("name")] = base
 
-    rows = []
+    candidates = []
     seen = set()
 
     for offer in offers:
         if not isinstance(offer, dict):
             continue
 
-        name = offer.get("retailer")
-        base = domains.get(name)
+        retailer = offer.get("retailer")
+        base = domains.get(retailer)
 
         if not base:
             continue
 
         url = offer.get("product_url", "")
-        if origin(url) != base:
+
+        if safe_origin(url) != base:
             continue
 
         match = re.match(
@@ -146,22 +174,31 @@ def candidates():
             continue
 
         handle = match.group(1)
-        key = (base, handle, str(offer.get("sku", "")))
+
+        key = (
+            base,
+            handle,
+            str(offer.get("sku", "")),
+        )
 
         if key in seen:
             continue
 
         seen.add(key)
-        rows.append((offer, base, handle))
 
-    return sorted(
-        rows,
-        key=lambda x: (
-            x[0].get("retailer", ""),
-            x[2],
-            str(x[0].get("sku", "")),
-        ),
+        candidates.append(
+            (offer, base, handle)
+        )
+
+    candidates.sort(
+        key=lambda item: (
+            item[0].get("retailer", ""),
+            item[2],
+            str(item[0].get("sku", "")),
+        )
     )
+
+    return candidates
 
 
 def select_variant(product, offer):
@@ -175,17 +212,21 @@ def select_variant(product, offer):
 
     if sku:
         matches = [
-            v for v in variants
-            if clean(v.get("sku")) == sku
+            variant
+            for variant in variants
+            if clean(variant.get("sku")) == sku
         ]
+
         if len(matches) == 1:
             return matches[0]
 
-    if title and title != "Product listing":
+    if title and title.lower() != "product listing":
         matches = [
-            v for v in variants
-            if clean(v.get("title")) == title
+            variant
+            for variant in variants
+            if clean(variant.get("title")) == title
         ]
+
         if len(matches) == 1:
             return matches[0]
 
@@ -195,89 +236,122 @@ def select_variant(product, offer):
     return None
 
 
-def extract_pickup(html, offer, variant, url):
-    soup = BeautifulSoup(html, "html.parser")
-    output = []
+def pickup_status(text):
+    text = clean(text)
 
-    # Shopify Dawn-style pickup location cards.
-    items = soup.select(
+    positive = bool(POSITIVE.search(text))
+    negative = bool(NEGATIVE.search(text))
+
+    if positive and not negative:
+        return "Pickup available"
+
+    if negative and not positive:
+        return "Pickup unavailable"
+
+    return None
+
+
+def parse_pickup(html, offer, variant, evidence_url):
+    soup = BeautifulSoup(
+        html,
+        "html.parser",
+    )
+
+    observations = []
+
+    # Shopify Dawn and compatible themes.
+    locations = soup.select(
         ".pickup-availability-list__item"
     )
 
-    for item in items:
+    for item in locations:
+
         heading = item.select_one(
-            "h3, h4, .pickup-availability-list__item-title"
+            ".pickup-availability-list__location, "
+            ".pickup-availability-list__item-title, "
+            "h3, h4"
         )
 
         if heading is None:
             continue
 
-        location = clean(
+        location_name = clean(
             heading.get_text(" ", strip=True)
         )
 
-        if not location:
+        if not location_name:
             continue
 
-        # Only evaluate the availability text
-        # belonging to this particular location.
-        info = item.select_one(
+        stock_element = item.select_one(
+            ".pickup-availability-list__stock, "
             ".pickup-availability-list__item-info"
         )
 
-        if info is None:
+        if stock_element is None:
             continue
 
-        status_text = clean(
-            info.get_text(" ", strip=True)
+        stock_text = clean(
+            stock_element.get_text(
+                " ",
+                strip=True,
+            )
         )
 
-        positive = bool(POSITIVE.search(status_text))
-        negative = bool(NEGATIVE.search(status_text))
+        status = pickup_status(stock_text)
 
-        # Do not interpret ambiguous markup.
-        if positive == negative:
+        if status is None:
             continue
 
-        status = (
-            "Pickup available"
-            if positive else "Pickup unavailable"
-        )
-
-        output.append({
+        observations.append({
             "retailer": offer.get("retailer"),
             "game": offer.get("game"),
-            "product_name": offer.get("product_name"),
-            "product_url": offer.get("product_url"),
-            "location_name": location,
-            "variant_id": str(variant["id"]),
-            "variant": clean(variant.get("title")),
+            "product_name":
+                offer.get("product_name"),
+            "product_url":
+                offer.get("product_url"),
+            "location_name": location_name,
+            "variant_id":
+                str(variant.get("id")),
+            "variant":
+                clean(variant.get("title")),
             "availability": status,
             "inventory_scope": "store_pickup",
             "shelf_stock_confirmed": False,
             "exact_quantity": None,
             "evidence_type":
                 "explicit_public_pickup_location_text",
-            "evidence_url": url,
+            "evidence_url": evidence_url,
             "checked_at": NOW,
         })
 
-    return output
+    return observations
 
 
-def check_pickup():
-    rows = candidates()
-    previous = read(REPORT, {})
+def run_monitor():
+    candidates = discover_candidates()
 
-    cursor = int(previous.get("next_cursor", 0))
+    previous_report = load_json(
+        REPORT_FILE,
+        {},
+    )
 
-    if rows:
-        cursor %= len(rows)
+    cursor = int(
+        previous_report.get("next_cursor", 0)
+    )
 
-    count = min(MAX_CHECKS, len(rows))
+    if candidates:
+        cursor %= len(candidates)
+
+    count = min(
+        MAX_CHECKS,
+        len(candidates),
+    )
+
     batch = [
-        rows[(cursor + i) % len(rows)]
-        for i in range(count)
+        candidates[
+            (cursor + index) % len(candidates)
+        ]
+        for index in range(count)
     ]
 
     observations = []
@@ -285,30 +359,43 @@ def check_pickup():
     cache = {}
 
     for offer, base, handle in batch:
+
         key = (base, handle)
 
         if key not in cache:
-            url = (
-                base + "/products/"
-                + quote(handle) + ".js"
+            product_url = (
+                base
+                + "/products/"
+                + quote(handle)
+                + ".js"
             )
-            cache[key] = get(url, as_json=True)
+
+            cache[key] = fetch(
+                product_url,
+                as_json=True,
+            )
 
         product = cache[key]
 
         if not isinstance(product, dict):
             checks.append({
-                "retailer": offer.get("retailer"),
+                "retailer":
+                    offer.get("retailer"),
                 "product": handle,
-                "status": "public_product_endpoint_unavailable",
+                "status":
+                    "public_product_endpoint_unavailable",
             })
             continue
 
-        variant = select_variant(product, offer)
+        variant = select_variant(
+            product,
+            offer,
+        )
 
         if not variant or not variant.get("id"):
             checks.append({
-                "retailer": offer.get("retailer"),
+                "retailer":
+                    offer.get("retailer"),
                 "product": handle,
                 "status": "variant_unresolved",
             })
@@ -320,19 +407,25 @@ def check_pickup():
             "pickup-availability",
             "store-availability",
         ):
+
             url = (
-                base + "/variants/"
+                base
+                + "/variants/"
                 + quote(str(variant["id"]))
-                + "/?section_id=" + section
+                + "/?section_id="
+                + section
             )
 
-            html = get(url)
+            html = fetch(url)
 
             if not html:
                 continue
 
-            found = extract_pickup(
-                html, offer, variant, url
+            found = parse_pickup(
+                html,
+                offer,
+                variant,
+                url,
             )
 
             if found:
@@ -341,73 +434,104 @@ def check_pickup():
         observations.extend(found)
 
         checks.append({
-            "retailer": offer.get("retailer"),
+            "retailer":
+                offer.get("retailer"),
             "product": handle,
             "status": (
                 "verified_pickup_text"
-                if found else
-                "no_explicit_pickup_evidence"
+                if found
+                else "no_explicit_pickup_evidence"
             ),
             "observations": len(found),
         })
 
     unique = {}
 
-    for row in observations:
+    for observation in observations:
         key = (
-            row["retailer"],
-            row["variant_id"],
-            row["location_name"],
+            observation["retailer"],
+            observation["variant_id"],
+            observation["location_name"],
         )
-        unique[key] = row
+        unique[key] = observation
 
     observations = list(unique.values())
 
     report = {
-        "version": "23.0",
+        "version": "23.1",
         "checked_at": NOW,
-        "candidate_offers": len(rows),
+        "candidate_offers": len(candidates),
         "checked_this_run": count,
         "next_cursor": (
-            (cursor + count) % len(rows)
-            if rows else 0
+            (cursor + count) % len(candidates)
+            if candidates
+            else 0
         ),
         "verified_pickup_observations":
             len(observations),
         "pickup_available": sum(
-            x["availability"] == "Pickup available"
-            for x in observations
+            row["availability"]
+            == "Pickup available"
+            for row in observations
         ),
         "pickup_unavailable": sum(
-            x["availability"] == "Pickup unavailable"
-            for x in observations
+            row["availability"]
+            == "Pickup unavailable"
+            for row in observations
         ),
         "physical_shelf_stock_confirmed": 0,
         "checks": checks,
     }
 
-    save(RESULTS, observations)
-    save(REPORT, report)
+    save_json(
+        RESULTS_FILE,
+        observations,
+    )
 
+    save_json(
+        REPORT_FILE,
+        report,
+    )
+
+    print("PokéStock V23.1")
+    print("Eligible offers:", len(candidates))
+    print("Checked:", count)
     print(
-        "Products checked:", count,
-        "| Pickup observations:", len(observations),
+        "Verified pickup observations:",
+        len(observations),
+    )
+    print(
+        "Available for pickup:",
+        report["pickup_available"],
+    )
+    print(
+        "Unavailable for pickup:",
+        report["pickup_unavailable"],
     )
 
 
-DASHBOARD = r"""
+PICKUP_SECTION = """
 <section id="pickup" class="panel">
-  <div class="section-label">Store-specific evidence</div>
-  <h2>Pickup Availability</h2>
+  <div class="section-label">
+    Verified pickup observations
+  </div>
+
+  <h2>Store Pickup Availability</h2>
+
   <p class="muted">
-    Only explicit public pickup-location observations
-    appear here. Pickup does not guarantee items
-    are physically on a shelf. Missing results mean
-    Unknown, not Out of Stock.
+    Results require explicit pickup information
+    for a named retail location.
+    Pickup availability does not guarantee
+    products are physically on a shelf.
+    Missing information means Unknown.
   </p>
+
   <div class="controls">
-    <input id="v23Search"
-      placeholder="Search products, stores, games">
+    <input
+      id="v23Search"
+      placeholder="Search products or locations"
+    >
+
     <select id="v23State">
       <option value="">All pickup statuses</option>
       <option value="Pickup available">
@@ -418,136 +542,190 @@ DASHBOARD = r"""
       </option>
     </select>
   </div>
-  <p id="v23Info" class="muted">Loading pickup data...</p>
+
+  <p id="v23Info" class="muted">
+    Loading pickup observations...
+  </p>
+
   <div id="v23Grid" class="grid"></div>
 </section>
 """
 
-JS = r"""
+PICKUP_SCRIPT = r"""
 <script>
 (function(){
   "use strict";
 
-  const esc = value => String(value ?? "").replace(
-    /[&<>"']/g,
-    c => ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-    }[c])
-  );
+  const escapeHTML = value =>
+    String(value ?? "").replace(
+      /[&<>"']/g,
+      c => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+      }[c])
+    );
 
-  let rows = [];
+  let observations = [];
   let report = {};
 
-  function safeLink(url,label){
+  function link(url,label){
     try{
-      const parsed = new URL(url);
-      if(parsed.protocol !== "https:") return "";
-      return `<a class="action" target="_blank"
-        rel="noopener noreferrer"
-        href="${esc(parsed.href)}">${esc(label)}</a>`;
+      const u = new URL(url);
+
+      if(u.protocol !== "https:"){
+        return "";
+      }
+
+      return `<a class="action"
+        href="${escapeHTML(u.href)}"
+        target="_blank"
+        rel="noopener noreferrer">
+        ${escapeHTML(label)}
+      </a>`;
+
     }catch{
       return "";
     }
   }
 
   function render(){
-    const search = document.getElementById("v23Search")
-      .value.toLowerCase().trim();
+    const search = document
+      .getElementById("v23Search")
+      .value.trim().toLowerCase();
 
-    const state = document.getElementById("v23State")
+    const filter = document
+      .getElementById("v23State")
       .value;
 
-    const fresh = rows.filter(r=>{
-      const age = Date.now() - Date.parse(r.checked_at);
-      return Number.isFinite(age)
+    const fresh = observations.filter(row=>{
+      const checked = Date.parse(row.checked_at);
+      const age = Date.now() - checked;
+
+      return Number.isFinite(checked)
         && age >= 0
         && age <= 8 * 3600000
-        && r.inventory_scope === "store_pickup"
-        && r.shelf_stock_confirmed === false
+        && row.inventory_scope === "store_pickup"
+        && row.shelf_stock_confirmed === false
         && [
           "Pickup available",
           "Pickup unavailable"
-        ].includes(r.availability)
-        && r.location_name
-        && r.evidence_url;
+        ].includes(row.availability)
+        && row.location_name
+        && row.evidence_url;
     });
 
-    const matched = fresh.filter(r=>{
+    const matched = fresh.filter(row=>{
       const text = [
-        r.product_name,
-        r.retailer,
-        r.location_name,
-        r.game
+        row.product_name,
+        row.retailer,
+        row.location_name,
+        row.game
       ].join(" ").toLowerCase();
 
       return (!search || text.includes(search))
-        && (!state || r.availability === state);
+        && (!filter || row.availability === filter);
     });
 
-    document.getElementById("v23Info").textContent =
-      matched.length + " matching fresh pickup observations. " +
-      "Checked: " + (report.checked_at || "Unknown") +
-      ". Physical shelf quantities: unverified.";
+    document.getElementById("v23Info")
+      .textContent =
+        matched.length
+        + " fresh pickup observations. Last check: "
+        + (report.checked_at || "Unknown")
+        + ". Shelf stock not verified.";
 
-    document.getElementById("v23Grid").innerHTML =
-      matched.map(r=>`
-        <article class="tile">
-          <h3>${esc(r.product_name)}</h3>
-          <p><strong>${esc(r.retailer)}</strong></p>
-          <p>Pickup location: ${esc(r.location_name)}</p>
-          <p>${esc(r.game || "Trading cards")}</p>
-          <span class="pill ${
-            r.availability === "Pickup available"
-              ? "in" : "out"
-          }">${esc(r.availability)}</span>
-          <p class="muted">
-            Store pickup only; shelf stock not confirmed.
-          </p>
-          <p class="muted">
-            Checked: ${esc(
-              new Date(r.checked_at).toLocaleString()
+    document.getElementById("v23Grid")
+      .innerHTML =
+        matched.map(row=>`
+          <article class="tile">
+            <h3>
+              ${escapeHTML(row.product_name)}
+            </h3>
+
+            <p>
+              ${escapeHTML(row.retailer)}
+            </p>
+
+            <p>
+              Pickup location:
+              ${escapeHTML(row.location_name)}
+            </p>
+
+            <p>
+              ${escapeHTML(row.game || "TCG")}
+            </p>
+
+            <span class="pill ${
+              row.availability === "Pickup available"
+                ? "in" : "out"
+            }">
+              ${escapeHTML(row.availability)}
+            </span>
+
+            <p class="muted">
+              Store pickup only.
+              Shelf inventory not confirmed.
+            </p>
+
+            <p class="muted">
+              Checked:
+              ${escapeHTML(
+                new Date(
+                  row.checked_at
+                ).toLocaleString()
+              )}
+            </p>
+
+            ${link(
+              row.product_url,
+              "View product"
             )}
-          </p>
-          ${safeLink(r.product_url,"View product")}
-          ${safeLink(r.evidence_url,"Pickup evidence")}
-        </article>
-      `).join("") ||
-      `<div class="empty">
-        No verified pickup observations match.
-        This does not mean the products are sold out.
-      </div>`;
+
+            ${link(
+              row.evidence_url,
+              "View evidence"
+            )}
+          </article>
+        `).join("")
+        || `<div class="empty">
+          No verified pickup observations.
+          This does not mean products
+          are out of stock.
+        </div>`;
   }
 
   async function load(){
     try{
       const [a,b] = await Promise.all([
         fetch(
-          "data/v23_pickup_observations.json?v=" +
-          Date.now(),
+          "data/v23_pickup_observations.json?v="
+          + Date.now(),
           {cache:"no-store"}
         ),
         fetch(
-          "data/v23_pickup_report.json?v=" +
-          Date.now(),
+          "data/v23_pickup_report.json?v="
+          + Date.now(),
           {cache:"no-store"}
         )
       ]);
 
-      if(!a.ok || !b.ok) throw Error("Data unavailable");
+      if(!a.ok || !b.ok){
+        throw Error("Data unavailable");
+      }
 
-      rows = await a.json();
+      observations = await a.json();
       report = await b.json();
 
-      if(!Array.isArray(rows)) rows = [];
+      if(!Array.isArray(observations)){
+        observations = [];
+      }
 
     }catch(error){
-      rows = [];
+      console.warn(error);
+      observations = [];
       report = {};
-      console.warn("V23 pickup data:",error);
     }
 
     render();
@@ -565,14 +743,22 @@ JS = r"""
 """
 
 
-def patch_website():
-    if not HTML.exists():
-        raise FileNotFoundError("index.html not found")
+def upgrade_website():
+    if not HTML_FILE.exists():
+        raise FileNotFoundError(
+            "index.html is missing"
+        )
 
-    html = HTML.read_text(encoding="utf-8")
+    html = HTML_FILE.read_text(
+        encoding="utf-8"
+    )
 
+    # V23 already installed the pickup tab.
+    # Do not duplicate it.
     if 'id="pickup"' in html:
-        print("V23 dashboard already installed")
+        print(
+            "Pickup dashboard already installed."
+        )
         return
 
     nav_anchor = (
@@ -589,33 +775,44 @@ def patch_website():
         or "</body>" not in html
     ):
         raise RuntimeError(
-            "Website structure changed; "
-            "refusing unsafe HTML modification"
+            "Website structure not recognized."
         )
 
     html = html.replace(
         nav_anchor,
-        '<button data-tab="pickup">📍 Pickup</button>\n    '
+        '<button data-tab="pickup">'
+        '📍 Pickup</button>\n    '
         + nav_anchor,
         1,
     )
 
     html = html.replace(
         section_anchor,
-        DASHBOARD + "\n" + section_anchor,
+        PICKUP_SECTION
+        + "\n"
+        + section_anchor,
         1,
     )
 
     html = html.replace(
         "</body>",
-        JS + "\n</body>",
+        PICKUP_SCRIPT
+        + "\n</body>",
         1,
     )
 
-    HTML.write_text(html, encoding="utf-8")
-    print("V23 dashboard installed successfully")
+    HTML_FILE.write_text(
+        html,
+        encoding="utf-8",
+    )
+
+    print("Pickup dashboard installed.")
+
+
+def main():
+    run_monitor()
+    upgrade_website()
 
 
 if __name__ == "__main__":
-    check_pickup()
-    patch_website()
+    main()
