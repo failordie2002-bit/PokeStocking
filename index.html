@@ -1,622 +1,586 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10131b">
-<title>PokéStock V7 | TCG Stock Tracker</title>
+<meta name="theme-color" content="#0b1120">
+<title>PokéStock V8 — TCG Discovery</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root{
- --bg:#10131b;--panel:#191e2a;--panel2:#252d3e;
- --border:#30394c;--text:#f5f4ef;--muted:#a0a9ba;
- --gold:#d6a83e;--green:#48d6a0;--red:#ff7185;
+:root {
+  color-scheme:dark;
+  --bg:#0b1120;
+  --panel:#172238;
+  --border:#33435a;
+  --text:#f5f7fb;
+  --muted:#a9b7cc;
+  --accent:#63e6be;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
-a{color:#f0cc76;text-decoration:none}
-button,select,input{font:inherit}
-button{cursor:pointer}
-header{padding:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border)}
-.brand{font-weight:900;font-size:23px}
-.brand span{color:var(--gold)}
-.subtitle,.muted{color:var(--muted)}
-.subtitle{font-size:12px;margin-top:4px}
-.container{max-width:1250px;margin:auto;padding:20px}
-nav{display:flex;gap:8px;overflow-x:auto;padding:12px 20px;border-bottom:1px solid var(--border)}
-nav button{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:10px 15px;white-space:nowrap}
-nav button.active{background:var(--gold);color:#17130a;font-weight:800}
-.page{display:none}
-.page.active{display:block}
-.hero{padding:25px;border:1px solid #5b4a29;border-radius:18px;background:linear-gradient(125deg,#302719,#191e2a);margin-bottom:20px}
-.hero h1{font-size:clamp(27px,5vw,43px);margin:0 0 8px}
-.hero p{color:#d0c9bb;max-width:700px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:20px 0}
-.stat,.panel,.product,.release,.store-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
-.stat strong{display:block;font-size:29px;color:var(--gold)}
-.stat small{color:var(--muted)}
-.panel{margin:20px 0}
-.panel h2{margin-top:0}
-.controls{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0}
-input,select{background:var(--panel2);border:1px solid #414c61;color:white;padding:11px;border-radius:9px;min-width:0}
-input{flex:1;min-width:180px}
-button.primary{background:var(--gold);color:#17130a;border:0;border-radius:9px;padding:11px 15px;font-weight:800}
-#stockMap{height:390px;width:100%;border-radius:12px;background:var(--panel2);z-index:0}
-.status{font-size:13px;color:var(--muted);padding:12px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px}
-.product img{width:100%;height:175px;object-fit:contain;background:#10131b;border-radius:10px}
-.product h3{font-size:15px;min-height:38px}
-.product p,.release p,.store-card p{font-size:13px;color:var(--muted)}
-.tag{display:inline-block;padding:5px 8px;background:var(--panel2);border-radius:6px;font-size:11px;margin:3px}
-.stock-unknown{color:var(--muted)}
-.stock-in{color:var(--green)}
-.stock-out{color:var(--red)}
-.release{margin:10px 0}
-.release h3{margin:0 0 6px}
-.store-card{margin:10px 0}
-.store-card strong{color:#f0cc76}
-.store-card small{display:block;color:var(--muted);margin:7px 0}
-.notice{padding:13px;border:1px solid #625337;border-radius:10px;color:#dfcda4;background:#30291d;font-size:13px}
-footer{padding:30px;text-align:center;color:var(--muted);font-size:12px}
-@media(max-width:600px){
- .container{padding:12px}
- header{padding:15px}
- #stockMap{height:320px}
- .panel{padding:12px}
- .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .product{padding:10px}
- .product img{height:125px}
- .product h3{font-size:13px}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:15px system-ui,sans-serif;
 }
+header {
+  padding:17px 5%;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.logo {font-size:24px;font-weight:900}
+.logo b {color:var(--accent)}
+nav {display:flex;gap:8px;flex-wrap:wrap}
+button,select,input {
+  font:inherit;
+  border:1px solid var(--border);
+  background:#21314b;
+  color:var(--text);
+  border-radius:10px;
+  padding:10px;
+}
+button {cursor:pointer}
+button:hover {border-color:var(--accent)}
+main {max-width:1280px;margin:auto;padding:24px 4%}
+.hero {
+  padding:24px;
+  background:linear-gradient(125deg,#173452,#152339);
+  border:1px solid var(--border);
+  border-radius:18px;
+  margin-bottom:20px;
+}
+h1 {margin:0 0 8px;font-size:clamp(27px,4vw,43px)}
+h2 {font-size:21px;margin:0 0 12px}
+.muted {color:var(--muted)}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:12px;
+}
+.panel,.tile {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+}
+.tile img {
+  width:100%;
+  height:135px;
+  object-fit:contain;
+  background:#0d182b;
+  border-radius:9px;
+}
+.tile h3 {font-size:15px;min-height:42px}
+.tile small {color:var(--muted)}
+.controls {display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+.controls input {flex:1;min-width:180px}
+.tab {display:none}
+.tab.active {display:block}
+#map {
+  height:480px;
+  border-radius:13px;
+  z-index:1;
+  background:#13263d;
+}
+.legend {display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin:10px 0}
+.dot {
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  margin-right:5px;
+}
+.good {background:#16a34a}
+.unknown {background:#64748b}
+.warn {background:#eab308}
+.stats {display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.stat {flex:1;min-width:130px}
+.stat strong {font-size:25px;display:block}
+.pill {
+  display:inline-block;
+  background:#263e55;
+  border-radius:30px;
+  padding:4px 9px;
+  color:#bcead9;
+  font-size:12px;
+}
+.empty {padding:25px;text-align:center;color:var(--muted)}
+a {color:#7fe5c8}
+footer {padding:30px 5%;color:var(--muted);text-align:center}
+.leaflet-popup-content {color:#172238}
+.leaflet-popup-content a {color:#065f46}
 </style>
 </head>
 <body>
-
 <header>
- <div>
-  <div class="brand">◉ Poké<span>Stock</span> <small style="font-size:12px">V7</small></div>
-  <div class="subtitle">Pokémon & Union Arena discovery and inventory intelligence</div>
- </div>
- <div id="connection" class="subtitle">Connecting...</div>
+  <div class="logo">Poké<b>Stock</b> <small class="muted">V8</small></div>
+  <nav>
+    <button data-tab="maptab">Live Map</button>
+    <button data-tab="products">Products</button>
+    <button data-tab="releases">Releases</button>
+    <button data-tab="shipments">Shipment Catcher</button>
+    <button data-tab="health">Source Health</button>
+  </nav>
 </header>
 
-<nav>
- <button class="active" data-page="home">⌂ Home</button>
- <button data-page="catalogue">▤ Products</button>
- <button data-page="releases">◷ Releases</button>
- <button data-page="retailers">⌖ Retailers</button>
- <button data-page="history">↻ Updates</button>
-</nav>
-
-<div class="container">
-
-<section id="home" class="page active">
- <div class="hero">
+<main>
+<section class="hero">
   <h1>Find your next big pull.</h1>
-  <p>Discover sealed Pokémon and Union Arena products, follow new releases, and explore verified local inventory reports.</p>
- </div>
+  <p class="muted">
+    Nationwide TCG discovery for Pokémon, Union Arena, Gundam
+    and One Piece. No invented inventory or shipment claims.
+  </p>
+  <div id="updated" class="pill">Loading catalogue…</div>
+</section>
 
- <div class="stats">
-  <div class="stat"><strong id="totalProducts">—</strong><small>Catalogue products</small></div>
-  <div class="stat"><strong id="pokemonCount">—</strong><small>Pokémon products</small></div>
-  <div class="stat"><strong id="unionCount">—</strong><small>Union Arena products</small></div>
-  <div class="stat"><strong id="verifiedCount">0</strong><small>Recent verified store reports</small></div>
- </div>
-
- <div class="panel">
-  <h2>📍 Nearby TCG Stock Map</h2>
-  <p class="muted">Find recently verified store-specific Pokémon and Union Arena stock reports near you.</p>
-
-  <div class="controls">
-   <button id="locateBtn" class="primary">Use my location</button>
-   <input id="locationSearch" placeholder="City or ZIP code">
-   <button id="searchLocationBtn" class="primary">Search</button>
+<div class="stats">
+  <div class="panel stat">
+    <strong id="productCount">—</strong>
+    <small>Catalogue products</small>
   </div>
-
-  <div class="controls">
-   <select id="mapGame">
-    <option value="all">All games</option>
-    <option value="pokemon">Pokémon</option>
-    <option value="union arena">Union Arena</option>
-   </select>
-   <select id="mapRadius">
-    <option value="10">10 miles</option>
-    <option value="25">25 miles</option>
-    <option value="50" selected>50 miles</option>
-    <option value="100">100 miles</option>
-    <option value="250">250 miles</option>
-   </select>
-   <button id="refreshMap" class="primary">Refresh inventory</button>
+  <div class="panel stat">
+    <strong id="storeCount">—</strong>
+    <small>Directory stores</small>
   </div>
-
-  <div id="stockMap"></div>
-  <div id="mapStatus" class="status">Initializing map...</div>
-  <div id="mapResults"></div>
-
-  <div class="notice">
-   Only recent, explicitly verified in-stock reports appear as inventory pins.
-   An empty map does not mean stores are sold out.
-   Store-level inventory is not yet connected to the existing V6 monitor.
+  <div class="panel stat">
+    <strong id="stockCount">—</strong>
+    <small>Verified in-stock records</small>
   </div>
- </div>
-
- <div class="panel">
-  <h2>Latest releases</h2>
-  <div id="homeReleases"></div>
- </div>
-</section>
-
-<section id="catalogue" class="page">
- <h1>Sealed Product Catalogue</h1>
- <p class="muted">Officially discovered products and retained historical records.</p>
- <div class="controls">
-  <input id="productSearch" placeholder="Search Pokémon, Union Arena, sets, boxes, tins...">
-  <select id="productGame">
-   <option value="all">All games</option>
-   <option value="pokemon">Pokémon</option>
-   <option value="union arena">Union Arena</option>
-  </select>
-  <select id="productType"><option value="all">All product types</option></select>
- </div>
- <p id="productCount" class="muted"></p>
- <div id="productGrid" class="cards"></div>
-</section>
-
-<section id="releases" class="page">
- <h1>Release Calendar</h1>
- <p class="muted">Release information from the published monitoring database. Dates may change.</p>
- <div class="controls">
-  <input id="releaseSearch" placeholder="Search releases">
-  <select id="releaseGame">
-   <option value="all">All games</option>
-   <option value="pokemon">Pokémon</option>
-   <option value="union arena">Union Arena</option>
-  </select>
- </div>
- <div id="releaseList"></div>
-</section>
-
-<section id="retailers" class="page">
- <h1>Retailer Discovery</h1>
- <div class="notice">These are retailer search links, not verified in-stock claims.</div>
- <div id="retailerList"></div>
-</section>
-
-<section id="history" class="page">
- <h1>Monitor Status</h1>
- <div class="panel">
-  <h2>Latest database update</h2>
-  <p id="lastUpdated">Loading...</p>
-  <div id="monitorSummary"></div>
- </div>
- <div class="panel">
-  <h2>Source health</h2>
-  <div id="sourceHealth"></div>
- </div>
- <div class="panel">
-  <h2>Monitor errors</h2>
-  <div id="monitorErrors"></div>
- </div>
-</section>
-
+  <div class="panel stat">
+    <strong id="shipmentCount">—</strong>
+    <small>Published shipment events</small>
+  </div>
 </div>
 
+<section id="maptab" class="tab active">
+  <div class="panel">
+    <h2>Nationwide Store Atlas</h2>
+    <p class="muted">
+      Location is optional. Store pins do not imply stock
+      unless specifically verified.
+    </p>
+    <div class="controls">
+      <button id="locate">Use my location</button>
+      <input id="zip" placeholder="ZIP code (US)" inputmode="numeric" maxlength="5">
+      <button id="findZip">Go to ZIP</button>
+      <select id="radius">
+        <option value="25">25 miles</option>
+        <option value="50" selected>50 miles</option>
+        <option value="100">100 miles</option>
+        <option value="250">250 miles</option>
+        <option value="10000">Nationwide</option>
+      </select>
+      <select id="mapGame">
+        <option value="">All games</option>
+        <option>Pokémon</option>
+        <option>Union Arena</option>
+        <option>Gundam</option>
+        <option>One Piece</option>
+      </select>
+    </div>
+    <div class="legend">
+      <span><i class="dot good"></i>Verified in stock</span>
+      <span><i class="dot unknown"></i>Store known, stock unknown</span>
+      <span><i class="dot warn"></i>Community report (future)</span>
+    </div>
+    <div id="map"></div>
+    <p id="mapInfo" class="muted"></p>
+  </div>
+</section>
+
+<section id="products" class="tab">
+  <div class="panel">
+    <h2>Multi-TCG Catalogue</h2>
+    <div class="controls">
+      <input id="search" placeholder="Search products, sets or stores">
+      <select id="game">
+        <option value="">All games</option>
+        <option>Pokémon</option>
+        <option>Union Arena</option>
+        <option>Gundam</option>
+        <option>One Piece</option>
+      </select>
+    </div>
+    <div id="productGrid" class="grid"></div>
+  </div>
+</section>
+
+<section id="releases" class="tab">
+  <div class="panel">
+    <h2>Release Calendar</h2>
+    <p class="muted">
+      Official dates only where available; blank dates are not inferred.
+    </p>
+    <div id="releaseList" class="grid"></div>
+  </div>
+</section>
+
+<section id="shipments" class="tab">
+  <div class="panel">
+    <h2>Shipment Catcher</h2>
+    <p class="muted">
+      Confirmed shipment schedules, observed restocks, and future
+      evidence-based forecasts will appear here. Shipment arrival
+      is different from shelf restocking.
+    </p>
+    <div id="shipmentList"></div>
+  </div>
+</section>
+
+<section id="health" class="tab">
+  <div class="panel">
+    <h2>Monitoring Transparency</h2>
+    <div id="healthList"></div>
+  </div>
+</section>
+</main>
+
 <footer>
- PokéStock V7 · Independent collector project · Not affiliated with Pokémon, Bandai, or any retailer
+  PokéStock V8 · Inventory is not guaranteed.
+  Verify with retailers before travelling.
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-"use strict";
-
-const DATA_URL = "data/status.json";
-const MAX_REPORT_AGE_MS = 6 * 60 * 60 * 1000;
-
-let database = {products:[],releases:[],store_inventory:[]};
-let map = null;
-let markerLayer = null;
-let userLocation = null;
-let validStock = [];
+'use strict';
 
 const $ = id => document.getElementById(id);
 
-function text(el,value){
- el.textContent = String(value ?? "");
-}
+let db = {
+  products: [],
+  releases: [],
+  store_inventory: []
+};
 
-function element(tag,content,className){
- const e=document.createElement(tag);
- if(content!==undefined) text(e,content);
- if(className) e.className=className;
- return e;
-}
+let stores = [];
+let shipments = {events: [], forecasts: []};
+let map, layer, userPoint = null;
 
-function safeLink(url){
- try{
-  const u=new URL(url);
-  return u.protocol==="https:" ? u.href : "";
- }catch{return ""}
-}
-
-function normalizeGame(value){
- const v=String(value||"").toLowerCase();
- return v.includes("union") ? "union arena" : v.includes("pok") ? "pokemon" : v;
-}
-
-function formatDate(value){
- if(!value)return "Date not announced";
- const d=new Date(value);
- return Number.isFinite(d.getTime()) ? d.toLocaleDateString() : String(value);
-}
-
-function formatTime(value){
- if(!value)return "Not available";
- const d=new Date(value);
- return Number.isFinite(d.getTime()) ? d.toLocaleString() : String(value);
-}
-
-function makeLink(url,label){
- const href=safeLink(url);
- if(!href)return element("span","Source unavailable");
- const a=element("a",label);
- a.href=href;
- a.target="_blank";
- a.rel="noopener noreferrer";
- return a;
-}
-
-function setupNavigation(){
- document.querySelectorAll("nav button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-   btn.classList.add("active");
-   $(btn.dataset.page).classList.add("active");
-   if(btn.dataset.page==="home" && map){
-    setTimeout(()=>map.invalidateSize(),100);
-   }
-  });
- });
-}
-
-function initMap(){
- if(typeof L==="undefined"){
-  text($("mapStatus"),"Map library could not load.");
-  return;
- }
- map=L.map("stockMap").setView([39.5,-98.35],4);
- L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{
-  attribution:"&copy; OpenStreetMap contributors",
-  maxZoom:19
- }).addTo(map);
- markerLayer=L.layerGroup().addTo(map);
-}
-
-function radians(degrees){return degrees*Math.PI/180}
-
-function distanceMiles(a,b){
- const dLat=radians(b.lat-a.lat);
- const dLon=radians(b.lon-a.lon);
- const x=Math.sin(dLat/2)**2+
-  Math.cos(radians(a.lat))*Math.cos(radians(b.lat))*
-  Math.sin(dLon/2)**2;
- return 3958.8*2*Math.asin(Math.min(1,Math.sqrt(x)));
-}
-
-function isVerifiedStock(r){
- if(!r || typeof r!=="object")return false;
- if(r.status!=="In stock")return false;
- if(!r.store_id || !r.store_name || !r.product_name || !r.game)return false;
- if(!safeLink(r.source_url))return false;
-
- const lat=Number(r.lat),lon=Number(r.lon);
- if(!Number.isFinite(lat)||!Number.isFinite(lon))return false;
- if(Math.abs(lat)>90||Math.abs(lon)>180)return false;
-
- const verified=Date.parse(r.verified_at);
- if(!Number.isFinite(verified))return false;
- const age=Date.now()-verified;
- return age>=0 && age<=MAX_REPORT_AGE_MS;
-}
-
-function makePopup(r){
- const div=document.createElement("div");
- div.append(
-  element("strong",r.store_name),
-  element("p",r.product_name+" — In stock"),
-  element("small","Verified: "+formatTime(r.verified_at)),
-  document.createElement("br"),
-  makeLink(r.source_url,"View evidence")
- );
- return div;
-}
-
-function renderMap(){
- if(!map)return;
- markerLayer.clearLayers();
- const results=$("mapResults");
- results.replaceChildren();
-
- validStock=(Array.isArray(database.store_inventory)?database.store_inventory:[])
-  .filter(isVerifiedStock);
-
- text($("verifiedCount"),validStock.length);
-
- const game=$("mapGame").value;
- const radius=Number($("mapRadius").value);
-
- const shown=validStock.filter(r=>{
-  if(game!=="all" && normalizeGame(r.game)!==game)return false;
-  if(userLocation){
-   return distanceMiles(userLocation,{lat:+r.lat,lon:+r.lon})<=radius;
+const safe = u => {
+  try {
+    const x = new URL(u);
+    return x.protocol === 'https:' ? x.href : '';
+  } catch {
+    return '';
   }
-  return true;
- });
+};
 
- if(userLocation){
-  shown.sort((a,b)=>
-   distanceMiles(userLocation,{lat:+a.lat,lon:+a.lon})-
-   distanceMiles(userLocation,{lat:+b.lat,lon:+b.lon})
+const esc = s => String(s ?? '').replace(
+  /[&<>"']/g,
+  c => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c])
+);
+
+function link(u, label) {
+  const x = safe(u);
+  return x
+    ? `<a href="${esc(x)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`
+    : '';
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(x => {
+    x.classList.toggle('active', x.id === id);
+  });
+  if (id === 'maptab') {
+    setTimeout(() => map.invalidateSize(), 100);
+  }
+}
+
+document.querySelectorAll('[data-tab]').forEach(b => {
+  b.onclick = () => switchTab(b.dataset.tab);
+});
+
+function miles(a,b,c,d) {
+  const R = 3958.8;
+  const rad = Math.PI / 180;
+  const x = (c-a)*rad;
+  const y = (d-b)*rad;
+  const z = Math.sin(x/2)**2 +
+    Math.cos(a*rad)*Math.cos(c*rad)*Math.sin(y/2)**2;
+  return 2*R*Math.asin(Math.sqrt(z));
+}
+
+function fresh(r) {
+  const t = Date.parse(r.verified_at || '');
+  return r.status === 'In stock' &&
+    Number.isFinite(t) &&
+    Date.now()-t >= 0 &&
+    Date.now()-t <= 6*3600000 &&
+    safe(r.source_url);
+}
+
+function verified(s) {
+  return (db.store_inventory || []).filter(
+    x => String(x.store_id) === String(s.id) && fresh(x)
   );
- }
-
- const bounds=[];
-
- for(const r of shown){
-  const lat=Number(r.lat),lon=Number(r.lon);
-  bounds.push([lat,lon]);
-  L.marker([lat,lon]).addTo(markerLayer).bindPopup(makePopup(r));
-
-  const card=element("div",undefined,"store-card");
-  card.append(
-   element("strong",r.store_name),
-   element("p",r.product_name+" — In stock")
-  );
-
-  const distance=userLocation
-   ?distanceMiles(userLocation,{lat,lon}).toFixed(1)+" miles · "
-   :"";
-
-  card.append(element("small",distance+"Verified "+formatTime(r.verified_at)));
-
-  const directions=makeLink(
-   "https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(lat+","+lon),
-   "Get directions"
-  );
-  card.append(directions);
-  results.append(card);
- }
-
- if(userLocation){
-  L.circleMarker([userLocation.lat,userLocation.lon],{
-   radius:7,color:"#82b8ff",fillColor:"#82b8ff",fillOpacity:1
-  }).addTo(markerLayer).bindPopup("Your location");
-  map.setView([userLocation.lat,userLocation.lon],11);
- }else if(bounds.length){
-  map.fitBounds(bounds,{padding:[25,25],maxZoom:12});
- }
-
- text($("mapStatus"),shown.length
-  ?shown.length+" recent verified stock report(s) match your filters."
-  :"No verified in-stock reports match your filters. Nearby stores may still have inventory.");
 }
 
-function locateUser(){
- if(!navigator.geolocation){
-  text($("mapStatus"),"Location is not supported by your browser.");
-  return;
- }
- text($("mapStatus"),"Requesting location permission...");
- navigator.geolocation.getCurrentPosition(
-  position=>{
-   userLocation={
-    lat:position.coords.latitude,
-    lon:position.coords.longitude
-   };
-   renderMap();
-  },
-  ()=>text($("mapStatus"),"Location unavailable or permission denied."),
-  {enableHighAccuracy:false,timeout:12000,maximumAge:300000}
- );
+function renderMap() {
+  layer.clearLayers();
+
+  const radius = Number($('radius').value);
+  const g = $('mapGame').value;
+  let shown = 0;
+
+  for (const s of stores) {
+    const lat = Number(s.lat);
+    const lon = Number(s.lon);
+
+    if (
+      s.lat == null || s.lon == null ||
+      !Number.isFinite(lat) || !Number.isFinite(lon) ||
+      Math.abs(lat)>90 || Math.abs(lon)>180
+    ) continue;
+
+    if (
+      userPoint &&
+      miles(userPoint[0],userPoint[1],lat,lon)>radius
+    ) continue;
+
+    const allVerified = verified(s);
+    const items = allVerified.filter(x => !g || x.game === g);
+
+    // A game filter narrows verified products, but unknown-stock
+    // stores remain visible unless the store declares supported games.
+    const supported = Array.isArray(s.games) ? s.games : [];
+    if (g && supported.length && !supported.includes(g) && !items.length) {
+      continue;
+    }
+
+    const good = items.length > 0;
+
+    const marker = L.circleMarker([lat,lon], {
+      radius:good?9:6,
+      color:good?'#15803d':'#64748b',
+      fillColor:good?'#22c55e':'#94a3b8',
+      fillOpacity:.9,
+      weight:2
+    });
+
+    let html =
+      `<strong>${esc(s.name)}</strong>` +
+      `<p>${esc([s.city,s.state].filter(Boolean).join(', '))}</p>` +
+      `<p>${good
+        ? 'Verified in-stock products: '+items.length
+        : 'Physical-store inventory unknown for this selection'
+      }</p>` +
+      items.slice(0,5).map(x =>
+        `<p>${esc(x.product_name)} · ${link(x.source_url,'Evidence')}</p>`
+      ).join('') +
+      link(s.url,'Shop website');
+
+    marker.bindPopup(html).addTo(layer);
+    shown++;
+  }
+
+  $('mapInfo').textContent =
+    `${shown} mapped stores shown. ${stores.length} total directory entries. ` +
+    'Stores without coordinates cannot be pinned.';
 }
 
-async function searchLocation(){
- const query=$("locationSearch").value.trim();
- if(!query)return;
- text($("mapStatus"),"Searching for location...");
- try{
-  const url="https://nominatim.openstreetmap.org/search?format=json&limit=1&q="+encodeURIComponent(query);
-  const response=await fetch(url);
-  if(!response.ok)throw Error("Location service unavailable");
-  const places=await response.json();
-  if(!places.length)throw Error("Location not found");
-  userLocation={lat:+places[0].lat,lon:+places[0].lon};
-  renderMap();
- }catch(error){
-  text($("mapStatus"),error.message);
- }
+function renderProducts() {
+  const q = $('search').value.toLowerCase();
+  const g = $('game').value;
+
+  const items = (db.products || []).filter(x =>
+    (!g || x.game === g) &&
+    (!q || [x.name,x.game,x.type,x.retailer]
+      .join(' ').toLowerCase().includes(q))
+  ).slice(0,180);
+
+  $('productGrid').innerHTML = items.map(p =>
+    `<article class="tile">` +
+    (safe(p.image)
+      ? `<img loading="lazy" src="${esc(safe(p.image))}" alt="">`
+      : '') +
+    `<h3>${esc(p.name)}</h3>` +
+    `<small>${esc(p.game)} · ${esc(p.type || 'Product')}</small>` +
+    `<p class="pill">${esc(
+      p.online_stock_status
+        ? 'Online: '+p.online_stock_status
+        : 'Store inventory not checked'
+    )}</p>` +
+    `<p>${link(p.url,'View source')}</p>` +
+    `</article>`
+  ).join('') || '<p class="empty">No matching products.</p>';
 }
 
-function renderDashboard(){
- const products=database.products||[];
- text($("totalProducts"),products.length);
- text($("pokemonCount"),products.filter(p=>normalizeGame(p.game)==="pokemon").length);
- text($("unionCount"),products.filter(p=>normalizeGame(p.game)==="union arena").length);
+function renderReleases() {
+  const arr = (db.releases || []).slice().sort((a,b) =>
+    String(b.date || b.release_date || '').localeCompare(
+      String(a.date || a.release_date || '')
+    )
+  ).slice(0,100);
+
+  $('releaseList').innerHTML = arr.map(x =>
+    `<div class="tile">` +
+    `<span class="pill">${esc(x.game)}</span>` +
+    `<h3>${esc(x.name)}</h3>` +
+    `<p>${esc(x.date || x.release_date || 'Date not published')}</p>` +
+    link(x.url,'Official source') +
+    `</div>`
+  ).join('') || '<p class="empty">No release records.</p>';
 }
 
-function productCard(p){
- const card=element("article",undefined,"product");
- if(p.image){
-  const img=document.createElement("img");
-  img.src=p.image;
-  img.alt=p.name||"TCG product";
-  img.loading="lazy";
-  img.onerror=()=>img.remove();
-  card.append(img);
- }
- card.append(
-  element("h3",p.name||"Unnamed product"),
-  element("span",p.game||"Unknown game","tag"),
-  element("span",p.type||"Sealed product","tag")
- );
- const status=p.stock_status||"Not checked";
- const label=element("p","Stock: "+status,
-  status==="In stock"?"stock-in":status==="Out of stock"?"stock-out":"stock-unknown");
- card.append(label);
- if(p.release_date)card.append(element("p","Release: "+formatDate(p.release_date)));
- if(p.msrp)card.append(element("p","MSRP: "+p.msrp));
- if(p.url)card.append(makeLink(p.url,"Product source"));
- return card;
+function renderShipments() {
+  const ev = shipments.events || [];
+  const fore = shipments.forecasts || [];
+
+  $('shipmentList').innerHTML = ev.length
+    ? ev.map(x =>
+      `<div class="tile">` +
+      `<h3>${esc(x.store_name || 'Store')}</h3>` +
+      `<p>${esc(x.product_name || 'Product not specified')}</p>` +
+      `<p>${esc(x.date || 'Date unknown')} · ` +
+      `${esc(x.event_type || 'Shipment event')}</p>` +
+      link(x.source_url,'Evidence') +
+      `</div>`
+    ).join('')
+    : '<p class="empty">No confirmed shipment events have been published. Forecasts require historical observations.</p>';
+
+  if (fore.length) {
+    $('shipmentList').innerHTML +=
+      `<p class="muted">${fore.length} forecast records available. ` +
+      `Forecasts are not confirmed shipments.</p>`;
+  }
 }
 
-function renderProducts(){
- const products=database.products||[];
- const search=$("productSearch").value.toLowerCase().trim();
- const game=$("productGame").value;
- const type=$("productType").value;
+function renderHealth() {
+  const h = db.catalogue_source_status || {};
 
- const types=[...new Set(products.map(p=>p.type).filter(Boolean))].sort();
- const current=$("productType").value;
- $("productType").replaceChildren(new Option("All product types","all"));
- types.forEach(t=>$("productType").add(new Option(t,t)));
- $("productType").value=types.includes(current)?current:"all";
-
- const filtered=products.filter(p=>{
-  const content=[p.name,p.set,p.type,p.game].join(" ").toLowerCase();
-  return content.includes(search) &&
-   (game==="all"||normalizeGame(p.game)===game) &&
-   (type==="all"||p.type===type);
- });
-
- text($("productCount"),filtered.length+" products");
- const grid=$("productGrid");
- grid.replaceChildren();
- filtered.forEach(p=>grid.append(productCard(p)));
+  $('healthList').innerHTML =
+    Object.entries(h).map(([k,v]) =>
+      `<p><strong>${esc(k)}</strong>: ${esc(v.status || 'unknown')} ` +
+      `${v.error ? ' — '+esc(v.error) : ''}</p>`
+    ).join('') +
+    `<p>Monitor version: ${esc(db.monitor_version || 'unknown')}</p>` +
+    (db.monitor_errors || []).map(x =>
+      `<p class="muted">${esc(x)}</p>`
+    ).join('');
 }
 
-function releaseCard(r){
- const div=element("article",undefined,"release");
- div.append(
-  element("h3",r.name||"Unnamed release"),
-  element("span",r.game||"Unknown game","tag"),
-  element("p","Release: "+formatDate(r.date||r.release_date))
- );
- if(r.url)div.append(makeLink(r.url,"Official information"));
- return div;
+async function json(path,fallback) {
+  try {
+    const r = await fetch(path+'?v='+Date.now(), {
+      cache:'no-store'
+    });
+    if (!r.ok) throw Error(r.status);
+    return await r.json();
+  } catch(e) {
+    console.warn(path,e);
+    return fallback;
+  }
 }
 
-function renderReleases(){
- const releases=database.releases||[];
- const search=$("releaseSearch").value.toLowerCase().trim();
- const game=$("releaseGame").value;
- const filtered=releases.filter(r=>
-  (r.name||"").toLowerCase().includes(search) &&
-  (game==="all"||normalizeGame(r.game)===game)
- );
- filtered.sort((a,b)=>String(b.date||b.release_date||"").localeCompare(String(a.date||a.release_date||"")));
- const list=$("releaseList");
- list.replaceChildren();
- filtered.forEach(r=>list.append(releaseCard(r)));
+async function init() {
+  map = L.map('map').setView([39,-98],4);
 
- const home=$("homeReleases");
- home.replaceChildren();
- filtered.slice(0,6).forEach(r=>home.append(releaseCard(r)));
- if(!filtered.length)home.append(element("p","No release entries available.","muted"));
-}
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution:'&copy; OpenStreetMap contributors',
+      maxZoom:18
+    }
+  ).addTo(map);
 
-function renderRetailers(){
- const retailers=[
-  ["Pokémon Center","https://www.pokemoncenter.com/"],
-  ["Walmart","https://www.walmart.com/search?q=pokemon+trading+cards"],
-  ["Target","https://www.target.com/s?searchTerm=pokemon+trading+cards"],
-  ["Best Buy","https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+cards"],
-  ["GameStop","https://www.gamestop.com/search/?q=pokemon+cards"]
- ];
- const list=$("retailerList");
- list.replaceChildren();
- for(const [name,url] of retailers){
-  const card=element("div",undefined,"store-card");
-  card.append(
-   element("strong",name),
-   element("p","Browse retailer products. Availability not verified."),
-   makeLink(url,"Visit retailer")
-  );
-  list.append(card);
- }
-}
+  layer = L.layerGroup().addTo(map);
 
-function renderMonitor(){
- text($("lastUpdated"),formatTime(database.last_updated));
- const summary=$("monitorSummary");
- summary.replaceChildren();
- const stats=database.discovery_summary||{};
- Object.entries(stats).forEach(([key,value])=>{
-  if(typeof value==="object")return;
-  summary.append(element("p",key.replaceAll("_"," ")+": "+value));
- });
+  [db,stores,shipments] = await Promise.all([
+    json('data/status.json',db),
+    json('data/stores.json',[]),
+    json('data/shipments.json',shipments)
+  ]);
 
- const health=$("sourceHealth");
- health.replaceChildren();
- Object.entries(database.catalogue_source_status||{}).forEach(([name,result])=>{
-  const row=element("div",undefined,"store-card");
-  row.append(
-   element("strong",name),
-   element("p","Status: "+(result.status||"Unknown")),
-   element("small","Last checked: "+formatTime(result.checked_at))
-  );
-  if(result.error)row.append(element("p",result.error));
-  health.append(row);
- });
+  if (!Array.isArray(stores)) stores = [];
+  if (!Array.isArray(db.products)) db.products = [];
+  if (!Array.isArray(db.releases)) db.releases = [];
+  if (!Array.isArray(db.store_inventory)) db.store_inventory = [];
+  if (!Array.isArray(shipments.events)) shipments.events = [];
+  if (!Array.isArray(shipments.forecasts)) shipments.forecasts = [];
 
- const errors=$("monitorErrors");
- errors.replaceChildren();
- const list=database.monitor_errors||[];
- if(!list.length)errors.append(element("p","No source errors reported."));
- list.forEach(error=>errors.append(element("p",error)));
-}
+  $('updated').textContent =
+    'Data updated: '+(db.last_updated || 'unknown');
+  $('productCount').textContent = db.products.length;
+  $('storeCount').textContent = stores.length;
+  $('stockCount').textContent = db.store_inventory.filter(fresh).length;
+  $('shipmentCount').textContent = shipments.events.length;
 
-async function loadData(){
- try{
-  const response=await fetch(DATA_URL+"?t="+Date.now(),{cache:"no-store"});
-  if(!response.ok)throw Error("HTTP "+response.status);
-  database=await response.json();
-  text($("connection"),"● Data feed connected");
-  renderDashboard();
   renderProducts();
   renderReleases();
-  renderMonitor();
+  renderShipments();
+  renderHealth();
   renderMap();
- }catch(error){
-  text($("connection"),"● Data feed unavailable");
-  text($("mapStatus"),"Inventory feed unavailable: "+error.message);
- }
 }
 
-function setup(){
- setupNavigation();
- initMap();
- renderRetailers();
+$('search').oninput = renderProducts;
+$('game').onchange = renderProducts;
+$('radius').onchange = renderMap;
+$('mapGame').onchange = renderMap;
 
- $("locateBtn").addEventListener("click",locateUser);
- $("searchLocationBtn").addEventListener("click",searchLocation);
- $("locationSearch").addEventListener("keydown",e=>{
-  if(e.key==="Enter")searchLocation();
- });
- $("mapGame").addEventListener("change",renderMap);
- $("mapRadius").addEventListener("change",renderMap);
- $("refreshMap").addEventListener("click",loadData);
- $("productSearch").addEventListener("input",renderProducts);
- $("productGame").addEventListener("change",renderProducts);
- $("productType").addEventListener("change",renderProducts);
- $("releaseSearch").addEventListener("input",renderReleases);
- $("releaseGame").addEventListener("change",renderReleases);
+$('locate').onclick = () => {
+  if (!navigator.geolocation) {
+    $('mapInfo').textContent = 'Geolocation unavailable';
+    return;
+  }
 
- loadData();
- setInterval(loadData,60000);
-}
+  navigator.geolocation.getCurrentPosition(
+    p => {
+      userPoint = [p.coords.latitude,p.coords.longitude];
+      map.setView(userPoint,10);
+      renderMap();
+    },
+    () => {
+      $('mapInfo').textContent =
+        'Location permission denied. Enter a ZIP code instead.';
+    },
+    {
+      enableHighAccuracy:false,
+      timeout:12000
+    }
+  );
+};
 
-setup();
+$('findZip').onclick = async () => {
+  const z = $('zip').value.trim();
+
+  if (!/^\d{5}$/.test(z)) {
+    $('mapInfo').textContent = 'Enter a five-digit US ZIP code.';
+    return;
+  }
+
+  try {
+    const r = await fetch(
+      'https://api.zippopotam.us/us/'+encodeURIComponent(z)
+    );
+    if (!r.ok) throw Error('ZIP not found');
+
+    const p = await r.json();
+
+    userPoint = [
+      Number(p.places[0].latitude),
+      Number(p.places[0].longitude)
+    ];
+
+    map.setView(userPoint,10);
+    renderMap();
+  } catch {
+    $('mapInfo').textContent =
+      'ZIP lookup unavailable. Try sharing your location.';
+  }
+};
+
+init();
 </script>
 </body>
 </html>
