@@ -1,19 +1,30 @@
-name: PokeStock Monitor
+
+name: PokeStock V8 Monitor
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "17 */2 * * *"
 
 permissions:
   contents: write
 
+concurrency:
+  group: pokestock-v8-monitor
+  cancel-in-progress: false
+
 jobs:
-  update:
+  monitor:
+    name: Update PokeStock V8 Data
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,17 +32,117 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: python -m pip install requests beautifulsoup4
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install requests beautifulsoup4
 
-      - name: Run monitor
-        run: python scripts/monitor.py
+      - name: Validate Python syntax
+        run: |
+          python -m py_compile scripts/monitor.py
 
-      - name: Publish updated data
+      - name: Validate existing catalogue
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("data/status.json")
+
+          if not path.exists():
+              raise SystemExit("ERROR: Existing catalogue missing")
+
+          data = json.loads(path.read_text(encoding="utf-8"))
+
+          if not isinstance(data.get("products"), list):
+              raise SystemExit("ERROR: Invalid products catalogue")
+
+          if not isinstance(data.get("releases"), list):
+              raise SystemExit("ERROR: Invalid releases catalogue")
+
+          print("Existing products:", len(data["products"]))
+          print("Existing releases:", len(data["releases"]))
+          PY
+
+      - name: Run nationwide V8 monitor
+        run: |
+          python scripts/monitor.py
+
+      - name: Validate generated JSON
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          required = [
+              "data/status.json",
+              "data/stores.json",
+              "data/shipments.json"
+          ]
+
+          for filename in required:
+              path = Path(filename)
+
+              if not path.exists():
+                  raise SystemExit(f"Missing generated file: {filename}")
+
+              with path.open(encoding="utf-8") as file:
+                  json.load(file)
+
+              print(f"VALID: {filename}")
+
+          status = json.loads(
+              Path("data/status.json").read_text(encoding="utf-8")
+          )
+
+          if not status.get("monitor_version", "").startswith("8"):
+              raise SystemExit("V8 monitor version missing")
+
+          print("Monitor version:", status["monitor_version"])
+          print("Products:", len(status.get("products", [])))
+          print("Verified inventory:",
+                len(status.get("store_inventory", [])))
+          PY
+
+      - name: Commit updated catalogue and store data
         run: |
           git config user.name "pokestock-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/status.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Update PokeStock product data"
-            git push
+
+          git add \
+            data/status.json \
+            data/stores.json \
+            data/shipments.json
+
+          if git diff --cached --quiet; then
+            echo "No data changes to publish."
+          else
+            git commit -m "Update PokéStock V8 catalogue and monitoring data"
+            git push origin HEAD:main
           fi
+
+      - name: Display monitor summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("data/status.json").read_text(encoding="utf-8")
+          )
+
+          print("\n=== POKESTOCK V8 MONITOR ===")
+          print("Version:", data.get("monitor_version"))
+          print("Last updated:", data.get("last_updated"))
+
+          summary = data.get("discovery_summary", {})
+
+          for key, value in summary.items():
+              print(f"{key}: {value}")
+
+          errors = data.get("monitor_errors", [])
+
+          print("\nSource errors:", len(errors))
+
+          for error in errors:
+              print("WARNING:", error)
+          PY
