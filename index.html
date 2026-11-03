@@ -310,6 +310,7 @@ footer{
   <nav>
     <button class="active" data-tab="stores">📍 Stores</button>
     <button data-tab="online">🛒 Online Stock</button>
+    <button data-tab="pickup">📍 Pickup</button>
     <button data-tab="products">📦 Products</button>
     <button data-tab="releases">✨ Releases</button>
     <button data-tab="shipments">🚚 Shipments</button>
@@ -421,6 +422,33 @@ footer{
       <p class="muted" id="onlineInfo"></p>
       <div class="grid" id="onlineGrid"></div>
     </section>
+
+
+<section id="pickup" class="panel">
+  <div class="section-label">Store-specific evidence</div>
+  <h2>Pickup Availability</h2>
+  <p class="muted">
+    Only explicit public pickup-location observations
+    appear here. Pickup does not guarantee items
+    are physically on a shelf. Missing results mean
+    Unknown, not Out of Stock.
+  </p>
+  <div class="controls">
+    <input id="v23Search"
+      placeholder="Search products, stores, games">
+    <select id="v23State">
+      <option value="">All pickup statuses</option>
+      <option value="Pickup available">
+        Pickup available
+      </option>
+      <option value="Pickup unavailable">
+        Pickup unavailable
+      </option>
+    </select>
+  </div>
+  <p id="v23Info" class="muted">Loading pickup data...</p>
+  <div id="v23Grid" class="grid"></div>
+</section>
 
     <section id="products" class="panel">
       <div class="section-label">Collector Catalogue</div>
@@ -1219,5 +1247,145 @@ init().catch(error=>{
     "Unable to initialize PokéStock.";
 });
 </script>
+
+<script>
+(function(){
+  "use strict";
+
+  const esc = value => String(value ?? "").replace(
+    /[&<>"']/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c])
+  );
+
+  let rows = [];
+  let report = {};
+
+  function safeLink(url,label){
+    try{
+      const parsed = new URL(url);
+      if(parsed.protocol !== "https:") return "";
+      return `<a class="action" target="_blank"
+        rel="noopener noreferrer"
+        href="${esc(parsed.href)}">${esc(label)}</a>`;
+    }catch{
+      return "";
+    }
+  }
+
+  function render(){
+    const search = document.getElementById("v23Search")
+      .value.toLowerCase().trim();
+
+    const state = document.getElementById("v23State")
+      .value;
+
+    const fresh = rows.filter(r=>{
+      const age = Date.now() - Date.parse(r.checked_at);
+      return Number.isFinite(age)
+        && age >= 0
+        && age <= 8 * 3600000
+        && r.inventory_scope === "store_pickup"
+        && r.shelf_stock_confirmed === false
+        && [
+          "Pickup available",
+          "Pickup unavailable"
+        ].includes(r.availability)
+        && r.location_name
+        && r.evidence_url;
+    });
+
+    const matched = fresh.filter(r=>{
+      const text = [
+        r.product_name,
+        r.retailer,
+        r.location_name,
+        r.game
+      ].join(" ").toLowerCase();
+
+      return (!search || text.includes(search))
+        && (!state || r.availability === state);
+    });
+
+    document.getElementById("v23Info").textContent =
+      matched.length + " matching fresh pickup observations. " +
+      "Checked: " + (report.checked_at || "Unknown") +
+      ". Physical shelf quantities: unverified.";
+
+    document.getElementById("v23Grid").innerHTML =
+      matched.map(r=>`
+        <article class="tile">
+          <h3>${esc(r.product_name)}</h3>
+          <p><strong>${esc(r.retailer)}</strong></p>
+          <p>Pickup location: ${esc(r.location_name)}</p>
+          <p>${esc(r.game || "Trading cards")}</p>
+          <span class="pill ${
+            r.availability === "Pickup available"
+              ? "in" : "out"
+          }">${esc(r.availability)}</span>
+          <p class="muted">
+            Store pickup only; shelf stock not confirmed.
+          </p>
+          <p class="muted">
+            Checked: ${esc(
+              new Date(r.checked_at).toLocaleString()
+            )}
+          </p>
+          ${safeLink(r.product_url,"View product")}
+          ${safeLink(r.evidence_url,"Pickup evidence")}
+        </article>
+      `).join("") ||
+      `<div class="empty">
+        No verified pickup observations match.
+        This does not mean the products are sold out.
+      </div>`;
+  }
+
+  async function load(){
+    try{
+      const [a,b] = await Promise.all([
+        fetch(
+          "data/v23_pickup_observations.json?v=" +
+          Date.now(),
+          {cache:"no-store"}
+        ),
+        fetch(
+          "data/v23_pickup_report.json?v=" +
+          Date.now(),
+          {cache:"no-store"}
+        )
+      ]);
+
+      if(!a.ok || !b.ok) throw Error("Data unavailable");
+
+      rows = await a.json();
+      report = await b.json();
+
+      if(!Array.isArray(rows)) rows = [];
+
+    }catch(error){
+      rows = [];
+      report = {};
+      console.warn("V23 pickup data:",error);
+    }
+
+    render();
+  }
+
+  document.getElementById("v23Search")
+    .addEventListener("input",render);
+
+  document.getElementById("v23State")
+    .addEventListener("change",render);
+
+  load();
+})();
+</script>
+
 </body>
 </html>
