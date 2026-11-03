@@ -1,4 +1,3 @@
-
 import json
 import re
 from datetime import datetime, timezone
@@ -11,7 +10,10 @@ from bs4 import BeautifulSoup
 DATA_FILE = Path("data/status.json")
 
 SOURCES = {
-    "pokemon": "https://press.pokemon.com/en/Items/Schedule?period=All&sortAsc=False&sortBy=Date",
+    "pokemon": (
+        "https://press.pokemon.com/en/Items/Schedule"
+        "?period=All&types=3&sortAsc=False&sortBy=Date"
+    ),
     "union_arena": "https://www.unionarena-tcg.com/na/products/",
 }
 
@@ -54,7 +56,11 @@ def normalize_date(text):
     if not text:
         return ""
 
-    quarter = re.search(r"\bQ([1-4])\s+(\d{4})\b", text, re.IGNORECASE)
+    quarter = re.search(
+        r"\bQ([1-4])\s+(\d{4})\b",
+        text,
+        re.IGNORECASE,
+    )
 
     if quarter:
         return f"Q{quarter.group(1)} {quarter.group(2)}"
@@ -133,7 +139,9 @@ def scrape_pokemon():
         name = clean_text(link.get_text(" ", strip=True))
 
         if not re.search(
-            r"Pok[eé]mon\s+TCG\s*:", name, re.IGNORECASE
+            r"Pok[eé]mon\s+TCG\s*:",
+            name,
+            re.IGNORECASE,
         ):
             continue
 
@@ -145,7 +153,6 @@ def scrape_pokemon():
         context = ""
         node = link
 
-        # Look for the date near this individual product.
         for _ in range(5):
             if node.parent is None:
                 break
@@ -159,8 +166,7 @@ def scrape_pokemon():
 
         release_date = find_date(context)
 
-        # Never assign a neighboring product's date to a battle deck.
-        # Its release date is not independently verified by this listing.
+        # Avoid assigning a neighboring product's date to Battle Decks.
         if "battle deck" in name.lower():
             release_date = ""
 
