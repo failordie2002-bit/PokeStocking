@@ -1,0 +1,105 @@
+name: PokeStock V21 Physical Inventory Discovery
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "13 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    name: Discover Physical Retail Sources
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate script
+        run: |
+          python -m py_compile \
+            scripts/physical_inventory_discovery.py
+
+      - name: Discover retail sources
+        run: |
+          python scripts/physical_inventory_discovery.py
+
+      - name: Validate results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rows = json.loads(
+              Path("data/physical_inventory_sources.json")
+              .read_text(encoding="utf-8")
+          )
+
+          report = json.loads(
+              Path("data/physical_inventory_report.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert isinstance(rows, list)
+          assert report["status"] == "discovery_only"
+
+          for row in rows:
+              assert row["physical_inventory_status"] == "Unknown"
+              assert row["physical_inventory_verified"] is False
+
+          print("Validated", len(rows), "candidate sources")
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/physical_inventory_sources.json \
+            data/physical_inventory_report.json
+
+          if git diff --cached --quiet; then
+            echo "Nothing to publish"
+            exit 0
+          fi
+
+          git commit -m \
+            "Update physical retail source directory"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "Published"
+              exit 0
+            fi
+
+            sleep 3
+          done
+
+          exit 1
