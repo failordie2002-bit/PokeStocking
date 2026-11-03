@@ -1,170 +1,161 @@
 {
-  "version": "10.1",
-  "checked_at": "2026-11-03T21:59:31.522455+00:00",
+  "version": "10.2",
+  "checked_at": "2026-11-03T22:24:25.102327+00:00",
   "candidate_products": 51,
-  "checked_this_run": 25,
+  "checked_this_run": 20,
   "retailers_integrated": [
     "Kayou Official Store",
+    "Atlantis Games & Comics",
     "KnaveTCG",
-    "PixelThat TCG"
+    "Curio Cavern",
+    "PixelThat TCG",
+    "Big Pack Hobby Shop",
+    "The Compleat Strategist",
+    "The Eternal Forge"
   ],
-  "offers_with_explicit_evidence": 36,
-  "total_fresh_offers": 61,
-  "next_cursor": 50,
+  "retailers_checked_this_run": 7,
+  "retailers_configured": 7,
+  "offers_with_explicit_evidence": 208,
+  "total_fresh_offers": 228,
+  "next_cursor": 19,
+  "shop_cursor": 0,
   "shop_next_pages": {
     "knavetcg.com": 1,
-    "www.pixelthattcg.com": 2
+    "www.pixelthattcg.com": 1,
+    "atlantis-comics.com": 2,
+    "www.curiocavern.com": 1,
+    "www.shopbigpack.com": 2,
+    "www.thecompleatstrategist.com": 2,
+    "www.theeternalforge.com": 2
   },
   "checks": [
     {
       "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony Trading Card Game-Fantasy Wonderlands-001",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony Trading Card Game-Friendships Begin (Assorteid Set)",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, 10 Packs & Sleeves Box",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony-Trading Card Game-Nightmare Night",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Card-Heaven Scroll-001",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Chapter Jin-002A-NA-Series 2",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Chapter Jin-003-NA-Series 3",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Chapter Jin-004A",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-001",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-002",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "Tokidoki-Wonder Voyage Collectible Cards-Roaming Edition-Series 1",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "Tokidoki-Wonder Voyage Collectible Cards-Roaming Edition-Series 1",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
+      "status": "no_explicit_evidence",
       "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
-      "offers": 1
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Demon Slayer: Kimetsu no Yaiba Infinity Castle Movie-Collectible Cards-Infinity Castle Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Demon Slayer: Kimetsu no Yaiba Infinity Castle Movie-Daybreak Collectible Cards-Breath Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Classic Edition-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
+      "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "verified_online_evidence",
-      "product": "Winx Club-Fairy Diary Collectible Cards-Daily Edition-001",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
       "offers": 1
     },
     {
       "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "Winx Club-Fairy Diary Collectible Cards-Daily Edition-001",
-      "offers": 1
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
-      "offers": 1
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "status": "ok",
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 3,
+      "offers": 3
     },
     {
       "retailer": "KnaveTCG",
@@ -173,12 +164,44 @@
       "reason": "Expecting value: line 1 column 1 (char 0)"
     },
     {
-      "retailer": "PixelThat TCG",
+      "retailer": "Curio Cavern",
       "status": "ok",
       "page": 1,
-      "feed_items": 100,
-      "matching_products": 11,
-      "offers": 11
+      "feed_items": 125,
+      "matching_products": 16,
+      "offers": 18
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "status": "ok",
+      "page": 2,
+      "feed_items": 0,
+      "matching_products": 0,
+      "offers": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "status": "ok",
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 33,
+      "offers": 33
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "status": "ok",
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 5,
+      "offers": 5
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "status": "ok",
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 148,
+      "offers": 148
     }
   ],
   "physical_store_stock_claims": 0
