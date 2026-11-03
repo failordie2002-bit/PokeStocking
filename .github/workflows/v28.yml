@@ -1,0 +1,302 @@
+name: PokeStock V28 Website Inventory Upgrade
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Upgrade website
+        shell: bash
+        run: |
+          cat > /tmp/pokestock_v28.py <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          marker = "POKESTOCK_V28_INVENTORY"
+
+          if marker in html:
+              print("V28 already installed")
+              raise SystemExit(0)
+
+          required = [
+              'jsonFile("data/online_offers.json",[])',
+              'offers=Array.isArray(data[2])?data[2]:[];',
+              'function renderOnline() {',
+              'id="onlineAvailability"',
+              'function validOffer(o) {',
+          ]
+
+          missing = [x for x in required if x not in html]
+          if missing:
+              raise SystemExit(
+                  "Website changed; refusing unsafe patch: "
+                  + repr(missing)
+              )
+
+          # Use the V27 feed, with the old feed as fallback.
+          html = html.replace(
+              'jsonFile("data/online_offers.json",[])',
+              '''jsonFile("data/v27_inventory.json",null)''',
+              1
+          )
+
+          html = html.replace(
+              'offers=Array.isArray(data[2])?data[2]:[];',
+              '''offers=Array.isArray(data[2])
+                ? data[2].filter(
+                    o=>o.inventory_scope==="online"
+                  )
+                : [];''',
+              1
+          )
+
+          # Add a product-format filter.
+          anchor = '<select id="onlineAvailability">'
+          addition = '''
+          <select id="onlineFormat">
+            <option value="">All Formats</option>
+            <option value="Booster box">Booster Boxes</option>
+            <option value="Booster pack">Booster Packs</option>
+            <option value="Booster bundle">Booster Bundles</option>
+            <option value="Elite Trainer Box">ETBs</option>
+            <option value="Deck">Decks</option>
+            <option value="Collection">Collections</option>
+          </select>
+          '''
+
+          html = html.replace(
+              anchor, addition + anchor, 1
+          )
+
+          # Add a verification filter.
+          anchor = '<p class="muted" id="onlineInfo"></p>'
+          addition = '''
+          <div class="controls">
+            <select id="onlineVerification">
+              <option value="">All Evidence Levels</option>
+              <option value="rechecked">
+                Independently Rechecked
+              </option>
+              <option value="source">
+                Recent Source Observation
+              </option>
+            </select>
+          </div>
+          '''
+          html = html.replace(
+              anchor, addition + anchor, 1
+          )
+
+          # Extend the existing render function.
+          start = html.index("function renderOnline() {")
+          end = html.index(
+              "\nfunction renderReleases()", start
+          )
+          block = html[start:end]
+
+          block = block.replace(
+              'const state=$("onlineAvailability").value;',
+              '''const state=$("onlineAvailability").value;
+              const format=$("onlineFormat").value;
+              const verification=
+                $("onlineVerification").value;''',
+              1
+          )
+
+          old_filter = (
+              '&& (!state||o.availability===state)'
+          )
+          new_filter = '''
+              && (!state||o.availability===state)
+              && (!format||String(o.format||"")
+                  .toLowerCase().includes(
+                    format.toLowerCase()
+                  ))
+              && (!verification||
+                  (verification==="rechecked"
+                    ? o.evidence_type===
+                      "shopify_public_variant_recheck"
+                    : o.evidence_type!==
+                      "shopify_public_variant_recheck"))
+          '''
+
+          if old_filter not in block:
+              raise SystemExit(
+                  "Could not locate online filter"
+              )
+          block = block.replace(
+              old_filter, new_filter, 1
+          )
+
+          block = block.replace(
+              '''rows.length+" matching fresh online offers. "+''',
+              '''rows.length+" matching fresh online offers. "+
+              rows.filter(o=>o.evidence_type===
+                "shopify_public_variant_recheck"
+              ).length+" independently rechecked. "+''',
+              1
+          )
+
+          block = block.replace(
+              '''<p>Variant: ${escapeHTML(o.variant||"Listing")}</p>''',
+              '''<p>Variant: ${escapeHTML(o.variant||"Listing")}</p>
+              <span class="pill">
+                ${o.evidence_type===
+                  "shopify_public_variant_recheck"
+                  ? "Independently rechecked"
+                  : "Recent source observation"}
+              </span>
+              <span class="pill">Online only</span>''',
+              1
+          )
+
+          # Prevent displaying unverified currency as a
+          # real currency label.
+          block = block.replace(
+              'const price=o.price&&o.currency',
+              '''const price=o.price&&o.currency
+                &&o.currency!=="Unverified"''',
+              1
+          )
+
+          html = html[:start] + block + html[end:]
+
+          # Update the existing event bindings.
+          old = '''"onlineRetailer","onlineAvailability"'''
+          new = '''"onlineRetailer","onlineAvailability",
+              "onlineFormat","onlineVerification"'''
+
+          if old not in html:
+              raise SystemExit(
+                  "Could not locate filter listeners"
+              )
+
+          html = html.replace(old, new, 1)
+
+          # Display V27-specific reporting and allow the
+          # previous online feed if V27 is unavailable.
+          old = '''offers=Array.isArray(data[2])
+                ? data[2].filter(
+                    o=>o.inventory_scope==="online"
+                  )
+                : [];'''
+
+          new = '''offers=Array.isArray(data[2])
+                ? data[2].filter(
+                    o=>o.inventory_scope==="online"
+                  )
+                : await jsonFile(
+                    "data/online_offers.json",[]
+                  );'''
+
+          html = html.replace(old, new, 1)
+
+          # Insert a version marker for idempotence.
+          html = html.replace(
+              "</head>",
+              "<!-- POKESTOCK_V28_INVENTORY -->\n</head>",
+              1
+          )
+
+          path.write_text(html, encoding="utf-8")
+          print("V28 website upgrade completed")
+
+          PY
+
+          python /tmp/pokestock_v28.py
+
+      - name: Validate website and inventory
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          html = Path("index.html").read_text(
+              encoding="utf-8"
+          )
+
+          assert "POKESTOCK_V28_INVENTORY" in html
+          assert "data/v27_inventory.json" in html
+          assert 'id="onlineFormat"' in html
+          assert 'id="onlineVerification"' in html
+
+          data = json.loads(
+              Path("data/v27_inventory.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert isinstance(data, list)
+
+          games = sorted({
+              x.get("game", "Other TCG")
+              for x in data
+              if x.get("inventory_scope") == "online"
+          })
+
+          print("V28 validation passed")
+          print("Inventory records:", len(data))
+          print("Supported games in current feed:")
+          for game in games:
+              print(" -", game)
+          PY
+
+      - name: Publish upgraded website
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "Website already upgraded"
+            exit 0
+          fi
+
+          git commit -m \
+            "V28 connect verified multi-TCG inventory"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "V28 published successfully"
+              exit 0
+            fi
+
+            sleep 4
+          done
+
+          exit 1
