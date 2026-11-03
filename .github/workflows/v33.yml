@@ -1,0 +1,700 @@
+name: Pokestock V33 Store Game Tracker
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 12,23 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-v33
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Build store game intelligence
+        shell: bash
+        run: |
+          mkdir -p data
+
+          cat > /tmp/pokestock_v33.py <<'PY'
+          import json
+          import re
+          import hashlib
+          import time
+          from pathlib import Path
+          from datetime import datetime, timedelta, timezone
+          from collections import defaultdict, Counter
+
+          ROOT = Path("data")
+          NOW = datetime.now(timezone.utc)
+          TODAY = NOW.date()
+          START = time.monotonic()
+
+          GAMES = {
+              "Pokemon": [
+                  "pokemon", "pokémon"
+              ],
+              "Gundam": ["gundam"],
+              "Union Arena": ["union arena"],
+              "One Piece": ["one piece"],
+              "Magic The Gathering": [
+                  "magic the gathering", "mtg"
+              ],
+              "Yu-Gi-Oh": [
+                  "yu gi oh", "yugioh"
+              ],
+              "Lorcana": ["lorcana"],
+              "Digimon": ["digimon"],
+              "Dragon Ball": ["dragon ball"],
+              "Star Wars Unlimited": [
+                  "star wars unlimited"
+              ],
+              "Riftbound": ["riftbound"],
+              "Flesh and Blood": [
+                  "flesh and blood"
+              ],
+              "Weiss Schwarz": [
+                  "weiss schwarz"
+              ],
+              "Cardfight Vanguard": [
+                  "cardfight", "vanguard"
+              ]
+          }
+
+          def load(name, default):
+              try:
+                  return json.loads(
+                      (ROOT / name).read_text(
+                          encoding="utf-8"
+                      )
+                  )
+              except (OSError, ValueError):
+                  return default
+
+          def save(name, data):
+              target = ROOT / name
+              temp = ROOT / (name + ".tmp")
+              temp.write_text(
+                  json.dumps(
+                      data,
+                      ensure_ascii=False,
+                      indent=2
+                  ),
+                  encoding="utf-8"
+              )
+              temp.replace(target)
+
+          def norm(value):
+              value = str(value or "").lower()
+              return re.sub(
+                  r"[^a-z0-9]+", " ", value
+              ).strip()
+
+          def canonical_game(value):
+              n = norm(value)
+              for game, terms in GAMES.items():
+                  if n == norm(game):
+                      return game
+                  if any(
+                      n == norm(term)
+                      for term in terms
+                  ):
+                      return game
+              return None
+
+          def detect_game(value):
+              n = norm(value)
+              for game, terms in GAMES.items():
+                  if any(
+                      norm(term) in n
+                      for term in terms
+                  ):
+                      return game
+              return None
+
+          def parse_date(value):
+              if not value:
+                  return None
+              try:
+                  if isinstance(value, (int, float)):
+                      n = float(value)
+                      if n > 100000000000:
+                          n /= 1000
+                      return datetime.fromtimestamp(
+                          n, timezone.utc
+                      ).date()
+                  return datetime.fromisoformat(
+                      str(value).replace(
+                          "Z", "+00:00"
+                      )
+                  ).date()
+              except (
+                  ValueError, TypeError,
+                  OverflowError, OSError
+              ):
+                  return None
+
+          stores = load(
+              "physical_inventory_sources.json",
+              []
+          )
+
+          if not isinstance(stores, list):
+              stores = []
+
+          store_map = {
+              s["source_id"]: s
+              for s in stores
+              if isinstance(s, dict)
+              and s.get("source_id")
+          }
+
+          # Only use historical observations with
+          # physical-store evidence.
+          #
+          # Online offers, generic weekday guesses,
+          # release dates, and research-only windows
+          # must never train restock predictions.
+
+          raw_events = []
+
+          for filename in [
+              "v32_sightings.json",
+              "v31_sightings.json",
+              "v33_sightings.json"
+          ]:
+              data = load(filename, [])
+              if isinstance(data, list):
+                  raw_events.extend(data)
+
+          shipments = load(
+              "shipments.json",
+              {"events": [], "forecasts": []}
+          )
+
+          if isinstance(shipments, dict):
+              events = shipments.get(
+                  "events", []
+              )
+              if isinstance(events, list):
+                  raw_events.extend(events)
+
+          accepted = {}
+          rejected = Counter()
+
+          for event in raw_events:
+              if not isinstance(event, dict):
+                  rejected["invalid_record"] += 1
+                  continue
+
+              sid = event.get(
+                  "store_id"
+              ) or event.get("source_id")
+
+              if sid not in store_map:
+                  rejected["unknown_store"] += 1
+                  continue
+
+              scope = norm(
+                  event.get("inventory_scope")
+              )
+
+              if scope not in {
+                  "physical store",
+                  "in store"
+              }:
+                  rejected["not_physical"] += 1
+                  continue
+
+              status = norm(
+                  event.get("status")
+              )
+
+              if status not in {
+                  "reported in stock",
+                  "in stock",
+                  "restocked",
+                  "shelf sighting",
+                  "delivery confirmed"
+              }:
+                  rejected["not_positive"] += 1
+                  continue
+
+              source = event.get(
+                  "source_url"
+              )
+
+              if not (
+                  isinstance(source, str)
+                  and source.startswith(
+                      ("https://", "http://")
+                  )
+              ):
+                  rejected["no_source"] += 1
+                  continue
+
+              observed = parse_date(
+                  event.get("observed_at")
+                  or event.get("reported_at")
+              )
+
+              if not observed:
+                  rejected["missing_date"] += 1
+                  continue
+
+              if not (
+                  TODAY - timedelta(days=365)
+                  <= observed <= TODAY
+              ):
+                  rejected["date_out_of_range"] += 1
+                  continue
+
+              game = canonical_game(
+                  event.get("game")
+              )
+
+              if not game:
+                  game = detect_game(
+                      event.get("product_name")
+                      or event.get("name")
+                  )
+
+              if not game:
+                  rejected["unknown_game"] += 1
+                  continue
+
+              # An observation counts for its game
+              # regardless of which specific product
+              # was sighted.
+              key = hashlib.sha256(
+                  (
+                      sid + "|" + game + "|" +
+                      observed.isoformat() + "|" +
+                      source
+                  ).encode()
+              ).hexdigest()[:24]
+
+              accepted[key] = {
+                  "event_id": key,
+                  "store_id": sid,
+                  "game": game,
+                  "observed_at":
+                      observed.isoformat(),
+                  "source_url": source,
+                  "inventory_scope":
+                      "physical_store",
+                  "evidence_level":
+                      event.get(
+                          "evidence_level",
+                          "third_party_report"
+                      ),
+                  "status":
+                      "Reported in stock",
+                  "current_stock_verified":
+                      False
+              }
+
+          sightings = sorted(
+              accepted.values(),
+              key=lambda x: (
+                  x["store_id"],
+                  x["game"],
+                  x["observed_at"]
+              )
+          )
+
+          histories = defaultdict(set)
+          evidence = defaultdict(list)
+
+          for event in sightings:
+              key = (
+                  event["store_id"],
+                  event["game"]
+              )
+
+              histories[key].add(
+                  parse_date(
+                      event["observed_at"]
+                  )
+              )
+              evidence[key].append(event)
+
+          def forecast(dates):
+              dates = sorted(set(dates))
+
+              result = {
+                  "last_reported_restock":
+                      dates[-1].isoformat()
+                      if dates else None,
+                  "observation_count":
+                      len(dates),
+                  "predicted_restock_date":
+                      None,
+                  "predicted_weekday":
+                      None,
+                  "confidence":
+                      "Insufficient evidence",
+                  "forecast_basis":
+                      "No reliable local history"
+              }
+
+              if len(dates) < 3:
+                  return result
+
+              weeks = {
+                  d.isocalendar()[:2]
+                  for d in dates
+              }
+
+              if len(weeks) < 3:
+                  return result
+
+              # Group by weekday at this exact
+              # store and game, never by chain.
+              counts = Counter(
+                  d.weekday()
+                  for d in dates
+              )
+
+              weekday, hits = (
+                  counts.most_common(1)[0]
+              )
+
+              agreement = (
+                  hits / len(dates)
+              )
+
+              if agreement < 0.6:
+                  result["forecast_basis"] = (
+                      "No consistent local weekday"
+                  )
+                  return result
+
+              # Do not predict indefinitely from
+              # stale sightings.
+              if (
+                  TODAY - dates[-1]
+              ).days > 60:
+                  result["forecast_basis"] = (
+                      "Historical evidence too old"
+                  )
+                  return result
+
+              # A weekday pattern is only a
+              # tentative watch day, not a
+              # confirmed delivery schedule.
+              for offset in range(1, 8):
+                  candidate = (
+                      TODAY +
+                      timedelta(days=offset)
+                  )
+                  if candidate.weekday() == weekday:
+                      result[
+                          "predicted_restock_date"
+                      ] = candidate.isoformat()
+                      break
+
+              result["predicted_weekday"] = [
+                  "Monday", "Tuesday",
+                  "Wednesday", "Thursday",
+                  "Friday", "Saturday",
+                  "Sunday"
+              ][weekday]
+
+              result["confidence"] = (
+                  "Moderate"
+                  if (
+                      len(dates) >= 6
+                      and agreement >= 0.75
+                      and len(weeks) >= 5
+                  )
+                  else "Low"
+              )
+
+              result["forecast_basis"] = (
+                  "Observed local weekday pattern"
+              )
+              result["weekday_agreement"] = (
+                  round(agreement, 3)
+              )
+
+              return result
+
+          records = []
+          with_sightings = 0
+          with_predictions = 0
+
+          for sid, store in store_map.items():
+              for game in GAMES:
+                  key = (sid, game)
+                  dates = histories.get(
+                      key, set()
+                  )
+                  result = forecast(dates)
+
+                  if dates:
+                      with_sightings += 1
+
+                  if result[
+                      "predicted_restock_date"
+                  ]:
+                      with_predictions += 1
+
+                  source_events = sorted(
+                      evidence.get(key, []),
+                      key=lambda x:
+                          x["observed_at"],
+                      reverse=True
+                  )
+
+                  records.append({
+                      "store_id": sid,
+                      "store_name":
+                          store.get("name"),
+                      "chain":
+                          store.get("chain"),
+                      "address":
+                          store.get("address"),
+                      "city":
+                          store.get("city"),
+                      "state":
+                          store.get("state"),
+                      "postal_code":
+                          store.get(
+                              "postal_code"
+                          ),
+                      "store_identity_status":
+                          store.get(
+                              "store_identity_status",
+                              "unverified"
+                          ),
+                      "game": game,
+                      "inventory_status":
+                          "Unknown",
+                      "inventory_verified":
+                          False,
+                      "last_sighting_source":
+                          source_events[0][
+                              "source_url"
+                          ]
+                          if source_events
+                          else None,
+                      **result
+                  })
+
+          save(
+              "v33_sightings.json",
+              sightings
+          )
+
+          save(
+              "v33_store_game.json",
+              records
+          )
+
+          # Publish only real-history forecasts
+          # into the existing shipment structure.
+          # Preserve all other historical records.
+          if not isinstance(shipments, dict):
+              shipments = {
+                  "events": [],
+                  "forecasts": []
+              }
+
+          previous = shipments.get(
+              "forecasts", []
+          )
+
+          if not isinstance(previous, list):
+              previous = []
+
+          previous = [
+              x for x in previous
+              if isinstance(x, dict)
+              and x.get(
+                  "forecast_engine"
+              ) != "v33"
+          ]
+
+          for row in records:
+              date = row[
+                  "predicted_restock_date"
+              ]
+
+              if not date:
+                  continue
+
+              previous.append({
+                  "forecast_engine": "v33",
+                  "kind":
+                      "Unconfirmed game restock watch",
+                  "store_id":
+                      row["store_id"],
+                  "store_name":
+                      row["store_name"],
+                  "game":
+                      row["game"],
+                  "name":
+                      row["game"] +
+                      " restock watch",
+                  "predicted_date": date,
+                  "confidence":
+                      row["confidence"],
+                  "basis":
+                      row["forecast_basis"],
+                  "source_url":
+                      row["last_sighting_source"],
+                  "inventory_status":
+                      "Unknown",
+                  "delivery_confirmed":
+                      False
+              })
+
+          shipments["forecasts"] = previous
+          shipments.setdefault(
+              "events", []
+          )
+
+          save(
+              "shipments.json",
+              shipments
+          )
+
+          report = {
+              "version": "33",
+              "checked_at":
+                  NOW.isoformat(),
+              "elapsed_seconds":
+                  round(
+                      time.monotonic() -
+                      START, 2
+                  ),
+              "stores_indexed":
+                  len(store_map),
+              "games_supported":
+                  len(GAMES),
+              "store_game_records":
+                  len(records),
+              "input_events":
+                  len(raw_events),
+              "accepted_unique_sightings":
+                  len(sightings),
+              "store_game_pairs_with_sightings":
+                  with_sightings,
+              "store_game_pairs_with_predictions":
+                  with_predictions,
+              "rejected_events":
+                  dict(rejected),
+              "status": (
+                  "Complete. Unknown means "
+                  "no verified availability."
+              ),
+              "limitations": [
+                  "Candidate stores are not necessarily verified.",
+                  "This workflow processes existing observations; it does not discover new public sightings.",
+                  "A forecast is not confirmed inventory.",
+                  "Product releases and online offers remain separate."
+              ]
+          }
+
+          save(
+              "v33_report.json",
+              report
+          )
+
+          print(
+              json.dumps(
+                  report, indent=2
+              ),
+              flush=True
+          )
+          PY
+
+          python -u /tmp/pokestock_v33.py
+
+      - name: Validate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for name in [
+              "v33_report.json",
+              "v33_sightings.json",
+              "v33_store_game.json",
+              "shipments.json"
+          ]:
+              path = Path("data") / name
+              assert path.exists(), name
+              json.loads(
+                  path.read_text(
+                      encoding="utf-8"
+                  )
+              )
+
+          print("V33 validation passed")
+          PY
+
+      - name: Publish results
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/v33_report.json \
+            data/v33_sightings.json \
+            data/v33_store_game.json \
+            data/shipments.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "V33 store game restock intelligence"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "V33 published"
+              exit 0
+            fi
+
+            sleep 5
+          done
+
+          echo "Publishing failed"
+          exit 1
