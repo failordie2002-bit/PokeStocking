@@ -11,13 +11,19 @@ from bs4 import BeautifulSoup
 DATA_FILE = Path("data/status.json")
 
 SOURCES = {
-    "pokemon": "https://press.pokemon.com/en/Items/Schedule?period=All&sortAsc=False&sortBy=Date",
+    "pokemon": "https://press.pokemon.com/en/Items/Schedule?period=All&types=3",
     "union_arena": "https://www.unionarena-tcg.com/na/products/",
 }
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; PokeStockMonitor/1.0)"
 }
+
+MONTH_DATE = (
+    r"(January|February|March|April|May|June|July|August|"
+    r"September|October|November|December)\s+\d{1,2},?\s+\d{4}"
+)
+
 
 def load_data():
     if DATA_FILE.exists():
@@ -26,16 +32,11 @@ def load_data():
         except Exception:
             pass
 
-    return {
-        "products": [],
-        "releases": [],
-        "drawings": [],
-        "history": [],
-    }
+    return {"products": [], "releases": [], "drawings": [], "history": []}
 
 
 def get_page(url):
-    response = requests.get(url, headers=HEADERS, timeout=25)
+    response = requests.get(url, headers=HEADERS, timeout=30)
     response.raise_for_status()
     return BeautifulSoup(response.text, "html.parser")
 
@@ -44,67 +45,58 @@ def clean_text(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
 
+def normalize_date(text):
+    if not text:
+        return ""
+
+    match = re.search(MONTH_DATE, text, re.IGNORECASE)
+    if not match:
+        return ""
+
+    value = match.group(0).replace(",", "")
+    try:
+        return datetime.strptime(value, "%B %d %Y").strftime("%Y-%m-%d")
+    except ValueError:
+        return ""
+
+
 def find_date(text):
-    patterns = [
-        r"\b\d{1,2}/\d{1,2}/\d{4}\b",
-        r"\b\d{4}-\d{2}-\d{2}\b",
-        r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}\b",
-    ]
-
-    for pattern in patterns:
-        match = re.search(pattern, text, re.IGNORECASE)
-        if match:
-            return match.group(0)
-
-    return ""
+    return normalize_date(text)
 
 
 def find_msrp(text):
     match = re.search(
-        r"(?:MSRP|SRP|Retail Price)[:\s]*\$?\s*(\d+(?:\.\d{2})?)",
+        r"(?:MSRP|SRP|Retail Price)[:\s]*\$?\s*(\d+(?:\.\d{1,2})?)",
         text,
         re.IGNORECASE,
     )
     return "$" + match.group(1) if match else ""
 
 
-def product_type(name, context=""):
-    text = (name + " " + context).lower()
+def pokemon_set_name(name):
+    if ":" in name:
+        return name.split(":", 1)[1].strip()
+    return name
 
-    if "booster box" in text or "booster display" in text:
-        return "Booster Box"
-    if "booster bundle" in text:
-        return "Booster Bundle"
-    if "booster pack" in text:
-        return "Booster Pack"
-    if "elite trainer box" in text or " etb" in text:
-        return "Elite Trainer Box"
+
+def pokemon_type(name):
+    text = name.lower()
+
+    if "battle academy" in text:
+        return "Battle Academy"
     if "collection" in text:
-        return "Collection Box"
-    if "starter deck" in text:
-        return "Starter Deck"
-    if "advanced deck" in text:
-        return "Advanced Deck"
-    if "structure deck" in text:
-        return "Structure Deck"
-    if "special booster" in text:
-        return "Booster Box"
+        return "Collection"
+    if "trick or trade" in text:
+        return "Booster Bundle"
+    if "mega evolution" in text or "scarlet & violet" in text:
+        return "Expansion"
+
     return "Other"
 
 
-def make_product(name, game, url, context=""):
-    name = clean_text(name)
-    context = clean_text(context)
-
-    if not name or len(name) < 5:
-        return None
-
-    date = find_date(context) or find_date(name)
-    msrp = find_msrp(context) or find_msrp(name)
-    kind = product_type(name, context)
-
+def make_product(name, game, url, kind, release_date="", msrp=""):
     return {
-        "name": name,
+        "name": clean_text(name),
         "game": game,
         "type": kind,
         "set": "",
@@ -112,7 +104,7 @@ def make_product(name, game, url, context=""):
         "image": "",
         "msrp": msrp,
         "market_price": "",
-        "release_date": date,
+        "release_date": release_date,
         "sku": "",
         "url": url,
     }
@@ -120,72 +112,137 @@ def make_product(name, game, url, context=""):
 
 def scrape_pokemon():
     products = []
+    soup = get_page(SOURCES["pokemon"])
 
-    try:
-        soup = get_page(SOURCES["pokemon"])
+    for link in soup.find_all("a", href=True):
+        name = clean_text(link.get_text(" ", strip=True))
 
-        for link in soup.find_all("a", href=True):
-            name = clean_text(link.get_text(" ", strip=True))
-            context = clean_text(link.parent.get_text(" ", strip=True))
+        if not re.search(r"Pok[eé]mon\s+TCG\s*:", name, re.IGNORECASE):
+            continue
 
-            if not re.search(r"Pok[eé]mon\s+TCG", name, re.IGNORECASE):
-                continue
+        if "/products/" not in link["href"]:
+            continue
 
-            url = urljoin(SOURCES["pokemon"], link["href"])
+        url = urljoin(SOURCES["pokemon"], link["href"])
 
-            item = make_product(
+        # Search nearby schedule containers for the official release date.
+        context = ""
+        node = link
+
+        for _ in range(5):
+            if node.parent is None:
+                break
+            node = node.parent
+            context = clean_text(node.get_text(" ", strip=True))
+
+            if normalize_date(context):
+                break
+
+        release_date = find_date(context)
+
+        products.append(
+            make_product(
                 name=name,
                 game="Pokémon",
                 url=url,
-                context=context,
+                kind=pokemon_type(name),
+                release_date=release_date,
             )
-
-            if item:
-                products.append(item)
-
-    except Exception as error:
-        print("Pokémon source error:", error)
+        )
 
     return products
 
 
+def clean_union_name(raw, kind):
+    text = clean_text(raw)
+
+    # Remove the website's section heading.
+    text = re.sub(
+        r"^(BOOSTERS|PRECONSTRUCTED DECKS|OTHER)\s+",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    # Remove the product type prefix.
+    prefixes = [
+        "Special Booster Pack",
+        "Precious Booster Pack",
+        "Booster Pack",
+        "Advanced Deck",
+        "Starter Deck",
+    ]
+
+    for prefix in prefixes:
+        if text.lower().startswith(prefix.lower()):
+            text = text[len(prefix):].strip()
+            break
+
+    # Remove release-date and MSRP information.
+    text = re.split(
+        r"\s+Release Date\b|\s+MSRP\b",
+        text,
+        flags=re.IGNORECASE,
+    )[0]
+
+    return clean_text(text)
+
+
 def scrape_union_arena():
     products = []
+    soup = get_page(SOURCES["union_arena"])
 
-    try:
-        soup = get_page(SOURCES["union_arena"])
+    for link in soup.find_all("a", href=True):
+        href = link["href"]
 
-        for link in soup.find_all("a", href=True):
-            name = clean_text(link.get_text(" ", strip=True))
-            context = clean_text(link.parent.get_text(" ", strip=True))
-            combined = (name + " " + context).lower()
+        # Only accept actual booster and deck product pages.
+        is_booster = "/products/boosters/" in href
+        is_deck = "/products/decks/" in href
 
-            if not any(word in combined for word in [
-                "booster pack",
-                "booster box",
-                "special booster",
-                "starter deck",
-                "advanced deck",
-            ]):
-                continue
+        if not (is_booster or is_deck):
+            continue
 
-            if len(name) < 5:
-                continue
+        raw = clean_text(link.get_text(" ", strip=True))
+        if not raw:
+            continue
 
-            url = urljoin(SOURCES["union_arena"], link["href"])
+        kind = "Booster Pack" if is_booster else "Starter Deck"
 
-            item = make_product(
+        if "advanced deck" in raw.lower():
+            kind = "Advanced Deck"
+
+        name = clean_union_name(raw, kind)
+
+        if len(name) < 3:
+            continue
+
+        url = urljoin(SOURCES["union_arena"], href)
+
+        context = ""
+        node = link
+
+        for _ in range(4):
+            if node.parent is None:
+                break
+            node = node.parent
+            context = clean_text(node.get_text(" ", strip=True))
+
+            if normalize_date(context) and find_msrp(context):
+                break
+
+        release_date = find_date(context)
+        msrp = find_msrp(context)
+
+        products.append(
+            make_product(
                 name=name,
                 game="Union Arena",
                 url=url,
-                context=context,
+                kind=kind,
+                release_date=release_date,
+                msrp=msrp,
             )
-
-            if item:
-                products.append(item)
-
-    except Exception as error:
-        print("Union Arena source error:", error)
+        )
 
     return products
 
@@ -194,11 +251,7 @@ def remove_duplicates(items):
     unique = {}
 
     for item in items:
-        key = (
-            item["game"].lower(),
-            item["name"].lower(),
-            item["url"].lower(),
-        )
+        key = (item["game"].lower(), item["url"].lower())
         unique[key] = item
 
     return list(unique.values())
@@ -210,8 +263,20 @@ def main():
     data = load_data()
     errors = []
 
-    pokemon = scrape_pokemon()
-    union_arena = scrape_union_arena()
+    pokemon = []
+    union_arena = []
+
+    try:
+        pokemon = scrape_pokemon()
+    except Exception as error:
+        errors.append("Pokémon: " + str(error))
+        print(errors[-1])
+
+    try:
+        union_arena = scrape_union_arena()
+    except Exception as error:
+        errors.append("Union Arena: " + str(error))
+        print(errors[-1])
 
     products = remove_duplicates(pokemon + union_arena)
 
@@ -243,10 +308,11 @@ def main():
     )
 
     print("Monitor finished.")
-    print("Pokémon products found:", len(pokemon))
-    print("Union Arena products found:", len(union_arena))
+    print("Pokémon products:", len(pokemon))
+    print("Union Arena products:", len(union_arena))
     print("Total products:", len(products))
     print("Release entries:", len(releases))
+    print("Errors:", len(errors))
 
 
 if __name__ == "__main__":
