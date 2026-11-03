@@ -1,0 +1,87 @@
+name: PokeStock Fast Website Check
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "reports.html"
+      - "assets/**"
+      - "css/**"
+      - "js/**"
+      - ".github/workflows/site-check.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pokestock-site-check
+  cancel-in-progress: true
+
+jobs:
+  check-website:
+    name: Validate Website
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout website
+        uses: actions/checkout@v4
+
+      - name: Check website files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          import json
+
+          class HTMLChecker(HTMLParser):
+              pass
+
+          for filename in ("index.html", "reports.html"):
+              path = Path(filename)
+
+              if not path.is_file():
+                  raise SystemExit(
+                      f"Missing website file: {filename}"
+                  )
+
+              html = path.read_text(
+                  encoding="utf-8"
+              )
+
+              if not html.strip():
+                  raise SystemExit(
+                      f"Empty website file: {filename}"
+                  )
+
+              HTMLChecker().feed(html)
+
+              print(
+                  f"PASS: {filename} "
+                  f"({len(html):,} characters)"
+              )
+
+          for filename in (
+              "data/status.json",
+              "data/stores.json",
+              "data/shipments.json"
+          ):
+              path = Path(filename)
+
+              if not path.is_file():
+                  raise SystemExit(
+                      f"Missing data: {filename}"
+                  )
+
+              with path.open(
+                  encoding="utf-8"
+              ) as file:
+                  json.load(file)
+
+              print(f"PASS: {filename}")
+
+          print("FAST WEBSITE CHECK PASSED")
+          PY
