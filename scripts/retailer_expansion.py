@@ -1,20 +1,19 @@
+
 #!/usr/bin/env python3
-"""PokéStock V11 — Nationwide Retailer Discovery.
+"""PokéStock V11.2 — Expanded TCG Retailer Discovery.
 
-Discovers public Shopify catalogues from websites
-already associated with nationwide store records.
+Discovers compatible public Shopify feeds from
+store websites already in PokéStock's directory.
 
-Writes:
-  data/online_retailers.json
-  data/retailer_discovery_report.json
+Supports:
+- More website field formats
+- More TCG franchises
+- Sealed booster boxes, bundles, cases and decks
+- Rotating scans across multiple runs
+- Persistent registered retailer list
+- Evidence-based retailer qualification
 
-Does NOT:
-  - modify product catalogue
-  - claim physical-store inventory
-  - fabricate stock
-  - treat every discovered store as a TCG retailer
-
-Designed for periodic GitHub Actions execution.
+Does not verify physical-store inventory.
 """
 
 import ipaddress
@@ -30,114 +29,145 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 
-STORES_FILE = DATA / "stores.json"
-RETAILERS_FILE = DATA / "online_retailers.json"
-REPORT_FILE = DATA / "retailer_discovery_report.json"
+STORES = DATA / "stores.json"
+RETAILERS = DATA / "online_retailers.json"
+REPORT = DATA / "retailer_discovery_report.json"
 
-NOW = datetime.now(timezone.utc).isoformat()
+STAMP = datetime.now(timezone.utc).isoformat()
 
-# Limit work to avoid excessive requests.
-MAX_CANDIDATES_PER_RUN = 20
+MAX_CHECKS = 30
 MAX_REGISTERED = 500
-TIMEOUT = (5, 12)
+MAX_FEED_PRODUCTS = 250
+TIMEOUT = (5, 10)
 
-# Avoid probing known major retailer websites
-# that do not use the Shopify adapter.
 SKIP_DOMAINS = {
-    "walmart.com",
-    "target.com",
-    "gamestop.com",
-    "bestbuy.com",
-    "amazon.com",
-    "ebay.com",
-    "costco.com",
-    "samsclub.com",
-    "walgreens.com",
-    "cvs.com",
-    "dollargeneral.com",
-    "dollartree.com",
-    "fivebelow.com",
-    "barnesandnoble.com",
-    "facebook.com",
-    "instagram.com",
-    "tiktok.com",
-    "x.com",
-    "twitter.com",
-    "google.com",
-    "maps.google.com",
-    "linktr.ee",
-    "discord.gg",
+    "walmart.com", "target.com",
+    "gamestop.com", "bestbuy.com",
+    "amazon.com", "ebay.com",
+    "costco.com", "samsclub.com",
+    "walgreens.com", "cvs.com",
+    "dollargeneral.com", "dollartree.com",
+    "fivebelow.com", "barnesandnoble.com",
+    "facebook.com", "instagram.com",
+    "tiktok.com", "x.com", "twitter.com",
+    "google.com", "business.site",
+    "linktr.ee", "discord.gg",
+    "wordpress.com", "wixsite.com",
 }
+
+GAME_PATTERNS = [
+    r"pok[eé]mon",
+    r"union[\s-]*arena",
+    r"gundam",
+    r"one[\s-]*piece",
+    r"yu[\s-]*gi[\s-]*oh",
+    r"magic[\s:.-]*the[\s-]*gathering",
+    r"\bmtg\b",
+    r"lorcana",
+    r"digimon",
+    r"dragon[\s-]*ball",
+    r"star[\s-]*wars[\s:.-]*unlimited",
+    r"wei(?:ss|ß)[\s-]*schwarz",
+    r"cardfight",
+    r"vanguard",
+    r"battle[\s-]*spirits",
+    r"shadowverse",
+    r"riftbound",
+    r"flesh[\s-]*and[\s-]*blood",
+    r"altered[\s-]*tcg",
+    r"grand[\s-]*archive",
+    r"final[\s-]*fantasy",
+    r"sorcery[\s:.-]*contested",
+    r"naruto",
+    r"demon[\s-]*slayer",
+    r"my[\s-]*little[\s-]*pony",
+    r"kpop[\s-]*demon[\s-]*hunters",
+    r"winx[\s-]*club",
+    r"tokidoki",
+    r"\bkayou\b",
+]
+
+GAME = re.compile(
+    "|".join(GAME_PATTERNS), re.I
+)
+
+SEALED = re.compile(
+    r"booster[\s-]*(box|pack|bundle|display|case)"
+    r"|booster"
+    r"|display[\s-]*case"
+    r"|factory[\s-]*sealed"
+    r"|sealed[\s-]*case"
+    r"|starter[\s-]*deck"
+    r"|trial[\s-]*deck"
+    r"|structure[\s-]*deck"
+    r"|battle[\s-]*deck"
+    r"|elite[\s-]*trainer"
+    r"|collector[\s-]*box"
+    r"|collection[\s-]*box"
+    r"|trading[\s-]*card[\s-]*pack"
+    r"|card[\s-]*box",
+    re.I,
+)
+
+NON_CARDS = re.compile(
+    r"\b(figurine|figure|plush|keychain|"
+    r"acrylic|sleeves|binder|playmat|"
+    r"poster|shirt|hoodie|mug|"
+    r"blind[\s-]*box|storage[\s-]*box)\b",
+    re.I,
+)
 
 SPORTS = re.compile(
     r"\b(baseball|basketball|football|"
     r"hockey|soccer|nfl|nba|mlb|nhl|"
-    r"nascar|sports cards?)\b",
+    r"nascar|sports[\s-]*cards?)\b",
     re.I,
 )
 
-TCG = re.compile(
-    r"pokemon|pokémon|union arena|gundam|"
-    r"one piece|yugioh|yu.gi.oh|"
-    r"magic.the.gathering|lorcana|"
-    r"digimon|dragon ball|star wars unlimited|"
-    r"weiss schwarz|weiß schwarz|"
-    r"cardfight|battle spirits|shadowverse|"
-    r"riftbound|flesh and blood|"
-    r"grand archive|final fantasy tcg|"
-    r"sorcery contested realm|"
-    r"booster box|booster pack|"
-    r"booster bundle|trading card game|"
-    r"tcg|sealed card",
-    re.I,
-)
-
-SEALED = re.compile(
-    r"booster|bundle|display|sealed|"
-    r"starter deck|trial deck|"
-    r"structure deck|elite trainer|"
-    r"collection box|collector box|"
-    r"blister|card pack|battle deck|"
-    r"trading card",
+STORE_TERMS = re.compile(
+    r"card|game|hobby|collectib|comic|"
+    r"anime|toy|tcg|trading",
     re.I,
 )
 
 SESSION = requests.Session()
 SESSION.trust_env = False
 SESSION.headers.update({
-    "User-Agent": "PokeStock/11.0 Retailer Discovery",
+    "User-Agent": "PokeStock/11.2 (+public TCG discovery)",
     "Accept": "application/json",
 })
 
 
-def load(path, fallback):
+def read_json(path, fallback):
     if not path.exists():
         return fallback
-    return json.loads(path.read_text(encoding="utf-8"))
+    with path.open(encoding="utf-8") as f:
+        return json.load(f)
 
 
-def save(path, data):
+def write_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(".json.tmp")
-    tmp.write_text(
+    temporary = path.with_suffix(".json.tmp")
+    temporary.write_text(
         json.dumps(
-            data,
-            ensure_ascii=False,
-            indent=2,
+            data, ensure_ascii=False, indent=2
         ),
         encoding="utf-8",
     )
-    tmp.replace(path)
+    temporary.replace(path)
 
 
 def clean(value):
     return " ".join(str(value or "").split())
 
 
-def normalize_url(value):
-    value = clean(value)
+def normalize_url(raw):
+    value = clean(raw)
 
     if not value:
+        return ""
+
+    if re.search(r"[\s,;]", value):
         return ""
 
     if value.startswith("http://"):
@@ -147,26 +177,19 @@ def normalize_url(value):
         value = "https://" + value
 
     try:
-        parsed = urlparse(value)
-        host = parsed.hostname
+        u = urlparse(value)
+        host = (u.hostname or "").lower().rstrip(".")
 
         if (
-            parsed.scheme != "https"
+            u.scheme != "https"
             or not host
-            or parsed.username
-            or parsed.password
-            or parsed.port not in (None, 443)
+            or u.username
+            or u.password
+            or u.port not in (None, 443)
         ):
             return ""
 
-        host = host.lower().rstrip(".")
-
-        if (
-            host == "localhost"
-            or host.endswith(".local")
-            or host.endswith(".internal")
-            or "." not in host
-        ):
+        if "." not in host or host == "localhost":
             return ""
 
         try:
@@ -175,12 +198,12 @@ def normalize_url(value):
         except ValueError:
             pass
 
-        if any(
-            host == domain
-            or host.endswith("." + domain)
-            for domain in SKIP_DOMAINS
-        ):
+        if host.endswith((".local", ".internal")):
             return ""
+
+        for blocked in SKIP_DOMAINS:
+            if host == blocked or host.endswith("." + blocked):
+                return ""
 
         return "https://" + host
 
@@ -189,67 +212,66 @@ def normalize_url(value):
 
 
 def public_dns(host):
-    """Reject private/reserved network targets."""
     try:
-        records = socket.getaddrinfo(
+        results = socket.getaddrinfo(
             host, 443, type=socket.SOCK_STREAM
         )
-
-        if not records:
+        if not results:
             return False
 
-        for record in records:
-            address = record[4][0]
-            ip = ipaddress.ip_address(address)
-
-            if not ip.is_global:
-                return False
-
-        return True
-
+        return all(
+            ipaddress.ip_address(item[4][0]).is_global
+            for item in results
+        )
     except (OSError, ValueError):
         return False
 
 
-def store_site(store):
-    for key in (
-        "website",
-        "url",
-        "website_url",
-        "contact_website",
-    ):
-        url = normalize_url(store.get(key))
-        if url:
-            return url
+def extract_websites(store):
+    keys = (
+        "website", "url", "website_url",
+        "contact_website", "shop_url",
+        "online_store", "homepage",
+    )
 
-    return ""
+    found = set()
+
+    for key in keys:
+        raw = store.get(key)
+
+        if isinstance(raw, list):
+            values = raw
+        else:
+            values = [raw]
+
+        for value in values:
+            if not isinstance(value, str):
+                continue
+
+            url = normalize_url(value)
+
+            if url:
+                found.add(url)
+
+    return sorted(found)
 
 
 def likely_store(store):
-    name = clean(store.get("name"))
-    category = clean(
-        " ".join(str(store.get(k) or "") for k in (
-            "category",
-            "shop",
-            "shop_type",
-            "retailer_type",
-            "description",
-        ))
-    )
+    values = [
+        store.get("name"),
+        store.get("category"),
+        store.get("shop"),
+        store.get("shop_type"),
+        store.get("retailer_type"),
+        store.get("description"),
+    ]
 
-    combined = name + " " + category
+    text = " ".join(clean(x) for x in values)
 
-    if SPORTS.search(combined) and not TCG.search(combined):
+    if SPORTS.search(text) and not GAME.search(text):
         return False
 
-    return bool(
-        re.search(
-            r"card|game|hobby|collectib|"
-            r"comic|toy|tcg|anime",
-            combined,
-            re.I,
-        )
-    )
+    return bool(STORE_TERMS.search(text))
 
 
 def candidates(stores):
@@ -262,160 +284,158 @@ def candidates(stores):
         if not likely_store(store):
             continue
 
-        url = store_site(store)
+        for base in extract_websites(store):
+            host = urlparse(base).hostname
 
-        if not url:
-            continue
-
-        host = urlparse(url).hostname
-
-        if host not in found:
-            found[host] = {
-                "name": clean(
-                    store.get("name") or host
-                ),
-                "base": url,
-                "host": host,
-            }
+            if host not in found:
+                found[host] = {
+                    "name": clean(
+                        store.get("name") or host
+                    ),
+                    "base": base,
+                    "host": host,
+                }
 
     return sorted(
         found.values(),
-        key=lambda row: row["host"],
+        key=lambda x: x["host"],
     )
 
 
-def inspect_shopify(shop):
-    """Inspect a public Shopify products feed.
+def qualifies(product):
+    if not isinstance(product, dict):
+        return False
 
-    A successful response alone is not enough:
-    at least one recognizable TCG product must
-    appear before registering the retailer.
-    """
-    if not public_dns(shop["host"]):
-        raise ValueError(
-            "Domain did not resolve to public IPs"
-        )
+    title = clean(product.get("title"))
+    tags = product.get("tags") or ""
+    product_type = clean(product.get("product_type"))
 
-    url = shop["base"] + "/products.json?limit=100"
+    if isinstance(tags, list):
+        tags = " ".join(map(str, tags))
+
+    text = " ".join([
+        title, clean(tags), product_type
+    ])
+
+    # Require a recognizable game in product metadata
+    # and a sealed-card format in the title.
+    if not GAME.search(text):
+        return False
+
+    if not SEALED.search(title):
+        return False
+
+    if NON_CARDS.search(title):
+        return False
+
+    if SPORTS.search(title) and not GAME.search(title):
+        return False
+
+    return True
+
+
+def inspect(shop):
+    host = shop["host"]
+
+    if not public_dns(host):
+        raise ValueError("Not a public DNS destination")
+
+    endpoint = (
+        shop["base"]
+        + "/products.json?limit="
+        + str(MAX_FEED_PRODUCTS)
+    )
 
     response = SESSION.get(
-        url,
+        endpoint,
         timeout=TIMEOUT,
         allow_redirects=False,
+        stream=True,
     )
 
-    if 300 <= response.status_code < 400:
-        raise ValueError(
-            "Redirect not followed"
-        )
+    try:
+        if 300 <= response.status_code < 400:
+            raise ValueError("Redirect not followed")
 
-    response.raise_for_status()
+        response.raise_for_status()
 
-    if len(response.content) > 5_000_000:
-        raise ValueError(
-            "Catalogue response too large"
-        )
+        chunks = []
+        size = 0
 
-    payload = response.json()
+        for chunk in response.iter_content(65536):
+            size += len(chunk)
+
+            if size > 6_000_000:
+                raise ValueError("Feed too large")
+
+            chunks.append(chunk)
+
+        payload = json.loads(b"".join(chunks))
+
+    finally:
+        response.close()
 
     if not isinstance(payload, dict):
-        raise ValueError(
-            "Invalid Shopify response"
-        )
+        raise ValueError("Invalid Shopify response")
 
     products = payload.get("products")
 
     if not isinstance(products, list):
-        raise ValueError(
-            "No Shopify products array"
-        )
+        raise ValueError("Missing products list")
 
-    matched = []
-
-    for product in products:
-        if not isinstance(product, dict):
-            continue
-
-        title = clean(product.get("title"))
-        tags = product.get("tags") or ""
-
-        if isinstance(tags, list):
-            tags = " ".join(map(str, tags))
-
-        text = title + " " + clean(tags)
-
-        if (
-            TCG.search(text)
-            and SEALED.search(text)
-            and not (
-                SPORTS.search(text)
-                and not TCG.search(title)
-            )
-        ):
-            matched.append(title)
-
-    if not matched:
-        return {
-            "supported": False,
-            "reason": "No matching sealed TCG products",
-            "feed_products": len(products),
-        }
+    matches = [
+        clean(p.get("title"))
+        for p in products
+        if qualifies(p)
+    ]
 
     return {
-        "supported": True,
+        "supported": bool(matches),
         "feed_products": len(products),
-        "matching_products": len(matched),
-        "examples": matched[:3],
+        "matching_products": len(matches),
+        "examples": matches[:3],
     }
 
 
 def main():
-    stores = load(STORES_FILE, [])
+    stores = read_json(STORES, [])
 
     if not isinstance(stores, list):
-        raise ValueError(
-            "Store directory must be a list"
-        )
+        raise ValueError("stores.json must be a list")
 
-    existing = load(RETAILERS_FILE, [])
+    existing = read_json(RETAILERS, [])
 
     if not isinstance(existing, list):
         raise ValueError(
-            "Retailer configuration must be a list"
+            "online_retailers.json must be a list"
         )
 
-    previous = load(REPORT_FILE, {})
-    cursor = int(previous.get("next_cursor", 0))
-
+    previous = read_json(REPORT, {})
     pool = candidates(stores)
 
+    cursor = int(previous.get("next_cursor", 0))
     selected = []
 
-    if pool:
-        for i in range(
-            min(MAX_CANDIDATES_PER_RUN, len(pool))
-        ):
-            selected.append(
-                pool[(cursor + i) % len(pool)]
-            )
+    for offset in range(min(MAX_CHECKS, len(pool))):
+        selected.append(
+            pool[(cursor + offset) % len(pool)]
+        )
 
     registered = {}
 
-    for shop in existing:
-        if not isinstance(shop, dict):
+    for item in existing:
+        if not isinstance(item, dict):
             continue
 
-        base = normalize_url(shop.get("base"))
+        base = normalize_url(item.get("base"))
 
         if not base:
             continue
 
-        domain = urlparse(base).hostname
+        host = urlparse(base).hostname
 
-        registered[domain] = {
-            "name": clean(
-                shop.get("name") or domain
-            ),
+        registered[host] = {
+            "name": clean(item.get("name") or host),
             "base": base,
         }
 
@@ -423,7 +443,9 @@ def main():
     added = 0
 
     for shop in selected:
-        if shop["host"] in registered:
+        host = shop["host"]
+
+        if host in registered:
             checks.append({
                 "name": shop["name"],
                 "status": "already_registered",
@@ -431,25 +453,26 @@ def main():
             continue
 
         try:
-            result = inspect_shopify(shop)
+            result = inspect(shop)
 
             if (
                 result["supported"]
                 and len(registered) < MAX_REGISTERED
             ):
-                registered[shop["host"]] = {
+                registered[host] = {
                     "name": shop["name"],
                     "base": shop["base"],
                 }
 
                 added += 1
                 status = "registered"
+
             else:
                 status = "not_eligible"
 
             checks.append({
                 "name": shop["name"],
-                "host": shop["host"],
+                "host": host,
                 "status": status,
                 **result,
             })
@@ -457,12 +480,11 @@ def main():
         except Exception as error:
             checks.append({
                 "name": shop["name"],
-                "host": shop["host"],
+                "host": host,
                 "status": "error",
                 "reason": (
                     type(error).__name__
-                    + ": "
-                    + str(error)[:120]
+                    + ": " + str(error)[:130]
                 ),
             })
 
@@ -471,34 +493,34 @@ def main():
         if pool else 0
     )
 
-    result = sorted(
+    output = sorted(
         registered.values(),
         key=lambda x: x["name"].lower(),
     )
 
     report = {
-        "version": "11.0",
-        "checked_at": NOW,
+        "version": "11.2",
+        "checked_at": STAMP,
         "total_store_records": len(stores),
         "candidate_retailer_websites": len(pool),
         "checked_this_run": len(selected),
         "new_retailers_registered": added,
-        "total_registered_retailers": len(result),
+        "total_registered_retailers": len(output),
         "next_cursor": next_cursor,
         "checks": checks,
         "inventory_scope": "online_only",
         "physical_store_stock_claims": 0,
     }
 
-    save(RETAILERS_FILE, result)
-    save(REPORT_FILE, report)
+    write_json(RETAILERS, output)
+    write_json(REPORT, report)
 
-    print("=== POKESTOCK V11 ===")
+    print("=== POKESTOCK V11.2 ===")
     print("Store records:", len(stores))
     print("Candidate websites:", len(pool))
-    print("Websites checked:", len(selected))
+    print("Checked:", len(selected))
     print("New retailers:", added)
-    print("Total registered:", len(result))
+    print("Registered retailers:", len(output))
 
     for check in checks:
         print(
