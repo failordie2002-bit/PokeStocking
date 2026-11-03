@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131b">
+<title>Community Sightings | PokéStock</title>
+<style>
+:root{
+ --bg:#10131b;--panel:#191e2a;--panel2:#202635;--border:#30394c;
+ --text:#f5f4ef;--muted:#a0a9ba;--gold:#d6a83e;
+ --gold2:#f0cc76;--green:#48d6a0;--red:#ff8798;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+.app{max-width:1100px;margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#f0cc76,#b78325);display:grid;place-items:center;color:#17130a;font-size:24px;font-weight:950}
+h1{font-size:20px;margin:0}
+.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:1px;margin-top:3px}
+a{color:var(--gold2);text-decoration:none}
+.btn{display:inline-flex;justify-content:center;align-items:center;background:var(--panel2);border:1px solid var(--border);color:white;padding:10px 13px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#17130a}
+.hero{padding:23px;border:1px solid #65502c;border-radius:18px;background:linear-gradient(115deg,#292638,#252b39 55%,#3b3020);margin-bottom:16px}
+.eyebrow{font-size:10px;color:var(--gold2);letter-spacing:2px;font-weight:800}
+.hero h2{font-size:29px;margin:9px 0 7px}
+.hero p{font-size:12px;color:#c2c5ce;line-height:1.7;margin:0;max-width:650px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px}
+h3{font-size:13px;margin:0 0 13px}
+label{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}
+.field{width:100%;background:#111722;border:1px solid var(--border);border-radius:9px;color:white;padding:11px;font-size:12px}
+.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.note{font-size:10px;color:var(--muted);line-height:1.6;margin-top:10px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 12px}
+.toolbar select{width:auto;min-width:135px}
+#reports{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.report{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:15px}
+.report h3{font-size:13px;margin:0 0 7px}
+.report p{font-size:10px;color:var(--muted);line-height:1.6;margin:5px 0}
+.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#3c321e;color:#ffd47c;font-size:9px;font-weight:800}
+.pill.green{background:#15382f;color:#70e5b7}
+.pill.red{background:#3b202b;color:#ff91a1}
+.meta{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-top:11px}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:30px 12px;background:var(--panel);border:1px solid var(--border);border-radius:14px;font-size:12px}
+footer{text-align:center;color:#69758a;font-size:9px;padding:25px}
+@media(max-width:650px){
+ .app{padding:13px}
+ .controls{grid-template-columns:1fr 1fr}
+ #reports{grid-template-columns:1fr}
+ header .btn{font-size:10px;padding:9px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand">
+  <div class="logo">P</div>
+  <div><h1>PokéStock</h1><small>COMMUNITY SIGHTINGS</small></div>
+ </div>
+ <a class="btn" href="index.html">← Homepage</a>
+</header>
+
+<div class="hero">
+ <div class="eyebrow">COLLECTORS HELPING COLLECTORS</div>
+ <h2>Find cards near you.</h2>
+ <p>See community-reported Pokémon and Union Arena sightings at physical stores. Reports are community submissions, not guaranteed live inventory.</p>
+</div>
+
+<div class="card">
+ <h3>📍 Your search area</h3>
+ <div class="controls">
+  <div>
+   <label for="location">City or ZIP code</label>
+   <input class="field" id="location" value="Staunton, VA" placeholder="Enter city or ZIP">
+  </div>
+  <div>
+   <label for="radius">Search radius</label>
+   <select class="field" id="radius">
+    <option value="5">5 miles</option>
+    <option value="10">10 miles</option>
+    <option value="25" selected>25 miles</option>
+    <option value="50">50 miles</option>
+    <option value="100">100 miles</option>
+   </select>
+  </div>
+  <div>
+   <label for="game">Game</label>
+   <select class="field" id="game">
+    <option value="">All games</option>
+    <option>Pokémon</option>
+    <option>Union Arena</option>
+   </select>
+  </div>
+ </div>
+ <div class="actions">
+  <button class="btn primary" onclick="applyFilters()">Apply filters</button>
+  <button class="btn" onclick="useLocation()">Use my location</button>
+ </div>
+ <p class="note" id="locationNote">Default search area: Staunton, Virginia. Your location is used only in this browser session and is not submitted with a report.</p>
+</div>
+
+<div class="toolbar">
+ <select class="field" id="reportType" onchange="applyFilters()">
+  <option value="">All report types</option>
+  <option value="saw">Shelf sightings</option>
+  <option value="sold">Sold out / empty shelf</option>
+  <option value="employee">Employee confirmations</option>
+  <option value="pickup">Pickup availability</option>
+ </select>
+ <select class="field" id="age" onchange="applyFilters()">
+  <option value="all">Any age</option>
+  <option value="24">Last 24 hours</option>
+  <option value="72">Last 3 days</option>
+  <option value="168">Last 7 days</option>
+ </select>
+ <button class="btn primary" onclick="submitReport()">＋ Report a sighting</button>
+</div>
+
+<div id="summary" class="note">Loading community reports…</div>
+<div id="reports"><div class="empty">Loading reports…</div></div>
+
+<footer>POKÉSTOCK · COMMUNITY REPORTS ARE UNVERIFIED UNLESS OTHERWISE IDENTIFIED</footer>
+</div>
+
+<script>
+const REPORT_URL="https://github.com/failordie2002-bit/PokeStocking/issues/new?template=stock-report.yml";
+let allReports=[];
+let searchPoint=null;
+let manualCity="Staunton, VA";
+
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function submitReport(){window.open(REPORT_URL,"_blank","noopener")}
+function normalize(v){return String(v||"").toLowerCase().trim()}
+function reportKind(v){
+ const s=normalize(v);
+ if(s.includes("employee"))return "employee";
+ if(s.includes("pickup"))return "pickup";
+ if(s.includes("empty")||s.includes("sold out"))return "sold";
+ return "saw";
+}
+function haversine(a,b){
+ const rad=x=>x*Math.PI/180;
+ const dLat=rad(b.lat-a.lat),dLon=rad(b.lon-a.lon);
+ const x=Math.sin(dLat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLon/2)**2;
+ return 3958.8*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
+}
+function applyFilters(){
+ const city=document.getElementById("location").value.trim();
+ const radius=Number(document.getElementById("radius").value);
+ const game=document.getElementById("game").value;
+ const kind=document.getElementById("reportType").value;
+ const age=document.getElementById("age").value;
+ const now=Date.now();
+ let list=allReports.filter(r=>r.issue_state!=="closed");
+ list=list.filter(r=>!game||r.game===game);
+ list=list.filter(r=>!kind||reportKind(r.report_type)===kind);
+ if(age!=="all")list=list.filter(r=>r.created_at&&now-new Date(r.created_at).getTime()<=Number(age)*3600000);
+ if(searchPoint){
+  list=list.filter(r=>{
+   const s=r.store||{};
+   if(typeof s.lat!=="number"||typeof s.lon!=="number")return false;
+   return haversine(searchPoint,{lat:s.lat,lon:s.lon})<=radius;
+  });
+ }else if(city){
+  const terms=city.toLowerCase().split(/[,\s]+/).filter(Boolean);
+  list=list.filter(r=>{
+   const s=r.store||{};
+   const text=normalize((s.city||"")+" "+(s.state||"")+" "+(s.label||"")+" "+(s.name||""));
+   return terms.some(t=>text.includes(t));
+  });
+ }
+ list.sort((a,b)=>String(b.created_at||"").localeCompare(String(a.created_at||"")));
+ render(list);
+}
+function render(list){
+ const container=document.getElementById("reports");
+ document.getElementById("summary").textContent=list.length+" matching report(s). Older sightings may no longer reflect current stock.";
+ if(!list.length){
+  container.innerHTML='<div class="empty">No matching reports yet.<br><br>Try a wider radius, another location or a different filter.</div>';
+  return;
+ }
+ container.innerHTML=list.map(r=>{
+  const s=r.store||{};
+  const kind=reportKind(r.report_type);
+  const label=kind==="saw"?"Shelf sighting":kind==="sold"?"Sold out / empty":kind==="employee"?"Employee confirmation":"Pickup availability";
+  const ageMs=r.created_at?Date.now()-new Date(r.created_at).getTime():Infinity;
+  const stale=ageMs>86400000;
+  const when=r.created_at?new Date(r.created_at).toLocaleString():"Time unavailable";
+  return `<article class="report">
+   <div class="meta"><span class="pill ${stale?"red":kind==="saw"||kind==="employee"?"green":""}">${stale?"Older report":label}</span><span class="pill">${esc(r.game||"Game")}</span></div>
+   <h3 style="margin-top:12px">${esc(r.product||"Unnamed product")}</h3>
+   <p><strong>${esc(s.name||"Store")}</strong> · ${esc(s.city||"")} ${esc(s.state||"")}</p>
+   <p>${esc(r.details||"No additional details supplied.")}</p>
+   <p>Quantity: ${esc(r.quantity||"Not specified")}</p>
+   <div class="meta"><span style="font-size:9px;color:var(--muted)">${esc(when)}</span><span class="pill">${esc(r.verification||"Unverified")}</span></div>
+   ${r.issue_url?`<p><a href="${esc(r.issue_url)}" target="_blank" rel="noopener">View original report ↗</a></p>`:""}
+  </article>`;
+ }).join("");
+}
+function useLocation(){
+ if(!navigator.geolocation){
+  alert("Location services are not supported by this browser.");
+  return;
+ }
+ document.getElementById("locationNote").textContent="Requesting your location…";
+ navigator.geolocation.getCurrentPosition(pos=>{
+  searchPoint={lat:pos.coords.latitude,lon:pos.coords.longitude};
+  document.getElementById("location").value="My current location";
+  document.getElementById("locationNote").textContent="Using your current location for distance filtering. Coordinates are kept in this browser session and are not uploaded.";
+  applyFilters();
+ },()=>{
+  document.getElementById("locationNote").textContent="Location access was not granted. Enter a city or ZIP code instead.";
+  alert("Couldn't access your location. Please enter a city or ZIP code.");
+ },{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
+}
+document.getElementById("location").addEventListener("input",()=>{
+ searchPoint=null;
+ document.getElementById("locationNote").textContent="City filtering is based on the location details stored in community reports.";
+});
+async function loadReports(){
+ try{
+  const response=await fetch("data/reports.json?time="+Date.now(),{cache:"no-store"});
+  if(!response.ok)throw new Error("Report feed not available");
+  const payload=await response.json();
+  allReports=Array.isArray(payload.reports)?payload.reports:[];
+  applyFilters();
+ }catch(e){
+  allReports=[];
+  document.getElementById("summary").textContent="The community report feed is not available yet.";
+  render([]);
+ }
+}
+loadReports();
+setInterval(loadReports,60000);
+</script>
+</body>
+</html>
