@@ -1,16 +1,13 @@
 
 #!/usr/bin/env python3
-"""PokéStock V8.2 — All-50-State Store Discovery.
+"""PokeStock V8.2.1: Resumable 50-state rural discovery.
 
-Searches OpenStreetMap for real, mapped store candidates.
-Includes cities, suburbs, small towns and rural locations.
-
-Preserves existing store records and catalogue data.
-Never invents stores, inventory or shipments.
+One geographic tile per run. Existing data is preserved.
+OpenStreetMap listings are candidates, never stock proof.
 """
 
 import json
-import os
+import math
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,100 +17,92 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
-STORES_FILE = DATA / "stores.json"
+STORES = DATA / "stores.json"
 STATE_FILE = DATA / "discovery_state.json"
 
-OVERPASS_ENDPOINTS = [
-    "https://overpass.kumi.systems/api/interpreter",
+STATES = {
+    "AL": "Alabama", "AK": "Alaska",
+    "AZ": "Arizona", "AR": "Arkansas",
+    "CA": "California", "CO": "Colorado",
+    "CT": "Connecticut", "DE": "Delaware",
+    "FL": "Florida", "GA": "Georgia",
+    "HI": "Hawaii", "ID": "Idaho",
+    "IL": "Illinois", "IN": "Indiana",
+    "IA": "Iowa", "KS": "Kansas",
+    "KY": "Kentucky", "LA": "Louisiana",
+    "ME": "Maine", "MD": "Maryland",
+    "MA": "Massachusetts", "MI": "Michigan",
+    "MN": "Minnesota", "MS": "Mississippi",
+    "MO": "Missouri", "MT": "Montana",
+    "NE": "Nebraska", "NV": "Nevada",
+    "NH": "New Hampshire", "NJ": "New Jersey",
+    "NM": "New Mexico", "NY": "New York",
+    "NC": "North Carolina", "ND": "North Dakota",
+    "OH": "Ohio", "OK": "Oklahoma",
+    "OR": "Oregon", "PA": "Pennsylvania",
+    "RI": "Rhode Island", "SC": "South Carolina",
+    "SD": "South Dakota", "TN": "Tennessee",
+    "TX": "Texas", "UT": "Utah",
+    "VT": "Vermont", "VA": "Virginia",
+    "WA": "Washington", "WV": "West Virginia",
+    "WI": "Wisconsin", "WY": "Wyoming",
+    "DC": "District of Columbia",
+}
+
+ORDER = [
+    "VA", "WV", "MD", "NC", "PA", "TN", "DC"
+] + [
+    s for s in STATES
+    if s not in (
+        "VA", "WV", "MD", "NC", "PA", "TN"
+    )
+]
+
+ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
 ]
 
 HEADERS = {
     "User-Agent": (
-        "PokeStock/8.2 "
+        "PokeStock/8.2.1 "
         "(https://github.com/failordie2002-bit/PokeStocking)"
-    ),
-    "Accept": "application/json",
+    )
 }
 
-# Actual US state abbreviations.
-# These are geographic search targets, not store records.
-STATES = [
-    "AL", "AK", "AZ", "AR", "CA",
-    "CO", "CT", "DE", "FL", "GA",
-    "HI", "ID", "IL", "IN", "IA",
-    "KS", "KY", "LA", "ME", "MD",
-    "MA", "MI", "MN", "MS", "MO",
-    "MT", "NE", "NV", "NH", "NJ",
-    "NM", "NY", "NC", "ND", "OH",
-    "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT",
-    "VA", "WA", "WV", "WI", "WY",
-]
-
-# Start near the user's Virginia region,
-# then progressively cover every other state.
-PRIORITY = [
-    "VA", "WV", "MD", "NC", "PA",
-    "TN", "DC",
-]
-
-# DC is an additional district, not a 51st state.
-SEARCH_ORDER = [
-    x for x in PRIORITY if x in STATES or x == "DC"
-] + [
-    x for x in STATES if x not in PRIORITY
-]
-
-STORE_TERMS = re.compile(
-    r"trading[\s-]*cards?|"
-    r"collectible[\s-]*cards?|"
-    r"card[\s-]*games?|"
-    r"pok[eé]mon|"
-    r"tabletop|"
-    r"hobby[\s-]*games?|"
-    r"game[\s-]*store|"
-    r"comic.*games|"
+KEYWORDS = re.compile(
+    r"trading[\s-]*cards?|collectible[\s-]*cards?|"
+    r"card[\s-]*games?|pok[eé]mon|tabletop|"
+    r"hobby[\s-]*games?|game[\s-]*store|"
     r"\btcg\b|\bccg\b",
-    re.IGNORECASE,
+    re.I,
 )
 
-EXCLUDED = re.compile(
+EXCLUDE = re.compile(
     r"casino|gambling|sports.betting|"
     r"arcade.only|video.games?.only",
-    re.IGNORECASE,
+    re.I,
 )
 
 
-def timestamp():
+def now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def read_json(path, fallback):
+def read(path, default):
     if not path.exists():
-        return fallback
-
-    with path.open(encoding="utf-8") as f:
-        return json.load(f)
+        return default
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def write_json(path, value):
+def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-
-    temporary = path.with_suffix(
-        path.suffix + ".tmp"
+    temp = path.with_suffix(path.suffix + ".tmp")
+    temp.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2),
+        encoding="utf-8",
     )
-
-    temporary.write_text(
-        json.dumps(
-            value,
-            ensure_ascii=False,
-            indent=2
-        ),
-        encoding="utf-8"
-    )
-
-    temporary.replace(path)
+    temp.replace(path)
 
 
 def clean(value):
@@ -122,57 +111,112 @@ def clean(value):
 
 def safe_url(value):
     try:
-        parsed = urlparse(clean(value))
-
+        p = urlparse(clean(value))
         if (
-            parsed.scheme == "https"
-            and parsed.hostname
-            and not parsed.username
-            and not parsed.password
+            p.scheme == "https"
+            and p.hostname
+            and not p.username
+            and not p.password
         ):
-            return parsed.geturl()
-
+            return p.geturl()
     except ValueError:
         pass
-
     return ""
 
 
-def overpass_query(state):
-    # OpenStreetMap state administrative area.
-    # This covers mapped rural and urban locations.
-    iso = "US-" + state
+def state_bounds(code):
+    response = requests.get(
+        "https://nominatim.openstreetmap.org/search",
+        params={
+            "q": STATES[code] + ", United States",
+            "format": "json",
+            "limit": 5,
+            "countrycodes": "us",
+        },
+        headers=HEADERS,
+        timeout=30,
+    )
+    response.raise_for_status()
 
-    return f"""
-[out:json][timeout:90];
-area
-  ["ISO3166-2"="{iso}"]
-  ["boundary"="administrative"]
-  ->.searchArea;
+    results = response.json()
+    expected = STATES[code].lower()
+
+    for item in results:
+        if (
+            item.get("type") == "administrative"
+            and expected in item.get(
+                "display_name", ""
+            ).lower()
+        ):
+            south, north, west, east = map(
+                float, item["boundingbox"]
+            )
+            return [south, west, north, east]
+
+    raise RuntimeError(
+        "State boundary lookup unsuccessful: " + code
+    )
+
+
+def make_tiles(bounds, code):
+    south, west, north, east = bounds
+
+    # Small tiles reduce Overpass timeouts.
+    # Alaska uses larger tiles because of its size.
+    step = 1.5 if code == "AK" else 0.65
+
+    rows = max(1, math.ceil((north - south) / step))
+    cols = max(1, math.ceil((east - west) / step))
+
+    tiles = []
+
+    for row in range(rows):
+        for col in range(cols):
+            a = south + row * step
+            b = west + col * step
+            c = min(north, a + step)
+            d = min(east, b + step)
+            tiles.append([
+                round(a, 5), round(b, 5),
+                round(c, 5), round(d, 5)
+            ])
+
+    return tiles
+
+
+def query_tile(code, tile):
+    south, west, north, east = tile
+
+    bbox = (
+        f"({south},{west},{north},{east})"
+    )
+
+    # Both the state area and geographic tile
+    # must match for a result to be returned.
+    query = f"""
+[out:json][timeout:35];
+area["ISO3166-2"="US-{code}"]
+["boundary"="administrative"]->.state;
 (
-  nwr["shop"="games"](area.searchArea);
-  nwr["shop"="collector"](area.searchArea);
-  nwr["shop"="comic"](area.searchArea);
-  nwr["name"~"Trading Card|Card Shop|Card Game|TCG|Game Store",i](area.searchArea);
-  nwr["description"~"trading card|card game|pokemon|pokémon|TCG",i](area.searchArea);
+  nwr["shop"="games"]{bbox}(area.state);
+  nwr["shop"="collector"]{bbox}(area.state);
+  nwr["shop"="comic"]{bbox}(area.state);
+  nwr["name"~"Trading Card|Card Shop|Card Game|TCG|Game Store",i]{bbox}(area.state);
+  nwr["description"~"trading card|card game|pokemon|pokémon|TCG",i]{bbox}(area.state);
 );
 out center tags;
 """
 
+    errors = []
 
-def query_state(state):
-    query = overpass_query(state)
-    failures = []
-
-    for endpoint in OVERPASS_ENDPOINTS:
+    for endpoint in ENDPOINTS:
         try:
             response = requests.post(
                 endpoint,
                 data={"data": query},
                 headers=HEADERS,
-                timeout=115,
+                timeout=55,
             )
-
             response.raise_for_status()
 
             result = response.json()
@@ -180,33 +224,30 @@ def query_state(state):
             if not isinstance(
                 result.get("elements"), list
             ):
-                raise ValueError(
-                    "Invalid Overpass response"
+                raise ValueError("Invalid result")
+
+            if result.get("remark"):
+                raise RuntimeError(
+                    str(result["remark"])[:200]
                 )
 
             return result["elements"]
 
         except (
             requests.RequestException,
-            ValueError
+            ValueError,
+            RuntimeError
         ) as exc:
-            failures.append(
-                f"{urlparse(endpoint).hostname}: "
-                f"{str(exc)[:100]}"
-            )
+            errors.append(str(exc)[:150])
 
-    raise RuntimeError(
-        "All Overpass endpoints failed: "
-        + "; ".join(failures)
-    )
+    raise RuntimeError("; ".join(errors))
 
 
-def extract_store(element, searched_state):
+def store_from_osm(element, code):
     if not isinstance(element, dict):
         return None
 
     tags = element.get("tags") or {}
-
     name = clean(tags.get("name"))
 
     if not name:
@@ -220,42 +261,35 @@ def extract_store(element, searched_state):
         name,
         clean(tags.get("description")),
         clean(tags.get("product")),
-        clean(tags.get("name:en")),
         category,
     ])
 
-    if EXCLUDED.search(description):
+    if EXCLUDE.search(description):
         return None
 
-    # Generic comic shops need specific gaming relevance.
     if category not in ("games", "collector"):
-        if not STORE_TERMS.search(description):
+        if not KEYWORDS.search(description):
             return None
 
-    osm_type = element.get("type")
-    osm_id = element.get("id")
+    kind = element.get("type")
+    oid = element.get("id")
 
-    if osm_type not in (
-        "node", "way", "relation"
-    ):
+    if kind not in ("node", "way", "relation"):
         return None
 
-    if not isinstance(osm_id, int):
+    if not isinstance(oid, int):
         return None
 
     center = element.get("center") or {}
 
-    lat = element.get(
-        "lat", center.get("lat")
-    )
-    lon = element.get(
-        "lon", center.get("lon")
-    )
-
     try:
-        lat = float(lat)
-        lon = float(lon)
-    except (ValueError, TypeError):
+        lat = float(
+            element.get("lat", center.get("lat"))
+        )
+        lon = float(
+            element.get("lon", center.get("lon"))
+        )
+    except (TypeError, ValueError):
         return None
 
     if not (
@@ -264,165 +298,145 @@ def extract_store(element, searched_state):
     ):
         return None
 
-    country_tag = clean(
-        tags.get("addr:country")
-    ).upper()
-
-    if country_tag and country_tag not in (
-        "US", "USA", "UNITED STATES"
-    ):
-        return None
-
-    state_tag = clean(
+    tagged_state = clean(
         tags.get("addr:state")
-    ).upper()
-
-    # The administrative-area search supplies the
-    # state when individual OSM address tags omit it.
-    state = state_tag or searched_state
-
-    street = " ".join(filter(None, [
-        clean(tags.get("addr:housenumber")),
-        clean(tags.get("addr:street")),
-    ]))
-
-    website = safe_url(
-        tags.get("website")
-        or tags.get("contact:website")
     )
 
-    osm_url = (
-        "https://www.openstreetmap.org/"
-        f"{osm_type}/{osm_id}"
-    )
+    street = clean(" ".join(filter(None, [
+        tags.get("addr:housenumber"),
+        tags.get("addr:street"),
+    ])))
 
     return {
-        "id": f"osm-{osm_type}-{osm_id}",
+        "id": f"osm-{kind}-{oid}",
         "name": name,
-        "url": website,
+        "url": safe_url(
+            tags.get("website")
+            or tags.get("contact:website")
+        ),
         "city": clean(tags.get("addr:city")),
-        "state": state,
+        "state": tagged_state or code,
         "country": "US",
-        "address": clean(street),
+        "address": street,
         "lat": lat,
         "lon": lon,
         "games": [],
-        "category": (
-            category or "possible_tcg_shop"
-        ),
+        "category": category or "possible_tcg_shop",
         "source": "OpenStreetMap",
-        "source_url": osm_url,
-        "discovery_status": (
-            "OSM-listed candidate"
+        "source_url": (
+            "https://www.openstreetmap.org/"
+            f"{kind}/{oid}"
         ),
+        "discovery_status": "OSM-listed candidate",
         "inventory_status": "Unknown",
-        "last_discovered": timestamp(),
-        "discovery_version": "8.2",
+        "last_discovered": now(),
+        "discovery_version": "8.2.1",
     }
 
 
-def merge_store(existing, discovered):
-    # Preserve existing fields, including any
-    # independently verified information.
-    merged = dict(existing)
+def merge(old, new):
+    combined = dict(old)
 
-    for field, value in discovered.items():
-        if field in (
-            "games",
-            "inventory_status",
-            "owner_verified",
-            "verified_at",
-            "inventory_evidence",
-            "stock_status",
-        ):
-            if field not in merged:
-                merged[field] = value
+    protected = {
+        "games", "inventory_status",
+        "owner_verified", "verified_at",
+        "inventory_evidence", "stock_status",
+    }
+
+    for field, value in new.items():
+        if field in protected and field in combined:
             continue
 
-        if field in ("city", "state", "address", "url"):
-            if not merged.get(field) and value:
-                merged[field] = value
+        if field in (
+            "city", "state", "address", "url"
+        ) and combined.get(field):
             continue
 
         if value not in ("", None, []):
-            merged[field] = value
+            combined[field] = value
 
-    return merged
+    return combined
 
 
-def run():
+def main():
     DATA.mkdir(parents=True, exist_ok=True)
 
-    existing = read_json(
-        STORES_FILE, []
-    )
-
-    progress = read_json(
-        STATE_FILE, {}
-    )
+    existing = read(STORES, [])
+    progress = read(STATE_FILE, {})
 
     if not isinstance(existing, list):
-        raise ValueError(
-            "stores.json must contain a list"
-        )
+        raise ValueError("Invalid stores.json")
 
     if not isinstance(progress, dict):
-        raise ValueError(
-            "discovery_state.json must be an object"
-        )
+        raise ValueError("Invalid discovery_state.json")
 
-    by_id = {}
+    by_id = {
+        str(s["id"]): dict(s)
+        for s in existing
+        if isinstance(s, dict) and s.get("id")
+    }
 
-    for store in existing:
-        if (
-            isinstance(store, dict)
-            and store.get("id")
-        ):
-            by_id[str(store["id"])] = dict(store)
-
-    # V8.1's cursor is not reused because
-    # V8.2 has a different geographic search order.
     cursor = int(
-        progress.get("v82_cursor", 0)
-    ) % len(SEARCH_ORDER)
+        progress.get("v821_state_cursor", 0)
+    ) % len(ORDER)
 
-    state = SEARCH_ORDER[cursor]
+    code = ORDER[cursor]
 
-    print("=== POKESTOCK V8.2 ===")
-    print("Searching state:", state)
+    print("=== POKESTOCK V8.2.1 ===")
+    print("State:", code)
     print("Existing stores:", len(by_id))
 
-    progress["version"] = "8.2"
-    progress["v82_last_attempt"] = timestamp()
-    progress["v82_last_state"] = state
-    progress["v82_regions_configured"] = len(
-        SEARCH_ORDER
-    )
-
     try:
-        elements = query_state(state)
+        cached = progress.get("v821_bounds", {})
 
-    except Exception as exc:
-        progress["v82_last_error"] = (
-            str(exc)[:500]
+        if not isinstance(cached, dict):
+            cached = {}
+
+        if code in cached:
+            bounds = cached[code]
+        else:
+            bounds = state_bounds(code)
+            cached[code] = bounds
+
+        tiles = make_tiles(bounds, code)
+
+        tile_cursor = int(
+            progress.get("v821_tile_cursor", 0)
         )
 
-        # Preserve the cursor so failed states
-        # can be retried on the next run.
-        write_json(STATE_FILE, progress)
+        if tile_cursor >= len(tiles):
+            tile_cursor = 0
 
-        print("Discovery failed:", exc)
-        print("Existing stores preserved.")
+        tile = tiles[tile_cursor]
+
+        print(
+            "Tile:",
+            tile_cursor + 1,
+            "of",
+            len(tiles)
+        )
+
+        elements = query_tile(code, tile)
+
+    except Exception as exc:
+        progress.update({
+            "version": "8.2.1",
+            "v821_last_state": code,
+            "v821_last_error": str(exc)[:500],
+            "v821_last_attempt": now(),
+        })
+
+        write(STATE_FILE, progress)
+
+        print("Discovery error:", exc)
+        print("Existing data preserved.")
         return
 
     added = 0
-    updated = 0
     candidates = 0
 
     for element in elements:
-        store = extract_store(
-            element, state
-        )
+        store = store_from_osm(element, code)
 
         if store is None:
             continue
@@ -431,75 +445,65 @@ def run():
         sid = store["id"]
 
         if sid in by_id:
-            by_id[sid] = merge_store(
-                by_id[sid], store
-            )
-            updated += 1
+            by_id[sid] = merge(by_id[sid], store)
         else:
             by_id[sid] = store
             added += 1
 
-    # Do not discard stores from previous runs.
-    directory = sorted(
-        by_id.values(),
-        key=lambda s: (
-            str(s.get("state", "")),
-            str(s.get("city", "")),
-            str(s.get("name", "")),
+    write(
+        STORES,
+        sorted(
+            by_id.values(),
+            key=lambda s: (
+                str(s.get("state", "")),
+                str(s.get("city", "")),
+                str(s.get("name", "")),
+            )
         )
     )
 
-    write_json(
-        STORES_FILE, directory
-    )
-
     completed = progress.get(
-        "v82_completed_states", []
+        "v821_completed_states", []
     )
 
     if not isinstance(completed, list):
         completed = []
 
-    if state not in completed:
-        completed.append(state)
+    next_tile = tile_cursor + 1
+    next_state = cursor
+
+    if next_tile >= len(tiles):
+        if code not in completed:
+            completed.append(code)
+
+        next_tile = 0
+        next_state = (cursor + 1) % len(ORDER)
 
     progress.update({
-        "version": "8.2",
-        "v82_cursor": (
-            cursor + 1
-        ) % len(SEARCH_ORDER),
-        "v82_last_state": state,
-        "v82_last_success": timestamp(),
-        "v82_last_error": None,
-        "v82_last_candidates": candidates,
-        "v82_last_new_stores": added,
-        "v82_last_updated_stores": updated,
-        "v82_total_stores": len(directory),
-        "v82_completed_states": completed,
-        "v82_completed_count": len(completed),
-        "v82_regions_configured": len(
-            SEARCH_ORDER
-        ),
-        "v82_inventory_claims_created": 0,
+        "version": "8.2.1",
+        "v821_bounds": cached,
+        "v821_state_cursor": next_state,
+        "v821_tile_cursor": next_tile,
+        "v821_last_state": code,
+        "v821_last_tile": tile_cursor + 1,
+        "v821_tiles_in_state": len(tiles),
+        "v821_last_success": now(),
+        "v821_last_error": None,
+        "v821_last_candidates": candidates,
+        "v821_last_new_stores": added,
+        "v821_total_stores": len(by_id),
+        "v821_completed_states": completed,
+        "v821_completed_count": len(completed),
+        "v821_inventory_claims_created": 0,
     })
 
-    write_json(
-        STATE_FILE, progress
-    )
+    write(STATE_FILE, progress)
 
-    print("State completed:", state)
-    print("Candidates found:", candidates)
     print("New stores:", added)
-    print("Existing stores updated:", updated)
-    print("Total stored:", len(directory))
-    print(
-        "States/district completed:",
-        len(completed),
-        "/",
-        len(SEARCH_ORDER)
-    )
+    print("Total stores:", len(by_id))
+    print("Next tile:", next_tile + 1)
     print("No inventory claims created.")
 
 
 if __name__ == "__main__":
-    run()
+    main()
