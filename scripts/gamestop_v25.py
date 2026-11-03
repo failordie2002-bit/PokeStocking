@@ -1,606 +1,320 @@
+
 #!/usr/bin/env python3
+"""PokéStock V26: GameStop product discovery and evidence-only store monitoring.
+
+Drop-in replacement for scripts/gamestop_v25.py, compatible with V25 workflow.
+Never equates online availability, HTTP failures, or missing responses with shelf stock.
 """
-PokéStock V25 — GameStop Store Inventory
-
-Based on the publicly documented GameStop browser
-checking approach from GianPokemonTracker.
-
-Features:
-- Discover GameStop TCG products automatically
-- Monitor real product pages with Playwright
-- Capture GameStop's own store availability response
-- Record actual store identity and product availability
-- Never substitute online stock for physical stock
-- Preserve previously verified results until expiration
-- Produce machine-readable data and diagnostics
-
-No API key required.
-
-IMPORTANT:
-GameStop chooses the store returned by its own session.
-This script does not claim that the selected store is
-near the user unless the returned address proves it.
-"""
-
 import json
 import os
 import re
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, quote
+from urllib.parse import quote, urljoin, urlparse
 
 from bs4 import BeautifulSoup
-from playwright.sync_api import (
-    sync_playwright,
-    Error as PlaywrightError,
-)
+from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
-DATA.mkdir(exist_ok=True)
-
+DATA.mkdir(parents=True, exist_ok=True)
 BASE = "https://www.gamestop.com"
-
-SEARCHES = [
-    "pokemon trading card",
-    "union arena",
-    "one piece trading card",
-    "yu gi oh cards",
-    "magic the gathering",
-    "lorcana",
-    "gundam card game",
-    "digimon card game",
-    "dragon ball super cards",
-    "star wars unlimited",
-]
-
-MAX_PRODUCTS = int(
-    os.environ.get("POKESTOCK_MAX_PRODUCTS", "18")
-)
-
-MAX_AGE_HOURS = 8
-
-NOW = datetime.now(timezone.utc)
-STAMP = NOW.isoformat()
-
+CATALOG = DATA / "gamestop_products.json"
 OUTPUT = DATA / "gamestop_store_inventory.json"
 REPORT = DATA / "gamestop_v25_report.json"
-CATALOG = DATA / "gamestop_products.json"
-
-VARIATION_MARKER = "Product-Variation"
+NOW = datetime.now(timezone.utc)
+STAMP = NOW.isoformat()
+MAX_PRODUCTS = max(1, min(100, int(os.getenv("POKESTOCK_MAX_PRODUCTS", "18"))))
+MAX_AGE = timedelta(hours=8)
+SEARCHES = [
+    "pokemon trading card", "union arena", "one piece trading card",
+    "yu gi oh cards", "magic the gathering", "lorcana",
+    "gundam card game", "digimon card game", "dragon ball super cards",
+    "star wars unlimited",
+]
+CARD = re.compile(
+    r"pokemon|pokémon|union arena|one piece|yu[ -]?gi[ -]?oh|magic.{0,5}gathering|"
+    r"lorcana|gundam|digimon|dragon ball|star wars unlimited|weiss schwarz|"
+    r"cardfight|flesh and blood|riftbound|shadowverse|battle spirits|booster|"
+    r"elite trainer box|trading card", re.I,
+)
+EXCLUDE = re.compile(
+    r"funko|plush|t-shirt|hoodie|controller|headset|video game|figurine|"
+    r"keychain|poster|gift card|storage box only", re.I,
+)
 STORE_MARKER = "Stores-ProductDetailStoreAvailability"
-
-CARD_PATTERN = re.compile(
-    r"pokemon|pokémon|union arena|one piece|"
-    r"yu.gi.oh|magic.the.gathering|lorcana|"
-    r"gundam|digimon|dragon ball|"
-    r"star wars unlimited|weiss schwarz|"
-    r"cardfight|flesh and blood|"
-    r"riftbound|shadowverse|"
-    r"battle spirits|booster|"
-    r"elite trainer box|trading card",
-    re.I,
-)
-
-EXCLUDED_PATTERN = re.compile(
-    r"funko|plush|t-shirt|hoodie|"
-    r"controller|headset|"
-    r"video game|figurine|"
-    r"keychain|poster|"
-    r"gift card|"
-    r"storage box only",
-    re.I,
-)
+VARIATION_MARKER = "Product-Variation"
 
 
-def read_json(path, default):
+def load(path, default):
     try:
-        return json.loads(
-            path.read_text(encoding="utf-8")
-        )
+        return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return default
 
 
-def write_json(path, data):
-    temporary = path.with_suffix(".tmp")
-    temporary.write_text(
-        json.dumps(
-            data,
-            indent=2,
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
-    )
-    temporary.replace(path)
+def save(path, value):
+    temp = path.with_suffix(path.suffix + ".tmp")
+    temp.write_text(json.dumps(value, indent=2, ensure_ascii=False), encoding="utf-8")
+    temp.replace(path)
 
 
-def clean(value):
+def tidy(value):
     return " ".join(str(value or "").split())
 
 
-def game_for(name):
-    text = name.lower()
-
-    games = [
-        ("Pokémon", r"pokemon|pokémon"),
-        ("Union Arena", r"union arena"),
-        ("One Piece", r"one piece"),
-        ("Yu-Gi-Oh!", r"yu.gi.oh"),
-        ("Magic: The Gathering", r"magic.the.gathering"),
-        ("Disney Lorcana", r"lorcana"),
-        ("Gundam", r"gundam"),
-        ("Digimon", r"digimon"),
-        ("Dragon Ball Super", r"dragon ball"),
-        ("Star Wars Unlimited", r"star wars unlimited"),
-        ("Weiß Schwarz", r"weiss schwarz"),
-        ("Cardfight Vanguard", r"cardfight"),
-        ("Flesh and Blood", r"flesh and blood"),
-        ("Riftbound", r"riftbound"),
-        ("Shadowverse", r"shadowverse"),
-        ("Battle Spirits Saga", r"battle spirits"),
-    ]
-
-    for game, pattern in games:
-        if re.search(pattern, text, re.I):
-            return game
-
-    return "Other TCG"
-
-
-def valid_product_url(url):
+def valid_url(url):
+    if not isinstance(url, str):
+        return False
     try:
-        parsed = urlparse(url)
-
-        return (
-            parsed.scheme == "https"
-            and parsed.hostname in (
-                "gamestop.com",
-                "www.gamestop.com",
-            )
-            and parsed.path.endswith(".html")
-        )
+        p = urlparse(url)
+        return (p.scheme == "https" and p.hostname in
+                {"gamestop.com", "www.gamestop.com"} and
+                p.path.lower().endswith(".html") and not p.username and not p.password)
     except ValueError:
         return False
 
 
-def discover(page):
+def game(name):
+    for label, pattern in [
+        ("Pokémon", r"pokemon|pokémon"), ("Union Arena", r"union arena"),
+        ("One Piece", r"one piece"), ("Yu-Gi-Oh!", r"yu[ -]?gi[ -]?oh"),
+        ("Magic: The Gathering", r"magic.{0,5}gathering"),
+        ("Disney Lorcana", r"lorcana"), ("Gundam", r"gundam"),
+        ("Digimon", r"digimon"), ("Dragon Ball Super", r"dragon ball"),
+        ("Star Wars Unlimited", r"star wars unlimited"),
+        ("Weiß Schwarz", r"weiss schwarz"), ("Cardfight Vanguard", r"cardfight"),
+        ("Flesh and Blood", r"flesh and blood"), ("Riftbound", r"riftbound"),
+        ("Shadowverse", r"shadowverse"), ("Battle Spirits Saga", r"battle spirits"),
+    ]:
+        if re.search(pattern, name, re.I):
+            return label
+    return "Other TCG"
+
+
+def product(name, url, origin):
+    name, url = tidy(name), tidy(url)
+    if not valid_url(url) or not CARD.search(name) or EXCLUDE.search(name):
+        return None
+    return {"retailer": "GameStop", "product_name": name, "game": game(name),
+            "product_url": url, "discovered_at": STAMP, "discovery_source": origin}
+
+
+def seed_catalog():
+    """Use known GameStop product links; never reinterpret other retailers' stock."""
     found = {}
+    for row in load(CATALOG, []):
+        if isinstance(row, dict):
+            p = product(row.get("product_name"), row.get("product_url"), "prior_catalog")
+            if p:
+                found[p["product_url"]] = p
+    for filename in ("online_offers.json", "status.json"):
+        source = load(DATA / filename, [])
+        if isinstance(source, dict):
+            source = source.get("products", [])
+        if not isinstance(source, list):
+            continue
+        for row in source:
+            if not isinstance(row, dict):
+                continue
+            p = product(row.get("product_name") or row.get("name"),
+                        row.get("product_url") or row.get("url"), filename)
+            if p:
+                found.setdefault(p["product_url"], p)
+    return found
 
+
+def discover(page):
+    found, diagnostics = {}, []
     for query in SEARCHES:
-        url = (
-            BASE
-            + "/search/?q="
-            + quote(query)
-        )
-
+        url = BASE + "/search/?q=" + quote(query)
+        diag = {"query": query, "search_url": url, "product_links": 0,
+                "tiles": 0, "accepted": 0}
         try:
-            page.goto(
-                url,
-                wait_until="domcontentloaded",
-                timeout=30000,
-            )
-
-            page.wait_for_timeout(2200)
-
-            soup = BeautifulSoup(
-                page.content(),
-                "html.parser",
-            )
-
-            for tile in soup.select("[data-pid]"):
-                name = clean(
-                    tile.get("data-cnstrc-item-name")
-                )
-
-                anchor = tile.select_one(
-                    'a[href*=".html"]'
-                )
-
-                if not name or anchor is None:
+            response = page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            page.wait_for_timeout(1700)
+            soup = BeautifulSoup(page.content(), "html.parser")
+            diag["http_status"] = response.status if response else None
+            diag["final_url"] = page.url
+            diag["page_title"] = tidy(soup.title.get_text(" ", strip=True))[:140] if soup.title else ""
+            tiles = soup.select("[data-pid]")
+            links = soup.select('a[href*=".html"]')
+            diag["tiles"] = len(tiles)
+            diag["product_links"] = len(links)
+            for tile in tiles:
+                name = (tile.get("data-cnstrc-item-name") or
+                        tile.get("data-name") or tile.get("title"))
+                anchor = tile.select_one('a[href*=".html"]')
+                if anchor is None:
                     continue
-
-                if not CARD_PATTERN.search(name):
-                    continue
-
-                if EXCLUDED_PATTERN.search(name):
-                    continue
-
-                href = anchor.get("href", "")
-                product_url = urljoin(BASE, href)
-
-                if not valid_product_url(product_url):
-                    continue
-
-                found[product_url] = {
-                    "retailer": "GameStop",
-                    "product_name": name,
-                    "game": game_for(name),
-                    "product_url": product_url,
-                    "discovered_at": STAMP,
-                }
-
-        except PlaywrightError as error:
-            print(
-                "Discovery unavailable:",
-                query,
-                str(error)[:160],
-            )
-
-    return list(found.values())
+                if not name:
+                    name = anchor.get("title") or anchor.get_text(" ", strip=True)
+                p = product(name, urljoin(BASE, anchor.get("href", "")), "gamestop_search")
+                if p:
+                    found[p["product_url"]] = p
+                    diag["accepted"] += 1
+            # Conservative fallback for changed tile markup.
+            for anchor in links:
+                name = anchor.get("title") or anchor.get("aria-label") or anchor.get_text(" ", strip=True)
+                p = product(name, urljoin(BASE, anchor.get("href", "")), "gamestop_search_link")
+                if p:
+                    found.setdefault(p["product_url"], p)
+            diag["total_accepted_after_fallback"] = len(found)
+        except PlaywrightError as exc:
+            diag["error"] = str(exc)[:200]
+        diagnostics.append(diag)
+        print("SEARCH", json.dumps(diag, ensure_ascii=False))
+    return found, diagnostics
 
 
-def parse_store_response(payload, product):
+def parse_store(payload, item, evidence_url):
     if not isinstance(payload, dict):
         return []
-
-    store_id = clean(payload.get("storeId"))
-    store_name = clean(payload.get("storeName"))
-    store_details = clean(
-        payload.get("storeDetails")
-    )
-
-    products = payload.get("products")
-
-    if not isinstance(products, list):
+    store_id = tidy(payload.get("storeId"))
+    store_name = tidy(payload.get("storeName"))
+    address = tidy(payload.get("storeDetails"))
+    entries = payload.get("products")
+    if not all((store_id, store_name, address)) or not isinstance(entries, list):
         return []
-
-    if not store_id or not store_name or not store_details:
-        return []
-
-    observations = []
-
-    for entry in products:
-        if not isinstance(entry, dict):
+    rows = []
+    for entry in entries:
+        if not isinstance(entry, dict) or type(entry.get("inStock")) is not bool:
             continue
-
-        # A missing or non-boolean inStock field is UNKNOWN.
-        # Never convert it to False.
-        in_stock = entry.get("inStock")
-
-        if type(in_stock) is not bool:
-            continue
-
-        observations.append({
-            "retailer": "GameStop",
-            "store_id": store_id,
-            "store_name": store_name,
-            "store_address": store_details,
-            "product_name": product["product_name"],
-            "product_url": product["product_url"],
-            "game": product["game"],
-            "availability": (
-                "In stock"
-                if in_stock
-                else "Out of stock"
-            ),
-            "inventory_scope": "store_specific",
-            "pickup_confirmed": False,
+        rows.append({
+            "retailer": "GameStop", "store_id": store_id, "store_name": store_name,
+            "store_address": address, "product_name": item["product_name"],
+            "product_url": item["product_url"], "game": item["game"],
+            "availability": "In stock" if entry["inStock"] else "Out of stock",
+            "inventory_scope": "store_specific", "pickup_confirmed": False,
             "shelf_stock_confirmed": False,
-            "evidence_type":
-                "gamestop_store_availability_response",
-            "checked_at": STAMP,
+            "evidence_type": "gamestop_store_availability_response",
+            "evidence_url": evidence_url, "checked_at": STAMP,
         })
+    return rows
 
-    return observations
 
-
-def inspect_product(context, product):
+def inspect(context, item):
     page = context.new_page()
+    captured = {"store": [], "variation": 0, "http_status": None, "error": None}
 
-    captured = {
-        "store": [],
-        "variation": [],
-    }
-
-    def capture(response):
+    def on_response(response):
         url = response.url
-
-        if (
-            STORE_MARKER not in url
-            and VARIATION_MARKER not in url
-        ):
+        if STORE_MARKER not in url and VARIATION_MARKER not in url:
             return
-
         if response.status != 200:
             return
+        if VARIATION_MARKER in url:
+            captured["variation"] += 1
+        if STORE_MARKER in url:
+            try:
+                captured["store"].append((response.json(), url))
+            except (ValueError, PlaywrightError):
+                pass
 
-        try:
-            payload = response.json()
-
-            if STORE_MARKER in url:
-                captured["store"].append(
-                    (payload, url)
-                )
-
-            elif VARIATION_MARKER in url:
-                captured["variation"].append(
-                    (payload, url)
-                )
-
-        except Exception:
-            pass
-
-    page.on("response", capture)
-
-    error_message = None
-
+    page.on("response", on_response)
     try:
-        page.goto(
-            product["product_url"],
-            wait_until="domcontentloaded",
-            timeout=30000,
-        )
-
+        response = page.goto(item["product_url"], wait_until="domcontentloaded", timeout=30000)
+        captured["http_status"] = response.status if response else None
         page.wait_for_timeout(4500)
-
-    except PlaywrightError as error:
-        error_message = str(error)[:200]
-
+    except PlaywrightError as exc:
+        captured["error"] = str(exc)[:200]
     finally:
         page.close()
-
-    observations = []
-
-    for payload, evidence_url in captured["store"]:
-        rows = parse_store_response(
-            payload,
-            product,
-        )
-
-        for row in rows:
-            row["evidence_url"] = evidence_url
-
-        observations.extend(rows)
-
-    # Only a store-specific response can generate
-    # store inventory observations.
-    # Variation responses describe overall availability.
-    return {
-        "observations": observations,
-        "store_responses": len(captured["store"]),
-        "variation_responses": len(
-            captured["variation"]
-        ),
-        "error": error_message,
-    }
+    rows = []
+    for payload, url in captured["store"]:
+        rows.extend(parse_store(payload, item, url))
+    return {"observations": rows, "store_responses": len(captured["store"]),
+            "variation_responses": captured["variation"],
+            "http_status": captured["http_status"], "error": captured["error"]}
 
 
-def fresh(record):
+def fresh(row):
     try:
-        dt = datetime.fromisoformat(
-            record["checked_at"].replace(
-                "Z",
-                "+00:00",
-            )
-        )
-
-        return (
-            timedelta(0)
-            <= NOW - dt.astimezone(timezone.utc)
-            <= timedelta(hours=MAX_AGE_HOURS)
-        )
-
-    except (KeyError, ValueError, TypeError):
+        dt = datetime.fromisoformat(row["checked_at"].replace("Z", "+00:00"))
+        age = NOW - dt.astimezone(timezone.utc)
+        return timedelta(0) <= age <= MAX_AGE
+    except (ValueError, KeyError, TypeError, AttributeError):
         return False
 
 
 def main():
-    previous_catalog = read_json(
-        CATALOG,
-        [],
-    )
-
-    previous_records = read_json(
-        OUTPUT,
-        [],
-    )
-
-    previous_report = read_json(
-        REPORT,
-        {},
-    )
-
-    report = {
-        "version": "25.0",
-        "checked_at": STAMP,
-        "retailer": "GameStop",
-        "searches_attempted": len(SEARCHES),
-        "products_discovered_this_run": 0,
-        "products_checked": 0,
-        "store_responses": 0,
-        "variation_responses": 0,
-        "store_observations": 0,
-        "in_stock": 0,
-        "out_of_stock": 0,
-        "near_staunton_confirmed": 0,
-        "errors": [],
-    }
-
-    discoveries = []
-
+    previous_report = load(REPORT, {})
+    previous_rows = load(OUTPUT, [])
+    if not isinstance(previous_report, dict):
+        previous_report = {}
+    if not isinstance(previous_rows, list):
+        previous_rows = []
+    report = {"version": "25.0", "engine_version": "26.0", "checked_at": STAMP,
+              "retailer": "GameStop", "searches_attempted": len(SEARCHES),
+              "products_discovered_this_run": 0, "products_checked": 0,
+              "store_responses": 0, "variation_responses": 0,
+              "store_observations": 0, "in_stock": 0, "out_of_stock": 0,
+              "near_staunton_confirmed": 0, "errors": [], "checks": []}
+    catalog = seed_catalog()
+    report["catalog_seeded"] = len(catalog)
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(
-            headless=True,
-            args=["--no-sandbox"],
-        )
-
+        browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
         try:
-            context = browser.new_context(
-                locale="en-US",
-                viewport={
-                    "width": 1280,
-                    "height": 900,
-                },
-            )
-
+            context = browser.new_context(locale="en-US", viewport={"width": 1280, "height": 900})
             page = context.new_page()
-
-            discoveries = discover(page)
-
+            discovered, diagnostics = discover(page)
             page.close()
-
-            report[
-                "products_discovered_this_run"
-            ] = len(discoveries)
-
-            merged = {}
-
-            for product in previous_catalog:
-                if isinstance(product, dict):
-                    url = product.get("product_url")
-
-                    if valid_product_url(url):
-                        merged[url] = product
-
-            for product in discoveries:
-                merged[product["product_url"]] = product
-
-            catalog = list(merged.values())
-
-            write_json(CATALOG, catalog)
-
-            if catalog:
-                cursor = int(
-                    previous_report.get(
-                        "next_cursor",
-                        0,
-                    )
-                ) % len(catalog)
-            else:
-                cursor = 0
-
-            batch = [
-                catalog[
-                    (cursor + i) % len(catalog)
-                ]
-                for i in range(
-                    min(MAX_PRODUCTS, len(catalog))
-                )
-            ]
-
-            report["next_cursor"] = (
-                (cursor + len(batch)) % len(catalog)
-                if catalog
-                else 0
-            )
-
-            new_records = []
-
-            for product in batch:
-                print(
-                    "Checking:",
-                    product["product_name"],
-                )
-
-                result = inspect_product(
-                    context,
-                    product,
-                )
-
+            report["discovery_diagnostics"] = diagnostics
+            report["products_discovered_this_run"] = len(discovered)
+            catalog.update(discovered)
+            products = sorted(catalog.values(), key=lambda x: x["product_url"])
+            save(CATALOG, products)
+            cursor = int(previous_report.get("next_cursor", 0) or 0) % len(products) if products else 0
+            batch = [products[(cursor + i) % len(products)]
+                     for i in range(min(MAX_PRODUCTS, len(products)))]
+            report["next_cursor"] = (cursor + len(batch)) % len(products) if products else 0
+            new_rows = []
+            for item in batch:
+                result = inspect(context, item)
                 report["products_checked"] += 1
-
-                report["store_responses"] += (
-                    result["store_responses"]
-                )
-
-                report["variation_responses"] += (
-                    result["variation_responses"]
-                )
-
-                new_records.extend(
-                    result["observations"]
-                )
-
+                report["store_responses"] += result["store_responses"]
+                report["variation_responses"] += result["variation_responses"]
+                new_rows.extend(result["observations"])
+                diag = {"product": item["product_name"], "url": item["product_url"],
+                        "http_status": result["http_status"],
+                        "store_responses": result["store_responses"],
+                        "observations": len(result["observations"])}
                 if result["error"]:
-                    report["errors"].append({
-                        "product": product["product_name"],
-                        "error": result["error"],
-                    })
-
-            combined = {}
-
-            for row in previous_records + new_records:
-                if not isinstance(row, dict):
+                    diag["error"] = result["error"]
+                    report["errors"].append(diag)
+                report["checks"].append(diag)
+                print("CHECK", json.dumps(diag, ensure_ascii=False))
+            merged = {}
+            for row in previous_rows + new_rows:
+                if not isinstance(row, dict) or not fresh(row):
                     continue
-
-                if not fresh(row):
+                if row.get("availability") not in {"In stock", "Out of stock"}:
                     continue
-
-                key = (
-                    str(row.get("store_id")),
-                    str(row.get("product_url")),
-                )
-
-                # New observations replace old ones.
-                combined[key] = row
-
-            records = list(combined.values())
-
-            write_json(
-                OUTPUT,
-                records,
-            )
-
-            report["store_observations"] = len(
-                records
-            )
-
-            report["in_stock"] = sum(
-                r["availability"] == "In stock"
-                for r in records
-            )
-
-            report["out_of_stock"] = sum(
-                r["availability"] == "Out of stock"
-                for r in records
-            )
-
-            # Address matching is deliberately strict.
-            # No inferred proximity from runner IP.
-            local_cities = (
-                "staunton",
-                "waynesboro",
-                "harrisonburg",
-                "charlottesville",
-            )
-
+                if not all(row.get(k) for k in ("store_id", "store_name", "store_address", "product_url", "evidence_url")):
+                    continue
+                merged[(str(row["store_id"]), row["product_url"])] = row
+            records = list(merged.values())
+            save(OUTPUT, records)
+            report["store_observations"] = len(records)
+            report["in_stock"] = sum(r["availability"] == "In stock" for r in records)
+            report["out_of_stock"] = sum(r["availability"] == "Out of stock" for r in records)
             report["near_staunton_confirmed"] = sum(
-                r["availability"] == "In stock"
-                and any(
-                    city in r["store_address"].lower()
-                    for city in local_cities
-                )
-                and re.search(
-                    r"\bVA\b|\bVirginia\b",
-                    r["store_address"],
-                    re.I,
-                ) is not None
-                for r in records
-            )
-
-            report["catalog_size"] = len(catalog)
-
+                r["availability"] == "In stock" and
+                any(city in r["store_address"].lower() for city in
+                    ("staunton", "waynesboro", "harrisonburg", "charlottesville")) and
+                re.search(r"\bVA\b|\bVirginia\b", r["store_address"], re.I) is not None
+                for r in records)
+            report["catalog_size"] = len(products)
+            report["integration_verified_this_run"] = report["store_responses"] > 0
+            report["integration_status"] = (
+                "store_response_captured" if report["integration_verified_this_run"]
+                else "unverified_no_store_response")
             report["note"] = (
-                "Availability is reported for the "
-                "actual GameStop store returned by "
-                "the website. Store-specific availability "
-                "does not guarantee pickup or shelf "
-                "quantity. Unknown results are omitted."
-            )
-
-            write_json(
-                REPORT,
-                report,
-            )
-
-            print(
-                json.dumps(
-                    report,
-                    indent=2,
-                )
-            )
-
+                "Store-specific availability is not proof of shelf quantity or pickup. "
+                "Unknown responses are never converted to out of stock. "
+                "A successful workflow is not proof of a working retailer integration.")
+            save(REPORT, report)
+            print(json.dumps(report, indent=2, ensure_ascii=False))
         finally:
             browser.close()
 
