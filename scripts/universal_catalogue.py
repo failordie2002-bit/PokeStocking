@@ -1,20 +1,26 @@
 
 #!/usr/bin/env python3
-"""PokeStock V9.1 Universal TCG Catalogue.
+"""PokeStock V9.2 — Universal Catalogue.
 
-- Gundam: all official catalogue pages
-- Kayou: official storefront products
-- Other TCGs: rotating official catalogue sources
-- Preserves products, releases and inventory
-- Never invents stock or sealed case formats
-- Excludes sports cards
+Repairs Kayou discovery using official Shoplazza
+collection pages rather than Shopify JSON.
+
+Preserves previous products, releases, images,
+verified inventory, and historical fields.
+
+Automatically checks Gundam, Kayou and two
+additional publisher sources per run.
+
+Never fabricates stock availability.
 """
 
 import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, urldefrag
+from urllib.parse import (
+    urljoin, urlparse, urldefrag, urlencode
+)
 
 import requests
 from bs4 import BeautifulSoup
@@ -26,43 +32,60 @@ STAMP = datetime.now(timezone.utc).isoformat()
 SESSION = requests.Session()
 SESSION.headers.update({
     "User-Agent": (
-        "PokeStock/9.1 "
+        "PokeStock/9.2 "
         "(https://github.com/"
         "failordie2002-bit/PokeStocking)"
     )
 })
 
 GUNDAM = (
-    "https://www.gundam-gcg.com/en/products/list.php"
+    "https://www.gundam-gcg.com/"
+    "en/products/list.php"
 )
 
 KAYOU = "https://shop.kayouofficial.com"
 
 OTHER_SOURCES = [
-    ("Union Arena",
-     "https://www.unionarena-tcg.com/na/products/",
-     "/na/products/"),
-    ("One Piece",
-     "https://en.onepiece-cardgame.com/products/",
-     "/products/"),
-    ("Yu-Gi-Oh!",
-     "https://www.yugioh-card.com/en/products/",
-     "/en/products/"),
-    ("Magic: The Gathering",
-     "https://magic.wizards.com/en/products",
-     "/en/products/"),
-    ("Digimon",
-     "https://world.digimoncard.com/products/",
-     "/products/"),
-    ("Weiß Schwarz",
-     "https://en.ws-tcg.com/products/",
-     "/products/"),
-    ("Cardfight!! Vanguard",
-     "https://en.cf-vanguard.com/products/",
-     "/products/"),
-    ("Shadowverse: Evolve",
-     "https://en.shadowverse-evolve.com/products/",
-     "/products/"),
+    (
+        "Union Arena",
+        "https://www.unionarena-tcg.com/na/products/",
+        "/na/products/"
+    ),
+    (
+        "One Piece",
+        "https://en.onepiece-cardgame.com/products/",
+        "/products/"
+    ),
+    (
+        "Yu-Gi-Oh!",
+        "https://www.yugioh-card.com/en/products/",
+        "/en/products/"
+    ),
+    (
+        "Magic: The Gathering",
+        "https://magic.wizards.com/en/products",
+        "/en/products/"
+    ),
+    (
+        "Digimon",
+        "https://world.digimoncard.com/products/",
+        "/products/"
+    ),
+    (
+        "Weiß Schwarz",
+        "https://en.ws-tcg.com/products/",
+        "/products/"
+    ),
+    (
+        "Cardfight!! Vanguard",
+        "https://en.cf-vanguard.com/products/",
+        "/products/"
+    ),
+    (
+        "Shadowverse: Evolve",
+        "https://en.shadowverse-evolve.com/products/",
+        "/products/"
+    ),
 ]
 
 ALL_GAMES = [
@@ -100,53 +123,62 @@ KAYOU_LINES = [
 
 PRODUCT_TERMS = re.compile(
     r"booster|starter|trial deck|structure deck|"
-    r"battle deck|collection|card set|"
+    r"battle deck|collection|collectible|card set|"
     r"bundle|sealed|display|tin|"
     r"collector box|gift box|blister|"
-    r"trading cards|card game",
-    re.I
+    r"trading cards|card game|card pack|"
+    r"packs box|boxes case",
+    re.I,
 )
 
 ACCESSORIES = re.compile(
-    r"sleeves?|playmat|binder|storage case|"
-    r"card case|deck box|dice|"
-    r"damage counter|accessories",
-    re.I
+    r"card sleeves?|playmat|binder|"
+    r"deck case|deck box|dice|"
+    r"damage counter|acrylic stand|"
+    r"keychain|t-shirt|plush toy",
+    re.I,
 )
 
 SPORTS = re.compile(
     r"\b(?:baseball|basketball|football|"
     r"hockey|soccer|nfl|nba|mlb|nhl|"
     r"nascar|motorsport)\b",
-    re.I
+    re.I,
+)
+
+CODE = re.compile(
+    r"\[([A-Z]{2,5}-?\d{1,3}[A-Z]?)\]",
+    re.I,
 )
 
 DATE = re.compile(
     r"Release Date\s*"
     r"([A-Za-z]+\s+\d{1,2},\s*\d{4})",
-    re.I
-)
-
-CODE = re.compile(
-    r"\[([A-Z]{2,5}[-]?\d{1,3}[A-Z]?)\]",
-    re.I
+    re.I,
 )
 
 
 def clean(value):
-    return " ".join(str(value or "").split())
+    return " ".join(
+        str(value or "").split()
+    )
 
 
 def norm(value):
     return re.sub(
-        r"[^a-z0-9]+", " ",
-        clean(value).lower().replace("é", "e")
+        r"[^a-z0-9]+",
+        " ",
+        clean(value).lower()
+        .replace("é", "e")
+        .replace("ß", "ss")
     ).strip()
 
 
 def safe_url(value):
     try:
-        parsed = urlparse(str(value))
+        parsed = urlparse(
+            str(value or "")
+        )
         return (
             parsed.scheme == "https"
             and bool(parsed.hostname)
@@ -159,36 +191,69 @@ def safe_url(value):
 
 def fetch(url):
     if not safe_url(url):
-        raise ValueError("HTTPS URL required")
+        raise ValueError(
+            "HTTPS URL required"
+        )
 
     response = SESSION.get(
-        url, timeout=(15, 35)
+        url,
+        timeout=(15, 35),
+        allow_redirects=True,
     )
+
     response.raise_for_status()
 
     if not safe_url(response.url):
-        raise ValueError("Unsafe redirect")
+        raise ValueError(
+            "Unsafe redirect"
+        )
 
-    if len(response.content) > 8000000:
-        raise ValueError("Response too large")
+    if len(response.content) > 8_000_000:
+        raise ValueError(
+            "Response too large"
+        )
 
     return response
 
 
 def load():
-    return json.loads(
-        STATUS.read_text(encoding="utf-8")
+    data = json.loads(
+        STATUS.read_text(
+            encoding="utf-8"
+        )
     )
 
+    if (
+        not isinstance(data, dict)
+        or not isinstance(
+            data.get("products"), list
+        )
+        or not isinstance(
+            data.get("releases"), list
+        )
+    ):
+        raise ValueError(
+            "Invalid catalogue; "
+            "refusing overwrite"
+        )
 
-def save(value):
-    temp = STATUS.with_suffix(".json.tmp")
+    return data
+
+
+def save(data):
+    temp = STATUS.with_suffix(
+        ".json.tmp"
+    )
+
     temp.write_text(
         json.dumps(
-            value, ensure_ascii=False, indent=2
+            data,
+            ensure_ascii=False,
+            indent=2
         ),
         encoding="utf-8"
     )
+
     temp.replace(STATUS)
 
 
@@ -196,25 +261,40 @@ def classify(name, code=""):
     n = norm(name)
     code = code.upper()
 
-    if "booster bundle display" in n:
+    if (
+        "booster bundle display case" in n
+        or "booster bundle case" in n
+        or "booster bundle display" in n
+    ):
         return "Booster bundle display case"
 
-    if "booster bundle case" in n:
-        return "Booster bundle display case"
-
-    if "booster box case" in n:
-        return "Booster box case"
+    if (
+        "sealed case" in n
+        or "boxes case" in n
+        or "booster box case" in n
+    ):
+        return "Factory-sealed case"
 
     if "booster bundle" in n:
         return "Booster bundle"
 
-    if "booster box" in n or "booster display" in n:
+    if (
+        "booster box" in n
+        or "booster display" in n
+        or re.search(
+            r"\d+ (?:foil |blister )?"
+            r"packs box", n
+        )
+    ):
         return "Booster box"
 
     if "elite trainer box" in n:
         return "Elite Trainer Box"
 
-    if "starter deck" in n or code.startswith("ST"):
+    if (
+        "starter deck" in n
+        or code.startswith("ST")
+    ):
         return "Starter deck"
 
     if "trial deck" in n:
@@ -226,16 +306,21 @@ def classify(name, code=""):
     if "battle deck" in n:
         return "Battle deck"
 
-    if "booster pack" in n:
-        return "Booster pack"
-
-    if code.startswith(("GD", "EB", "BT")):
+    if (
+        "booster pack" in n
+        or code.startswith(
+            ("GD", "EB", "BT")
+        )
+    ):
         return "Booster pack"
 
     if "booster" in n:
         return "Booster product"
 
-    if "collection" in n:
+    if (
+        "collector box" in n
+        or "collection" in n
+    ):
         return "Collection"
 
     if re.search(r"\btin\b", n):
@@ -247,28 +332,41 @@ def classify(name, code=""):
     if "card set" in n:
         return "Card set"
 
-    return "Official product"
+    return "Official card product"
 
 
-def image_from(anchor, base):
-    image = anchor.find("img")
+def candidate_image(element, base):
+    image = element.find("img")
 
     if not image:
         return ""
 
     src = (
         image.get("data-src")
+        or image.get("data-original")
         or image.get("src")
         or ""
     )
+
+    if (
+        not src
+        and image.get("srcset")
+    ):
+        src = (
+            image["srcset"]
+            .split(",")[0]
+            .strip()
+            .split(" ")[0]
+        )
 
     url = urljoin(base, src)
 
     if (
         not safe_url(url)
         or re.search(
-            r"logo|favicon|sprite|placeholder",
-            url, re.I
+            r"logo|favicon|placeholder|sprite",
+            url,
+            re.I
         )
     ):
         return ""
@@ -276,9 +374,15 @@ def image_from(anchor, base):
     return url
 
 
-def new_product(game, name, url, code="",
-                image="", source="Official catalogue"):
-    entry = {
+def make_product(
+    game,
+    name,
+    url,
+    code="",
+    image="",
+    source="Official catalogue",
+):
+    result = {
         "name": clean(name),
         "game": game,
         "type": classify(name, code),
@@ -289,82 +393,90 @@ def new_product(game, name, url, code="",
     }
 
     if code:
-        entry["sku"] = code
+        result["sku"] = code
 
     if image:
-        entry["image"] = image
-        entry["image_review_status"] = (
+        result["image"] = image
+        result["image_review_status"] = (
             "unverified_candidate"
         )
 
-    return entry
+    return result
 
 
 def gundam_products():
-    results = {}
+    products = {}
     errors = []
 
-    # Include page 1 explicitly. Query pagination
-    # on the official list.php catalogue.
     for page in range(1, 6):
         url = GUNDAM + "?page=" + str(page)
 
         try:
             soup = BeautifulSoup(
-                fetch(url).text, "html.parser"
+                fetch(url).text,
+                "html.parser"
             )
 
-            for anchor in soup.select("a[href]"):
-                href = urldefrag(urljoin(
-                    url, anchor.get("href", "")
-                ))[0]
+            for anchor in soup.select(
+                "a[href]"
+            ):
+                href = urldefrag(
+                    urljoin(
+                        url,
+                        anchor["href"]
+                    )
+                )[0]
 
                 parsed = urlparse(href)
 
-                # Must be an actual product detail page,
-                # never a filter or catalogue index.
                 if (
                     parsed.hostname
                     != "www.gundam-gcg.com"
                     or not re.fullmatch(
-                        r"/en/products/[A-Za-z0-9_-]+\.html",
+                        r"/en/products/"
+                        r"[A-Za-z0-9_-]+\.html",
                         parsed.path
                     )
                 ):
                     continue
 
                 raw = clean(
-                    anchor.get_text(" ", strip=True)
+                    anchor.get_text(
+                        " ", strip=True
+                    )
                 )
 
                 if len(raw) < 8:
                     continue
 
-                if ACCESSORIES.search(raw):
-                    # Keep sealed bundles and card sets
-                    # if they include actual cards.
-                    if not re.search(
+                if (
+                    ACCESSORIES.search(raw)
+                    and not re.search(
                         r"bundle|card set|collection",
                         raw, re.I
-                    ):
-                        continue
+                    )
+                ):
+                    continue
 
                 match = CODE.search(raw)
-                code = match.group(1) if match else ""
+                code = (
+                    match.group(1)
+                    if match else ""
+                )
 
-                slug = parsed.path.split("/")[-1]
-                slug = slug.replace(".html", "").upper()
+                slug = (
+                    parsed.path
+                    .split("/")[-1]
+                    .replace(".html", "")
+                    .upper()
+                )
 
-                if not code:
-                    prefix = re.match(
-                        r"^(ST|GD|EB)\d+",
-                        slug
-                    )
-                    if prefix:
-                        code = slug
+                if not code and re.match(
+                    r"^(ST|GD|EB)\d+",
+                    slug
+                ):
+                    code = slug
 
-                # Reject miscellaneous unrelated
-                # catalogue entries.
                 if not (
                     code
                     or PRODUCT_TERMS.search(raw)
@@ -375,30 +487,33 @@ def gundam_products():
                 ):
                     continue
 
-                # Text frequently includes date and MSRP.
                 name = re.split(
                     r"\bRelease Date\b|\bMSRP\b",
-                    raw, maxsplit=1,
+                    raw,
+                    maxsplit=1,
                     flags=re.I
                 )[0].strip()
 
                 if not name:
                     continue
 
-                entry = new_product(
+                result = make_product(
                     "Gundam",
                     name,
                     href,
                     code,
-                    image_from(anchor, url)
+                    candidate_image(
+                        anchor, url
+                    )
                 )
 
-                date_match = DATE.search(raw)
+                date_match = DATE.search(
+                    raw
+                )
 
                 if date_match:
                     try:
-                        from datetime import datetime
-                        entry["release_date"] = (
+                        result["release_date"] = (
                             datetime.strptime(
                                 date_match.group(1),
                                 "%B %d, %Y"
@@ -407,90 +522,22 @@ def gundam_products():
                     except ValueError:
                         pass
 
-                # Official category is supported by
-                # Gundam's product-code prefixes.
-                if code.upper().startswith("ST"):
-                    entry["type"] = "Starter deck"
-                elif code.upper().startswith(
-                    ("GD", "EB")
-                ):
-                    entry["type"] = "Booster pack"
-
-                results[href] = entry
+                products[href] = result
 
         except Exception as error:
             errors.append(
-                f"Page {page}: {type(error).__name__}: "
+                f"Page {page}: "
+                f"{type(error).__name__}: "
                 f"{str(error)[:100]}"
             )
 
-    if not results:
+    if not products:
         raise RuntimeError(
-            "No Gundam product pages found. "
+            "No Gundam products found. "
             + "; ".join(errors)
         )
 
-    return list(results.values()), errors
-
-
-def generic_products(game, root, prefix):
-    soup = BeautifulSoup(
-        fetch(root).text, "html.parser"
-    )
-
-    hostname = urlparse(root).hostname
-    results = {}
-
-    for anchor in soup.select("a[href]"):
-        href = urldefrag(urljoin(
-            root, anchor.get("href", "")
-        ))[0]
-
-        parsed = urlparse(href)
-
-        if (
-            not safe_url(href)
-            or parsed.hostname != hostname
-            or not parsed.path.startswith(prefix)
-        ):
-            continue
-
-        # Skip indexes, filters and category links.
-        if (
-            href.rstrip("/") == root.rstrip("/")
-            or parsed.path.rstrip("/") == prefix.rstrip("/")
-            or re.search(
-                r"/(?:list|category|search|tag)/",
-                parsed.path, re.I
-            )
-        ):
-            continue
-
-        name = clean(
-            anchor.get_text(" ", strip=True)
-        )
-
-        if not name:
-            img = anchor.find("img")
-            name = clean(
-                img.get("alt") if img else ""
-            )
-
-        if not (8 <= len(name) <= 180):
-            continue
-
-        if SPORTS.search(name) or ACCESSORIES.search(name):
-            continue
-
-        if not PRODUCT_TERMS.search(name):
-            continue
-
-        results[href] = new_product(
-            game, name, href,
-            image=image_from(anchor, root)
-        )
-
-    return list(results.values())
+    return list(products.values()), errors
 
 
 def kayou_line(name):
@@ -503,69 +550,324 @@ def kayou_line(name):
     return "Other Kayou"
 
 
-def kayou_products():
-    results = {}
+def kayou_collections():
+    """Find collection URLs from the official shop."""
+    soup = BeautifulSoup(
+        fetch(KAYOU + "/").text,
+        "html.parser"
+    )
 
-    for page in range(1, 4):
-        url = (
-            KAYOU
-            + "/products.json?limit=100&page="
-            + str(page)
+    results = {
+        KAYOU + "/collections/all-items"
+    }
+
+    for anchor in soup.select(
+        'a[href*="/collections/"]'
+    ):
+        url = urljoin(
+            KAYOU,
+            anchor.get("href", "")
         )
 
-        payload = fetch(url).json()
-        items = payload.get("products", [])
+        parsed = urlparse(url)
 
-        if not isinstance(items, list):
-            raise ValueError("Invalid Kayou response")
+        if (
+            parsed.hostname
+            != "shop.kayouofficial.com"
+            or not re.fullmatch(
+                r"/collections/[A-Za-z0-9_-]+/?",
+                parsed.path
+            )
+        ):
+            continue
 
-        if not items:
+        results.add(
+            KAYOU + parsed.path.rstrip("/")
+        )
+
+    # Limit work and avoid hammering the store.
+    return sorted(results)[:16]
+
+
+def kayou_name(anchor):
+    """Extract a real title, never a price or button."""
+    candidates = []
+
+    text = clean(
+        anchor.get_text(
+            " ", strip=True
+        )
+    )
+
+    if text:
+        candidates.append(text)
+
+    title = clean(
+        anchor.get("title")
+    )
+
+    if title:
+        candidates.append(title)
+
+    image = anchor.find("img")
+
+    if image:
+        alt = clean(image.get("alt"))
+        if alt:
+            candidates.append(alt)
+
+    # Some themes put title and photo in
+    # separate anchors within one product card.
+    parent = anchor.parent
+
+    for _ in range(3):
+        if not parent:
             break
 
-        for item in items:
-            name = clean(item.get("title"))
-            handle = clean(item.get("handle"))
+        heading = parent.find(
+            ["h2", "h3", "h4"]
+        )
 
-            if (
-                not name
-                or SPORTS.search(name)
-                or ACCESSORIES.search(name)
-                or not re.fullmatch(
-                    r"[A-Za-z0-9_-]+", handle
+        if heading:
+            candidates.append(
+                clean(
+                    heading.get_text(
+                        " ", strip=True
+                    )
                 )
-            ):
-                continue
-
-            if not PRODUCT_TERMS.search(name):
-                continue
-
-            url = (
-                KAYOU + "/products/" + handle
             )
 
-            entry = new_product(
-                "Kayou", name, url,
-                source="Official Kayou storefront"
+        parent = parent.parent
+
+    candidates = [
+        candidate
+        for candidate in candidates
+        if (
+            8 <= len(candidate) <= 220
+            and PRODUCT_TERMS.search(
+                candidate
             )
+            and not SPORTS.search(
+                candidate
+            )
+            and not ACCESSORIES.search(
+                candidate
+            )
+        )
+    ]
 
-            entry["publisher"] = "Kayou"
-            entry["franchise"] = kayou_line(name)
+    if not candidates:
+        return ""
 
-            images = item.get("images") or []
+    # Prefer informative product titles.
+    candidates.sort(
+        key=lambda value: (
+            bool(re.search(
+                r"naruto|pony|demon|winx|"
+                r"tokidoki|collector",
+                value, re.I
+            )),
+            len(value)
+        ),
+        reverse=True
+    )
 
-            if (
-                images
-                and isinstance(images[0], dict)
-                and safe_url(images[0].get("src"))
+    return candidates[0]
+
+
+def kayou_products():
+    """Discover actual Kayou Shoplazza product pages."""
+    products = {}
+    errors = []
+    collections = kayou_collections()
+    successful_pages = 0
+
+    for collection in collections:
+        try:
+            soup = BeautifulSoup(
+                fetch(collection).text,
+                "html.parser"
+            )
+            successful_pages += 1
+
+            for anchor in soup.select(
+                'a[href*="/products/"]'
             ):
-                entry["image"] = images[0]["src"]
-                entry["image_review_status"] = (
-                    "unverified_candidate"
+                href = urljoin(
+                    collection,
+                    anchor.get("href", "")
                 )
 
-            results[url] = entry
+                parsed = urlparse(href)
 
-    return list(results.values())
+                if (
+                    parsed.hostname
+                    != "shop.kayouofficial.com"
+                    or not re.fullmatch(
+                        r"/products/"
+                        r"[A-Za-z0-9_-]+/?",
+                        parsed.path
+                    )
+                ):
+                    continue
+
+                href = (
+                    KAYOU
+                    + parsed.path.rstrip("/")
+                )
+
+                name = kayou_name(anchor)
+
+                if not name:
+                    continue
+
+                image = candidate_image(
+                    anchor, collection
+                )
+
+                entry = make_product(
+                    "Kayou",
+                    name,
+                    href,
+                    image=image,
+                    source="Official Kayou US store"
+                )
+
+                entry["publisher"] = "Kayou"
+                entry["franchise"] = (
+                    kayou_line(name)
+                )
+                entry["catalogue_method"] = (
+                    "Official Shoplazza collection"
+                )
+
+                # A separate sealed-case listing
+                # is a distinct product.
+                if re.search(
+                    r"sealed case|boxes case",
+                    name, re.I
+                ):
+                    entry["type"] = (
+                        "Factory-sealed case"
+                    )
+
+                old = products.get(href)
+
+                if not old:
+                    products[href] = entry
+
+                elif (
+                    not old.get("image")
+                    and image
+                ):
+                    old["image"] = image
+                    old["image_review_status"] = (
+                        "unverified_candidate"
+                    )
+
+        except Exception as error:
+            errors.append(
+                collection
+                + ": "
+                + type(error).__name__
+                + ": "
+                + str(error)[:100]
+            )
+
+    if not products:
+        raise RuntimeError(
+            "Kayou catalogue returned "
+            "no product links. "
+            + "; ".join(errors[:3])
+        )
+
+    if successful_pages == 0:
+        raise RuntimeError(
+            "No Kayou collection pages loaded"
+        )
+
+    return list(products.values()), errors
+
+
+def generic_products(game, root, prefix):
+    soup = BeautifulSoup(
+        fetch(root).text,
+        "html.parser"
+    )
+
+    hostname = urlparse(root).hostname
+    results = {}
+
+    for anchor in soup.select(
+        "a[href]"
+    ):
+        href = urldefrag(
+            urljoin(
+                root,
+                anchor.get("href", "")
+            )
+        )[0]
+
+        parsed = urlparse(href)
+
+        if (
+            not safe_url(href)
+            or parsed.hostname != hostname
+            or not parsed.path.startswith(
+                prefix
+            )
+        ):
+            continue
+
+        if (
+            href.rstrip("/")
+            == root.rstrip("/")
+            or parsed.path.rstrip("/")
+            == prefix.rstrip("/")
+            or re.search(
+                r"/(?:list|category|search|tag)/",
+                parsed.path, re.I
+            )
+        ):
+            continue
+
+        name = clean(
+            anchor.get_text(
+                " ", strip=True
+            )
+        )
+
+        if not name:
+            image = anchor.find("img")
+            name = clean(
+                image.get("alt")
+                if image else ""
+            )
+
+        if not (
+            8 <= len(name) <= 180
+        ):
+            continue
+
+        if (
+            SPORTS.search(name)
+            or ACCESSORIES.search(name)
+            or not PRODUCT_TERMS.search(
+                name
+            )
+        ):
+            continue
+
+        results[href] = make_product(
+            game,
+            name,
+            href,
+            image=candidate_image(
+                anchor, root
+            )
+        )
+
+    return list(results.values()), []
 
 
 def product_key(item):
@@ -584,24 +886,22 @@ def merge_products(existing, incoming):
         if isinstance(item, dict)
     }
 
-    added = 0
+    before = len(output)
     updated = 0
 
-    for item in incoming:
-        key = product_key(item)
+    for product in incoming:
+        key = product_key(product)
 
         if key not in output:
             output[key] = {
-                **item,
+                **product,
                 "first_seen": STAMP
             }
-            added += 1
             continue
 
         old = output[key]
+        changed = False
 
-        # Prevent losing verified availability,
-        # curated photographs and historical data.
         protected = {
             "first_seen",
             "product_image",
@@ -610,48 +910,62 @@ def merge_products(existing, incoming):
             "image_review_status",
         }
 
-        changed = False
-
-        for field, value in item.items():
+        for field, value in product.items():
             if field in protected:
                 continue
 
-            if field == "image" and old.get("image"):
+            if (
+                field == "image"
+                and old.get("image")
+            ):
                 continue
 
-            if value not in ("", None, []):
-                if old.get(field) != value:
-                    old[field] = value
-                    changed = True
+            if (
+                value not in ("", None, [])
+                and old.get(field) != value
+            ):
+                old[field] = value
+                changed = True
 
         if changed:
             updated += 1
 
-    return list(output.values()), added, updated
+    return (
+        list(output.values()),
+        len(output) - before,
+        updated
+    )
 
 
-def check(label, function):
+def check(game, function):
     try:
         products, errors = function()
-        return products, {
-            "game": label,
+
+        report = {
+            "game": game,
             "status": (
-                "partial" if errors
-                else "ok" if products
+                "partial"
+                if errors
+                else "ok"
+                if products
                 else "no_matching_products"
             ),
             "products_found": len(products),
-            "errors": errors,
+            "errors": errors[:8],
             "checked_at": STAMP,
         }
+
+        return products, report
+
     except Exception as error:
         return [], {
-            "game": label,
+            "game": game,
             "status": "error",
             "products_found": 0,
             "error": (
                 type(error).__name__
-                + ": " + str(error)[:180]
+                + ": "
+                + str(error)[:180]
             ),
             "checked_at": STAMP,
         }
@@ -660,92 +974,111 @@ def check(label, function):
 def main():
     db = load()
 
-    if (
-        not isinstance(db, dict)
-        or not isinstance(db.get("products"), list)
-        or not isinstance(db.get("releases"), list)
-    ):
-        raise ValueError(
-            "Invalid existing catalogue; refusing overwrite"
-        )
-
     before = len(db["products"])
-    releases_before = len(db["releases"])
+    releases_before = len(
+        db["releases"]
+    )
 
     discovered = []
     reports = []
 
-    # Always check Gundam and Kayou.
+    # These two catalogues are checked
+    # on every run.
     for game, function in [
         ("Gundam", gundam_products),
-        ("Kayou", lambda: (kayou_products(), [])),
+        ("Kayou", kayou_products),
     ]:
-        products, report = check(game, function)
-        discovered.extend(products)
-        reports.append(report)
-
-    # Rotate two additional publisher sources
-    # per run to keep execution lightweight.
-    cursor = int(db.get("v91_source_cursor", 0))
-
-    for offset in range(2):
-        game, root, prefix = OTHER_SOURCES[
-            (cursor + offset) % len(OTHER_SOURCES)
-        ]
-
         products, report = check(
-            game,
-            lambda g=game, r=root, p=prefix:
-                (generic_products(g, r, p), [])
+            game, function
         )
 
         discovered.extend(products)
         reports.append(report)
 
-    merged, added, updated = merge_products(
-        db["products"], discovered
+    # Rotate through other publishers.
+    cursor = int(
+        db.get("v91_source_cursor", 0)
+    )
+
+    for offset in range(2):
+        game, root, prefix = (
+            OTHER_SOURCES[
+                (cursor + offset)
+                % len(OTHER_SOURCES)
+            ]
+        )
+
+        products, report = check(
+            game,
+            lambda g=game, r=root, p=prefix:
+                generic_products(g, r, p)
+        )
+
+        discovered.extend(products)
+        reports.append(report)
+
+    merged, added, updated = (
+        merge_products(
+            db["products"],
+            discovered
+        )
     )
 
     if len(merged) < before:
-        raise RuntimeError("Product count decreased")
+        raise RuntimeError(
+            "Product loss detected"
+        )
 
-    if len(db["releases"]) < releases_before:
-        raise RuntimeError("Release count decreased")
+    if len(
+        db["releases"]
+    ) < releases_before:
+        raise RuntimeError(
+            "Release loss detected"
+        )
 
     db["products"] = merged
+
     db["v91_source_cursor"] = (
         cursor + 2
     ) % len(OTHER_SOURCES)
 
     db["v9_catalogue"] = {
-        "version": "9.1",
+        "version": "9.2",
         "updated_at": STAMP,
         "games_registered": ALL_GAMES,
         "kayou_lines": KAYOU_LINES,
         "sports_cards_excluded": True,
         "source_checks": reports,
-        "products_discovered_this_run": len(discovered),
+        "products_discovered_this_run": (
+            len(discovered)
+        ),
         "products_added_this_run": added,
         "products_updated_this_run": updated,
         "total_products": len(merged),
-        "total_releases": len(db["releases"]),
+        "total_releases": len(
+            db["releases"]
+        ),
         "stock_claims_created": 0,
     }
 
     save(db)
 
-    print("=== POKESTOCK V9.1 ===")
+    print("=== POKESTOCK V9.2 ===")
     print("Products before:", before)
     print("Products after:", len(merged))
     print("New products:", added)
     print("Updated products:", updated)
-    print("Releases preserved:", len(db["releases"]))
+    print(
+        "Releases preserved:",
+        len(db["releases"])
+    )
 
     for report in reports:
         print(
             report["game"],
             report["status"],
-            report["products_found"]
+            report["products_found"],
+            flush=True
         )
 
 
