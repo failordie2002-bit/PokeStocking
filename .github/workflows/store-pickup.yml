@@ -1,0 +1,115 @@
+
+name: PokeStock V22 Store Pickup Monitoring
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "47 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  pickup:
+    name: Check Public Store Pickup Availability
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Validate script
+        run: |
+          python -m py_compile \
+            scripts/store_pickup_monitor.py
+
+      - name: Check pickup availability
+        run: |
+          python scripts/store_pickup_monitor.py
+
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          observations = json.loads(
+              Path("data/store_pickup_observations.json")
+              .read_text(encoding="utf-8")
+          )
+          report = json.loads(
+              Path("data/store_pickup_report.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert isinstance(observations, list)
+          assert report["version"] == "22.0"
+
+          for row in observations:
+              assert row["inventory_scope"] == "store_pickup"
+              assert row["shelf_stock_confirmed"] is False
+              assert row["availability"] in (
+                  "Pickup available",
+                  "Pickup unavailable",
+              )
+              assert row["location_name"]
+              assert row["evidence_url"]
+
+          print("Pickup observations validated.")
+          PY
+
+      - name: Publish results
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/store_pickup_observations.json \
+            data/store_pickup_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "Update store-specific pickup observations"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "Published successfully"
+              exit 0
+            fi
+
+            sleep 3
+          done
+
+          exit 1
