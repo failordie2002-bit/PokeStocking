@@ -1,5 +1,5 @@
 
-name: PokeStock V8.2.2 Reliable Discovery
+name: PokeStock V8.3 Nationwide Monitor
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   monitor:
-    name: Catalogue and Reliable Store Discovery
+    name: Discovery Catalogue and Product Images
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -33,13 +33,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           python -m pip install requests beautifulsoup4
 
       - name: Validate Python scripts
         run: |
           python -m py_compile scripts/monitor.py
           python -m py_compile scripts/discover_stores.py
+          python -m py_compile scripts/product_images.py
 
       - name: Save protection baseline
         run: |
@@ -47,33 +47,23 @@ jobs:
           import json
           from pathlib import Path
 
-          status = json.loads(
-              Path("data/status.json").read_text(
-                  encoding="utf-8"
+          def read(name):
+              return json.loads(
+                  Path("data", name).read_text(
+                      encoding="utf-8"
+                  )
               )
-          )
 
-          stores = json.loads(
-              Path("data/stores.json").read_text(
-                  encoding="utf-8"
-              )
-          )
-
-          shipments = json.loads(
-              Path("data/shipments.json").read_text(
-                  encoding="utf-8"
-              )
-          )
+          status = read("status.json")
+          stores = read("stores.json")
+          shipments = read("shipments.json")
 
           if not isinstance(status.get("products"), list):
               raise SystemExit("Invalid products")
-
           if not isinstance(status.get("releases"), list):
               raise SystemExit("Invalid releases")
-
           if not isinstance(stores, list):
               raise SystemExit("Invalid stores")
-
           if not isinstance(shipments, dict):
               raise SystemExit("Invalid shipments")
 
@@ -106,35 +96,29 @@ jobs:
         run: |
           python scripts/monitor.py
 
+      - name: Enrich product packaging images
+        id: images
+        continue-on-error: true
+        run: |
+          python scripts/product_images.py
+
       - name: Validate protected data
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
-          status = json.loads(
-              Path("data/status.json").read_text(
-                  encoding="utf-8"
+          def read(name):
+              return json.loads(
+                  Path("data", name).read_text(
+                      encoding="utf-8"
+                  )
               )
-          )
 
-          stores = json.loads(
-              Path("data/stores.json").read_text(
-                  encoding="utf-8"
-              )
-          )
-
-          shipments = json.loads(
-              Path("data/shipments.json").read_text(
-                  encoding="utf-8"
-              )
-          )
-
-          state = json.loads(
-              Path("data/discovery_state.json").read_text(
-                  encoding="utf-8"
-              )
-          )
+          status = read("status.json")
+          stores = read("stores.json")
+          shipments = read("shipments.json")
+          state = read("discovery_state.json")
 
           baseline = json.loads(
               Path("/tmp/pokestock_baseline.json").read_text(
@@ -142,35 +126,39 @@ jobs:
               )
           )
 
-          if len(status.get("products", [])) < baseline["products"]:
-              raise SystemExit("Products were lost")
-
-          if len(status.get("releases", [])) < baseline["releases"]:
-              raise SystemExit("Releases were lost")
-
+          if not isinstance(status.get("products"), list):
+              raise SystemExit("Invalid products")
+          if not isinstance(status.get("releases"), list):
+              raise SystemExit("Invalid releases")
           if not isinstance(stores, list):
               raise SystemExit("Invalid stores")
+          if not isinstance(shipments, dict):
+              raise SystemExit("Invalid shipments")
+          if not isinstance(state, dict):
+              raise SystemExit("Invalid discovery state")
+
+          if len(status["products"]) < baseline["products"]:
+              raise SystemExit("Products were lost")
+
+          if len(status["releases"]) < baseline["releases"]:
+              raise SystemExit("Releases were lost")
 
           if len(stores) < baseline["stores"]:
               raise SystemExit("Stores were lost")
-
-          if not isinstance(shipments, dict):
-              raise SystemExit("Invalid shipments")
 
           for key in ("events", "forecasts"):
               old = baseline["shipments"].get(key, [])
               new = shipments.get(key, [])
 
               if not isinstance(new, list):
-                  raise SystemExit("Invalid shipment records")
+                  raise SystemExit("Invalid shipment data")
 
               if len(new) < len(old):
-                  raise SystemExit("Shipment records were lost")
+                  raise SystemExit(
+                      "Shipment records were lost"
+                  )
 
-          if not isinstance(state, dict):
-              raise SystemExit("Invalid discovery state")
-
-          print("Protected data validated")
+          print("DATA PROTECTION PASSED")
           print("Products:", len(status["products"]))
           print("Releases:", len(status["releases"]))
           print("Stores:", len(stores))
@@ -178,6 +166,11 @@ jobs:
               "Discovery status:",
               state.get("v822_status")
           )
+
+          images = status.get(
+              "v83_image_enrichment", {}
+          )
+          print("Image enrichment:", images)
           PY
 
       - name: Commit updated data
@@ -192,9 +185,9 @@ jobs:
             data/discovery_state.json
 
           if git diff --cached --quiet; then
-            echo "No changes to publish."
+            echo "No data changes."
           else
-            git commit -m "Update PokeStock V8.2.2 data"
+            git commit -m "Update PokeStock V8.3 data"
             git push origin HEAD:main
           fi
 
@@ -205,29 +198,67 @@ jobs:
           import json
           from pathlib import Path
 
-          p = Path("data/discovery_state.json")
-
-          if not p.exists():
-              print("No discovery state found")
-              raise SystemExit(0)
-
-          state = json.loads(
-              p.read_text(encoding="utf-8")
+          state_path = Path(
+              "data/discovery_state.json"
+          )
+          status_path = Path(
+              "data/status.json"
           )
 
-          print("=== POKESTOCK V8.2.2 ===")
-          print("State:", state.get("v822_last_state"))
-          print("Status:", state.get("v822_status"))
-          print("Method:", state.get("v822_last_method"))
-          print("New stores:", state.get("v822_last_new_stores"))
-          print("Total stores:", state.get("v822_total_stores"))
-          print("Error:", state.get("v822_last_error"))
+          if state_path.exists():
+              state = json.loads(
+                  state_path.read_text(
+                      encoding="utf-8"
+                  )
+              )
+
+              print("=== STORE DISCOVERY ===")
+              print(
+                  "State:",
+                  state.get("v822_last_state")
+              )
+              print(
+                  "Status:",
+                  state.get("v822_status")
+              )
+              print(
+                  "New stores:",
+                  state.get("v822_last_new_stores")
+              )
+              print(
+                  "Error:",
+                  state.get("v822_last_error")
+              )
+
+          if status_path.exists():
+              status = json.loads(
+                  status_path.read_text(
+                      encoding="utf-8"
+                  )
+              )
+
+              print("=== PRODUCT IMAGES ===")
+              print(
+                  json.dumps(
+                      status.get(
+                          "v83_image_enrichment",
+                          {}
+                      ),
+                      indent=2
+                  )
+              )
           PY
 
       - name: Report discovery failure
         if: steps.discovery.outcome == 'failure'
         run: |
           echo "::error::Store discovery failed or was incomplete."
-          echo "Catalogue monitoring and data preservation completed."
-          echo "Review data/discovery_state.json for details."
+          echo "Review data/discovery_state.json."
+          exit 1
+
+      - name: Report image enrichment failure
+        if: steps.images.outcome == 'failure'
+        run: |
+          echo "::error::Product image enrichment failed."
+          echo "Review the image enrichment step logs."
           exit 1
