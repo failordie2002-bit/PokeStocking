@@ -1,0 +1,105 @@
+name: PokeStock V24 Verified Local Stock
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '41 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  verify-local:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run verified local inventory join
+        run: python scripts/store_inventory_v24.py
+
+      - name: Validate evidence constraints
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rows = json.loads(
+              Path('data/verified_local_stock.json').read_text()
+          )
+          report = json.loads(
+              Path('data/verified_local_stock_report.json').read_text()
+          )
+
+          assert report['version'] == '24.0'
+          assert len(rows) == report['verified_store_specific_records']
+
+          for row in rows:
+              assert row['inventory_scope'] in (
+                  'store_pickup', 'physical_store'
+              )
+              assert row['evidence_url'].startswith('https://')
+              assert row['store_id']
+
+              if row['inventory_scope'] == 'store_pickup':
+                  assert row['shelf_stock_confirmed'] is False
+              else:
+                  assert row['shelf_stock_confirmed'] is True
+
+          print(
+              'Verified local stock validation passed:',
+              len(rows)
+          )
+          PY
+
+      - name: Commit verified observations
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name pokestock-bot
+          git config user.email actions@users.noreply.github.com
+
+          git add \
+            data/verified_local_stock.json \
+            data/verified_local_stock_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+
+          git commit -m \
+            'Publish verified store-specific stock V24'
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "PokéStock V24 published"
+              exit 0
+            fi
+
+            sleep 3
+          done
+
+          exit 1
