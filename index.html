@@ -296,6 +296,7 @@ footer{
   .grid{grid-template-columns:1fr}
 }
 </style>
+<!-- POKESTOCK_V28_INVENTORY -->
 </head>
 <body>
 
@@ -411,7 +412,17 @@ footer{
         <select id="onlineRetailer">
           <option value="">All Retailers</option>
         </select>
-        <select id="onlineAvailability">
+        
+<select id="onlineFormat">
+  <option value="">All Formats</option>
+  <option value="Booster box">Booster Boxes</option>
+  <option value="Booster pack">Booster Packs</option>
+  <option value="Booster bundle">Booster Bundles</option>
+  <option value="Elite Trainer Box">ETBs</option>
+  <option value="Deck">Decks</option>
+  <option value="Collection">Collections</option>
+</select>
+<select id="onlineAvailability">
           <option value="">All Availability</option>
           <option value="In stock">In Stock</option>
           <option value="Out of stock">Out of Stock</option>
@@ -419,7 +430,19 @@ footer{
           <option value="Backorder">Backorder</option>
         </select>
       </div>
-      <p class="muted" id="onlineInfo"></p>
+      
+<div class="controls">
+  <select id="onlineVerification">
+    <option value="">All Evidence Levels</option>
+    <option value="rechecked">
+      Independently Rechecked
+    </option>
+    <option value="source">
+      Recent Source Observation
+    </option>
+  </select>
+</div>
+<p class="muted" id="onlineInfo"></p>
       <div class="grid" id="onlineGrid"></div>
     </section>
 
@@ -812,6 +835,9 @@ function renderOnline() {
   const game=$("onlineGame").value;
   const retailer=$("onlineRetailer").value;
   const state=$("onlineAvailability").value;
+    const format=$("onlineFormat").value;
+    const verification=
+      $("onlineVerification").value;
 
   const rows=offers.filter(o=>
     validOffer(o)
@@ -820,7 +846,19 @@ function renderOnline() {
     ].join(" ").toLowerCase().includes(q))
     && (!game||o.game===game)
     && (!retailer||o.retailer===retailer)
+    
     && (!state||o.availability===state)
+    && (!format||String(o.format||"")
+        .toLowerCase().includes(
+          format.toLowerCase()
+        ))
+    && (!verification||
+        (verification==="rechecked"
+          ? o.evidence_type===
+            "shopify_public_variant_recheck"
+          : o.evidence_type!==
+            "shopify_public_variant_recheck"))
+
   ).sort((a,b)=>
     (a.availability==="In stock"?0:1)
     -(b.availability==="In stock"?0:1)
@@ -828,11 +866,15 @@ function renderOnline() {
 
   $("onlineInfo").textContent=
     rows.length+" matching fresh online offers. "+
+    rows.filter(o=>o.evidence_type===
+      "shopify_public_variant_recheck"
+    ).length+" independently rechecked. "+
     "Not physical-store stock. "+
     "Availability applies to the reported listing or variant.";
 
   $("onlineGrid").innerHTML=rows.slice(0,400).map(o=>{
     const price=o.price&&o.currency
+      &&o.currency!=="Unverified"
       ? `<p><strong>${escapeHTML(o.currency)}
         ${escapeHTML(o.price)}</strong></p>`
       : "";
@@ -845,6 +887,13 @@ function renderOnline() {
         ${badge(o.availability)}
         <span class="pill">${escapeHTML(o.format||"Sealed cards")}</span>
         <p>Variant: ${escapeHTML(o.variant||"Listing")}</p>
+    <span class="pill">
+      ${o.evidence_type===
+        "shopify_public_variant_recheck"
+        ? "Independently rechecked"
+        : "Recent source observation"}
+    </span>
+    <span class="pill">Online only</span>
         ${price}
         <p class="muted">Checked:
           ${escapeHTML(new Date(o.checked_at).toLocaleString())}
@@ -1181,14 +1230,20 @@ async function init() {
   const data=await Promise.all([
     jsonFile("data/status.json",database),
     jsonFile("data/stores.json",[]),
-    jsonFile("data/online_offers.json",[]),
+    jsonFile("data/v27_inventory.json",null),
     jsonFile("data/online_inventory_report.json",{}),
     jsonFile("data/shipments.json",shipments)
   ]);
 
   database=data[0]||database;
   stores=Array.isArray(data[1])?data[1]:[];
-  offers=Array.isArray(data[2])?data[2]:[];
+  offers=Array.isArray(data[2])
+      ? data[2].filter(
+          o=>o.inventory_scope==="online"
+        )
+      : await jsonFile(
+          "data/online_offers.json",[]
+        );
   stockReport=data[3]||{};
   shipments=data[4]||shipments;
 
@@ -1233,7 +1288,8 @@ for(const id of [
 }
 for(const id of [
   "onlineSearch","onlineGame",
-  "onlineRetailer","onlineAvailability"
+  "onlineRetailer","onlineAvailability",
+    "onlineFormat","onlineVerification"
 ]){
   $(id).addEventListener("input",renderOnline);
 }
