@@ -1,4 +1,5 @@
-name: PokeStock V23 Pickup and Website
+
+name: PokeStock V23.1 Pickup and Website
 
 on:
   workflow_dispatch:
@@ -19,7 +20,7 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
@@ -31,47 +32,77 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
 
-      - name: Validate script
-        run: python -m py_compile scripts/v23_upgrade.py
+      - name: Validate Python script
+        run: |
+          python -m py_compile scripts/v23_upgrade.py
 
-      - name: Run V23
-        run: python scripts/v23_upgrade.py
+      - name: Run PokéStock V23.1
+        run: |
+          python scripts/v23_upgrade.py
 
-      - name: Validate data
+      - name: Validate inventory results
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
-          rows = json.loads(
+          observations = json.loads(
               Path("data/v23_pickup_observations.json")
               .read_text(encoding="utf-8")
           )
+
           report = json.loads(
               Path("data/v23_pickup_report.json")
               .read_text(encoding="utf-8")
           )
 
-          assert isinstance(rows, list)
-          assert report["version"] == "23.0"
+          assert isinstance(observations, list)
+          assert report["version"] == "23.1"
 
-          for row in rows:
-              assert row["inventory_scope"] == "store_pickup"
-              assert row["shelf_stock_confirmed"] is False
-              assert row["location_name"]
-              assert row["evidence_url"]
+          assert report["verified_pickup_observations"] == len(
+              observations
+          )
 
-          html = Path("index.html").read_text(
+          assert report["physical_shelf_stock_confirmed"] == 0
+
+          for item in observations:
+              assert item["inventory_scope"] == "store_pickup"
+              assert item["shelf_stock_confirmed"] is False
+              assert item["location_name"]
+              assert item["evidence_url"]
+
+              assert item["availability"] in (
+                  "Pickup available",
+                  "Pickup unavailable",
+              )
+
+          website = Path("index.html").read_text(
               encoding="utf-8"
           )
-          assert 'id="pickup"' in html
 
-          print("V23 validated")
+          assert 'id="pickup"' in website
+          assert 'id="v23Grid"' in website
+
+          print("PokéStock V23.1 validation passed")
+          print(
+              "Pickup observations:",
+              len(observations)
+          )
+          print(
+              "Available for pickup:",
+              report["pickup_available"]
+          )
+          print(
+              "Unavailable for pickup:",
+              report["pickup_unavailable"]
+          )
           PY
 
-      - name: Publish changes
+      - name: Publish updated data and website
         shell: bash
         run: |
           set -euo pipefail
@@ -86,27 +117,30 @@ jobs:
             data/v23_pickup_report.json
 
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No changes to publish"
             exit 0
           fi
 
           git commit -m \
-            "Upgrade pickup monitoring and website V23"
+            "Update PokéStock pickup monitoring V23.1"
 
           for attempt in 1 2 3; do
             git fetch origin main
 
             if ! git rebase origin/main; then
               git rebase --abort || true
+              echo "Rebase failed"
               exit 1
             fi
 
             if git push origin HEAD:main; then
-              echo "V23 published successfully"
+              echo "PokéStock V23.1 published"
               exit 0
             fi
 
+            echo "Push attempt failed; retrying..."
             sleep 3
           done
 
+          echo "Unable to publish changes"
           exit 1
