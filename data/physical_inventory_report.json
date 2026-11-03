@@ -1,0 +1,22 @@
+{
+  "version": "21.0",
+  "generated_at": "2026-11-03T22:34:11.649194+00:00",
+  "store_records_scanned": 2729,
+  "candidate_sources": 1173,
+  "local_candidate_sources": 39,
+  "source_types": {
+    "independent_store": 161,
+    "major_retailer": 1012
+  },
+  "verified_physical_stock_observations": 0,
+  "verified_physical_out_of_stock": 0,
+  "inventory_scope": "physical_store",
+  "status": "discovery_only",
+  "next_step": "Integrate authorized store-specific availability sources.",
+  "limitations": [
+    "Candidate stores are not confirmed TCG sellers.",
+    "Online availability does not prove shelf stock.",
+    "Unknown is not equivalent to out of stock.",
+    "No public physical-stock API is assumed."
+  ]
+}
