@@ -1,8 +1,10 @@
+
 import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 from bs4 import BeautifulSoup
@@ -57,9 +59,7 @@ def normalize_date(text):
         return ""
 
     quarter = re.search(
-        r"\bQ([1-4])\s+(\d{4})\b",
-        text,
-        re.IGNORECASE,
+        r"\bQ([1-4])\s+(\d{4})\b", text, re.IGNORECASE
     )
 
     if quarter:
@@ -90,25 +90,20 @@ def find_msrp(text):
         text,
         re.IGNORECASE,
     )
-
     return "$" + match.group(1) if match else ""
 
 
 def pokemon_type(name):
     text = name.lower()
 
-    if "v battle deck" in text or "battle deck" in text:
+    if "battle deck" in text:
         return "Battle Deck"
-
     if "battle academy" in text:
         return "Battle Academy"
-
     if "collection" in text:
         return "Collection"
-
     if "trick or trade" in text:
         return "Booster Bundle"
-
     if "mega evolution" in text or "scarlet & violet" in text:
         return "Expansion"
 
@@ -123,12 +118,49 @@ def make_product(name, game, url, kind, release_date="", msrp=""):
         "set": "",
         "stock_status": "Not checked",
         "image": "",
+        "image_source": "",
         "msrp": msrp,
         "market_price": "",
         "release_date": release_date,
         "sku": "",
         "url": url,
     }
+
+
+def pokemon_image(url):
+    """Find a product image on an individual Pokémon press page."""
+    try:
+        soup = get_page(url)
+
+        # Prefer page-level image metadata.
+        for meta in soup.find_all("meta"):
+            key = meta.get("property", "").lower()
+            name = meta.get("name", "").lower()
+
+            if key in ("og:image", "og:image:secure_url") or name == "twitter:image":
+                content = meta.get("content", "").strip()
+                if content:
+                    return urljoin(url, content)
+
+        # Fallback to product-shot images.
+        for img in soup.find_all("img"):
+            src = img.get("src") or img.get("data-src")
+
+            if not src:
+                continue
+
+            candidate = urljoin(url, src)
+            marker = candidate.lower()
+
+            if any(word in marker for word in (
+                "product", "shot", "press"
+            )):
+                return candidate
+
+    except Exception as error:
+        print("Pokémon image lookup failed:", url, error)
+
+    return ""
 
 
 def scrape_pokemon():
@@ -166,7 +198,6 @@ def scrape_pokemon():
 
         release_date = find_date(context)
 
-        # Avoid assigning a neighboring product's date to Battle Decks.
         if "battle deck" in name.lower():
             release_date = ""
 
@@ -215,6 +246,38 @@ def clean_union_name(raw):
     return clean_text(text)
 
 
+def union_product_image(link, base_url):
+    """Find a thumbnail belonging to this Union Arena product card."""
+    nodes = [link]
+    node = link
+
+    # Product images are sometimes inside the link and sometimes
+    # inside its immediate card container.
+    for _ in range(3):
+        if node.parent is None:
+            break
+        node = node.parent
+        nodes.append(node)
+
+    for container in nodes:
+        for img in container.find_all("img"):
+            src = img.get("src") or img.get("data-src")
+
+            if not src:
+                continue
+
+            candidate = urljoin(base_url, src)
+            lower = candidate.lower()
+
+            if (
+                "/images/products/" in lower
+                and ("/boosters/" in lower or "/decks/" in lower)
+            ):
+                return candidate
+
+    return ""
+
+
 def scrape_union_arena():
     products = []
     soup = get_page(SOURCES["union_arena"])
@@ -259,19 +322,23 @@ def scrape_union_arena():
                 context = candidate
                 break
 
-        release_date = find_date(context)
-        msrp = find_msrp(context)
-
-        products.append(
-            make_product(
-                name=name,
-                game="Union Arena",
-                url=url,
-                kind=kind,
-                release_date=release_date,
-                msrp=msrp,
-            )
+        product = make_product(
+            name=name,
+            game="Union Arena",
+            url=url,
+            kind=kind,
+            release_date=find_date(context),
+            msrp=find_msrp(context),
         )
+
+        product["image"] = union_product_image(
+            link, SOURCES["union_arena"]
+        )
+
+        if product["image"]:
+            product["image_source"] = "Union Arena official catalogue"
+
+        products.append(product)
 
     return products
 
@@ -284,7 +351,6 @@ def remove_duplicates(items):
             item["game"].lower(),
             item["url"].lower(),
         )
-
         unique[key] = item
 
     return list(unique.values())
@@ -294,24 +360,69 @@ def main():
     print("Starting PokeStock monitor...")
 
     data = load_data()
+    old_products = data.get("products", [])
     errors = []
 
-    pokemon = []
-    union_arena = []
+    old_by_url = {
+        item.get("url", ""): item
+        for item in old_products
+        if item.get("url")
+    }
 
     try:
         pokemon = scrape_pokemon()
+        print("Pokémon source entries:", len(pokemon))
+
+        # Reuse cached images; retrieve missing ones.
+        missing = [
+            item for item in pokemon
+            if not old_by_url.get(item["url"], {}).get("image")
+        ]
+
+        print("Pokémon images to retrieve:", len(missing))
+
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            images = list(
+                executor.map(
+                    lambda item: pokemon_image(item["url"]),
+                    missing,
+                )
+            )
+
+        for item, image_url in zip(missing, images):
+            item["image"] = image_url
+            if image_url:
+                item["image_source"] = "Pokémon official press page"
+
     except Exception as error:
+        pokemon = [
+            item for item in old_products
+            if item.get("game") == "Pokémon"
+        ]
         errors.append("Pokémon: " + str(error))
         print(errors[-1])
 
     try:
         union_arena = scrape_union_arena()
+        print("Union Arena source entries:", len(union_arena))
+
     except Exception as error:
+        union_arena = [
+            item for item in old_products
+            if item.get("game") == "Union Arena"
+        ]
         errors.append("Union Arena: " + str(error))
         print(errors[-1])
 
     products = remove_duplicates(pokemon + union_arena)
+
+    # Preserve previously retrieved images and other existing fields.
+    for item in products:
+        old = old_by_url.get(item["url"], {})
+
+        for field in ("image", "image_source", "sku", "set", "market_price"):
+            if not item.get(field) and old.get(field):
+                item[field] = old[field]
 
     releases = []
 
@@ -335,15 +446,25 @@ def main():
     data["monitor_errors"] = errors
 
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
-
     DATA_FILE.write_text(
         json.dumps(data, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
+    pokemon_images = sum(
+        bool(p.get("image")) for p in products
+        if p.get("game") == "Pokémon"
+    )
+    union_images = sum(
+        bool(p.get("image")) for p in products
+        if p.get("game") == "Union Arena"
+    )
+
     print("Monitor finished.")
-    print("Pokémon products:", len(pokemon))
-    print("Union Arena products:", len(union_arena))
+    print("Pokémon products:", sum(p["game"] == "Pokémon" for p in products))
+    print("Union Arena products:", sum(p["game"] == "Union Arena" for p in products))
+    print("Pokémon images:", pokemon_images)
+    print("Union Arena images:", union_images)
     print("Total products:", len(products))
     print("Release entries:", len(releases))
     print("Errors:", len(errors))
