@@ -1,147 +1,244 @@
 {
-  "version": "11.0",
-  "checked_at": "2026-11-03T22:17:19.312312+00:00",
+  "version": "11.2",
+  "checked_at": "2026-11-03T22:20:01.896782+00:00",
   "total_store_records": 2729,
-  "candidate_retailer_websites": 57,
-  "checked_this_run": 20,
-  "new_retailers_registered": 1,
-  "total_registered_retailers": 1,
-  "next_cursor": 20,
+  "candidate_retailer_websites": 54,
+  "checked_this_run": 30,
+  "new_retailers_registered": 4,
+  "total_registered_retailers": 5,
+  "next_cursor": 50,
   "checks": [
     {
-      "name": "Alpha Comics & Games",
-      "host": "alphacomics.com",
+      "name": "One, Two Kangaroo Toys",
+      "host": "villageatshirlington.com",
       "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://alphacomics.com/products.json?limit=100"
+      "reason": "ValueError: Redirect not followed"
     },
     {
-      "name": "The Amazing Comic Shop",
-      "host": "amazingcomicshop.wordpress.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://amazingcomicshop.wordpress.com/products.json?limit=100"
+      "name": "World of Mirth",
+      "host": "worldofmirth.com",
+      "status": "not_eligible",
+      "supported": false,
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
     },
     {
-      "name": "Atlantis Games & Comics",
-      "host": "atlantis-comics.com",
+      "name": "757 Sports Collectibles",
+      "host": "www.757sc.com",
+      "status": "not_eligible",
+      "supported": false,
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
+    },
+    {
+      "name": "Bitfrost",
+      "host": "www.bifrostgamesnyc.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.bifrostgamesnyc.com/products.json?limit=250"
+    },
+    {
+      "name": "The Carcosa Club",
+      "host": "www.carcosaclub.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.carcosaclub.com/products.json?limit=250"
+    },
+    {
+      "name": "Carytown Dolls & Bears",
+      "host": "www.carytowndollsandbears.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.carytowndollsandbears.com/products.json?limit=250"
+    },
+    {
+      "name": "Chess Forum",
+      "host": "www.chessforum.com",
+      "status": "not_eligible",
+      "supported": false,
+      "feed_products": 102,
+      "matching_products": 0,
+      "examples": []
+    },
+    {
+      "name": "Curio Cavern",
+      "host": "www.curiocavern.com",
       "status": "registered",
       "supported": true,
-      "feed_products": 100,
-      "matching_products": 1,
+      "feed_products": 125,
+      "matching_products": 14,
       "examples": [
-        "KAYOU: My Little Pony TCG Booster Pack 04 (BP04) - Hearth's Warming Eve Booster Box (Release Date 10.30.26)"
+        "PRE-ORDER: Magic: The Gathering - Star Trek Play Booster Box",
+        "Weiss Schwarz: Avatar the Last Airbender Booster Box",
+        "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]"
       ]
     },
     {
-      "name": "Brooklyn Game Lab",
-      "host": "brooklyngamelab.com",
+      "name": "Egg-cellent",
+      "host": "www.eggcellentmtoys.com",
       "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://brooklyngamelab.com/products.json?limit=100"
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.eggcellentmtoys.com/products.json?limit=250"
     },
     {
-      "name": "CAMP",
-      "host": "camp.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://camp.com/products.json?limit=100"
-    },
-    {
-      "name": "Child’s Play Toys and Books",
-      "host": "childsplaytoysandbooks.com",
+      "name": "Gaming Giant",
+      "host": "www.gaminggiant.com",
       "status": "not_eligible",
       "supported": false,
-      "reason": "No matching sealed TCG products",
-      "feed_products": 100
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
     },
     {
-      "name": "FORT to-go",
-      "host": "forttogo.com, https",
-      "status": "error",
-      "reason": "ValueError: Domain did not resolve to public IPs"
-    },
-    {
-      "name": "Gamestoria",
-      "host": "gamestoria.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://gamestoria.com/products.json?limit=100"
-    },
-    {
-      "name": "Incredible Flying Objects",
-      "host": "incredible-flying-objects-ifotoys.business.site",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://incredible-flying-objects-ifotoys.business.site/products.json?limit=100"
-    },
-    {
-      "name": "Keep It Strange Game Room",
-      "host": "keepitstrange.wixsite.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://keepitstrange.wixsite.com/products.json?limit=100"
-    },
-    {
-      "name": "Lab20 Cards",
-      "host": "lab20cards.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://lab20cards.com/products.json?limit=100"
-    },
-    {
-      "name": "One Eyed Jacques",
-      "host": "oneeyedjacques.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://oneeyedjacques.com/products.json?limit=100"
-    },
-    {
-      "name": "Revolution Cards",
-      "host": "revolutioncardsllc.com",
-      "status": "error",
-      "reason": "HTTPError: 401 Client Error: Unauthorized for url: https://revolutioncardsllc.com/products.json?limit=100"
-    },
-    {
-      "name": "Shenanigans",
-      "host": "shenanigans.toys",
+      "name": "Little Dickens",
+      "host": "www.givensbooks.com",
       "status": "not_eligible",
       "supported": false,
-      "reason": "No matching sealed TCG products",
-      "feed_products": 100
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
     },
     {
-      "name": "Squishable",
-      "host": "squishable.com",
+      "name": "Go Bananas",
+      "host": "www.gobananastoys.com",
       "status": "not_eligible",
       "supported": false,
-      "reason": "No matching sealed TCG products",
-      "feed_products": 100
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
     },
     {
-      "name": "Stone Blue Hobbies",
-      "host": "stonebluehobbies.com",
+      "name": "Hex & Co",
+      "host": "www.hexnyc.com",
+      "status": "error",
+      "reason": "HTTPError: 403 Client Error: Forbidden for url: https://www.hexnyc.com/products.json?limit=250"
+    },
+    {
+      "name": "Huzzah Hobbies",
+      "host": "www.huzzahhobbies.com",
+      "status": "error",
+      "reason": "ValueError: Redirect not followed"
+    },
+    {
+      "name": "Jersey's Cards & Comics LLC",
+      "host": "www.jerseyscc.com",
+      "status": "error",
+      "reason": "HTTPError: 401 Client Error: Unauthorized for url: https://www.jerseyscc.com/products.json?limit=250"
+    },
+    {
+      "name": "Kinder Haus Toys",
+      "host": "www.kinderhaus.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.kinderhaus.com/products.json?limit=250"
+    },
+    {
+      "name": "Lego",
+      "host": "www.lego.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.lego.com/products.json?limit=250"
+    },
+    {
+      "name": "Midtown Comics",
+      "host": "www.midtowncomics.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.midtowncomics.com/products.json?limit=250"
+    },
+    {
+      "name": "Pufferbellies",
+      "host": "www.pufferbelliestoys.com",
       "status": "not_eligible",
       "supported": false,
-      "reason": "No matching sealed TCG products",
-      "feed_products": 100
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
     },
     {
-      "name": "The Booster Box Trading Card Games",
-      "host": "theboosterbox.com",
+      "name": "Rhodorable",
+      "host": "www.rhodoraspecialty.com",
       "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://theboosterbox.com/products.json?limit=100"
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.rhodoraspecialty.com/products.json?limit=250"
     },
     {
-      "name": "The Playful Educator",
-      "host": "theplayfuleducator.shop",
+      "name": "Big Pack Hobby Shop",
+      "host": "www.shopbigpack.com",
+      "status": "registered",
+      "supported": true,
+      "feed_products": 250,
+      "matching_products": 23,
+      "examples": [
+        "Chaos Rising Booster Pack",
+        "Scarlet & Violet Pokemon Center Elite Trainer Box (Exclusive) [Miraidon]",
+        "Surging Sparks Pokemon Center Elite Trainer Box (Exclusive)"
+      ]
+    },
+    {
+      "name": "Sloomoo",
+      "host": "www.sloomoo.com",
       "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://theplayfuleducator.shop/products.json?limit=100"
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.sloomoo.com/products.json?limit=250"
     },
     {
-      "name": "Third Eye Comics",
-      "host": "thirdeyecomics.com",
+      "name": "The Compleat Strategist",
+      "host": "www.thecompleatstrategist.com",
+      "status": "registered",
+      "supported": true,
+      "feed_products": 250,
+      "matching_products": 4,
+      "examples": [
+        "Magic: The Gathering Born of the Gods - Booster Box",
+        "Magic: the Gathering Core Set 2020 - Booster Box",
+        "Magic: the Gathering Ravnica Allegiance - Booster Box"
+      ]
+    },
+    {
+      "name": "The Dragon's Hoard",
+      "host": "www.thedragonshoard.com",
       "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://thirdeyecomics.com/products.json?limit=100"
+      "reason": "ValueError: Redirect not followed"
     },
     {
-      "name": "Toy Lair",
-      "host": "toylairrva.com",
+      "name": "The End Games",
+      "host": "www.theendgames.co",
+      "status": "error",
+      "reason": "HTTPError: 400 Client Error: Bad Request for url: https://www.theendgames.co/products.json?limit=250"
+    },
+    {
+      "name": "The Eternal Forge",
+      "host": "www.theeternalforge.com",
+      "status": "registered",
+      "supported": true,
+      "feed_products": 250,
+      "matching_products": 116,
+      "examples": [
+        "Pokémon TCG: Next Destinies - Booster Pack",
+        "Pokémon TCG: XY Breakpoint - Booster Pack",
+        "Pokémon TCG: XY Steam Siege - Booster Pack"
+      ]
+    },
+    {
+      "name": "Blowout Cards - The Fantastic Store",
+      "host": "www.thefantasticstore.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.thefantasticstore.com/products.json?limit=250"
+    },
+    {
+      "name": "The Player Agency",
+      "host": "www.theplayeragency.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.theplayeragency.com/products.json?limit=250"
+    },
+    {
+      "name": "The Toy Nest",
+      "host": "www.thetoynest.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.thetoynest.com/products.json?limit=250"
+    },
+    {
+      "name": "The Trainer Court",
+      "host": "www.thetrainercourt.com",
       "status": "not_eligible",
       "supported": false,
-      "reason": "No matching sealed TCG products",
-      "feed_products": 100
+      "feed_products": 250,
+      "matching_products": 0,
+      "examples": []
     }
   ],
   "inventory_scope": "online_only",
