@@ -1,12 +1,10 @@
 
 #!/usr/bin/env python3
-"""PokeStock V10.1 - Multi-retailer online inventory.
+"""PokéStock V10.2 — Evidence-backed retailer stock.
 
-Checks Kayou product pages and public Shopify
-catalogues for selected independent TCG retailers.
-
-Results are ONLINE offers only, not store shelves.
-Does not alter status.json or existing catalogue.
+Checks real public Shopify availability and Kayou
+product-page offers. Results represent ONLINE
+availability, never physical shelf inventory.
 """
 
 import json
@@ -26,169 +24,111 @@ STAMP = NOW.isoformat()
 STATUS = DATA / "status.json"
 OFFERS = DATA / "online_offers.json"
 REPORT = DATA / "online_inventory_report.json"
+RETAILERS = DATA / "online_retailers.json"
 
-KAYOU_HOST = "shop.kayouofficial.com"
+MAX_AGE = timedelta(hours=8)
+KAYOU_BATCH = 20
+SHOP_BATCH = 15
+SHOP_PAGE_SIZE = 250
 
-# Initial independent-retailer integrations.
-# Public feed availability is tested each run.
-SHOPS = [
-    {
-        "name": "KnaveTCG",
-        "base": "https://knavetcg.com",
-    },
+DEFAULT_SHOPS = [
     {
         "name": "PixelThat TCG",
         "base": "https://www.pixelthattcg.com",
     },
+    {
+        "name": "KnaveTCG",
+        "base": "https://knavetcg.com",
+    },
 ]
 
-# Keep additional retailer feeds configurable
-# without changing the monitoring logic.
-SHOP_FILE = DATA / "online_retailers.json"
-
 GAMES = [
-    ("Pokémon", [
-        "pokemon", "pokémon"
-    ]),
-    ("Union Arena", [
-        "union arena"
-    ]),
-    ("Gundam", [
-        "gundam"
-    ]),
-    ("One Piece", [
-        "one piece"
-    ]),
-    ("Yu-Gi-Oh!", [
-        "yu gi oh", "yugioh"
-    ]),
-    ("Magic: The Gathering", [
-        "magic the gathering", "mtg"
-    ]),
-    ("Disney Lorcana", [
-        "lorcana"
-    ]),
-    ("Digimon", [
-        "digimon"
-    ]),
-    ("Dragon Ball Super", [
-        "dragon ball"
-    ]),
-    ("Star Wars: Unlimited", [
-        "star wars unlimited"
-    ]),
-    ("Weiß Schwarz", [
-        "weiss schwarz", "weiß schwarz"
-    ]),
-    ("Cardfight!! Vanguard", [
-        "cardfight vanguard", "cardfight!! vanguard"
-    ]),
-    ("Battle Spirits Saga", [
-        "battle spirits saga"
-    ]),
-    ("Shadowverse: Evolve", [
-        "shadowverse"
-    ]),
-    ("Riftbound", [
-        "riftbound", "league of legends tcg"
-    ]),
-    ("Flesh and Blood", [
-        "flesh and blood"
-    ]),
-    ("Altered", [
-        "altered tcg"
-    ]),
-    ("Grand Archive", [
-        "grand archive"
-    ]),
-    ("Final Fantasy TCG", [
-        "final fantasy tcg"
-    ]),
-    ("Sorcery: Contested Realm", [
-        "sorcery contested realm"
-    ]),
-    ("Kayou", [
-        "kayou", "naruto collectible",
-        "kpop demon hunters collectible",
-        "my little pony collectible",
-    ]),
+    ("Pokémon", r"pok[eé]mon"),
+    ("Union Arena", r"union[\s-]*arena"),
+    ("Gundam", r"gundam"),
+    ("One Piece", r"one[\s-]*piece"),
+    ("Yu-Gi-Oh!", r"yu[\s-]*gi[\s-]*oh|yugioh"),
+    ("Magic: The Gathering",
+     r"magic[\s:.-]*the[\s-]*gathering|\bmtg\b"),
+    ("Disney Lorcana", r"lorcana"),
+    ("Digimon", r"digimon"),
+    ("Dragon Ball Super", r"dragon[\s-]*ball"),
+    ("Star Wars: Unlimited",
+     r"star[\s-]*wars[\s:.-]*unlimited"),
+    ("Weiß Schwarz", r"wei(?:ss|ß)[\s-]*schwarz"),
+    ("Cardfight!! Vanguard", r"cardfight|vanguard"),
+    ("Battle Spirits Saga", r"battle[\s-]*spirits"),
+    ("Shadowverse: Evolve", r"shadowverse"),
+    ("Riftbound", r"riftbound"),
+    ("Flesh and Blood", r"flesh[\s-]*and[\s-]*blood"),
+    ("Altered", r"altered[\s-]*tcg"),
+    ("Grand Archive", r"grand[\s-]*archive"),
+    ("Final Fantasy TCG", r"final[\s-]*fantasy"),
+    ("Sorcery: Contested Realm",
+     r"sorcery[\s:.-]*contested"),
+    ("Kayou",
+     r"kayou|naruto|demon[\s-]*slayer|"
+     r"my[\s-]*little[\s-]*pony|"
+     r"kpop[\s-]*demon[\s-]*hunters|"
+     r"winx[\s-]*club|tokidoki"),
 ]
 
 SEALED = re.compile(
     r"booster|bundle|display|sealed|"
-    r"starter deck|trial deck|structure deck|"
-    r"elite trainer|etb|collection|"
-    r"collector box|gift box|"
-    r"blister|tin|card pack|"
-    r"battle deck|double pack|"
-    r"deck build box|case",
-    re.I
+    r"starter[\s-]*deck|trial[\s-]*deck|"
+    r"structure[\s-]*deck|battle[\s-]*deck|"
+    r"elite[\s-]*trainer|\betb\b|"
+    r"collector[\s-]*box|collection[\s-]*box|"
+    r"gift[\s-]*box|blister|"
+    r"trading[\s-]*card[\s-]*pack|"
+    r"\b(?:tin|case)\b",
+    re.I,
 )
 
 EXCLUDE = re.compile(
-    r"\b(single card|single cards|graded|"
-    r"slab|sleeves|playmat|binder|"
-    r"toploader|deck box|dice|"
+    r"single[\s-]*card|graded|slab|"
+    r"sleeves|playmat|binder|toploader|"
+    r"deck[\s-]*box|dice|figurine|"
+    r"\bfigure\b|plush|keychain|acrylic|"
+    r"poster|hoodie|shirt|mug|"
+    r"blind[\s-]*box|storage[\s-]*box|"
     r"baseball|basketball|football|"
-    r"hockey|soccer|nfl|nba|mlb|nhl)\b",
-    re.I
+    r"hockey|soccer|\bnfl\b|\bnba\b|"
+    r"\bmlb\b|\bnhl\b",
+    re.I,
 )
 
 PREORDER = re.compile(
-    r"pre[\s-]?order|presale|pre[\s-]?sale|"
-    r"coming soon|not yet released",
-    re.I
+    r"pre[\s-]?order|pre[\s-]?sale|"
+    r"presale|coming[\s-]*soon",
+    re.I,
 )
 
 SESSION = requests.Session()
 SESSION.headers.update({
-    "User-Agent": (
-        "PokeStock/10.1 "
-        "(public product availability monitor)"
-    ),
+    "User-Agent": "PokeStock/10.2",
     "Accept": "application/json,text/html",
 })
 
-MAX_AGE = timedelta(hours=8)
-KAYOU_BATCH = 25
-SHOP_PAGE_SIZE = 100
 
-
-def read(path, fallback):
+def load(path, fallback):
     if not path.exists():
         return fallback
-    return json.loads(
-        path.read_text(encoding="utf-8")
-    )
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def write(path, value):
-    path.parent.mkdir(
-        parents=True, exist_ok=True
+def save(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(".json.tmp")
+    temporary.write_text(
+        json.dumps(value, ensure_ascii=False, indent=2),
+        encoding="utf-8",
     )
-    temp = path.with_suffix(
-        path.suffix + ".tmp"
-    )
-    temp.write_text(
-        json.dumps(
-            value, indent=2,
-            ensure_ascii=False
-        ),
-        encoding="utf-8"
-    )
-    temp.replace(path)
+    temporary.replace(path)
 
 
 def clean(value):
-    return " ".join(
-        str(value or "").split()
-    )
-
-
-def norm(value):
-    s = clean(value).lower()
-    s = s.replace("é", "e").replace("ß", "ss")
-    return re.sub(r"[^a-z0-9]+", " ", s).strip()
+    return " ".join(str(value or "").split())
 
 
 def host(url):
@@ -206,76 +146,68 @@ def host(url):
         return ""
 
 
-def get(url, expected_host):
+def fetch(url, expected_host):
     if host(url) != expected_host:
-        raise ValueError("Untrusted request host")
+        raise ValueError("Unexpected request host")
 
-    r = SESSION.get(
-        url, timeout=(12, 30),
-        allow_redirects=True
+    response = SESSION.get(
+        url, timeout=(8, 20),
+        allow_redirects=False,
     )
-    r.raise_for_status()
+    response.raise_for_status()
 
-    if host(r.url) != expected_host:
-        raise ValueError("Untrusted redirect")
-
-    if len(r.content) > 8_000_000:
+    if len(response.content) > 8_000_000:
         raise ValueError("Response too large")
 
-    return r
+    return response
 
 
-def game_of(title, tags="", vendor=""):
-    words = norm(
-        " ".join([title, tags, vendor])
-    )
-    padded = " " + words + " "
+def game_of(title, metadata=""):
+    text = title + " " + metadata
 
-    for game, aliases in GAMES:
-        for alias in aliases:
-            token = " " + norm(alias) + " "
-            if token in padded:
-                return game
+    for name, pattern in GAMES:
+        if re.search(pattern, text, re.I):
+            return name
 
     return ""
 
 
-def fmt(title):
-    n = norm(title)
+def product_format(title):
+    text = clean(title).lower()
 
-    if (
-        "booster bundle display" in n
-        or "booster bundle case" in n
+    if re.search(
+        r"booster bundle.*(?:display|case)|"
+        r"(?:display|case).*booster bundle",
+        text,
     ):
         return "Booster bundle display case"
 
-    if "booster box case" in n or (
-        "sealed case" in n
+    if re.search(
+        r"sealed case|factory.sealed case|"
+        r"booster box case|case of \d+",
+        text,
     ):
         return "Factory-sealed case"
 
-    if "booster bundle" in n:
+    if "booster bundle" in text:
         return "Booster bundle"
 
-    if (
-        "booster box" in n
-        or "booster display" in n
+    if re.search(
+        r"booster box|booster display",
+        text,
     ):
         return "Booster box"
 
-    if "elite trainer box" in n:
+    if "elite trainer" in text:
         return "Elite Trainer Box"
 
-    if "starter deck" in n:
-        return "Starter deck"
-
-    if "booster pack" in n:
+    if "booster pack" in text:
         return "Booster pack"
 
-    if "tin" in n.split():
-        return "Tin"
+    if "deck" in text:
+        return "Deck"
 
-    if "collection" in n:
+    if "collection" in text:
         return "Collection"
 
     return "Sealed TCG product"
@@ -283,252 +215,50 @@ def fmt(title):
 
 def fresh(row):
     try:
-        date = datetime.fromisoformat(
-            row["checked_at"].replace(
-                "Z", "+00:00"
-            )
+        dt = datetime.fromisoformat(
+            row["checked_at"].replace("Z", "+00:00")
         )
-        return (
-            timedelta(0)
-            <= NOW - date
-            <= MAX_AGE
-        )
-    except (
-        TypeError, KeyError, ValueError
-    ):
+        return timedelta(0) <= NOW - dt <= MAX_AGE
+    except (KeyError, ValueError, TypeError):
         return False
 
 
-def schema_nodes(payload):
-    if isinstance(payload, list):
-        for item in payload:
-            yield from schema_nodes(item)
-        return
-
-    if not isinstance(payload, dict):
-        return
-
-    kind = payload.get("@type", [])
-    kinds = (
-        kind if isinstance(kind, list)
-        else [kind]
+def eligible(title, metadata=""):
+    return bool(
+        game_of(title, metadata)
+        and SEALED.search(title)
+        and not EXCLUDE.search(title)
     )
 
-    if any(
-        str(x).split("/")[-1].lower()
-        == "product" for x in kinds
-    ):
-        yield payload
 
-    for name in (
-        "@graph", "mainEntity", "hasVariant"
-    ):
-        if name in payload:
-            yield from schema_nodes(
-                payload[name]
-            )
+def shop_list():
+    configured = load(RETAILERS, [])
+    if not isinstance(configured, list):
+        raise ValueError("Invalid retailer configuration")
 
-
-def schema_state(value):
-    key = str(value or "").split("/")[-1].lower()
-    return {
-        "instock": "In stock",
-        "outofstock": "Out of stock",
-        "soldout": "Out of stock",
-        "preorder": "Preorder",
-        "backorder": "Backorder",
-    }.get(key, "Unknown")
-
-
-def kayou_check(product):
-    url = product["url"]
-    soup = BeautifulSoup(
-        get(url, KAYOU_HOST).text,
-        "html.parser"
-    )
-
-    found = []
-
-    for tag in soup.select(
-        'script[type="application/ld+json"]'
-    ):
-        try:
-            payload = json.loads(
-                tag.string or tag.get_text()
-            )
-        except (ValueError, TypeError):
+    result = {}
+    for item in DEFAULT_SHOPS + configured:
+        if not isinstance(item, dict):
             continue
 
-        for node in schema_nodes(payload):
-            offers = node.get("offers", [])
-            if isinstance(offers, dict):
-                offers = [offers]
-
-            if not isinstance(offers, list):
-                continue
-
-            for offer in offers:
-                if not isinstance(offer, dict):
-                    continue
-
-                if (
-                    str(offer.get("@type", ""))
-                    .lower() == "aggregateoffer"
-                ):
-                    continue
-
-                state = schema_state(
-                    offer.get("availability")
-                )
-
-                if state == "Unknown":
-                    continue
-
-                sku = clean(
-                    offer.get("sku")
-                    or node.get("sku")
-                )
-                variant = clean(
-                    offer.get("name")
-                    or offer.get("sku")
-                )
-
-                # A single Product-level offer does
-                # not prove individual option stock.
-                if len(offers) > 1 and not variant:
-                    continue
-
-                image = node.get("image")
-                if isinstance(image, list):
-                    image = next(
-                        (
-                            x for x in image
-                            if isinstance(x, str)
-                        ),
-                        ""
-                    )
-                if isinstance(image, dict):
-                    image = image.get("url", "")
-
-                if not (
-                    isinstance(image, str)
-                    and host(image)
-                ):
-                    meta = soup.find(
-                        "meta",
-                        attrs={
-                            "property": "og:image"
-                        }
-                    )
-                    image = (
-                        meta.get("content", "")
-                        if meta else ""
-                    )
-
-                row = {
-                    "product_url": url,
-                    "product_name": product["name"],
-                    "game": "Kayou",
-                    "retailer": "Kayou Official Store",
-                    "inventory_scope": "online",
-                    "availability": state,
-                    "variant": (
-                        variant or "Product listing"
-                    ),
-                    "sku": sku,
-                    "format": fmt(product["name"]),
-                    "evidence_type":
-                        "schema_org_offer",
-                    "evidence_url": url,
-                    "checked_at": STAMP,
-                }
-
-                if isinstance(image, str) and host(image):
-                    row["image_candidate"] = image
-                    row["image_review_status"] = (
-                        "unverified_candidate"
-                    )
-
-                if (
-                    offer.get("price") not in ("", None)
-                    and offer.get("priceCurrency")
-                ):
-                    row["price"] = str(
-                        offer["price"]
-                    )
-                    row["currency"] = str(
-                        offer["priceCurrency"]
-                    )
-
-                found.append(row)
-
-    # Prevent duplicates within one product.
-    unique = {}
-    conflicts = set()
-
-    for row in found:
-        key = (
-            row["product_url"],
-            row["variant"],
-            row["sku"],
-        )
-
-        if key in unique and (
-            unique[key]["availability"]
-            != row["availability"]
-        ):
-            conflicts.add(key)
-        else:
-            unique[key] = row
-
-    return [
-        row for key, row in unique.items()
-        if key not in conflicts
-    ]
-
-
-def configured_shops():
-    extra = read(SHOP_FILE, [])
-    if not isinstance(extra, list):
-        raise ValueError(
-            "online_retailers.json must be a list"
-        )
-
-    result = []
-    seen = set()
-
-    for shop in SHOPS + extra:
-        if not isinstance(shop, dict):
-            continue
-
-        base = clean(
-            shop.get("base")
-        ).rstrip("/")
-        name = clean(shop.get("name"))
-
+        name = clean(item.get("name"))
+        base = clean(item.get("base")).rstrip("/")
         domain = host(base)
 
-        if (
-            not domain
-            or not name
-            or domain in seen
-        ):
-            continue
+        if name and domain:
+            result[domain] = {
+                "name": name,
+                "base": "https://" + domain,
+                "host": domain,
+            }
 
-        seen.add(domain)
-        result.append({
-            "name": name,
-            "base": base,
-            "host": domain,
-        })
-
-    return result
+    return sorted(
+        result.values(),
+        key=lambda x: x["host"],
+    )
 
 
 def shopify_check(shop, page):
-    # Public Shopify catalogue feed.
-    # A failure is recorded, not treated as
-    # proof that the store has no stock.
     url = (
         shop["base"]
         + "/products.json?limit="
@@ -536,60 +266,44 @@ def shopify_check(shop, page):
         + "&page=" + str(page)
     )
 
-    payload = get(
-        url, shop["host"]
-    ).json()
+    response = fetch(url, shop["host"])
+    payload = response.json()
+    products = payload.get("products")
 
-    items = (
-        payload.get("products")
-        if isinstance(payload, dict)
-        else None
-    )
+    if not isinstance(products, list):
+        raise ValueError("No public Shopify products list")
 
-    if not isinstance(items, list):
-        raise ValueError(
-            "Not a supported Shopify feed"
-        )
+    observations = []
+    checked_products = set()
+    matching = 0
 
-    rows = []
-    matched = 0
-
-    for item in items:
-        title = clean(
-            item.get("title")
-        )
-        tags = item.get("tags", "")
-        if isinstance(tags, list):
-            tags = " ".join(
-                str(x) for x in tags
-            )
-
-        vendor = clean(
-            item.get("vendor")
-        )
-
-        game = game_of(
-            title, str(tags), vendor
-        )
-
-        if (
-            not game
-            or not SEALED.search(title)
-            or EXCLUDE.search(title)
-        ):
+    for item in products:
+        if not isinstance(item, dict):
             continue
 
-        handle = clean(
-            item.get("handle")
-        )
+        title = clean(item.get("title"))
+        tags = item.get("tags") or ""
+
+        if isinstance(tags, list):
+            tags = " ".join(map(str, tags))
+
+        metadata = " ".join([
+            clean(tags),
+            clean(item.get("vendor")),
+            clean(item.get("product_type")),
+        ])
+
+        if not eligible(title, metadata):
+            continue
+
+        handle = clean(item.get("handle"))
 
         if not re.fullmatch(
-            r"[A-Za-z0-9_-]+",
-            handle
+            r"[A-Za-z0-9_-]+", handle
         ):
             continue
 
-        matched += 1
+        game = game_of(title, metadata)
         product_url = (
             shop["base"]
             + "/products/"
@@ -597,33 +311,29 @@ def shopify_check(shop, page):
         )
 
         variants = item.get("variants", [])
+
         if not isinstance(variants, list):
             continue
 
-        image = (
-            item.get("images") or []
-        )
+        matching += 1
+        checked_products.add(product_url)
+
+        images = item.get("images") or []
         picture = ""
 
         if (
-            isinstance(image, list)
-            and image
-            and isinstance(image[0], dict)
+            isinstance(images, list)
+            and images
+            and isinstance(images[0], dict)
         ):
-            picture = clean(
-                image[0].get("src")
-            )
+            picture = clean(images[0].get("src"))
 
         for variant in variants:
             if not isinstance(variant, dict):
                 continue
 
-            available = variant.get(
-                "available"
-            )
+            available = variant.get("available")
 
-            # No guess when Shopify does not
-            # explicitly supply availability.
             if not isinstance(available, bool):
                 continue
 
@@ -634,19 +344,20 @@ def shopify_check(shop, page):
             if variant_name.lower() == "default title":
                 variant_name = "Product listing"
 
-            combined_name = (
-                title + " " + variant_name
-            )
+            combined = title + " " + variant_name
 
-            # Available preorders must never
-            # appear as immediately in stock.
-            state = (
-                "Preorder"
-                if PREORDER.search(combined_name)
-                else "In stock"
-                if available
-                else "Out of stock"
-            )
+            # Preorder listings are never labeled
+            # immediately available.
+            if PREORDER.search(combined):
+                availability = (
+                    "Preorder" if available
+                    else "Out of stock"
+                )
+            else:
+                availability = (
+                    "In stock" if available
+                    else "Out of stock"
+                )
 
             row = {
                 "product_url": product_url,
@@ -654,15 +365,12 @@ def shopify_check(shop, page):
                 "game": game,
                 "retailer": shop["name"],
                 "inventory_scope": "online",
-                "availability": state,
+                "availability": availability,
                 "variant": (
-                    variant_name
-                    or "Product listing"
+                    variant_name or "Product listing"
                 ),
-                "sku": clean(
-                    variant.get("sku")
-                ),
-                "format": fmt(combined_name),
+                "sku": clean(variant.get("sku")),
+                "format": product_format(combined),
                 "evidence_type":
                     "shopify_public_variant",
                 "evidence_url": product_url,
@@ -678,14 +386,183 @@ def shopify_check(shop, page):
             price = variant.get("price")
             if price not in (None, ""):
                 row["price"] = str(price)
-                row["currency"] = "USD"
+                # Shopify public products feeds do not
+                # independently prove store currency.
+                row["currency"] = "Unverified"
 
-            rows.append(row)
+            observations.append(row)
 
-    return rows, len(items), matched
+    return (
+        observations,
+        len(products),
+        matching,
+        checked_products,
+    )
 
 
-def offer_key(row):
+def product_nodes(value):
+    if isinstance(value, list):
+        for child in value:
+            yield from product_nodes(child)
+        return
+
+    if not isinstance(value, dict):
+        return
+
+    types = value.get("@type", [])
+    if isinstance(types, str):
+        types = [types]
+
+    if any(
+        str(t).split("/")[-1].lower() == "product"
+        for t in types
+    ):
+        yield value
+
+    for key in ("@graph", "mainEntity", "hasVariant"):
+        if key in value:
+            yield from product_nodes(value[key])
+
+
+def kayou_check(product):
+    url = product["url"]
+    soup = BeautifulSoup(
+        fetch(url, "shop.kayouofficial.com").text,
+        "html.parser",
+    )
+
+    # Do not attach a catalogue name to a
+    # different product page. The JSON-LD
+    # product name must match sufficiently.
+    slug = urlparse(url).path.split("/")[-1]
+    expected = clean(product.get("name"))
+    observations = []
+
+    for tag in soup.select(
+        'script[type="application/ld+json"]'
+    ):
+        try:
+            payload = json.loads(
+                tag.string or tag.get_text()
+            )
+        except (ValueError, TypeError):
+            continue
+
+        for node in product_nodes(payload):
+            actual = clean(node.get("name"))
+
+            if not actual:
+                continue
+
+            def tokens(value):
+                return set(
+                    re.findall(
+                        r"[a-z0-9]+",
+                        value.lower(),
+                    )
+                )
+
+            a = tokens(actual)
+            b = tokens(expected)
+            overlap = len(a & b) / max(
+                1, len(a | b)
+            )
+
+            # Avoid mismatched catalogue records.
+            if overlap < 0.35:
+                continue
+
+            if not eligible(actual, "Kayou"):
+                continue
+
+            offers = node.get("offers", [])
+            if isinstance(offers, dict):
+                offers = [offers]
+
+            if not isinstance(offers, list):
+                continue
+
+            for offer in offers:
+                if not isinstance(offer, dict):
+                    continue
+
+                if (
+                    str(offer.get("@type", "")).lower()
+                    == "aggregateoffer"
+                ):
+                    continue
+
+                state = str(
+                    offer.get("availability") or ""
+                ).split("/")[-1].lower()
+
+                availability = {
+                    "instock": "In stock",
+                    "outofstock": "Out of stock",
+                    "preorder": "Preorder",
+                    "backorder": "Backorder",
+                }.get(state)
+
+                if not availability:
+                    continue
+
+                image = node.get("image")
+                if isinstance(image, list):
+                    image = next(
+                        (
+                            x for x in image
+                            if isinstance(x, str)
+                        ),
+                        "",
+                    )
+                elif isinstance(image, dict):
+                    image = image.get("url", "")
+
+                row = {
+                    "product_url": url,
+                    "product_name": actual,
+                    "game": "Kayou",
+                    "retailer": "Kayou Official Store",
+                    "inventory_scope": "online",
+                    "availability": availability,
+                    "variant": clean(
+                        offer.get("name")
+                        or offer.get("sku")
+                        or "Product listing"
+                    ),
+                    "sku": clean(
+                        offer.get("sku")
+                        or node.get("sku")
+                    ),
+                    "format": product_format(actual),
+                    "evidence_type": "schema_org_offer",
+                    "evidence_url": url,
+                    "checked_at": STAMP,
+                }
+
+                if isinstance(image, str) and host(image):
+                    row["image_candidate"] = image
+                    row["image_review_status"] = (
+                        "unverified_candidate"
+                    )
+
+                if (
+                    offer.get("price") not in (None, "")
+                    and offer.get("priceCurrency")
+                ):
+                    row["price"] = str(
+                        offer["price"]
+                    )
+                    row["currency"] = str(
+                        offer["priceCurrency"]
+                    )
+
+                observations.append(row)
+
+    return observations
+
+
+def key(row):
     return (
         row.get("retailer"),
         row.get("product_url"),
@@ -695,70 +572,64 @@ def offer_key(row):
 
 
 def main():
-    catalogue = read(STATUS, {})
+    catalogue = load(STATUS, {})
     products = catalogue.get("products", [])
 
     if not isinstance(products, list):
-        raise ValueError(
-            "Invalid existing catalogue"
-        )
+        raise ValueError("Invalid product catalogue")
 
-    candidates = sorted(
+    kayou = sorted(
         [
             p for p in products
             if (
                 isinstance(p, dict)
                 and host(p.get("url"))
-                == KAYOU_HOST
+                == "shop.kayouofficial.com"
                 and p.get("name")
             )
         ],
-        key=lambda x: x["url"]
+        key=lambda p: p["url"],
     )
 
-    previous = read(OFFERS, [])
-    if not isinstance(previous, list):
-        raise ValueError(
-            "Invalid previous offer file"
-        )
+    old_offers = load(OFFERS, [])
+    old_report = load(REPORT, {})
 
-    old_report = read(REPORT, {})
-    cursor = int(
-        old_report.get("next_cursor", 0)
-    )
+    if not isinstance(old_offers, list):
+        raise ValueError("Invalid previous offers")
 
+    if not isinstance(old_report, dict):
+        old_report = {}
+
+    cursor = int(old_report.get("next_cursor", 0))
     chosen = [
-        candidates[
-            (cursor + i) % len(candidates)
-        ]
-        for i in range(
-            min(KAYOU_BATCH, len(candidates))
-        )
-    ] if candidates else []
+        kayou[(cursor + i) % len(kayou)]
+        for i in range(min(KAYOU_BATCH, len(kayou)))
+    ] if kayou else []
 
     observations = []
     checks = []
-    checked_urls = set()
+    checked_products = set()
 
     for product in chosen:
         url = product["url"]
-        checked_urls.add(
-            ("Kayou Official Store", url)
-        )
 
         try:
             rows = kayou_check(product)
             observations.extend(rows)
+            checked_products.add(
+                ("Kayou Official Store", url)
+            )
+
             checks.append({
                 "retailer": "Kayou Official Store",
                 "status": (
                     "verified_online_evidence"
-                    if rows
-                    else "no_explicit_evidence"
+                    if rows else "no_explicit_evidence"
                 ),
                 "product": product["name"],
                 "offers": len(rows),
             })
+
         except Exception as error:
             checks.append({
                 "retailer": "Kayou Official Store",
@@ -767,60 +638,59 @@ def main():
                 "reason": str(error)[:140],
             })
 
-    shops = configured_shops()
+    shops = shop_list()
+    pages = old_report.get("shop_next_pages", {})
 
-    # Check one public catalogue page per shop
-    # on each scheduled execution.
-    pages = old_report.get(
-        "shop_next_pages", {}
-    )
     if not isinstance(pages, dict):
         pages = {}
 
-    new_pages = {}
+    new_pages = dict(pages)
 
-    for shop in shops[:15]:
-        name = shop["name"]
-        page = max(
-            1, int(
-                pages.get(
-                    shop["host"], 1
-                )
-            )
-        )
+    # Rotate retailer selection so the configured
+    # retailer list can grow beyond 15 shops.
+    shop_cursor = int(
+        old_report.get("shop_cursor", 0)
+    )
+
+    selected = [
+        shops[(shop_cursor + i) % len(shops)]
+        for i in range(min(SHOP_BATCH, len(shops)))
+    ] if shops else []
+
+    for shop in selected:
+        domain = shop["host"]
+        page = max(1, int(pages.get(domain, 1)))
 
         try:
-            rows, count, matched = (
+            rows, count, matched, checked = (
                 shopify_check(shop, page)
             )
 
             observations.extend(rows)
 
-            # Only clear earlier records for
-            # products that appeared in this feed.
-            for row in rows:
-                checked_urls.add((
-                    name, row["product_url"]
-                ))
+            for url in checked:
+                checked_products.add(
+                    (shop["name"], url)
+                )
 
-            new_pages[shop["host"]] = (
+            new_pages[domain] = (
                 page + 1
                 if count == SHOP_PAGE_SIZE
                 else 1
             )
 
             checks.append({
-                "retailer": name,
+                "retailer": shop["name"],
                 "status": "ok",
                 "page": page,
                 "feed_items": count,
                 "matching_products": matched,
                 "offers": len(rows),
             })
+
         except Exception as error:
-            new_pages[shop["host"]] = page
             checks.append({
-                "retailer": name,
+                "retailer": shop["name"],
                 "status": "error",
                 "page": page,
                 "reason": str(error)[:140],
@@ -828,64 +698,75 @@ def main():
 
     combined = {}
 
-    for row in previous:
+    for row in old_offers:
         if (
-            not isinstance(row, dict)
-            or not fresh(row)
-            or (
+            isinstance(row, dict)
+            and fresh(row)
+            and row.get("inventory_scope") == "online"
+            and (
                 row.get("retailer"),
-                row.get("product_url")
-            ) in checked_urls
+                row.get("product_url"),
+            ) not in checked_products
+            and eligible(
+                clean(row.get("product_name")),
+                clean(row.get("game")),
+            )
         ):
-            continue
-
-        combined[offer_key(row)] = row
+            combined[key(row)] = row
 
     for row in observations:
-        combined[offer_key(row)] = row
+        combined[key(row)] = row
 
-    final = list(combined.values())
-
-    next_cursor = (
-        (cursor + len(chosen))
-        % len(candidates)
-        if candidates else 0
+    final = sorted(
+        combined.values(),
+        key=lambda x: (
+            x.get("retailer", ""),
+            x.get("product_name", ""),
+        ),
     )
 
     report = {
-        "version": "10.1",
+        "version": "10.2",
         "checked_at": STAMP,
-        "candidate_products": len(candidates),
+        "candidate_products": len(kayou),
         "checked_this_run": len(chosen),
         "retailers_integrated": [
             "Kayou Official Store"
-        ] + [
-            s["name"] for s in shops[:15]
-        ],
+        ] + [s["name"] for s in selected],
+        "retailers_checked_this_run": len(selected),
+        "retailers_configured": len(shops),
         "offers_with_explicit_evidence":
             len(observations),
         "total_fresh_offers": len(final),
-        "next_cursor": next_cursor,
+        "next_cursor": (
+            (cursor + len(chosen)) % len(kayou)
+            if kayou else 0
+        ),
+        "shop_cursor": (
+            (shop_cursor + len(selected)) % len(shops)
+            if shops else 0
+        ),
         "shop_next_pages": new_pages,
         "checks": checks,
         "physical_store_stock_claims": 0,
     }
 
-    write(OFFERS, final)
-    write(REPORT, report)
+    save(OFFERS, final)
+    save(REPORT, report)
 
-    print("=== POKESTOCK V10.1 ===")
-    print("Kayou pages:", len(chosen))
-    print("Retailers attempted:", len(shops))
-    print("New offers:", len(observations))
-    print("Fresh offers:", len(final))
+    print("=== POKESTOCK V10.2 ===")
+    print("Retailers configured:", len(shops))
+    print("Retailers checked:", len(selected))
+    print("Kayou pages checked:", len(chosen))
+    print("New online observations:", len(observations))
+    print("Fresh online offers:", len(final))
 
-    for item in checks:
+    for check in checks:
         print(
-            item["retailer"],
-            item["status"],
-            item.get("offers", 0),
-            item.get("reason", ""),
+            check["retailer"],
+            check["status"],
+            check.get("offers", 0),
+            check.get("reason", ""),
             flush=True,
         )
 
