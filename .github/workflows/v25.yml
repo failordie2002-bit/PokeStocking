@@ -1,0 +1,154 @@
+name: PokeStock V25 GameStop Live Inventory
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 */3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  gamestop-inventory:
+    name: GameStop Store Inventory
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    env:
+      POKESTOCK_MAX_PRODUCTS: "18"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright beautifulsoup4
+          python -m playwright install --with-deps chromium
+
+      - name: Validate script
+        run: |
+          python -m py_compile scripts/gamestop_v25.py
+
+      - name: Run live GameStop inventory monitor
+        run: |
+          python scripts/gamestop_v25.py
+
+      - name: Validate results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path("data/gamestop_v25_report.json")
+              .read_text(encoding="utf-8")
+          )
+
+          records = json.loads(
+              Path("data/gamestop_store_inventory.json")
+              .read_text(encoding="utf-8")
+          )
+
+          catalog = json.loads(
+              Path("data/gamestop_products.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert report["version"] == "25.0"
+          assert isinstance(records, list)
+          assert isinstance(catalog, list)
+
+          assert report["store_observations"] == len(
+              records
+          )
+
+          for record in records:
+              assert record["retailer"] == "GameStop"
+              assert record["store_id"]
+              assert record["store_name"]
+              assert record["store_address"]
+              assert record["product_url"]
+              assert record["evidence_url"]
+              assert record["inventory_scope"] == "store_specific"
+
+              assert record["availability"] in (
+                  "In stock",
+                  "Out of stock",
+              )
+
+              assert record["shelf_stock_confirmed"] is False
+
+          print("V25 data validation passed")
+          print("Products checked:", report["products_checked"])
+          print("Store responses:", report["store_responses"])
+          print("Store records:", len(records))
+          print("In stock:", report["in_stock"])
+
+          if report["store_responses"] == 0:
+              print(
+                  "::warning::No GameStop store availability "
+                  "responses were captured. Integration is "
+                  "not yet verified on this runner."
+              )
+
+          if not records:
+              print(
+                  "::warning::No verified store-specific "
+                  "availability was collected."
+              )
+          PY
+
+      - name: Publish results
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/gamestop_products.json \
+            data/gamestop_store_inventory.json \
+            data/gamestop_v25_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+
+          git commit -m \
+            "Update GameStop store inventory V25"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "GameStop inventory data published"
+              exit 0
+            fi
+
+            sleep 4
+          done
+
+          echo "Failed to publish inventory data"
+          exit 1
