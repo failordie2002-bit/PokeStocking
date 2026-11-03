@@ -1,5 +1,5 @@
 
-name: PokeStock V8.1 Nationwide Monitor
+name: PokeStock V8.2 Nationwide Monitor
 
 on:
   workflow_dispatch:
@@ -10,14 +10,14 @@ permissions:
   contents: write
 
 concurrency:
-  group: pokestock-v81-monitor
+  group: pokestock-v82-monitor
   cancel-in-progress: false
 
 jobs:
   monitor:
-    name: Catalogue and Nationwide Store Discovery
+    name: Catalogue and All-State Store Discovery
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - name: Checkout repository
@@ -41,50 +41,7 @@ jobs:
           python -m py_compile scripts/monitor.py
           python -m py_compile scripts/discover_stores.py
 
-      - name: Validate existing catalogue
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          p = Path("data/status.json")
-          data = json.loads(p.read_text(encoding="utf-8"))
-
-          assert isinstance(data.get("products"), list)
-          assert isinstance(data.get("releases"), list)
-
-          print("Products:", len(data["products"]))
-          print("Releases:", len(data["releases"]))
-          PY
-
-      - name: Save original catalogue counts
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          d = json.loads(
-              Path("data/status.json").read_text(encoding="utf-8")
-          )
-
-          Path("/tmp/pokestock_counts.json").write_text(
-              json.dumps({
-                  "products": len(d["products"]),
-                  "releases": len(d["releases"])
-              }),
-              encoding="utf-8"
-          )
-          PY
-
-      - name: Discover real US game stores
-        run: |
-          python scripts/discover_stores.py
-
-      - name: Update product catalogue
-        run: |
-          python scripts/monitor.py
-
-      - name: Validate all generated data
+      - name: Validate existing data
         run: |
           python - <<'PY'
           import json
@@ -99,16 +56,120 @@ jobs:
 
           for filename in required:
               p = Path(filename)
+
               if not p.exists():
-                  raise SystemExit("Missing: " + filename)
-              json.loads(p.read_text(encoding="utf-8"))
+                  raise SystemExit(
+                      "Missing file: " + filename
+                  )
+
+              json.loads(
+                  p.read_text(encoding="utf-8")
+              )
+
               print("VALID:", filename)
 
           status = json.loads(
-              Path("data/status.json").read_text(encoding="utf-8")
+              Path("data/status.json").read_text(
+                  encoding="utf-8"
+              )
           )
-          original = json.loads(
-              Path("/tmp/pokestock_counts.json").read_text(
+
+          if not isinstance(
+              status.get("products"), list
+          ):
+              raise SystemExit(
+                  "Invalid product catalogue"
+              )
+
+          if not isinstance(
+              status.get("releases"), list
+          ):
+              raise SystemExit(
+                  "Invalid release catalogue"
+              )
+
+          print(
+              "Existing products:",
+              len(status["products"])
+          )
+
+          print(
+              "Existing releases:",
+              len(status["releases"])
+          )
+          PY
+
+      - name: Save catalogue protection baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          status = json.loads(
+              Path("data/status.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          baseline = {
+              "products": len(
+                  status.get("products", [])
+              ),
+              "releases": len(
+                  status.get("releases", [])
+              )
+          }
+
+          Path(
+              "/tmp/pokestock_baseline.json"
+          ).write_text(
+              json.dumps(baseline),
+              encoding="utf-8"
+          )
+
+          print("Baseline saved:", baseline)
+          PY
+
+      - name: Discover stores across US states
+        run: |
+          python scripts/discover_stores.py
+
+      - name: Update product catalogue
+        run: |
+          python scripts/monitor.py
+
+      - name: Validate generated data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          status = json.loads(
+              Path("data/status.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          stores = json.loads(
+              Path("data/stores.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          shipments = json.loads(
+              Path("data/shipments.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          state = json.loads(
+              Path("data/discovery_state.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          baseline = json.loads(
+              Path("/tmp/pokestock_baseline.json").read_text(
                   encoding="utf-8"
               )
           )
@@ -116,22 +177,42 @@ jobs:
           products = status.get("products", [])
           releases = status.get("releases", [])
 
-          if len(products) < original["products"]:
-              raise SystemExit("Product catalogue shrank")
+          if len(products) < baseline["products"]:
+              raise SystemExit(
+                  "ERROR: Products were lost"
+              )
 
-          if len(releases) < original["releases"]:
-              raise SystemExit("Release catalogue shrank")
-
-          stores = json.loads(
-              Path("data/stores.json").read_text(encoding="utf-8")
-          )
+          if len(releases) < baseline["releases"]:
+              raise SystemExit(
+                  "ERROR: Releases were lost"
+              )
 
           if not isinstance(stores, list):
-              raise SystemExit("Invalid store directory")
+              raise SystemExit(
+                  "Invalid store directory"
+              )
+
+          if not isinstance(shipments, dict):
+              raise SystemExit(
+                  "Invalid shipment data"
+              )
+
+          if not isinstance(state, dict):
+              raise SystemExit(
+                  "Invalid discovery state"
+              )
 
           print("Products:", len(products))
           print("Releases:", len(releases))
           print("Stores:", len(stores))
+          print(
+              "Last state:",
+              state.get("v82_last_state")
+          )
+          print(
+              "Discovery error:",
+              state.get("v82_last_error")
+          )
           PY
 
       - name: Commit updated data
@@ -148,30 +229,47 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to publish."
           else
-            git commit -m "Update PokeStock V8.1 nationwide data"
+            git commit -m "Update PokeStock V8.2 nationwide data"
             git push origin HEAD:main
           fi
 
-      - name: Display results
+      - name: Display V8.2 summary
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
           status = json.loads(
-              Path("data/status.json").read_text(encoding="utf-8")
+              Path("data/status.json").read_text(
+                  encoding="utf-8"
+              )
           )
+
           state = json.loads(
               Path("data/discovery_state.json").read_text(
                   encoding="utf-8"
               )
           )
 
-          print("=== POKESTOCK V8.1 ===")
-          print("Products:", len(status.get("products", [])))
-          print("Releases:", len(status.get("releases", [])))
-          print("Last region:", state.get("last_region"))
-          print("New stores:", state.get("last_new_stores"))
-          print("Total stores:", state.get("total_stores"))
-          print("Discovery error:", state.get("last_error"))
+          print("=== POKESTOCK V8.2 ===")
+          print(
+              "Products:",
+              len(status.get("products", []))
+          )
+          print(
+              "Releases:",
+              len(status.get("releases", []))
+          )
+          print(
+              "Stores:",
+              state.get("v82_total_stores")
+          )
+          print(
+              "Completed states:",
+              state.get("v82_completed_states")
+          )
+          print(
+              "Last discovery error:",
+              state.get("v82_last_error")
+          )
           PY
