@@ -3,215 +3,352 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10182b">
-<title>PokéStock</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10131c">
+<title>PokéStock | TCG Stock Tracker</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1020;--panel:#151f35;--panel2:#202e49;--ink:#f4f6fc;--muted:#aab6ca;--gold:#f5c542;--line:#30405d;--green:#4bd39a}
+:root {
+  --bg:#0b0e15;--panel:#141925;--panel2:#1a2130;
+  --border:#283246;--text:#f3f5fa;--muted:#929db0;
+  --blue:#65a8ff;--green:#48d6a0;--red:#ff687d;
+  --yellow:#ffc968;--purple:#b69aff;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,sans-serif}
-header{position:sticky;top:0;background:#10182bf5;padding:14px;border-bottom:1px solid var(--line);z-index:5}
-.head,main{max-width:1100px;margin:auto}
-.head{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand{font-size:23px;font-weight:900}.brand span{color:var(--gold)}
-main{padding:16px 13px 80px}
-.hero,.panel,.card,.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
-.hero{background:linear-gradient(130deg,#263958,#151f35);padding:20px}
-h1{font-size:24px;margin:0 0 6px}h2{font-size:20px;margin:22px 0 12px}h3{font-size:16px;margin:0 0 8px}
-.muted,.small{color:var(--muted)}.small{font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}
-.stat b{display:block;color:var(--gold);font-size:23px}
-.stat small{color:var(--muted)}
-nav{display:flex;gap:7px;overflow:auto;margin:14px 0}
-button,select,input{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px}
-button{cursor:pointer;white-space:nowrap}
-button.active,.primary{background:var(--gold);color:#151515;border-color:var(--gold);font-weight:800}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.row>*{flex:1}.row button{flex:0 0 auto}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:10px}
-.card{margin:0}.card p{margin:7px 0}
-.tag{display:inline-block;background:#293b59;padding:3px 8px;border-radius:30px;font-size:11px;margin:2px}
-.good{color:#8ef0c3}.warn{color:#ffdc8a}
-.link{color:var(--gold);text-decoration:none}
-.section{display:none}.section.show{display:block}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.filters input{flex:1;min-width:150px}
-.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
-.formgrid input,.formgrid select{width:100%}
-.notice{background:#332d1b;border:1px solid #66552b;padding:12px;border-radius:10px;font-size:13px;line-height:1.5}
-.empty{border:1px dashed var(--line);padding:20px;text-align:center;color:var(--muted);border-radius:10px}
-footer{text-align:center;color:var(--muted);font-size:12px;margin-top:25px}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}h1{font-size:21px}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1500px;margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,#438fff,#8a65ff);display:grid;place-items:center;font-size:24px;font-weight:900}
+.brand h1{font-size:22px;margin:0;letter-spacing:-.7px}
+.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);display:inline-block}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px}
+nav{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:12px;height:max-content;position:sticky;top:15px}
+.nav-label{font-size:10px;letter-spacing:1.5px;color:var(--muted);padding:12px 10px 7px}
+.nav-btn{width:100%;display:flex;align-items:center;gap:11px;padding:12px 11px;border:0;border-radius:10px;background:transparent;color:#aab5c8;text-align:left;margin:2px 0;font-size:13px}
+.nav-btn:hover,.nav-btn.active{background:#222d41;color:white}
+.nav-btn.active{box-shadow:inset 3px 0 var(--blue)}
+.nav-icon{width:20px;text-align:center;font-size:16px}
+main{min-width:0}
+.page{display:none}.page.active{display:block}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:20px}
+.page-head h2{font-size:25px;margin:0 0 5px;letter-spacing:-.7px}
+.page-head p{margin:0;color:var(--muted);font-size:13px}
+.btn{border:1px solid var(--border);background:var(--panel2);color:white;padding:10px 14px;border-radius:10px;font-size:12px}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#08101c;font-weight:750}
+.btn:hover{filter:brightness(1.12)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:17px}
+.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px}
+.stat-label{color:var(--muted);font-size:12px}
+.stat-value{font-size:27px;font-weight:800;margin:9px 0 4px;letter-spacing:-1px}
+.stat-note{font-size:11px;color:var(--muted)}
+.section-title{font-size:15px;margin:23px 0 12px}
+.card{margin-bottom:13px}
+.notice{border:1px solid #66512d;background:#2b2419;color:#f5d9a3;border-radius:13px;padding:14px;font-size:12px;line-height:1.6;margin-bottom:17px}
+.notice strong{color:#ffe3a6}
+.two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.empty{padding:30px 15px;text-align:center;color:var(--muted);font-size:13px}
+.empty-icon{font-size:27px;margin-bottom:8px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.field{background:#101622;border:1px solid var(--border);border-radius:9px;color:white;padding:10px 12px;min-width:0;font-size:12px}
+.search{flex:1;min-width:180px}
+select.field{min-width:130px}
+.product-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.product{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.product-img{height:130px;background:linear-gradient(135deg,#202b40,#151b29);display:grid;place-items:center;color:#64748b;font-size:35px}
+.product-img img{width:100%;height:100%;object-fit:contain}
+.product-body{padding:13px}
+.product-title{font-size:13px;font-weight:750;line-height:1.4;min-height:36px}
+.product-meta{font-size:11px;color:var(--muted);margin:7px 0}
+.prices{display:flex;justify-content:space-between;gap:8px;margin:12px 0;font-size:11px}
+.prices strong{display:block;font-size:14px;margin-top:3px}
+.pill{display:inline-block;padding:5px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#273247;color:#b9c8df}
+.pill.green{background:#15382f;color:#70e5b7}
+.pill.red{background:#3b202b;color:#ff91a1}
+.pill.yellow{background:#3c321e;color:#ffd47c}
+.pill.blue{background:#1b3150;color:#91c3ff}
+.product-actions{display:flex;gap:7px;margin-top:12px}
+.product-actions .btn{flex:1;text-align:center;padding:8px 5px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;color:var(--muted);font-weight:600;padding:12px 10px;border-bottom:1px solid var(--border)}
+td{padding:13px 10px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:0}
+.release-date{font-weight:800;color:var(--blue);white-space:nowrap}
+.store-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.store{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:15px}
+.store h3{font-size:14px;margin:0 0 5px}
+.store p{font-size:11px;color:var(--muted);margin:0 0 12px}
+.store a{color:var(--blue);font-size:12px;text-decoration:none}
+.setting{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:15px 0;border-bottom:1px solid var(--border)}
+.setting:last-child{border:0}
+.setting strong{font-size:13px}
+.setting p{font-size:11px;color:var(--muted);margin:4px 0 0}
+.toggle{width:42px;height:23px;appearance:none;background:#3b4558;border-radius:20px;position:relative;cursor:pointer;flex-shrink:0}
+.toggle:checked{background:#438fff}
+.toggle:before{content:"";position:absolute;width:17px;height:17px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s}
+.toggle:checked:before{transform:translateX(19px)}
+footer{text-align:center;color:#657186;font-size:10px;padding:25px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.product-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+ .app{padding:13px}.layout{grid-template-columns:1fr;gap:12px}
+ nav{position:static;display:flex;overflow-x:auto;gap:4px;padding:7px}
+ .nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;padding:10px}
+ .nav-icon{display:none}.brand h1{font-size:19px}
+ .status{font-size:10px}.two-col{grid-template-columns:1fr}
+ .store-grid{grid-template-columns:repeat(2,1fr)}
+ .page-head h2{font-size:22px}
+}
+@media(max-width:430px){.product-list{grid-template-columns:1fr}.grid{gap:8px}.stat{padding:12px}.stat-value{font-size:23px}.store-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<header><div class="head">
-<div><div class="brand">Poké<span>Stock</span></div><div class="small">Pokémon + Union Arena tracker</div></div>
-<select id="region" onchange="changeRegion()"><option value="VA">Virginia</option><option value="USA">Nationwide</option></select>
-</div></header>
-<main>
-<div class="hero"><h1 id="headline">Virginia Restock Tracker</h1><div class="muted">Find products, track releases, record sightings and monitor restocks.</div></div>
+<div class="app">
+<header>
+ <div class="brand">
+  <div class="logo">P</div>
+  <div><h1>PokéStock</h1><p>Pokémon & Union Arena tracker</p></div>
+ </div>
+ <div class="status"><span class="dot" id="connectionDot"></span><span id="connectionText">Waiting for stock data</span></div>
+</header>
 
-<div class="grid">
-<div class="stat"><b id="stockCount">0</b><small>Stock sightings</small></div>
-<div class="stat"><b id="storeCount">0</b><small>Stores tracked</small></div>
-<div class="stat"><b id="productCount">0</b><small>Products tracked</small></div>
-<div class="stat"><b id="watchCount">0</b><small>Watchlist items</small></div>
-</div>
-
+<div class="layout">
 <nav>
-<button class="active" onclick="tab('dashboard',this)">Dashboard</button>
-<button onclick="tab('releases',this)">Releases</button>
-<button onclick="tab('stores',this)">Stores</button>
-<button onclick="tab('products',this)">Products</button>
-<button onclick="tab('history',this)">History</button>
-<button onclick="tab('settings',this)">Settings</button>
+ <div class="nav-label">WORKSPACE</div>
+ <button class="nav-btn active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+ <button class="nav-btn" data-page="catalogue"><span class="nav-icon">▤</span>Product catalogue</button>
+ <button class="nav-btn" data-page="releases"><span class="nav-icon">▣</span>Release calendar</button>
+ <button class="nav-btn" data-page="drawings"><span class="nav-icon">✦</span>Drawings & invites</button>
+ <button class="nav-btn" data-page="stores"><span class="nav-icon">⌖</span>Retailers</button>
+ <button class="nav-btn" data-page="history"><span class="nav-icon">◷</span>Alert history</button>
+ <div class="nav-label">PREFERENCES</div>
+ <button class="nav-btn" data-page="settings"><span class="nav-icon">⚙</span>Settings</button>
 </nav>
 
-<section id="dashboard" class="section show">
-<div class="notice"><b>Stock accuracy:</b> Retailer links are not live inventory confirmations. Only mark an item verified after checking the actual store or retailer. Community sightings are leads, not guarantees.</div>
-<h2>Retailer shortcuts</h2>
-<div id="retailerLinks" class="cards"></div>
-<h2>Recent sightings</h2>
-<div id="recent" class="cards"></div>
+<main>
+<section class="page active" id="dashboard">
+ <div class="page-head">
+  <div><h2>Dashboard</h2><p>Your TCG restock command center.</p></div>
+  <button class="btn" onclick="loadData()">↻ Refresh</button>
+ </div>
+ <div class="notice"><strong>Monitoring connection:</strong> The website is ready to display automated stock data. The monitoring service has not been connected yet, so no live stock claims are being shown.</div>
+ <div class="grid">
+  <div class="stat"><div class="stat-label">Products tracked</div><div class="stat-value" id="statProducts">0</div><div class="stat-note">Pokémon + Union Arena</div></div>
+  <div class="stat"><div class="stat-label">In stock</div><div class="stat-value" id="statStock">0</div><div class="stat-note">Confirmed inventory only</div></div>
+  <div class="stat"><div class="stat-label">Upcoming releases</div><div class="stat-value" id="statReleases">0</div><div class="stat-note">From connected release data</div></div>
+  <div class="stat"><div class="stat-label">Active drawings</div><div class="stat-value" id="statDrawings">0</div><div class="stat-note">Retailer opportunities</div></div>
+ </div>
+ <div class="two-col">
+  <div class="card">
+   <h3 class="section-title" style="margin-top:0">Recent restocks</h3>
+   <div id="recentRestocks" class="empty"><div class="empty-icon">◷</div>No verified restock alerts yet.</div>
+  </div>
+  <div class="card">
+   <h3 class="section-title" style="margin-top:0">Next releases</h3>
+   <div id="nextReleases" class="empty"><div class="empty-icon">▣</div>No release feed connected yet.</div>
+  </div>
+ </div>
+ <h3 class="section-title">Retailer shortcuts</h3>
+ <div class="store-grid" id="dashboardStores"></div>
 </section>
 
-<section id="releases" class="section">
-<h2>Upcoming release tracker</h2>
-<p class="small">Dates are based on published release information. Retailer arrival dates and allocations can differ.</p>
-<div id="releaseCards" class="cards"></div>
-<p class="small">Sources: <a class="link" href="https://press.pokemon.com/en/Items/Schedule" target="_blank">Pokémon official release schedule</a> · <a class="link" href="https://www.unionarena-tcg.com/en/" target="_blank">Union Arena official website</a></p>
+<section class="page" id="catalogue">
+ <div class="page-head"><div><h2>Product catalogue</h2><p>Search Pokémon and Union Arena products.</p></div></div>
+ <div class="toolbar">
+  <input class="field search" id="productSearch" placeholder="Search products, sets, SKUs..." oninput="renderProducts()">
+  <select class="field" id="gameFilter" onchange="renderProducts()"><option value="">All games</option><option>Pokémon</option><option>Union Arena</option></select>
+  <select class="field" id="typeFilter" onchange="renderProducts()"><option value="">All product types</option><option>Booster Box</option><option>Elite Trainer Box</option><option>Booster Bundle</option><option>Collection Box</option><option>Starter Deck</option><option>Other</option></select>
+ </div>
+ <div class="product-list" id="productList"><div class="empty">Product catalogue data has not been connected yet.</div></div>
 </section>
 
-<section id="stores" class="section">
-<div class="row"><h2>Store directory</h2><button class="primary" onclick="show('storeForm')">+ Add store</button></div>
-<div class="filters"><input id="storeSearch" placeholder="Search stores" oninput="renderStores()"></div>
-<div id="storeCards" class="cards"></div>
-<div id="storeForm" class="panel" hidden>
-<h3>Add a store</h3><div class="formgrid">
-<input id="sName" placeholder="Store name"><input id="sCity" placeholder="City">
-<input id="sState" placeholder="State"><input id="sUrl" placeholder="Website / inventory URL">
-</div><div class="row"><button class="primary" onclick="addStore()">Save</button><button onclick="hide('storeForm')">Cancel</button></div>
-</div>
+<section class="page" id="releases">
+ <div class="page-head"><div><h2>Release calendar</h2><p>Upcoming Pokémon and Union Arena launches.</p></div></div>
+ <div class="toolbar">
+  <select class="field" id="releaseFilter" onchange="renderReleases()"><option value="">All games</option><option>Pokémon</option><option>Union Arena</option></select>
+ </div>
+ <div class="card table-wrap">
+  <table><thead><tr><th>Release date</th><th>Product</th><th>Game</th><th>Type</th><th>MSRP</th></tr></thead><tbody id="releaseRows"><tr><td colspan="5" class="empty">No verified release data connected yet.</td></tr></tbody></table>
+ </div>
 </section>
 
-<section id="products" class="section">
-<div class="row"><h2>Product watchlist</h2><button class="primary" onclick="show('productForm')">+ Add product</button></div>
-<div id="productCards" class="cards"></div>
-<div id="productForm" class="panel" hidden>
-<h3>Add product</h3><div class="formgrid">
-<input id="pName" placeholder="Product name">
-<select id="pGame"><option>Pokémon</option><option>Union Arena</option></select>
-<input id="pType" placeholder="Booster box, ETB, deck...">
-<input id="pDate" type="date">
-</div><div class="row"><button class="primary" onclick="addProduct()">Save</button><button onclick="hide('productForm')">Cancel</button></div>
-</div>
+<section class="page" id="drawings">
+ <div class="page-head"><div><h2>Drawings & invites</h2><p>Keep track of retailer drops, entry windows and deadlines.</p></div></div>
+ <div class="notice"><strong>Important:</strong> PokéStock can help track public drawing pages and remind you to enter. It will not automatically enter drawings, use retailer accounts, or submit purchases for you.</div>
+ <div id="drawingList" class="empty"><div class="empty-icon">✦</div>No drawing or invite data connected yet.</div>
+ <h3 class="section-title">Retailer drawing pages</h3>
+ <div class="store-grid">
+  <div class="store"><h3>Walmart Collectibles</h3><p>Check current collectibles drawings and entry deadlines.</p><a href="https://www.walmart.com/cp/collectibles/389412" target="_blank" rel="noopener">Visit Walmart ↗</a></div>
+  <div class="store"><h3>Target</h3><p>Check product launch drawing information and entry requirements.</p><a href="https://help.target.com/" target="_blank" rel="noopener">Target Help ↗</a></div>
+  <div class="store"><h3>Best Buy Drops</h3><p>View upcoming app-exclusive drops and notification options.</p><a href="https://www.bestbuy.com/" target="_blank" rel="noopener">Visit Best Buy ↗</a></div>
+ </div>
 </section>
 
-<section id="history" class="section">
-<h2>Stock history</h2><div id="historyCards" class="cards"></div>
+<section class="page" id="stores">
+ <div class="page-head"><div><h2>Retailers</h2><p>Quick access to major US TCG retailers.</p></div></div>
+ <div class="store-grid" id="storeGrid"></div>
 </section>
 
-<section id="settings" class="section">
-<h2>Data and backup</h2>
-<div class="panel"><p>Data is saved in this browser on this device. Export backups regularly if you want to move your records to another phone.</p>
-<div class="row"><button class="primary" onclick="exportBackup()">Export backup</button><label>Import backup <input type="file" accept="application/json" onchange="importBackup(event)"></label></div>
-</div>
-<div class="notice">This is a static website. It does not yet have a shared cloud database or automatic retailer inventory feeds. Those require a separate backend and authorized inventory sources. Do not treat a retailer search result as confirmed stock.</div>
+<section class="page" id="history">
+ <div class="page-head"><div><h2>Alert history</h2><p>Previously detected stock changes and notifications.</p></div><button class="btn" onclick="clearHistory()">Clear history</button></div>
+ <div class="card table-wrap">
+  <table><thead><tr><th>Time</th><th>Product</th><th>Retailer</th><th>Event</th></tr></thead><tbody id="historyRows"><tr><td colspan="4" class="empty">No alerts recorded yet.</td></tr></tbody></table>
+ </div>
 </section>
 
-<footer>PokéStock · Independent collector tool · Not affiliated with Pokémon, Bandai or retailers.</footer>
+<section class="page" id="settings">
+ <div class="page-head"><div><h2>Settings</h2><p>Manage your PokéStock preferences.</p></div></div>
+ <div class="card">
+  <h3 class="section-title" style="margin-top:0">Alert preferences</h3>
+  <div class="setting"><div><strong>Pokémon alerts</strong><p>Include Pokémon product restocks.</p></div><input class="toggle" type="checkbox" id="pokemonAlerts" checked></div>
+  <div class="setting"><div><strong>Union Arena alerts</strong><p>Include Union Arena product restocks.</p></div><input class="toggle" type="checkbox" id="unionAlerts" checked></div>
+  <div class="setting"><div><strong>Release reminders</strong><p>Show upcoming release information.</p></div><input class="toggle" type="checkbox" id="releaseAlerts" checked></div>
+  <div class="setting"><div><strong>Drawing reminders</strong><p>Show retailer drawing and invite reminders.</p></div><input class="toggle" type="checkbox" id="drawingAlerts" checked></div>
+  <div class="setting"><div><strong>Phone notifications</strong><p>Browser notification permission, when supported.</p></div><button class="btn" onclick="enableBrowserNotifications()">Enable</button></div>
+ </div>
+ <div class="card">
+  <h3 class="section-title" style="margin-top:0">Monitoring status</h3>
+  <p style="font-size:12px;color:var(--muted);line-height:1.7">This page can display data supplied by a monitoring service at <code>data/status.json</code>. A scheduled backend must collect and verify retailer inventory, catalogue information, releases and drawing changes. GitHub Pages alone cannot perform those checks or send reliable SMS messages.</p>
+  <button class="btn" onclick="loadData()">Check for data</button>
+ </div>
+</section>
 </main>
+</div>
+<footer>POKÉSTOCK · INDEPENDENT TCG TRACKER · NOT AFFILIATED WITH THE RETAILERS OR CARD BRANDS</footer>
+</div>
 
 <script>
-const KEY='pokestock_v2';
-const retailers=[
-['Walmart','https://www.walmart.com/search?q=pokemon+trading+cards'],
-['Target','https://www.target.com/s?searchTerm=pokemon+trading+cards'],
-['Best Buy','https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+cards'],
-['GameStop','https://www.gamestop.com/search/?q=pokemon+cards'],
-['Pokémon Center','https://www.pokemoncenter.com/'],
-['Amazon','https://www.amazon.com/s?k=pokemon+trading+cards'],
-['Bandai TCG+','https://www.bandai-tcg-plus.com/'],
-['Union Arena','https://www.unionarena-tcg.com/en/']
+const retailers = [
+ {name:"Pokémon Center",desc:"Official Pokémon merchandise and TCG products.",url:"https://www.pokemoncenter.com/"},
+ {name:"Walmart",desc:"Online Pokémon and trading card products.",url:"https://www.walmart.com/search?q=pokemon+cards"},
+ {name:"Target",desc:"Trading cards, product launches and drawings.",url:"https://www.target.com/c/trading-cards/-/N-4y4s7"},
+ {name:"Best Buy",desc:"Trading cards, Drops and product invites.",url:"https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+cards"},
+ {name:"GameStop",desc:"Trading card products and collectibles.",url:"https://www.gamestop.com/search/?q=pokemon"},
+ {name:"Amazon",desc:"Online trading card listings.",url:"https://www.amazon.com/s?k=pokemon+trading+cards"},
+ {name:"Bandai / Union Arena",desc:"Official Union Arena product information.",url:"https://www.unionarena-tcg.com/"},
+ {name:"TCGplayer",desc:"Market pricing reference for individual cards and sealed products.",url:"https://www.tcgplayer.com/"}
 ];
-const releases=[
-{date:'2026-11-06',game:'Pokémon',name:'Mega Evolution—Delta Reign',type:'Booster boxes, ETBs, bundles and collections',url:'https://www.pokemon.com/uk/news/pokemon-tcg-mega-evolution-delta-reign-product-showcase'},
-{date:'2026-11-06',game:'Union Arena',name:'BLEACH: Thousand-Year Blood War Advanced Deck',type:'Advanced Deck',url:'https://www.unionarena-tcg.com/en/'},
-{date:'2026-11-13',game:'Pokémon',name:'Mega Greninja ex League Battle Deck',type:'League Battle Deck',url:'https://press.pokemon.com/en/Items/Schedule'},
-{date:'2026-11-13',game:'Union Arena',name:'BLEACH: Thousand-Year Blood War Vol.3',type:'Booster Pack · UEX08BT',url:'https://www.unionarena-tcg.com/en/'},
-{date:'2026-12-11',game:'Union Arena',name:'My Hero Academia Special Booster',type:'Booster Pack · UE25BT',url:'https://www.unionarena-tcg.com/en/'},
-{date:'2027-01-22',game:'Union Arena',name:'Gurren Lagann',type:'Booster Pack · UE26BT',url:'https://www.unionarena-tcg.com/en/'}
-];
-let region='VA';
-let data=load();
-function fresh(){return {stores:[],products:[],sightings:[]}}
-function load(){try{return {...fresh(),...JSON.parse(localStorage.getItem(KEY+'_'+region)||'{}')}}catch(e){return fresh()}}
-function save(){localStorage.setItem(KEY+'_'+region,JSON.stringify(data));render()}
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function tab(id,b){document.querySelectorAll('.section').forEach(x=>x.classList.remove('show'));document.getElementById(id).classList.add('show');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function show(id){document.getElementById(id).hidden=false}
-function hide(id){document.getElementById(id).hidden=true}
-function changeRegion(){region=document.getElementById('region').value;data=load();render()}
-function render(){
-document.getElementById('headline').textContent=region==='VA'?'Virginia Restock Tracker':'Nationwide Restock Tracker';
-document.getElementById('stockCount').textContent=data.sightings.length;
-document.getElementById('storeCount').textContent=data.stores.length;
-document.getElementById('productCount').textContent=data.products.length;
-document.getElementById('watchCount').textContent=data.products.filter(p=>p.watch).length;
-renderRetailers();renderReleases();renderStores();renderProducts();renderHistory();
+
+let data = {products:[],releases:[],drawings:[],history:[],updated_at:null};
+
+function escapeHTML(value){
+ return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function renderRetailers(){
-document.getElementById('retailerLinks').innerHTML=retailers.map(r=>`<article class="card"><b>${r[0]}</b><p><a class="link" href="${r[1]}" target="_blank" rel="noopener">Open retailer ↗</a></p></article>`).join('');
+function money(value){
+ if(value===null||value===undefined||value==="") return "—";
+ return typeof value==="number" ? "$"+value.toFixed(2) : escapeHTML(value);
 }
-function renderReleases(){
-document.getElementById('releaseCards').innerHTML=releases.map(r=>`<article class="card"><span class="tag">${r.game}</span><h3>${r.name}</h3><p>${r.type}</p><b class="good">${new Date(r.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</b><p><a class="link" href="${r.url}" target="_blank" rel="noopener">Release information ↗</a></p></article>`).join('');
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ window.scrollTo({top:0,behavior:"smooth"});
 }
+document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+
 function renderStores(){
-let q=(document.getElementById('storeSearch')?.value||'').toLowerCase();
-let all=data.stores.filter(s=>(s.name+' '+s.city+' '+s.state).toLowerCase().includes(q));
-let local=region==='VA'?[['Staunton card shops','Staunton VA'],['Harrisonburg card shops','Harrisonburg VA'],['Waynesboro card shops','Waynesboro VA'],['Charlottesville card shops','Charlottesville VA']]:[];
-let directory=all.map(s=>`<article class="card"><h3>${esc(s.name)}</h3><p>${esc(s.city)} ${esc(s.state)}</p>${s.url?`<a class="link" href="${esc(s.url)}" target="_blank">Website ↗</a>`:''}<p><button onclick="logStore(${s.id})">Record stock</button> <button onclick="del('stores',${s.id})">Delete</button></p></article>`).join('');
-let searches=local.map(x=>`<article class="card"><h3>${x[0]}</h3><a class="link" target="_blank" href="https://www.google.com/maps/search/${encodeURIComponent('trading card shops '+x[1])}">Find shops on map ↗</a></article>`).join('');
-document.getElementById('storeCards').innerHTML=(directory||searches)?directory+searches:'<div class="empty">No saved stores yet.</div>';
+ const html=retailers.map(s=>`<div class="store"><h3>${escapeHTML(s.name)}</h3><p>${escapeHTML(s.desc)}</p><a href="${s.url}" target="_blank" rel="noopener">Visit retailer ↗</a></div>`).join("");
+ document.getElementById("storeGrid").innerHTML=html;
+ document.getElementById("dashboardStores").innerHTML=retailers.slice(0,3).map(s=>`<div class="store"><h3>${escapeHTML(s.name)}</h3><p>${escapeHTML(s.desc)}</p><a href="${s.url}" target="_blank" rel="noopener">Open ↗</a></div>`).join("");
 }
+
 function renderProducts(){
-document.getElementById('productCards').innerHTML=data.products.length?data.products.map(p=>`<article class="card"><h3>${esc(p.name)}</h3><span class="tag">${esc(p.game)}</span><span class="tag">${esc(p.type)}</span><p>${p.date?'Release: '+esc(p.date):''}</p><p><button onclick="watch(${p.id})">${p.watch?'Watching ✓':'Watch product'}</button> <button onclick="logProduct(${p.id})">Log sighting</button> <button onclick="del('products',${p.id})">Delete</button></p></article>`).join(''):'<div class="empty">Add products you want to monitor.</div>';
+ const q=(document.getElementById("productSearch").value||"").toLowerCase();
+ const game=document.getElementById("gameFilter").value;
+ const type=document.getElementById("typeFilter").value;
+ const items=data.products.filter(p=>(!game||p.game===game)&&(!type||p.type===type)&&JSON.stringify(p).toLowerCase().includes(q));
+ const el=document.getElementById("productList");
+ if(!items.length){el.innerHTML='<div class="empty">No matching products found in the connected catalogue.</div>';return}
+ el.innerHTML=items.map(p=>{
+  const stock=String(p.stock_status||"Unknown");
+  const stockClass=/stock|available/i.test(stock)&&!/out/i.test(stock)?"green":/out/i.test(stock)?"red":"yellow";
+  const image=p.image?`<img src="${escapeHTML(p.image)}" alt="">`:"▤";
+  return `<article class="product">
+   <div class="product-img">${image}</div>
+   <div class="product-body">
+    <div class="product-title">${escapeHTML(p.name||"Unnamed product")}</div>
+    <div class="product-meta">${escapeHTML(p.game||"")} · ${escapeHTML(p.type||"Product")} · ${escapeHTML(p.set||"")}</div>
+    <span class="pill ${stockClass}">${escapeHTML(stock)}</span>
+    <div class="prices"><div>MSRP<strong>${money(p.msrp)}</strong></div><div>Market<strong>${money(p.market_price)}</strong></div></div>
+    <div class="product-meta">Release: ${escapeHTML(p.release_date||"TBA")} ${p.sku?"· SKU: "+escapeHTML(p.sku):""}</div>
+    <div class="product-actions">${p.url?`<a class="btn primary" href="${escapeHTML(p.url)}" target="_blank" rel="noopener">View product ↗</a>`:"<span class='btn'>No product link</span>"}</div>
+   </div></article>`;
+ }).join("");
 }
+
+function renderReleases(){
+ const game=document.getElementById("releaseFilter").value;
+ const items=data.releases.filter(r=>!game||r.game===game).sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")));
+ document.getElementById("releaseRows").innerHTML=items.length?items.map(r=>`<tr><td class="release-date">${escapeHTML(r.date||"TBA")}</td><td><strong>${escapeHTML(r.name||"Unnamed release")}</strong></td><td>${escapeHTML(r.game||"")}</td><td>${escapeHTML(r.type||"")}</td><td>${money(r.msrp)}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">No verified release data connected yet.</td></tr>';
+}
+
+function renderDrawings(){
+ const el=document.getElementById("drawingList");
+ if(!data.drawings.length){el.innerHTML='<div class="empty"><div class="empty-icon">✦</div>No verified drawing or invite listings are available.</div>';return}
+ el.innerHTML=data.drawings.map(d=>`<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><strong>${escapeHTML(d.name||"Retailer opportunity")}</strong><span class="pill yellow">${escapeHTML(d.status||"Check details")}</span></div><p style="color:var(--muted);font-size:12px">${escapeHTML(d.retailer||"")} · Deadline: ${escapeHTML(d.deadline||"Not listed")}</p><p style="font-size:12px">${escapeHTML(d.description||"")}</p>${d.url?`<a href="${escapeHTML(d.url)}" target="_blank" rel="noopener" style="color:var(--blue);font-size:12px">Open retailer page ↗</a>`:""}</div>`).join("");
+}
+
 function renderHistory(){
-let rows=[...data.sightings].reverse();
-document.getElementById('historyCards').innerHTML=rows.length?rows.map(s=>`<article class="card"><h3>${esc(s.product)}</h3><span class="tag">${esc(s.status)}</span><p>${esc(s.store)} · ${esc(s.city)}</p><p class="small">${new Date(s.time).toLocaleString()}</p>${s.note?`<p>${esc(s.note)}</p>`:''}</article>`).join(''):'<div class="empty">No sightings recorded yet.</div>';
-document.getElementById('recent').innerHTML=rows.slice(0,6).map(s=>`<article class="card"><b>${esc(s.product)}</b><p>${esc(s.store)} · ${esc(s.status)}</p><span class="small">${new Date(s.time).toLocaleString()}</span></article>`).join('')||'<div class="empty">Your latest sightings will appear here.</div>';
+ const items=data.history||[];
+ document.getElementById("historyRows").innerHTML=items.length?items.slice().reverse().map(h=>`<tr><td>${escapeHTML(h.time||"")}</td><td>${escapeHTML(h.product||"")}</td><td>${escapeHTML(h.retailer||"")}</td><td>${escapeHTML(h.event||"")}</td></tr>`).join(""):'<tr><td colspan="4" class="empty">No alerts recorded yet.</td></tr>';
 }
-function addStore(){
-let name=document.getElementById('sName').value.trim();if(!name)return alert('Enter a store name.');
-data.stores.push({id:Date.now(),name,city:document.getElementById('sCity').value,state:document.getElementById('sState').value,url:document.getElementById('sUrl').value});
-hide('storeForm');save();
+
+function updateDashboard(){
+ document.getElementById("statProducts").textContent=data.products.length;
+ document.getElementById("statStock").textContent=data.products.filter(p=>/in stock|available/i.test(p.stock_status||"")&&!/out/i.test(p.stock_status||"")).length;
+ document.getElementById("statReleases").textContent=data.releases.length;
+ document.getElementById("statDrawings").textContent=data.drawings.length;
+ const recent=(data.history||[]).slice(-5).reverse();
+ document.getElementById("recentRestocks").innerHTML=recent.length?recent.map(h=>`<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>${escapeHTML(h.product||"Product")}</strong><div style="color:var(--muted);margin-top:4px">${escapeHTML(h.retailer||"")} · ${escapeHTML(h.time||"")}</div></div>`).join(""):'<div class="empty">No verified restock alerts yet.</div>';
+ const upcoming=data.releases.slice().sort((a,b)=>String(a.date||"").localeCompare(String(b.date||""))).slice(0,5);
+ document.getElementById("nextReleases").innerHTML=upcoming.length?upcoming.map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>${escapeHTML(r.name||"Release")}</strong><div style="color:var(--muted);margin-top:4px">${escapeHTML(r.date||"TBA")} · ${escapeHTML(r.game||"")}</div></div>`).join(""):'<div class="empty">No release feed connected yet.</div>';
 }
-function addProduct(){
-let name=document.getElementById('pName').value.trim();if(!name)return alert('Enter a product name.');
-data.products.push({id:Date.now(),name,game:document.getElementById('pGame').value,type:document.getElementById('pType').value,date:document.getElementById('pDate').value,watch:false});
-hide('productForm');save();
+
+async function loadData(){
+ const dot=document.getElementById("connectionDot");
+ const label=document.getElementById("connectionText");
+ try{
+  const response=await fetch("data/status.json?time="+Date.now(),{cache:"no-store"});
+  if(!response.ok)throw new Error("No data file");
+  const incoming=await response.json();
+  data={...data,...incoming};
+  data.products=Array.isArray(data.products)?data.products:[];
+  data.releases=Array.isArray(data.releases)?data.releases:[];
+  data.drawings=Array.isArray(data.drawings)?data.drawings:[];
+  data.history=Array.isArray(data.history)?data.history:[];
+  dot.style.background="var(--green)";
+  label.textContent="Data feed connected";
+ }catch(e){
+  dot.style.background="var(--yellow)";
+  label.textContent="Monitoring not connected";
+ }
+ updateDashboard();renderProducts();renderReleases();renderDrawings();renderHistory();
 }
-function watch(id){let p=data.products.find(x=>x.id===id);p.watch=!p.watch;save()}
-function del(key,id){if(confirm('Delete this entry?')){data[key]=data[key].filter(x=>x.id!==id);save()}}
-function logStore(id){let s=data.stores.find(x=>x.id===id);if(!data.products.length)return alert('Add a product first.');record(s,data.products[0])}
-function logProduct(id){let p=data.products.find(x=>x.id===id);if(!data.stores.length)return alert('Add a store first.');record(data.stores[0],p)}
-function record(s,p){
-let status=prompt('Enter status exactly: Verified in stock, Possible signal, Out of stock, or Unknown','Possible signal');if(!status)return;
-if(!['Verified in stock','Possible signal','Out of stock','Unknown'].includes(status))return alert('Please use one of the listed status values.');
-let note=prompt('Optional details: price, quantity, source, aisle, etc.','')||'';
-data.sightings.push({id:Date.now(),product:p.name,store:s.name,city:[s.city,s.state].filter(Boolean).join(', '),status,note,time:new Date().toISOString()});save();
+
+function clearHistory(){
+ if(!confirm("Clear the alert history displayed by this page?"))return;
+ data.history=[];
+ renderHistory();updateDashboard();
 }
-function exportBackup(){
-let a=document.createElement('a'),blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-a.href=URL.createObjectURL(blob);a.download='pokestock-'+region.toLowerCase()+'-backup.json';a.click();URL.revokeObjectURL(a.href);
+
+async function enableBrowserNotifications(){
+ if(!("Notification" in window)){alert("This browser does not support notifications.");return}
+ const result=await Notification.requestPermission();
+ alert(result==="granted"?"Browser notifications are enabled for this site.":"Notification permission was not granted.");
 }
-function importBackup(e){
-let f=e.target.files[0];if(!f)return;
-let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.stores)||!Array.isArray(x.products)||!Array.isArray(x.sightings))throw Error();data=x;save();alert('Backup imported.')}catch(err){alert('Invalid PokéStock backup file.')}};r.readAsText(f);
-}
-render();
+
+["pokemonAlerts","unionAlerts","releaseAlerts","drawingAlerts"].forEach(id=>{
+ const el=document.getElementById(id);
+ const saved=localStorage.getItem("pokestock_"+id);
+ if(saved!==null)el.checked=saved==="true";
+ el.addEventListener("change",()=>localStorage.setItem("pokestock_"+id,el.checked));
+});
+
+renderStores();
+loadData();
+setInterval(loadData,60000);
 </script>
 </body>
 </html>
