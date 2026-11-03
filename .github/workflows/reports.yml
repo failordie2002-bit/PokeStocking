@@ -1,0 +1,38 @@
+name: PokeStock Community Reports
+
+on:
+  issues:
+    types: [opened, edited, closed, reopened]
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  update-reports:
+    if: startsWith(github.event.issue.title, '[Stock report]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build public report feed
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: python scripts/process_reports.py
+
+      - name: Publish report feed
+        run: |
+          git config user.name "pokestock-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/reports.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update community stock reports"
+            git push
+          fi
