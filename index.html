@@ -3,69 +3,160 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10131c">
-<title>PokéStock | TCG Stock Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131b">
+<title>PokéStock | The Collector's Command Center</title>
 <style>
-:root {
-  --bg:#0b0e15;--panel:#141925;--panel2:#1a2130;
-  --border:#283246;--text:#f3f5fa;--muted:#929db0;
-  --blue:#65a8ff;--green:#48d6a0;--red:#ff687d;
-  --yellow:#ffc968;--purple:#b69aff;
+:root{
+ --bg:#10131b;
+ --panel:#191e2a;
+ --panel2:#202635;
+ --panel3:#252d3e;
+ --border:#30394c;
+ --text:#f5f4ef;
+ --muted:#a0a9ba;
+ --gold:#d6a83e;
+ --gold2:#f0cc76;
+ --green:#48d6a0;
+ --red:#ff7185;
+ --blue:#82b8ff;
+ --purple:#b9a0ff;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
 button,input,select{font:inherit}
+button,a{ -webkit-tap-highlight-color:transparent}
 button{cursor:pointer}
+a{color:var(--gold2);text-decoration:none}
+a:hover{filter:brightness(1.15)}
 .app{max-width:1500px;margin:auto;padding:22px}
-header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+header{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:15px;margin-bottom:24px
+}
 .brand{display:flex;align-items:center;gap:12px}
-.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,#438fff,#8a65ff);display:grid;place-items:center;font-size:24px;font-weight:900}
+.logo{
+ width:47px;height:47px;border-radius:15px;
+ background:linear-gradient(145deg,#f0cc76,#b78325);
+ color:#17130a;display:grid;place-items:center;
+ font-size:25px;font-weight:950;
+ box-shadow:0 5px 22px #d6a83e2a
+}
 .brand h1{font-size:22px;margin:0;letter-spacing:-.7px}
-.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
-.status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);display:inline-block}
-.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px}
-nav{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:12px;height:max-content;position:sticky;top:15px}
-.nav-label{font-size:10px;letter-spacing:1.5px;color:var(--muted);padding:12px 10px 7px}
-.nav-btn{width:100%;display:flex;align-items:center;gap:11px;padding:12px 11px;border:0;border-radius:10px;background:transparent;color:#aab5c8;text-align:left;margin:2px 0;font-size:13px}
-.nav-btn:hover,.nav-btn.active{background:#222d41;color:white}
-.nav-btn.active{box-shadow:inset 3px 0 var(--blue)}
+.brand p{margin:3px 0 0;color:var(--muted);font-size:10px;letter-spacing:1.4px}
+.status{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block}
+.layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:20px}
+nav{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:18px;padding:12px;height:max-content;
+ position:sticky;top:15px
+}
+.nav-label{font-size:10px;letter-spacing:1.6px;color:#778298;padding:13px 10px 7px}
+.nav-btn,.nav-link{
+ width:100%;display:flex;align-items:center;gap:11px;
+ padding:12px 11px;border:0;border-radius:10px;
+ background:transparent;color:#b8c1d0;text-align:left;
+ margin:2px 0;font-size:12px;text-decoration:none
+}
+.nav-btn:hover,.nav-btn.active,.nav-link:hover{
+ background:#2a3040;color:white
+}
+.nav-btn.active{box-shadow:inset 3px 0 var(--gold)}
 .nav-icon{width:20px;text-align:center;font-size:16px}
 main{min-width:0}
-.page{display:none}.page.active{display:block}
-.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:20px}
-.page-head h2{font-size:25px;margin:0 0 5px;letter-spacing:-.7px}
-.page-head p{margin:0;color:var(--muted);font-size:13px}
-.btn{border:1px solid var(--border);background:var(--panel2);color:white;padding:10px 14px;border-radius:10px;font-size:12px}
-.btn.primary{background:var(--blue);border-color:var(--blue);color:#08101c;font-weight:750}
+.page{display:none}
+.page.active{display:block}
+.page-head{
+ display:flex;justify-content:space-between;align-items:flex-start;
+ gap:15px;margin-bottom:19px
+}
+.page-head h2{font-size:24px;margin:0 0 5px;letter-spacing:-.8px}
+.page-head p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.btn{
+ display:inline-flex;align-items:center;justify-content:center;gap:7px;
+ border:1px solid var(--border);background:var(--panel2);
+ color:white;padding:10px 14px;border-radius:10px;
+ font-size:11px;font-weight:650;text-decoration:none
+}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#1b1609}
 .btn:hover{filter:brightness(1.12)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:17px}
-.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px}
-.stat-label{color:var(--muted);font-size:12px}
-.stat-value{font-size:27px;font-weight:800;margin:9px 0 4px;letter-spacing:-1px}
-.stat-note{font-size:11px;color:var(--muted)}
-.section-title{font-size:15px;margin:23px 0 12px}
-.card{margin-bottom:13px}
-.notice{border:1px solid #66512d;background:#2b2419;color:#f5d9a3;border-radius:13px;padding:14px;font-size:12px;line-height:1.6;margin-bottom:17px}
-.notice strong{color:#ffe3a6}
-.two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
-.empty{padding:30px 15px;text-align:center;color:var(--muted);font-size:13px}
-.empty-icon{font-size:27px;margin-bottom:8px}
+.hero{
+ position:relative;overflow:hidden;
+ border:1px solid #65502c;border-radius:20px;
+ background:linear-gradient(115deg,#292638 0%,#252b39 48%,#3b3020 100%);
+ padding:25px;margin-bottom:17px
+}
+.hero:after{
+ content:"";position:absolute;width:240px;height:240px;
+ border:1px solid #d6a83e26;border-radius:50%;
+ right:-75px;top:-100px;
+ box-shadow:0 0 0 22px #d6a83e0b,0 0 0 48px #d6a83e08
+}
+.hero-content{position:relative;z-index:1;max-width:650px}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--gold2);font-weight:800}
+.hero h2{font-size:clamp(25px,4vw,37px);line-height:1.12;margin:10px 0 9px;letter-spacing:-1.2px}
+.hero p{color:#c2c5ce;font-size:13px;line-height:1.7;max-width:560px;margin:0 0 17px}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap}
+.hero .btn:not(.primary){background:#ffffff0c;border-color:#ffffff2a}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:17px}
+.stat,.card{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:15px;padding:16px
+}
+.stat{position:relative;overflow:hidden}
+.stat:after{
+ content:"";position:absolute;width:55px;height:55px;
+ border:1px solid #d6a83e20;border-radius:50%;
+ right:-18px;bottom:-23px
+}
+.stat-label{color:var(--muted);font-size:11px}
+.stat-value{font-size:27px;font-weight:850;margin:9px 0 4px;letter-spacing:-1px}
+.stat-note{font-size:10px;color:#8994a8}
+.section-title{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;font-size:14px;margin:23px 0 11px
+}
+.section-title a{font-size:10px;font-weight:700;letter-spacing:.5px}
+.notice{
+ border:1px solid #66512d;background:#2b251b;color:#f0d9a7;
+ border-radius:13px;padding:13px;font-size:11px;line-height:1.7;margin-bottom:15px
+}
+.notice strong{color:var(--gold2)}
+.two-col{display:grid;grid-template-columns:1.2fr 1fr;gap:13px}
+.empty{padding:25px 12px;text-align:center;color:var(--muted);font-size:12px}
+.empty-icon{font-size:25px;margin-bottom:8px;color:var(--gold)}
 .toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
-.field{background:#101622;border:1px solid var(--border);border-radius:9px;color:white;padding:10px 12px;min-width:0;font-size:12px}
-.search{flex:1;min-width:180px}
+.field{
+ background:#111722;border:1px solid var(--border);
+ border-radius:9px;color:white;padding:10px 12px;
+ min-width:0;font-size:11px
+}
+.search{flex:1;min-width:170px}
 select.field{min-width:130px}
 .product-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.product{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.product-img{height:130px;background:linear-gradient(135deg,#202b40,#151b29);display:grid;place-items:center;color:#64748b;font-size:35px}
+.product{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:14px;overflow:hidden;transition:transform .18s,border-color .18s
+}
+.product:hover{transform:translateY(-2px);border-color:#78633a}
+.product-img{
+ height:135px;background:linear-gradient(145deg,#252e40,#171d2a);
+ display:grid;place-items:center;color:#8b7950;font-size:34px;padding:12px
+}
 .product-img img{width:100%;height:100%;object-fit:contain}
 .product-body{padding:13px}
-.product-title{font-size:13px;font-weight:750;line-height:1.4;min-height:36px}
-.product-meta{font-size:11px;color:var(--muted);margin:7px 0}
-.prices{display:flex;justify-content:space-between;gap:8px;margin:12px 0;font-size:11px}
-.prices strong{display:block;font-size:14px;margin-top:3px}
-.pill{display:inline-block;padding:5px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#273247;color:#b9c8df}
+.product-title{font-size:12px;font-weight:800;line-height:1.45;min-height:35px}
+.product-meta{font-size:10px;color:var(--muted);margin:7px 0;line-height:1.5}
+.prices{display:flex;justify-content:space-between;gap:8px;margin:12px 0;font-size:10px;color:var(--muted)}
+.prices strong{display:block;font-size:13px;color:white;margin-top:3px}
+.pill{
+ display:inline-block;padding:5px 8px;border-radius:20px;
+ font-size:9px;font-weight:800;background:#30394c;color:#c5d0e0
+}
 .pill.green{background:#15382f;color:#70e5b7}
 .pill.red{background:#3b202b;color:#ff91a1}
 .pill.yellow{background:#3c321e;color:#ffd47c}
@@ -73,36 +164,57 @@ select.field{min-width:130px}
 .product-actions{display:flex;gap:7px;margin-top:12px}
 .product-actions .btn{flex:1;text-align:center;padding:8px 5px}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{text-align:left;color:var(--muted);font-weight:600;padding:12px 10px;border-bottom:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{text-align:left;color:var(--muted);font-weight:700;padding:12px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
 td{padding:13px 10px;border-bottom:1px solid var(--border)}
 tr:last-child td{border-bottom:0}
-.release-date{font-weight:800;color:var(--blue);white-space:nowrap}
-.store-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.store{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:15px}
-.store h3{font-size:14px;margin:0 0 5px}
-.store p{font-size:11px;color:var(--muted);margin:0 0 12px}
-.store a{color:var(--blue);font-size:12px;text-decoration:none}
-.setting{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:15px 0;border-bottom:1px solid var(--border)}
+.release-date{font-weight:850;color:var(--gold2);white-space:nowrap}
+.store-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.store{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:15px}
+.store h3{font-size:12px;margin:0 0 5px}
+.store p{font-size:10px;color:var(--muted);margin:0 0 11px;line-height:1.5}
+.store a{color:var(--gold2);font-size:11px;font-weight:700}
+.setting{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 0;border-bottom:1px solid var(--border)}
 .setting:last-child{border:0}
-.setting strong{font-size:13px}
-.setting p{font-size:11px;color:var(--muted);margin:4px 0 0}
+.setting strong{font-size:12px}
+.setting p{font-size:10px;color:var(--muted);margin:4px 0 0}
 .toggle{width:42px;height:23px;appearance:none;background:#3b4558;border-radius:20px;position:relative;cursor:pointer;flex-shrink:0}
-.toggle:checked{background:#438fff}
+.toggle:checked{background:var(--gold)}
 .toggle:before{content:"";position:absolute;width:17px;height:17px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s}
 .toggle:checked:before{transform:translateX(19px)}
-footer{text-align:center;color:#657186;font-size:10px;padding:25px}
-@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.product-list{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){
- .app{padding:13px}.layout{grid-template-columns:1fr;gap:12px}
- nav{position:static;display:flex;overflow-x:auto;gap:4px;padding:7px}
- .nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;padding:10px}
- .nav-icon{display:none}.brand h1{font-size:19px}
- .status{font-size:10px}.two-col{grid-template-columns:1fr}
- .store-grid{grid-template-columns:repeat(2,1fr)}
- .page-head h2{font-size:22px}
+.report-preview{padding:12px 0;border-bottom:1px solid var(--border)}
+.report-preview:last-child{border:0}
+.report-preview strong{font-size:11px}
+.report-preview p{margin:4px 0 0;color:var(--muted);font-size:10px}
+footer{text-align:center;color:#69758a;font-size:9px;padding:25px 10px;letter-spacing:.7px}
+@media(max-width:1000px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .product-list{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:430px){.product-list{grid-template-columns:1fr}.grid{gap:8px}.stat{padding:12px}.stat-value{font-size:23px}.store-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){
+ .app{padding:13px}
+ .layout{grid-template-columns:1fr;gap:12px}
+ nav{
+  position:sticky;top:0;z-index:5;display:flex;overflow-x:auto;
+  gap:4px;padding:6px;border-radius:12px
+ }
+ .nav-label{display:none}
+ .nav-btn,.nav-link{white-space:nowrap;width:auto;padding:10px;font-size:10px}
+ .nav-icon{display:none}
+ .brand h1{font-size:19px}
+ .status{font-size:9px}
+ .two-col{grid-template-columns:1fr}
+ .store-grid{grid-template-columns:repeat(2,1fr)}
+ .page-head h2{font-size:21px}
+ .hero{padding:20px}
+}
+@media(max-width:430px){
+ .product-list{grid-template-columns:1fr}
+ .grid{gap:8px}
+ .stat{padding:12px}
+ .stat-value{font-size:23px}
+ .store-grid{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -110,59 +222,74 @@ footer{text-align:center;color:#657186;font-size:10px;padding:25px}
 <header>
  <div class="brand">
   <div class="logo">P</div>
-  <div><h1>PokéStock</h1><p>Pokémon & Union Arena tracker</p></div>
+  <div>
+   <h1>PokéStock</h1>
+   <p>THE COLLECTOR'S COMMAND CENTER</p>
+  </div>
  </div>
- <div class="status"><span class="dot" id="connectionDot"></span><span id="connectionText">Waiting for stock data</span></div>
+ <div class="status"><span class="dot" id="connectionDot"></span><span id="connectionText">Connecting to data feed…</span></div>
 </header>
 
 <div class="layout">
 <nav>
- <div class="nav-label">WORKSPACE</div>
- <button class="nav-btn active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
- <button class="nav-btn" data-page="catalogue"><span class="nav-icon">▤</span>Product catalogue</button>
- <button class="nav-btn" data-page="releases"><span class="nav-icon">▣</span>Release calendar</button>
- <button class="nav-btn" data-page="drawings"><span class="nav-icon">✦</span>Drawings & invites</button>
+ <div class="nav-label">YOUR WORKSPACE</div>
+ <button class="nav-btn active" data-page="dashboard"><span class="nav-icon">⌂</span>Overview</button>
+ <button class="nav-btn" data-page="catalogue"><span class="nav-icon">▤</span>Products</button>
+ <button class="nav-btn" data-page="releases"><span class="nav-icon">▣</span>Releases</button>
+ <a class="nav-link" href="reports.html"><span class="nav-icon">⌖</span>Sightings</a>
+ <button class="nav-btn" data-page="drawings"><span class="nav-icon">✦</span>Drawings</button>
  <button class="nav-btn" data-page="stores"><span class="nav-icon">⌖</span>Retailers</button>
- <button class="nav-btn" data-page="history"><span class="nav-icon">◷</span>Alert history</button>
+ <button class="nav-btn" data-page="history"><span class="nav-icon">◷</span>History</button>
  <div class="nav-label">PREFERENCES</div>
  <button class="nav-btn" data-page="settings"><span class="nav-icon">⚙</span>Settings</button>
 </nav>
 
 <main>
 <section class="page active" id="dashboard">
- <div class="page-head">
-  <div><h2>Dashboard</h2><p>Your TCG restock command center.</p></div>
-  <button class="btn" onclick="loadData()">↻ Refresh</button>
+ <div class="hero">
+  <div class="hero-content">
+   <div class="eyebrow">WELCOME TO POKÉSTOCK</div>
+   <h2>Find your next<br>big pull.</h2>
+   <p>Your home for Pokémon and Union Arena releases, product discovery and community-reported store sightings.</p>
+   <div class="hero-actions">
+    <button class="btn primary" onclick="showPage('catalogue')">Explore products →</button>
+    <a class="btn" href="reports.html">Community sightings ↗</a>
+   </div>
+  </div>
  </div>
- <div class="notice"><strong>Monitoring connection:</strong> The website is ready to display automated stock data. The monitoring service has not been connected yet, so no live stock claims are being shown.</div>
+
  <div class="grid">
-  <div class="stat"><div class="stat-label">Products tracked</div><div class="stat-value" id="statProducts">0</div><div class="stat-note">Pokémon + Union Arena</div></div>
-  <div class="stat"><div class="stat-label">In stock</div><div class="stat-value" id="statStock">0</div><div class="stat-note">Confirmed inventory only</div></div>
-  <div class="stat"><div class="stat-label">Upcoming releases</div><div class="stat-value" id="statReleases">0</div><div class="stat-note">From connected release data</div></div>
-  <div class="stat"><div class="stat-label">Active drawings</div><div class="stat-value" id="statDrawings">0</div><div class="stat-note">Retailer opportunities</div></div>
+  <div class="stat"><div class="stat-label">PRODUCTS TRACKED</div><div class="stat-value" id="statProducts">—</div><div class="stat-note">Pokémon + Union Arena</div></div>
+  <div class="stat"><div class="stat-label">CONFIRMED IN STOCK</div><div class="stat-value" id="statStock">—</div><div class="stat-note">Verified inventory only</div></div>
+  <div class="stat"><div class="stat-label">RELEASE ENTRIES</div><div class="stat-value" id="statReleases">—</div><div class="stat-note">From connected catalogues</div></div>
+  <div class="stat"><div class="stat-label">COMMUNITY REPORTS</div><div class="stat-value" id="statReports">—</div><div class="stat-note">Shared store sightings</div></div>
  </div>
+
+ <div class="notice"><strong>Catalogue connection:</strong> Product and release information is supplied by the connected data feed. Retailer inventory is not yet connected, so products marked “Not checked” are not being presented as in stock.</div>
+
  <div class="two-col">
   <div class="card">
-   <h3 class="section-title" style="margin-top:0">Recent restocks</h3>
-   <div id="recentRestocks" class="empty"><div class="empty-icon">◷</div>No verified restock alerts yet.</div>
+   <div class="section-title" style="margin-top:0">Latest community sightings <a href="reports.html">VIEW ALL →</a></div>
+   <div id="recentReports" class="empty">Community report feed will appear here when available.</div>
   </div>
   <div class="card">
-   <h3 class="section-title" style="margin-top:0">Next releases</h3>
-   <div id="nextReleases" class="empty"><div class="empty-icon">▣</div>No release feed connected yet.</div>
+   <div class="section-title" style="margin-top:0">Upcoming releases <button class="btn" onclick="showPage('releases')">Calendar →</button></div>
+   <div id="nextReleases" class="empty">Loading release information…</div>
   </div>
  </div>
- <h3 class="section-title">Retailer shortcuts</h3>
+
+ <div class="section-title">Retailer shortcuts <a href="#" onclick="showPage('stores');return false">ALL RETAILERS →</a></div>
  <div class="store-grid" id="dashboardStores"></div>
 </section>
 
 <section class="page" id="catalogue">
- <div class="page-head"><div><h2>Product catalogue</h2><p>Search Pokémon and Union Arena products.</p></div></div>
+ <div class="page-head"><div><h2>Product catalogue</h2><p>Discover Pokémon and Union Arena products.</p></div></div>
  <div class="toolbar">
-  <input class="field search" id="productSearch" placeholder="Search products, sets, SKUs..." oninput="renderProducts()">
+  <input class="field search" id="productSearch" placeholder="Search products, sets, SKUs…" oninput="renderProducts()">
   <select class="field" id="gameFilter" onchange="renderProducts()"><option value="">All games</option><option>Pokémon</option><option>Union Arena</option></select>
   <select class="field" id="typeFilter" onchange="renderProducts()"><option value="">All product types</option><option>Booster Box</option><option>Elite Trainer Box</option><option>Booster Bundle</option><option>Collection Box</option><option>Starter Deck</option><option>Other</option></select>
  </div>
- <div class="product-list" id="productList"><div class="empty">Product catalogue data has not been connected yet.</div></div>
+ <div class="product-list" id="productList"><div class="empty">Loading catalogue…</div></div>
 </section>
 
 <section class="page" id="releases">
@@ -171,29 +298,29 @@ footer{text-align:center;color:#657186;font-size:10px;padding:25px}
   <select class="field" id="releaseFilter" onchange="renderReleases()"><option value="">All games</option><option>Pokémon</option><option>Union Arena</option></select>
  </div>
  <div class="card table-wrap">
-  <table><thead><tr><th>Release date</th><th>Product</th><th>Game</th><th>Type</th><th>MSRP</th></tr></thead><tbody id="releaseRows"><tr><td colspan="5" class="empty">No verified release data connected yet.</td></tr></tbody></table>
+  <table><thead><tr><th>Release date</th><th>Product</th><th>Game</th><th>Type</th><th>MSRP</th></tr></thead><tbody id="releaseRows"><tr><td colspan="5" class="empty">Loading release data…</td></tr></tbody></table>
  </div>
 </section>
 
 <section class="page" id="drawings">
  <div class="page-head"><div><h2>Drawings & invites</h2><p>Keep track of retailer drops, entry windows and deadlines.</p></div></div>
- <div class="notice"><strong>Important:</strong> PokéStock can help track public drawing pages and remind you to enter. It will not automatically enter drawings, use retailer accounts, or submit purchases for you.</div>
- <div id="drawingList" class="empty"><div class="empty-icon">✦</div>No drawing or invite data connected yet.</div>
- <h3 class="section-title">Retailer drawing pages</h3>
+ <div class="notice"><strong>Reminder:</strong> PokéStock can help track public drawing pages and deadlines. It will not automatically enter drawings, use retailer accounts or submit purchases.</div>
+ <div id="drawingList" class="empty">No drawing or invite data connected yet.</div>
+ <div class="section-title">Retailer drawing pages</div>
  <div class="store-grid">
   <div class="store"><h3>Walmart Collectibles</h3><p>Check current collectibles drawings and entry deadlines.</p><a href="https://www.walmart.com/cp/collectibles/389412" target="_blank" rel="noopener">Visit Walmart ↗</a></div>
-  <div class="store"><h3>Target</h3><p>Check product launch drawing information and entry requirements.</p><a href="https://help.target.com/" target="_blank" rel="noopener">Target Help ↗</a></div>
-  <div class="store"><h3>Best Buy Drops</h3><p>View upcoming app-exclusive drops and notification options.</p><a href="https://www.bestbuy.com/" target="_blank" rel="noopener">Visit Best Buy ↗</a></div>
+  <div class="store"><h3>Target</h3><p>Check product launch drawing information.</p><a href="https://help.target.com/" target="_blank" rel="noopener">Target Help ↗</a></div>
+  <div class="store"><h3>Best Buy Drops</h3><p>View app-exclusive drops and notification options.</p><a href="https://www.bestbuy.com/" target="_blank" rel="noopener">Visit Best Buy ↗</a></div>
  </div>
 </section>
 
 <section class="page" id="stores">
- <div class="page-head"><div><h2>Retailers</h2><p>Quick access to major US TCG retailers.</p></div></div>
+ <div class="page-head"><div><h2>Retailer directory</h2><p>Quick access to major trading card retailers.</p></div></div>
  <div class="store-grid" id="storeGrid"></div>
 </section>
 
 <section class="page" id="history">
- <div class="page-head"><div><h2>Alert history</h2><p>Previously detected stock changes and notifications.</p></div><button class="btn" onclick="clearHistory()">Clear history</button></div>
+ <div class="page-head"><div><h2>Alert history</h2><p>Previously detected stock changes and notifications.</p><button class="btn" onclick="clearHistory()">Clear history</button></div></div>
  <div class="card table-wrap">
   <table><thead><tr><th>Time</th><th>Product</th><th>Retailer</th><th>Event</th></tr></thead><tbody id="historyRows"><tr><td colspan="4" class="empty">No alerts recorded yet.</td></tr></tbody></table>
  </div>
@@ -202,26 +329,28 @@ footer{text-align:center;color:#657186;font-size:10px;padding:25px}
 <section class="page" id="settings">
  <div class="page-head"><div><h2>Settings</h2><p>Manage your PokéStock preferences.</p></div></div>
  <div class="card">
-  <h3 class="section-title" style="margin-top:0">Alert preferences</h3>
-  <div class="setting"><div><strong>Pokémon alerts</strong><p>Include Pokémon product restocks.</p></div><input class="toggle" type="checkbox" id="pokemonAlerts" checked></div>
-  <div class="setting"><div><strong>Union Arena alerts</strong><p>Include Union Arena product restocks.</p></div><input class="toggle" type="checkbox" id="unionAlerts" checked></div>
+  <div class="section-title" style="margin-top:0">Alert preferences</div>
+  <div class="setting"><div><strong>Pokémon alerts</strong><p>Include Pokémon product updates.</p></div><input class="toggle" type="checkbox" id="pokemonAlerts" checked></div>
+  <div class="setting"><div><strong>Union Arena alerts</strong><p>Include Union Arena product updates.</p></div><input class="toggle" type="checkbox" id="unionAlerts" checked></div>
   <div class="setting"><div><strong>Release reminders</strong><p>Show upcoming release information.</p></div><input class="toggle" type="checkbox" id="releaseAlerts" checked></div>
   <div class="setting"><div><strong>Drawing reminders</strong><p>Show retailer drawing and invite reminders.</p></div><input class="toggle" type="checkbox" id="drawingAlerts" checked></div>
   <div class="setting"><div><strong>Phone notifications</strong><p>Browser notification permission, when supported.</p></div><button class="btn" onclick="enableBrowserNotifications()">Enable</button></div>
  </div>
  <div class="card">
-  <h3 class="section-title" style="margin-top:0">Monitoring status</h3>
-  <p style="font-size:12px;color:var(--muted);line-height:1.7">This page can display data supplied by a monitoring service at <code>data/status.json</code>. A scheduled backend must collect and verify retailer inventory, catalogue information, releases and drawing changes. GitHub Pages alone cannot perform those checks or send reliable SMS messages.</p>
-  <button class="btn" onclick="loadData()">Check for data</button>
+  <div class="section-title" style="margin-top:0">Monitoring status</div>
+  <p style="font-size:11px;color:var(--muted);line-height:1.8">The catalogue monitor publishes data to <code>data/status.json</code>. It currently gathers product and release information, not live retailer stock. Community sightings will be published separately to <code>data/reports.json</code>.</p>
+  <p id="lastUpdated" style="font-size:11px;color:var(--gold2)">Last data update: not available</p>
+  <button class="btn" onclick="loadData()">↻ Check for data</button>
  </div>
 </section>
 </main>
 </div>
+
 <footer>POKÉSTOCK · INDEPENDENT TCG TRACKER · NOT AFFILIATED WITH THE RETAILERS OR CARD BRANDS</footer>
 </div>
 
 <script>
-const retailers = [
+const retailers=[
  {name:"Pokémon Center",desc:"Official Pokémon merchandise and TCG products.",url:"https://www.pokemoncenter.com/"},
  {name:"Walmart",desc:"Online Pokémon and trading card products.",url:"https://www.walmart.com/search?q=pokemon+cards"},
  {name:"Target",desc:"Trading cards, product launches and drawings.",url:"https://www.target.com/c/trading-cards/-/N-4y4s7"},
@@ -232,14 +361,15 @@ const retailers = [
  {name:"TCGplayer",desc:"Market pricing reference for individual cards and sealed products.",url:"https://www.tcgplayer.com/"}
 ];
 
-let data = {products:[],releases:[],drawings:[],history:[],updated_at:null};
+let data={products:[],releases:[],drawings:[],history:[],updated_at:null};
+let communityReports=[];
 
 function escapeHTML(value){
- return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 function money(value){
- if(value===null||value===undefined||value==="") return "—";
- return typeof value==="number" ? "$"+value.toFixed(2) : escapeHTML(value);
+ if(value===null||value===undefined||value==="")return "—";
+ return typeof value==="number"?"$"+value.toFixed(2):escapeHTML(value);
 }
 function showPage(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
@@ -263,7 +393,7 @@ function renderProducts(){
  if(!items.length){el.innerHTML='<div class="empty">No matching products found in the connected catalogue.</div>';return}
  el.innerHTML=items.map(p=>{
   const stock=String(p.stock_status||"Unknown");
-  const stockClass=/stock|available/i.test(stock)&&!/out/i.test(stock)?"green":/out/i.test(stock)?"red":"yellow";
+  const stockClass=/stock|available/i.test(stock)&&!/out|not checked/i.test(stock)?"green":/out/i.test(stock)?"red":"yellow";
   const image=p.image?`<img src="${escapeHTML(p.image)}" alt="">`:"▤";
   return `<article class="product">
    <div class="product-img">${image}</div>
@@ -281,13 +411,13 @@ function renderProducts(){
 function renderReleases(){
  const game=document.getElementById("releaseFilter").value;
  const items=data.releases.filter(r=>!game||r.game===game).sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")));
- document.getElementById("releaseRows").innerHTML=items.length?items.map(r=>`<tr><td class="release-date">${escapeHTML(r.date||"TBA")}</td><td><strong>${escapeHTML(r.name||"Unnamed release")}</strong></td><td>${escapeHTML(r.game||"")}</td><td>${escapeHTML(r.type||"")}</td><td>${money(r.msrp)}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">No verified release data connected yet.</td></tr>';
+ document.getElementById("releaseRows").innerHTML=items.length?items.map(r=>`<tr><td class="release-date">${escapeHTML(r.date||"TBA")}</td><td><strong>${escapeHTML(r.name||"Unnamed release")}</strong></td><td>${escapeHTML(r.game||"")}</td><td>${escapeHTML(r.type||"")}</td><td>${money(r.msrp)}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">No release entries available.</td></tr>';
 }
 
 function renderDrawings(){
  const el=document.getElementById("drawingList");
- if(!data.drawings.length){el.innerHTML='<div class="empty"><div class="empty-icon">✦</div>No verified drawing or invite listings are available.</div>';return}
- el.innerHTML=data.drawings.map(d=>`<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><strong>${escapeHTML(d.name||"Retailer opportunity")}</strong><span class="pill yellow">${escapeHTML(d.status||"Check details")}</span></div><p style="color:var(--muted);font-size:12px">${escapeHTML(d.retailer||"")} · Deadline: ${escapeHTML(d.deadline||"Not listed")}</p><p style="font-size:12px">${escapeHTML(d.description||"")}</p>${d.url?`<a href="${escapeHTML(d.url)}" target="_blank" rel="noopener" style="color:var(--blue);font-size:12px">Open retailer page ↗</a>`:""}</div>`).join("");
+ if(!data.drawings.length){el.innerHTML='<div class="empty">No verified drawing or invite listings are available.</div>';return}
+ el.innerHTML=data.drawings.map(d=>`<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><strong>${escapeHTML(d.name||"Retailer opportunity")}</strong><span class="pill yellow">${escapeHTML(d.status||"Check details")}</span></div><p style="color:var(--muted);font-size:11px">${escapeHTML(d.retailer||"")} · Deadline: ${escapeHTML(d.deadline||"Not listed")}</p><p style="font-size:11px">${escapeHTML(d.description||"")}</p>${d.url?`<a href="${escapeHTML(d.url)}" target="_blank" rel="noopener">Open retailer page ↗</a>`:""}</div>`).join("");
 }
 
 function renderHistory(){
@@ -295,15 +425,39 @@ function renderHistory(){
  document.getElementById("historyRows").innerHTML=items.length?items.slice().reverse().map(h=>`<tr><td>${escapeHTML(h.time||"")}</td><td>${escapeHTML(h.product||"")}</td><td>${escapeHTML(h.retailer||"")}</td><td>${escapeHTML(h.event||"")}</td></tr>`).join(""):'<tr><td colspan="4" class="empty">No alerts recorded yet.</td></tr>';
 }
 
+function renderCommunityPreview(){
+ const el=document.getElementById("recentReports");
+ const recent=communityReports.filter(r=>r.issue_state!=="closed").slice(0,4);
+ document.getElementById("statReports").textContent=communityReports.filter(r=>r.issue_state!=="closed").length;
+ if(!recent.length){
+  el.innerHTML='<div class="empty">No community sightings have been submitted yet.<br><br><a href="reports.html">Be the first to report a sighting →</a></div>';
+  return;
+ }
+ el.innerHTML=recent.map(r=>{
+  const store=r.store||{};
+  const date=r.created_at?new Date(r.created_at).toLocaleString():"Time unavailable";
+  return `<div class="report-preview"><strong>${escapeHTML(r.product||"Product")}</strong><p>${escapeHTML(r.game||"")} · ${escapeHTML(store.name||"Store")} · ${escapeHTML(store.city||"")}, ${escapeHTML(store.state||"")}</p><p>${escapeHTML(r.report_type||"Community report")} · ${escapeHTML(date)}</p></div>`;
+ }).join("");
+}
+
 function updateDashboard(){
  document.getElementById("statProducts").textContent=data.products.length;
- document.getElementById("statStock").textContent=data.products.filter(p=>/in stock|available/i.test(p.stock_status||"")&&!/out/i.test(p.stock_status||"")).length;
+ document.getElementById("statStock").textContent=data.products.filter(p=>/in stock|available/i.test(p.stock_status||"")&&!/out|not checked/i.test(p.stock_status||"")).length;
  document.getElementById("statReleases").textContent=data.releases.length;
- document.getElementById("statDrawings").textContent=data.drawings.length;
- const recent=(data.history||[]).slice(-5).reverse();
- document.getElementById("recentRestocks").innerHTML=recent.length?recent.map(h=>`<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>${escapeHTML(h.product||"Product")}</strong><div style="color:var(--muted);margin-top:4px">${escapeHTML(h.retailer||"")} · ${escapeHTML(h.time||"")}</div></div>`).join(""):'<div class="empty">No verified restock alerts yet.</div>';
- const upcoming=data.releases.slice().sort((a,b)=>String(a.date||"").localeCompare(String(b.date||""))).slice(0,5);
- document.getElementById("nextReleases").innerHTML=upcoming.length?upcoming.map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>${escapeHTML(r.name||"Release")}</strong><div style="color:var(--muted);margin-top:4px">${escapeHTML(r.date||"TBA")} · ${escapeHTML(r.game||"")}</div></div>`).join(""):'<div class="empty">No release feed connected yet.</div>';
+ const recent=data.releases.slice().filter(r=>r.date).sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,5);
+ document.getElementById("nextReleases").innerHTML=recent.length?recent.map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:11px"><strong>${escapeHTML(r.name||"Release")}</strong><div style="color:var(--muted);margin-top:4px">${escapeHTML(r.date||"TBA")} · ${escapeHTML(r.game||"")}</div></div>`).join(""):'<div class="empty">No dated releases available.</div>';
+}
+
+async function loadCommunityReports(){
+ try{
+  const response=await fetch("data/reports.json?time="+Date.now(),{cache:"no-store"});
+  if(!response.ok)throw new Error("Report feed not published");
+  const payload=await response.json();
+  communityReports=Array.isArray(payload.reports)?payload.reports:[];
+ }catch(e){
+  communityReports=[];
+ }
+ renderCommunityPreview();
 }
 
 async function loadData(){
@@ -319,24 +473,31 @@ async function loadData(){
   data.drawings=Array.isArray(data.drawings)?data.drawings:[];
   data.history=Array.isArray(data.history)?data.history:[];
   dot.style.background="var(--green)";
-  label.textContent="Data feed connected";
+  label.textContent="Catalogue feed connected";
+  document.getElementById("lastUpdated").textContent="Last data update: "+(data.last_updated?new Date(data.last_updated).toLocaleString():"Not supplied");
  }catch(e){
-  dot.style.background="var(--yellow)";
-  label.textContent="Monitoring not connected";
+  dot.style.background="var(--gold)";
+  label.textContent="Catalogue feed unavailable";
+  document.getElementById("lastUpdated").textContent="Last data update: unavailable";
  }
- updateDashboard();renderProducts();renderReleases();renderDrawings();renderHistory();
+ updateDashboard();
+ renderProducts();
+ renderReleases();
+ renderDrawings();
+ renderHistory();
+ await loadCommunityReports();
 }
 
 function clearHistory(){
  if(!confirm("Clear the alert history displayed by this page?"))return;
  data.history=[];
- renderHistory();updateDashboard();
+ renderHistory();
 }
 
 async function enableBrowserNotifications(){
  if(!("Notification" in window)){alert("This browser does not support notifications.");return}
  const result=await Notification.requestPermission();
- alert(result==="granted"?"Browser notifications are enabled for this site.":"Notification permission was not granted.");
+ alert(result==="granted"?"Browser notification permission is enabled for this site.":"Notification permission was not granted.");
 }
 
 ["pokemonAlerts","unionAlerts","releaseAlerts","drawingAlerts"].forEach(id=>{
