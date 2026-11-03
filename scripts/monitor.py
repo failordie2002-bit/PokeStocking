@@ -1,326 +1,179 @@
 
 #!/usr/bin/env python3
-"""PokéStock V7.2: conservative catalogue and independent-shop discovery.
-Requires requests and beautifulsoup4 (existing GitHub workflow dependencies).
-Optional configuration: data/shops.json and data/retailer_sources.json.
-Never infers physical-store stock from online stock or search snippets.
-"""
-import hashlib
-import json
-import re
-import time
-from datetime import datetime, timezone
+"""PokéStock V8.0. Evidence-first nationwide catalogue and store pipeline."""
+import json, re, hashlib, os
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, quote_plus
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone, timedelta
+from urllib.parse import urlparse, urljoin
 import requests
 from bs4 import BeautifulSoup
 
-DB = Path('data/status.json')
-SHOPS = Path('data/shops.json')
-STORE_SOURCES = Path('data/retailer_sources.json')
-VERSION = '7.2'
-NOW = datetime.now(timezone.utc)
-HEADERS = {'User-Agent': 'PokestockCatalogMonitor/7.2 (+public catalogues; no checkout automation)', 'Accept': 'text/html,application/json,application/xml;q=0.9,*/*;q=0.8'}
-SESSION = requests.Session()
-SESSION.headers.update(HEADERS)
-ERRORS = []
-HEALTH = {}
-MAX_SHOPS = 12
-MAX_ITEMS_PER_SHOP = 100
-MAX_STORE_SOURCES = 20
-TTL_SECONDS = 6 * 3600
-POKEMON_PRESS = 'https://press.pokemon.com/en/Items/Schedule?period=All&types=3&sortAsc=False&sortBy=Date'
-UNION = 'https://www.unionarena-tcg.com/na/products/'
-SEALED = ('booster', 'elite trainer', 'collection', 'bundle', 'tin', 'blister', 'deck', 'display', 'battle academy', 'build & battle', 'premium', 'chest', 'battle stadium')
-EXCLUDE = ('sleeves', 'binder', 'playmat', 'portfolio', 'deck box', 'plush', 'apparel', 'single card', 'individual card', 'graded', 'digital code')
-BIG_RETAILERS = {'walmart.com':'Walmart','target.com':'Target','bestbuy.com':'Best Buy','gamestop.com':'GameStop','pokemoncenter.com':'Pokémon Center'}
-
-def stamp(): return datetime.now(timezone.utc).isoformat()
-def norm(s): return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9]+', ' ', str(s or '').casefold().replace('é','e'))).strip()
-def safe_url(s):
-    try:
-        u=urlparse(str(s)); return u.scheme=='https' and bool(u.hostname) and not u.username and not u.password
-    except (TypeError,ValueError): return False
-
-def host(url): return (urlparse(url).hostname or '').lower()
-def same_host(a,b): return host(a)==host(b)
-def get(url, json_mode=False):
-    if not safe_url(url): raise ValueError('HTTPS URL required')
-    r=SESSION.get(url,timeout=(7,17),allow_redirects=True)
-    r.raise_for_status()
-    if not same_host(url,r.url): raise ValueError('Cross-domain redirect rejected')
-    if len(r.content)>5_000_000: raise ValueError('Response exceeds 5MB limit')
-    return r.json() if json_mode else BeautifulSoup(r.text,'html.parser')
-
-def walk(obj):
-    if isinstance(obj,list):
-        for x in obj: yield from walk(x)
-    elif isinstance(obj,dict):
-        yield obj
-        for x in obj.values():
-            if isinstance(x,(dict,list)): yield from walk(x)
-
-def structured(soup):
-    for script in soup.select('script[type="application/ld+json"]'):
-        try: yield from walk(json.loads(script.string or script.get_text()))
-        except (ValueError,TypeError): continue
-
-def kind(obj,name):
-    t=obj.get('@type',[]); t=[t] if isinstance(t,str) else t
-    return any(str(v).split('/')[-1]==name for v in t)
-
-def game(name):
-    n=norm(name)
-    if 'pokemon' in n: return 'Pokémon'
-    if 'union arena' in n: return 'Union Arena'
-    return ''
-
+ROOT=Path(__file__).resolve().parents[1]
+DATA=ROOT/'data'
+NOW=datetime.now(timezone.utc)
+STAMP=NOW.isoformat()
+UA={'User-Agent':'PokeStock/8.0 (public product catalogue monitor)'}
+GAMES=['Pokémon','Union Arena','Gundam','One Piece']
+SOURCES={
+ 'Pokémon':'https://press.pokemon.com/en/Items/Schedule?period=All&types=3&sortAsc=False&sortBy=Date',
+ 'Union Arena':'https://www.unionarena-tcg.com/na/products/',
+ 'Gundam':'https://www.gundam-gcg.com/en/products/',
+ 'One Piece':'https://en.onepiece-cardgame.com/products/'
+}
+errors=[]; health={}
+def load(name,default):
+ p=DATA/name
+ if not p.exists(): return default
+ return json.loads(p.read_text(encoding='utf-8'))
+def save(name,obj):
+ p=DATA/name;p.parent.mkdir(parents=True,exist_ok=True)
+ tmp=p.with_suffix(p.suffix+'.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2),encoding='utf-8');tmp.replace(p)
+def https(u):
+ try:
+  p=urlparse(str(u));return p.scheme=='https' and bool(p.hostname) and not p.username and not p.password
+ except ValueError:return False
+def fetch(url):
+ if not https(url):raise ValueError('HTTPS required')
+ r=requests.get(url,headers=UA,timeout=18,allow_redirects=True)
+ r.raise_for_status()
+ if not https(r.url) or len(r.content)>4_000_000:raise ValueError('Invalid response')
+ return r
+def norm(x):return re.sub(r'[^a-z0-9]+',' ',str(x or '').lower().replace('é','e')).strip()
+def key(p):return (norm(p.get('game')),p.get('url') or p.get('sku') or norm(p.get('name')))
+def merge(existing,new):
+ out={key(x):dict(x) for x in existing if isinstance(x,dict)}
+ for p in new:
+  k=key(p)
+  if k in out:
+   for field,val in p.items():
+    if val not in ('',None,[]):out[k][field]=val
+  else:out[k]=dict(p,first_seen=STAMP)
+ return list(out.values())
+def status(name,fn):
+ try:
+  result=fn();health[name]={'status':'ok' if result else 'no_results','count':len(result),'checked_at':STAMP};return result
+ except Exception as e:
+  msg=f'{type(e).__name__}: {str(e)[:180]}'
+  errors.append(name+': '+msg);health[name]={'status':'error','error':msg,'checked_at':STAMP};return []
+def official(game,url):
+ soup=BeautifulSoup(fetch(url).text,'html.parser');results=[];seen=set()
+ for a in soup.select('a[href]'):
+  link=urljoin(url,a['href']);name=a.get_text(' ',strip=True)
+  if not https(link) or urlparse(link).hostname!=urlparse(url).hostname or link in seen:continue
+  path=urlparse(link).path.lower()
+  if game=='Pokémon':
+   if '/products/' not in path or not re.search(r'pok[eé]mon\s+tcg\s*:',name,re.I):continue
+  elif game=='Union Arena':
+   if not ('/products/boosters/' in path or '/products/decks/' in path):continue
+  else:
+   if '/products/' not in path or len(name)<8 or len(name)>140:continue
+   if not any(w in norm(name) for w in ('booster','starter','deck','pack','set','collection')):continue
+  seen.add(link)
+  img=a.find('img')
+  image=urljoin(url,img.get('src','')) if img else ''
+  results.append({'name':name,'game':game,'type':'Official catalogue listing','url':link,'image':image if https(image) else '', 'stock_status':'Not checked','source':'Official catalogue'})
+ if not results:raise ValueError('No product links parsed; source structure may have changed')
+ return results[:300]
+def shops():
+ data=load('shops.json',[])
+ if not isinstance(data,list):raise ValueError('shops.json must be a list')
+ out=[];seen=set()
+ for s in data:
+  if not isinstance(s,dict) or not https(s.get('url')):continue
+  u=s['url'].rstrip('/');sid=str(s.get('id') or hashlib.sha256(u.encode()).hexdigest()[:16])
+  if sid in seen:continue
+  seen.add(sid)
+  out.append({'id':sid,'name':s.get('name') or urlparse(u).hostname,'url':u,'city':s.get('city',''),'state':s.get('state',''),'lat':s.get('lat'),'lon':s.get('lon'),'country':s.get('country','US')})
+ return out
 def sealed(name):
-    n=norm(name)
-    return bool(game(name)) and any(norm(x) in n for x in SEALED) and not any(norm(x) in n for x in EXCLUDE)
-
-def image_of(value,base):
-    if isinstance(value,list): value=next(iter(value),'')
-    if isinstance(value,dict): value=value.get('url') or value.get('contentUrl','')
-    if not isinstance(value,str): return ''
-    url=urljoin(base,value)
-    return url if safe_url(url) else ''
-
-def record(name, fn):
-    try:
-        result=fn()
-        HEALTH[name]={'status':'ok' if result else 'no_results','count':len(result),'checked_at':stamp()}
-        return result
-    except Exception as exc:
-        msg=f'{type(exc).__name__}: {str(exc)[:220]}'
-        ERRORS.append(f'{name}: {msg}')
-        HEALTH[name]={'status':'error','error':msg,'checked_at':stamp()}
-        return []
-
-def load_json(path,default):
-    if not path.exists(): return default
-    return json.loads(path.read_text(encoding='utf-8'))
-
-def official_pokemon():
-    soup=get(POKEMON_PRESS); out={}
-    for a in soup.select('a[href*="/products/"]'):
-        title=a.get_text(' ',strip=True)
-        if not re.search(r'Pok[eé]mon\s+TCG\s*:',title,re.I): continue
-        url=urljoin(POKEMON_PRESS,a['href'])
-        if not safe_url(url): continue
-        parent=a
-        date=''
-        for _ in range(5):
-            parent=parent.parent if parent.parent else parent
-            match=re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}',parent.get_text(' ',strip=True),re.I)
-            if match:
-                try: date=datetime.strptime(match.group().replace(',',''),'%B %d %Y').date().isoformat()
-                except ValueError: pass
-                break
-        out[url]={'name':title,'game':'Pokémon','type':'Set Release','date':date,'url':url}
-    if not out: raise ValueError('Official schedule returned no parsable releases')
-    return list(out.values())
-
-def official_union():
-    soup=get(UNION); out={}
-    for a in soup.select('a[href]'):
-        href=a.get('href','')
-        if '/products/boosters/' not in href and '/products/decks/' not in href: continue
-        url=urljoin(UNION,href)
-        if not safe_url(url): continue
-        title=a.get_text(' ',strip=True)
-        if not title: continue
-        title=re.sub(r'^(BOOSTERS|PRECONSTRUCTED DECKS)\s+','',title,flags=re.I)
-        item={'name':title,'game':'Union Arena','type':'Starter Deck' if '/decks/' in href else 'Booster Pack','url':url,'source':'Union Arena official catalogue','stock_status':'Not checked','image':'','release_date':''}
-        parent=a
-        for _ in range(4):
-            parent=parent.parent if parent.parent else parent
-            for im in parent.select('img[src],img[data-src]'):
-                candidate=image_of(im.get('src') or im.get('data-src'),UNION)
-                if '/images/products/' in candidate: item['image']=candidate; break
-            if item['image']: break
-        out[url]=item
-    if not out: raise ValueError('Official Union Arena catalogue returned no parsable products')
-    return list(out.values())
-
-def catalog_key(p):
-    return (norm(p.get('game')),str(p.get('url','')).rstrip('/'))
-
-def merge(old,new):
-    result={}; added=0
-    for p in old:
-        if isinstance(p,dict) and p.get('url'): result[catalog_key(p)]=dict(p)
-    for p in new:
-        key=catalog_key(p)
-        if not key[1]: continue
-        if key not in result:
-            result[key]=dict(p); result[key]['first_seen']=stamp(); added+=1
-        else:
-            for k,v in p.items():
-                if v and k not in ('stock_status','first_seen'): result[key][k]=v
-        result[key]['last_seen']=stamp()
-    return list(result.values()),added
-
-def shops_config():
-    shops=load_json(SHOPS,[])
-    if not isinstance(shops,list): raise ValueError('data/shops.json must contain a JSON array')
-    cleaned=[]; seen=set()
-    for shop in shops:
-        if not isinstance(shop,dict): continue
-        url=str(shop.get('url','')).rstrip('/')
-        if not safe_url(url) or url in seen: continue
-        seen.add(url)
-        cleaned.append({'name':str(shop.get('name') or host(url)),'url':url,'city':str(shop.get('city','')),'state':str(shop.get('state','')),'id':str(shop.get('id') or hashlib.sha256(url.encode()).hexdigest()[:12])})
-    return cleaned
-
-def parse_shopify(shop):
-    url=shop['url']+'/products.json?limit=250'
-    payload=get(url,json_mode=True)
-    products=payload.get('products') if isinstance(payload,dict) else None
-    if not isinstance(products,list): raise ValueError('Shopify product endpoint missing products array')
-    found=[]
-    for p in products[:MAX_ITEMS_PER_SHOP]:
-        title=str(p.get('title',''))
-        if not sealed(title): continue
-        handle=p.get('handle')
-        if not handle: continue
-        link=shop['url']+'/products/'+str(handle)
-        if not safe_url(link): continue
-        variants=p.get('variants') or []
-        # Shopify available may represent ONLINE inventory, never physical location.
-        availability=[v.get('available') for v in variants if isinstance(v,dict)]
-        online='In stock' if any(v is True for v in availability) else 'Out of stock' if availability and all(v is False for v in availability) else 'Unknown'
-        imgs=p.get('images') or []
-        img=image_of(imgs[0].get('src'),shop['url']) if imgs and isinstance(imgs[0],dict) else ''
-        found.append({'name':title,'game':game(title),'type':'Sealed TCG product','url':link,'image':img,'source':'Independent shop Shopify catalogue','retailer':shop['name'],'online_stock_status':online,'stock_status':'Not checked','shop_id':shop['id']})
-    return found
-
-def parse_woocommerce(shop):
-    # Public WordPress Store API, if enabled by shop.
-    url=shop['url']+'/wp-json/wc/store/v1/products?per_page=100'
-    payload=get(url,json_mode=True)
-    if not isinstance(payload,list): raise ValueError('WooCommerce public Store API unavailable')
-    found=[]
-    for p in payload[:MAX_ITEMS_PER_SHOP]:
-        title=BeautifulSoup(str(p.get('name','')),'html.parser').get_text(' ',strip=True)
-        if not sealed(title): continue
-        link=p.get('permalink','')
-        if not safe_url(link) or host(link)!=host(shop['url']): continue
-        imgs=p.get('images') or []
-        img=image_of(imgs[0].get('src'),shop['url']) if imgs and isinstance(imgs[0],dict) else ''
-        availability=p.get('is_in_stock')
-        online='In stock' if availability is True else 'Out of stock' if availability is False else 'Unknown'
-        found.append({'name':title,'game':game(title),'type':'Sealed TCG product','url':link,'image':img,'source':'Independent shop WooCommerce Store API','retailer':shop['name'],'online_stock_status':online,'stock_status':'Not checked','shop_id':shop['id']})
-    return found
-
-def parse_structured_shop(shop):
-    # Product JSON-LD from homepage only; not an exhaustive catalogue.
-    soup=get(shop['url']); found=[]
-    for p in structured(soup):
-        if not kind(p,'Product'): continue
-        title=str(p.get('name',''))
-        if not sealed(title): continue
-        link=p.get('url') or shop['url']
-        if not safe_url(link) or host(link)!=host(shop['url']): continue
-        found.append({'name':title,'game':game(title),'type':'Sealed TCG product','url':link,'image':image_of(p.get('image'),shop['url']),'source':'Independent shop structured product metadata','retailer':shop['name'],'online_stock_status':'Unknown','stock_status':'Not checked','shop_id':shop['id']})
-    return found
-
-def scan_shop(shop):
-    errors=[]
-    for label,fn in [('shopify',parse_shopify),('woocommerce',parse_woocommerce),('jsonld',parse_structured_shop)]:
-        try:
-            items=fn(shop)
-            if items: return {'shop':shop,'products':items,'adapter':label,'status':'ok','errors':errors}
-            errors.append(label+': no matching sealed products')
-        except Exception as exc: errors.append(label+': '+type(exc).__name__+': '+str(exc)[:130])
-    return {'shop':shop,'products':[],'adapter':None,'status':'no_results_or_blocked','errors':errors}
-
-def verify_store(source):
-    """Only explicitly configured, machine-readable, physical-store evidence qualifies."""
-    result={'status':'Unknown','checked_at':stamp(),'source_url':source.get('source_url','')}
-    required=('store_id','store_name','lat','lon','game','product_name','source_url','evidence_url')
-    missing=[x for x in required if source.get(x) in ('',None)]
-    if missing: return dict(result,reason='Missing '+','.join(missing))
-    try:
-        lat=float(source['lat']); lon=float(source['lon'])
-        if abs(lat)>90 or abs(lon)>180: raise ValueError('Invalid coordinates')
-        if not safe_url(source['source_url']) or not safe_url(source['evidence_url']): raise ValueError('Invalid HTTPS evidence URL')
-        data=get(source['evidence_url'],json_mode=True)
-        if not isinstance(data,dict): raise ValueError('Evidence must be a JSON object')
-        if str(data.get('store_id',''))!=str(source['store_id']): raise ValueError('Store ID mismatch')
-        if norm(data.get('product_name'))!=norm(source['product_name']): raise ValueError('Product mismatch')
-        if data.get('inventory_scope')!='physical_store': raise ValueError('No explicit physical-store scope')
-        status=str(data.get('availability','')).split('/')[-1]
-        if status not in ('InStock','OutOfStock','PreOrder','BackOrder'): raise ValueError('Unrecognized availability')
-        result['status']={'InStock':'In stock','OutOfStock':'Out of stock','PreOrder':'Preorder','BackOrder':'Backorder'}[status]
-        if status=='InStock':
-            result.update({'store_id':str(source['store_id']),'store_name':str(source['store_name']),'product_name':str(source['product_name']),'game':str(source['game']),'lat':lat,'lon':lon,'verified_at':stamp(),'source_url':source['source_url'],'evidence_url':source['evidence_url']})
-    except Exception as exc: result.update({'reason':type(exc).__name__+': '+str(exc)[:200],'check_failed':True})
-    return result
-
-def recent(record):
-    if not isinstance(record,dict) or record.get('status')!='In stock': return False
-    try:
-        dt=datetime.fromisoformat(record['verified_at'].replace('Z','+00:00'))
-        return dt.tzinfo is not None and 0<=(NOW-dt).total_seconds()<=TTL_SECONDS
-    except (KeyError,TypeError,ValueError): return False
-
+ n=norm(name)
+ return any(x in n for x in ('pokemon','union arena','gundam','one piece')) and any(x in n for x in ('booster','deck','bundle','tin','collection','display','trainer box','starter')) and not any(x in n for x in ('single card','sleeves','binder','playmat','graded'))
+def shop_products(shop):
+ base=shop['url'];found=[];attempts=[]
+ for adapter,path in [('shopify','/products.json?limit=100'),('woocommerce','/wp-json/wc/store/v1/products?per_page=100')]:
+  try:
+   r=fetch(base+path)
+   if urlparse(r.url).hostname!=urlparse(base).hostname:raise ValueError('Redirected off shop domain')
+   payload=r.json();items=payload.get('products',[]) if adapter=='shopify' and isinstance(payload,dict) else payload if isinstance(payload,list) else []
+   if not isinstance(items,list):raise ValueError('Invalid product list')
+   for item in items[:100]:
+    title=BeautifulSoup(str(item.get('title') or item.get('name') or ''),'html.parser').get_text(' ',strip=True)
+    if not sealed(title):continue
+    link=(base+'/products/'+str(item.get('handle',''))) if adapter=='shopify' else item.get('permalink','')
+    if not https(link) or urlparse(link).hostname!=urlparse(base).hostname:continue
+    n=norm(title)
+    game=next((g for g in GAMES if norm(g) in n),'')
+    if not game:continue
+    variants=item.get('variants') or []
+    available=any(v.get('available') is True for v in variants if isinstance(v,dict)) if adapter=='shopify' else item.get('is_in_stock') is True
+    # Online availability is NOT store shelf availability.
+    found.append({'name':title,'game':game,'type':'Sealed product','url':link,'retailer':shop['name'],'shop_id':shop['id'],'online_stock_status':'In stock' if available else 'Unknown','stock_status':'Not checked','source':adapter})
+   attempts.append({'adapter':adapter,'status':'ok','items':len(items)})
+   if found:break
+  except Exception as e:attempts.append({'adapter':adapter,'status':'error','reason':str(e)[:120]})
+ return found,attempts
+def evidence_rows():
+ sources=load('retailer_sources.json',[])
+ if not isinstance(sources,list):raise ValueError('retailer_sources.json must be a list')
+ rows=[];checks=[]
+ for s in sources[:40]:
+  try:
+   required=('store_id','store_name','product_name','game','lat','lon','source_url','evidence_url')
+   if not isinstance(s,dict) or any(s.get(x) in (None,'') for x in required):raise ValueError('Missing required source fields')
+   if not https(s['source_url']) or not https(s['evidence_url']):raise ValueError('Invalid evidence URL')
+   r=fetch(s['evidence_url'])
+   if urlparse(r.url).hostname!=urlparse(s['evidence_url']).hostname:raise ValueError('Redirected evidence')
+   d=r.json()
+   if not isinstance(d,dict) or str(d.get('store_id'))!=str(s['store_id']) or norm(d.get('product_name'))!=norm(s['product_name']) or d.get('inventory_scope')!='physical_store':raise ValueError('Store-specific evidence mismatch')
+   if d.get('availability')!='InStock':checks.append({'store_id':s['store_id'],'product_name':s['product_name'],'status':'not_in_stock','checked_at':STAMP});continue
+   lat,lon=float(s['lat']),float(s['lon'])
+   if not -90<=lat<=90 or not -180<=lon<=180:raise ValueError('Invalid coordinates')
+   rows.append({'store_id':str(s['store_id']),'store_name':s['store_name'],'product_name':s['product_name'],'game':s['game'],'lat':lat,'lon':lon,'status':'In stock','verified_at':STAMP,'source_url':s['source_url'],'evidence_url':s['evidence_url']})
+   checks.append({'store_id':s['store_id'],'status':'verified_in_stock','checked_at':STAMP})
+  except Exception as e:checks.append({'store_id':s.get('store_id') if isinstance(s,dict) else '', 'status':'error','reason':str(e)[:150],'checked_at':STAMP})
+ return rows,checks,len(sources)
 def main():
-    db=load_json(DB,{'products':[],'releases':[]})
-    if not isinstance(db,dict) or not isinstance(db.get('products'),list) or not isinstance(db.get('releases'),list):
-        raise ValueError('Existing database invalid; refusing to overwrite')
-    original_products=db['products']; original_releases=db['releases']
-    releases=record('Pokemon Press',official_pokemon)
-    union=record('Union Arena',official_union)
-    db['releases'],_=merge(original_releases,releases)
-    products,added=merge(original_products,union)
-    try:
-        shops=shops_config()
-        HEALTH['Independent shop configuration']={'status':'ok' if shops else 'not_configured','shops':len(shops),'checked_at':stamp()}
-    except Exception as exc:
-        shops=[]; ERRORS.append('Independent shop configuration: '+str(exc))
-        HEALTH['Independent shop configuration']={'status':'error','error':str(exc),'checked_at':stamp()}
-    cursor=int(db.get('v72_shop_cursor',0) or 0)
-    selected=[shops[(cursor+i)%len(shops)] for i in range(min(MAX_SHOPS,len(shops)))] if shops else []
-    db['v72_shop_cursor']=(cursor+len(selected))%len(shops) if shops else 0
-    checks=[]; discovered=[]
-    with ThreadPoolExecutor(max_workers=3) as pool:
-        for result in pool.map(scan_shop,selected):
-            checks.append({'shop':result['shop']['name'],'url':result['shop']['url'],'status':result['status'],'adapter':result['adapter'],'products_found':len(result['products']),'errors':result['errors'],'checked_at':stamp()})
-            discovered.extend(result['products'])
-    products,shop_added=merge(products,discovered)
-    HEALTH['Independent shop catalogues']={'status':'ok' if discovered else 'no_results' if shops else 'not_configured','shops_checked':len(selected),'products_found':len(discovered),'shops_with_products':sum(x['products_found']>0 for x in checks),'checked_at':stamp()}
-    for p in products: p['stock_status']='Not checked'
-    try:
-        sources=load_json(STORE_SOURCES,[])
-        if not isinstance(sources,list): raise ValueError('Store sources must be a JSON array')
-        HEALTH['Physical store evidence']={'status':'configured' if sources else 'not_configured','sources':len(sources),'checked_at':stamp()}
-    except Exception as exc:
-        sources=[]; ERRORS.append('Physical store evidence: '+str(exc))
-        HEALTH['Physical store evidence']={'status':'error','error':str(exc),'checked_at':stamp()}
-    scursor=int(db.get('v72_store_cursor',0) or 0)
-    chosen=[sources[(scursor+i)%len(sources)] for i in range(min(MAX_STORE_SOURCES,len(sources)))] if sources else []
-    db['v72_store_cursor']=(scursor+len(chosen))%len(sources) if sources else 0
-    with ThreadPoolExecutor(max_workers=3) as pool: store_checks=list(pool.map(verify_store,chosen))
-    inventory={}
-    for item in db.get('store_inventory',[]):
-        if recent(item): inventory[(str(item.get('store_id')),norm(item.get('product_name')))]=item
-    # A failed check must not refresh or extend an older positive result.
-    for item in store_checks:
-        if 'store_id' not in item: continue
-        key=(str(item['store_id']),norm(item['product_name']))
-        if recent(item): inventory[key]=item
-        else: inventory.pop(key,None)
-    db.update({'products':products,'store_inventory':list(inventory.values()),'monitor_version':VERSION,'last_updated':stamp(),'catalogue_source_status':HEALTH,'monitor_errors':ERRORS,'v72_shop_checks':checks,'v72_store_checks':store_checks,'retailer_stock_checks':'configured' if sources else 'not_connected'})
-    db['discovery_summary']={'new_products_this_run':added+shop_added,'total_products':len(products),'pokemon_products':sum(p.get('game')=='Pokémon' for p in products),'union_arena_products':sum(p.get('game')=='Union Arena' for p in products),'products_with_images':sum(bool(p.get('image')) for p in products),'independent_shops_configured':len(shops),'independent_shops_checked':len(selected),'independent_shop_products_discovered_this_run':len(discovered),'physical_store_sources_configured':len(sources),'store_checks_this_run':len(store_checks),'verified_in_stock_locations':len(inventory),'source_errors':len(ERRORS),'updated_at':stamp()}
-    DB.parent.mkdir(parents=True,exist_ok=True)
-    tmp=DB.with_suffix('.json.tmp')
-    tmp.write_text(json.dumps(db,ensure_ascii=False,indent=2),encoding='utf-8')
-    tmp.replace(DB)
-    print(json.dumps(db['discovery_summary'],indent=2))
-    for check in checks:
-        if check['status']!='ok': print('Shop not verified:',check['shop'],check['errors'][:2])
-    for err in ERRORS: print('SOURCE ERROR:',err)
-
-if __name__=='__main__': main()
+ db=load('status.json',{'products':[],'releases':[]})
+ if not isinstance(db,dict) or not isinstance(db.get('products'),list) or not isinstance(db.get('releases'),list):raise ValueError('Invalid existing status.json; refusing overwrite')
+ old=len(db['products']);discovered=[]
+ for g,url in SOURCES.items():discovered+=status('Official '+g,lambda g=g,url=url:official(g,url))
+ # Keep all existing products/releases even if upstream sites fail.
+ db['products']=merge(db['products'],discovered)
+ try:directory=shops();health['Shop directory']={'status':'ok' if directory else 'not_configured','count':len(directory),'checked_at':STAMP}
+ except Exception as e:directory=[];errors.append('Shop directory: '+str(e))
+ cursor=int(db.get('v8_shop_cursor',0));chosen=[directory[(cursor+i)%len(directory)] for i in range(min(10,len(directory)))] if directory else []
+ db['v8_shop_cursor']=(cursor+len(chosen))%len(directory) if directory else 0
+ reports=[];offers=[]
+ for s in chosen:
+  products,attempts=shop_products(s);offers.extend(products)
+  reports.append({'store_id':s['id'],'name':s['name'],'found':len(products),'adapters':attempts,'checked_at':STAMP})
+ db['products']=merge(db['products'],offers)
+ # Preserve independently curated store records, but never invent locations.
+ previous=load('stores.json',[])
+ if not isinstance(previous,list):previous=[]
+ by_id={str(s['id']):s for s in previous if isinstance(s,dict) and s.get('id')}
+ for s in directory:by_id[s['id']]={**by_id.get(s['id'],{}),**s}
+ save('stores.json',list(by_id.values()))
+ try:confirmed,checks,configured=evidence_rows()
+ except Exception as e:confirmed=[];checks=[];configured=0;errors.append('Physical-store evidence: '+str(e))
+ # Preserve only previously verified records younger than six hours.
+ for item in db.get('store_inventory',[]):
+  try:
+   t=datetime.fromisoformat(item['verified_at'].replace('Z','+00:00'))
+   if item.get('status')=='In stock' and timedelta(0)<=NOW-t<=timedelta(hours=6):
+    if not any(str(x.get('store_id'))==str(item.get('store_id')) and norm(x.get('product_name'))==norm(item.get('product_name')) for x in confirmed):confirmed.append(item)
+  except (KeyError,ValueError,TypeError):pass
+ # Remove stale positives when an explicit negative observation is received.
+ negative={(str(x.get('store_id')),norm(x.get('product_name'))) for x in checks if x.get('status')=='not_in_stock'}
+ confirmed=[x for x in confirmed if (str(x.get('store_id')),norm(x.get('product_name'))) not in negative]
+ # Shipment Catcher is schema-ready; no inferred delivery events.
+ shipment=load('shipments.json',{'events':[],'forecasts':[]})
+ if not isinstance(shipment,dict):shipment={'events':[],'forecasts':[]}
+ shipment.setdefault('events',[]);shipment.setdefault('forecasts',[])
+ save('shipments.json',shipment)
+ db.update({'monitor_version':'8.0','last_updated':STAMP,'store_inventory':confirmed,'catalogue_source_status':health,'monitor_errors':errors,'v8_shop_checks':reports,'v8_store_checks':checks,'v8_store_count':len(by_id),'v8_shipment_schema':'data/shipments.json'})
+ db['discovery_summary']={'previous_products':old,'total_products':len(db['products']),'stores':len(by_id),'shop_checks':len(reports),'store_sources':configured,'verified_in_stock_locations':len(confirmed),'source_errors':len(errors),'updated_at':STAMP}
+ save('status.json',db)
+ print(json.dumps(db['discovery_summary'],indent=2))
+ for e in errors:print('SOURCE ERROR:',e)
+if __name__=='__main__':main()
