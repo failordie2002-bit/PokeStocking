@@ -1,16 +1,10 @@
 name: PokeStock Monitor
 
-on:
-  schedule:
-    - cron: "*/5 * * * *"
+on: 
   workflow_dispatch:
 
 permissions:
   contents: write
-
-concurrency:
-  group: pokestock-monitor
-  cancel-in-progress: false
 
 jobs:
   update:
