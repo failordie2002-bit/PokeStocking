@@ -1,0 +1,635 @@
+name: Pokestock V31 Store Product Forecasts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 10,22 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-v31
+  cancel-in-progress: false
+
+jobs:
+  collect-and-forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run collector and forecasts
+        shell: bash
+        run: |
+          mkdir -p data
+          cat > /tmp/v31.py <<'PY'
+          import json
+          import re
+          import hashlib
+          import statistics
+          from pathlib import Path
+          from datetime import datetime, timedelta, timezone
+          from collections import defaultdict, Counter
+          from urllib.parse import urlparse
+          import requests
+          from bs4 import BeautifulSoup
+
+          ROOT = Path("data")
+          NOW = datetime.now(timezone.utc)
+          TODAY = NOW.date()
+
+          GAMES = [
+              "Pokémon", "Union Arena", "Gundam",
+              "One Piece", "Magic: The Gathering",
+              "Yu-Gi-Oh!", "Disney Lorcana",
+              "Digimon", "Dragon Ball Super",
+              "Star Wars: Unlimited",
+              "Flesh and Blood", "Riftbound",
+              "Weiss Schwarz", "Cardfight Vanguard"
+          ]
+
+          def read(name, default):
+              try:
+                  return json.loads(
+                      (ROOT / name).read_text(
+                          encoding="utf-8"
+                      )
+                  )
+              except (OSError, ValueError):
+                  return default
+
+          def write(name, obj):
+              p = ROOT / name
+              temp = p.with_suffix(".tmp")
+              temp.write_text(
+                  json.dumps(
+                      obj, indent=2, ensure_ascii=False
+                  ),
+                  encoding="utf-8"
+              )
+              temp.replace(p)
+
+          def norm(value):
+              return re.sub(
+                  r"\s+", " ",
+                  str(value or "").strip().lower()
+              )
+
+          def canonical(value):
+              return re.sub(
+                  r"[^a-z0-9]+", "",
+                  norm(value)
+              )
+
+          def parse_date(value):
+              try:
+                  return datetime.fromisoformat(
+                      str(value).replace("Z", "+00:00")
+                  ).date()
+              except (ValueError, TypeError):
+                  return None
+
+          def chain(value):
+              x = norm(value)
+              for name in [
+                  "Walmart", "Target", "Best Buy",
+                  "GameStop", "Barnes & Noble",
+                  "Five Below", "Dollar General",
+                  "Walgreens", "CVS", "Kohl",
+                  "Ross", "Burlington", "Lowe"
+              ]:
+                  if canonical(name) in canonical(x):
+                      return name
+              return str(value or "").strip()
+
+          def game_of(name):
+              x = norm(name)
+              patterns = {
+                  "Pokémon": ["pokemon", "pokémon"],
+                  "Union Arena": ["union arena"],
+                  "Gundam": ["gundam"],
+                  "One Piece": ["one piece"],
+                  "Magic: The Gathering": [
+                      "magic the gathering", "mtg"
+                  ],
+                  "Yu-Gi-Oh!": ["yu-gi-oh", "yugioh"],
+                  "Disney Lorcana": ["lorcana"],
+                  "Digimon": ["digimon"],
+                  "Dragon Ball Super": [
+                      "dragon ball"
+                  ],
+                  "Star Wars: Unlimited": [
+                      "star wars unlimited"
+                  ],
+                  "Flesh and Blood": [
+                      "flesh and blood"
+                  ],
+                  "Riftbound": ["riftbound"],
+                  "Weiss Schwarz": ["weiss schwarz"],
+                  "Cardfight Vanguard": [
+                      "cardfight", "vanguard"
+                  ]
+              }
+              for game, terms in patterns.items():
+                  if any(t in x for t in terms):
+                      return game
+              return None
+
+          def product_key(game, name):
+              return hashlib.sha256(
+                  (canonical(game) + "|" +
+                   canonical(name)).encode()
+              ).hexdigest()[:20]
+
+          def next_day(weekday):
+              for offset in range(8):
+                  d = TODAY + timedelta(days=offset)
+                  if d.weekday() == weekday:
+                      return d.isoformat()
+              return None
+
+          stores = read(
+              "physical_inventory_sources.json", []
+          )
+          offers = read("online_offers.json", [])
+          shipments = read(
+              "shipments.json",
+              {"events": [], "forecasts": []}
+          )
+          old = read(
+              "v31_sightings.json", []
+          )
+
+          if not isinstance(stores, list):
+              stores = []
+          if not isinstance(offers, list):
+              offers = []
+          if not isinstance(old, list):
+              old = []
+          if not isinstance(shipments, dict):
+              shipments = {}
+
+          store_by_id = {}
+          store_lookup = defaultdict(list)
+
+          for s in stores:
+              if not isinstance(s, dict):
+                  continue
+              sid = s.get("source_id")
+              if not sid:
+                  continue
+
+              store_by_id[sid] = s
+              k = (
+                  canonical(chain(
+                      s.get("chain") or s.get("name")
+                  )),
+                  canonical(s.get("city")),
+                  canonical(s.get("state"))
+              )
+              store_lookup[k].append(sid)
+
+          # Build a product catalogue without merging
+          # different games or product titles.
+          products = {}
+          for o in offers:
+              if not isinstance(o, dict):
+                  continue
+              game = o.get("game")
+              title = o.get("product_name")
+              if not game or not title:
+                  continue
+
+              k = product_key(game, title)
+              products[k] = {
+                  "product_id": k,
+                  "game": game,
+                  "product_name": title,
+                  "format": o.get("format", ""),
+                  "source_url": o.get(
+                      "product_url", ""
+                  )
+              }
+
+          # Collector: public in-store sightings.
+          # We do not guess location or game from
+          # retailer-wide reports.
+          sources = [
+              "https://restockd.app/pokemon-in-store"
+          ]
+
+          diagnostics = []
+          candidates = []
+
+          for url in sources:
+              try:
+                  r = requests.get(
+                      url,
+                      timeout=25,
+                      headers={
+                          "User-Agent":
+                          "Mozilla/5.0 PokestockResearch/31"
+                      }
+                  )
+                  diagnostics.append({
+                      "url": url,
+                      "http_status": r.status_code,
+                      "bytes": len(r.content)
+                  })
+                  if r.status_code != 200:
+                      continue
+
+                  soup = BeautifulSoup(
+                      r.text, "html.parser"
+                  )
+
+                  # Extract explicitly structured
+                  # sightings when exposed in JSON-LD.
+                  for node in soup.select(
+                      'script[type="application/ld+json"]'
+                  ):
+                      try:
+                          data = json.loads(
+                              node.string or node.text
+                          )
+                      except (ValueError, TypeError):
+                          continue
+
+                      def walk(obj):
+                          if isinstance(obj, list):
+                              for item in obj:
+                                  yield from walk(item)
+                          elif isinstance(obj, dict):
+                              yield obj
+                              for v in obj.values():
+                                  if isinstance(
+                                      v, (dict, list)
+                                  ):
+                                      yield from walk(v)
+
+                      for obj in walk(data):
+                          if not isinstance(obj, dict):
+                              continue
+                          if all(
+                              k in obj for k in (
+                                  "product_name",
+                                  "store_name",
+                                  "city",
+                                  "state",
+                                  "observed_at"
+                              )
+                          ):
+                              candidates.append({
+                                  **obj,
+                                  "source_url": url
+                              })
+
+              except requests.RequestException as e:
+                  diagnostics.append({
+                      "url": url,
+                      "error": str(e)[:250]
+                  })
+
+          # Allow separately sourced observations
+          # to be imported into this file.
+          # They must still pass validation.
+          imported = read(
+              "v31_observation_inbox.json", []
+          )
+          if isinstance(imported, list):
+              candidates.extend(imported)
+
+          accepted = {}
+          rejected = Counter()
+
+          for obj in old + candidates:
+              if not isinstance(obj, dict):
+                  continue
+
+              sid = obj.get("store_id")
+              title = obj.get("product_name")
+              game = obj.get("game") or game_of(title)
+              observed = parse_date(
+                  obj.get("observed_at")
+              )
+              url = obj.get("source_url", "")
+
+              if not sid:
+                  k = (
+                      canonical(chain(
+                          obj.get("retailer") or
+                          obj.get("store_name")
+                      )),
+                      canonical(obj.get("city")),
+                      canonical(obj.get("state"))
+                  )
+                  matches = store_lookup.get(k, [])
+
+                  # Chain + city is insufficient if
+                  # there are multiple branches.
+                  if len(matches) == 1:
+                      sid = matches[0]
+
+              if sid not in store_by_id:
+                  rejected["unmatched_store"] += 1
+                  continue
+
+              if not game or not title:
+                  rejected["missing_product"] += 1
+                  continue
+
+              if not observed:
+                  rejected["missing_date"] += 1
+                  continue
+
+              if not (
+                  TODAY - timedelta(days=180)
+                  <= observed <= TODAY
+              ):
+                  rejected["outside_180_days"] += 1
+                  continue
+
+              if not str(url).startswith(
+                  ("https://", "http://")
+              ):
+                  rejected["missing_evidence"] += 1
+                  continue
+
+              scope = norm(obj.get(
+                  "inventory_scope",
+                  "physical_store"
+              ))
+              if scope not in (
+                  "physical_store", "in_store"
+              ):
+                  rejected["not_physical"] += 1
+                  continue
+
+              status = norm(obj.get("status"))
+              if status not in (
+                  "in stock", "restocked",
+                  "shelf sighting",
+                  "delivery confirmed"
+              ):
+                  rejected["not_positive_sighting"] += 1
+                  continue
+
+              pid = product_key(game, title)
+
+              # A report of a particular product
+              # must not train other products.
+              event_id = hashlib.sha256(
+                  (
+                      sid + "|" + pid + "|" +
+                      observed.isoformat() + "|" +
+                      str(url)
+                  ).encode()
+              ).hexdigest()[:24]
+
+              accepted[event_id] = {
+                  "event_id": event_id,
+                  "store_id": sid,
+                  "game": game,
+                  "product_id": pid,
+                  "product_name": title,
+                  "observed_at": observed.isoformat(),
+                  "source_url": url,
+                  "status": status,
+                  "inventory_scope": "physical_store",
+                  "evidence_level":
+                      "source-backed report",
+                  "current_stock_verified": False
+              }
+
+              products.setdefault(pid, {
+                  "product_id": pid,
+                  "game": game,
+                  "product_name": title,
+                  "format": "",
+                  "source_url": url
+              })
+
+          sightings = list(accepted.values())
+          write("v31_sightings.json", sightings)
+
+          # Separate histories:
+          # 1. Store + exact product
+          # 2. Store + TCG game
+          # Neither borrows other locations.
+          by_product = defaultdict(set)
+          by_game = defaultdict(set)
+
+          for e in sightings:
+              d = parse_date(e["observed_at"])
+              by_product[
+                  (e["store_id"], e["product_id"])
+              ].add(d)
+              by_game[
+                  (e["store_id"], e["game"])
+              ].add(d)
+
+          def model(dates):
+              dates = sorted(dates)
+              n = len(dates)
+
+              if n < 3:
+                  return {
+                      "confidence": "Insufficient data",
+                      "predicted_date": None,
+                      "observations": n
+                  }
+
+              counts = Counter(
+                  d.weekday() for d in dates
+              )
+              weekday, hits = counts.most_common(1)[0]
+              weeks = len({
+                  d.isocalendar()[:2] for d in dates
+              })
+
+              if weeks < 3:
+                  confidence = "Low"
+              elif n >= 6 and hits / n >= 0.7:
+                  confidence = "Moderate"
+              else:
+                  confidence = "Low"
+
+              return {
+                  "confidence": confidence,
+                  "predicted_date": next_day(
+                      weekday
+                  ),
+                  "observations": n,
+                  "weekday": weekday,
+                  "weekday_agreement":
+                      round(hits / n, 3),
+                  "weeks_observed": weeks
+              }
+
+          game_rows = []
+          product_rows = []
+
+          # One independent record per store/game.
+          # Unknown is a valid and honest result.
+          for sid, s in store_by_id.items():
+              for game in GAMES:
+                  m = model(
+                      by_game.get((sid, game), set())
+                  )
+                  game_rows.append({
+                      "store_id": sid,
+                      "store_name": s.get("name"),
+                      "address": s.get("address"),
+                      "city": s.get("city"),
+                      "state": s.get("state"),
+                      "game": game,
+                      **m
+                  })
+
+          # Product-specific forecasts are created
+          # only where exact-store observations exist.
+          for (sid, pid), dates in by_product.items():
+              s = store_by_id[sid]
+              p = products[pid]
+              m = model(dates)
+              product_rows.append({
+                  "store_id": sid,
+                  "store_name": s.get("name"),
+                  "address": s.get("address"),
+                  "city": s.get("city"),
+                  "state": s.get("state"),
+                  "game": p["game"],
+                  "product_id": pid,
+                  "product_name": p["product_name"],
+                  **m,
+                  "current_stock_verified": False
+              })
+
+          write(
+              "v31_store_game_forecasts.json",
+              game_rows
+          )
+          write(
+              "v31_store_product_forecasts.json",
+              product_rows
+          )
+          write(
+              "v31_product_catalogue.json",
+              list(products.values())
+          )
+
+          # Preserve existing V30 forecast data.
+          # Add only evidence-supported V31 rows
+          # with explicit store + game + product.
+          previous = shipments.get("forecasts", [])
+          if not isinstance(previous, list):
+              previous = []
+
+          previous = [
+              f for f in previous
+              if f.get("forecast_engine") != "v31"
+          ]
+
+          for row in product_rows:
+              if not row.get("predicted_date"):
+                  continue
+
+              matching = [
+                  e for e in sightings
+                  if e["store_id"] == row["store_id"]
+                  and e["product_id"] == row["product_id"]
+              ]
+              source = matching[-1]["source_url"]
+
+              previous.append({
+                  "forecast_engine": "v31",
+                  "store_id": row["store_id"],
+                  "store_name": (
+                      str(row["store_name"]) +
+                      " — " + str(row["city"]) +
+                      ", " + str(row["state"])
+                  ),
+                  "game": row["game"],
+                  "product_id": row["product_id"],
+                  "product_name": row["product_name"],
+                  "predicted_date":
+                      row["predicted_date"],
+                  "confidence": row["confidence"],
+                  "source_url": source,
+                  "inventory_status": "Unknown",
+                  "delivery_confirmed": False
+              })
+
+          shipments["forecasts"] = previous
+          shipments.setdefault("events", [])
+          write("shipments.json", shipments)
+
+          report = {
+              "version": "31",
+              "checked_at": NOW.isoformat(),
+              "stores": len(store_by_id),
+              "games": len(GAMES),
+              "store_game_records": len(game_rows),
+              "catalogue_products": len(products),
+              "accepted_sightings": len(sightings),
+              "new_source_candidates": len(candidates),
+              "rejected": dict(rejected),
+              "product_forecasts": len(product_rows),
+              "dated_product_predictions": sum(
+                  bool(x["predicted_date"])
+                  for x in product_rows
+              ),
+              "source_diagnostics": diagnostics,
+              "warning": (
+                  "No exact-store observations means "
+                  "no evidence-based prediction. "
+                  "A green run does not confirm stock."
+              )
+          }
+          write("v31_report.json", report)
+          print(json.dumps(report, indent=2))
+          PY
+
+          python /tmp/v31.py
+
+      - name: Commit data
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/v31_*.json \
+            data/shipments.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m "V31 per-store product forecasts"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 5
+          done
+
+          exit 1
