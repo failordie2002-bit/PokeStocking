@@ -5,125 +5,185 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b1120">
-<title>PokéStock V8 — TCG Discovery</title>
+<title>PokéStock V8.3</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root {
+:root{
   color-scheme:dark;
   --bg:#0b1120;
   --panel:#172238;
-  --border:#33435a;
+  --border:#34445b;
   --text:#f5f7fb;
   --muted:#a9b7cc;
   --accent:#63e6be;
 }
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:var(--bg);
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);
   color:var(--text);
   font:15px system-ui,sans-serif;
 }
-header {
-  padding:17px 5%;
+header{
+  padding:16px 4%;
   border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
+  display:flex;gap:12px;
   align-items:center;
+  justify-content:space-between;
   flex-wrap:wrap;
-  gap:12px;
 }
-.logo {font-size:24px;font-weight:900}
-.logo b {color:var(--accent)}
-nav {display:flex;gap:8px;flex-wrap:wrap}
-button,select,input {
+.logo{font-size:25px;font-weight:900}
+.logo b{color:var(--accent)}
+nav,.controls{
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+button,select,input{
   font:inherit;
   border:1px solid var(--border);
   background:#21314b;
   color:var(--text);
   border-radius:10px;
-  padding:10px;
+  padding:11px;
 }
-button {cursor:pointer}
-button:hover {border-color:var(--accent)}
-main {max-width:1280px;margin:auto;padding:24px 4%}
-.hero {
+button{cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:focus-visible,a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+.primary{
+  background:#087f68;
+  color:white;
+  border-color:#0ba584;
+}
+main{
+  max-width:1300px;
+  margin:auto;
+  padding:22px 4%;
+}
+.hero{
   padding:24px;
-  background:linear-gradient(125deg,#173452,#152339);
+  background:linear-gradient(120deg,#173452,#152339);
   border:1px solid var(--border);
   border-radius:18px;
   margin-bottom:20px;
 }
-h1 {margin:0 0 8px;font-size:clamp(27px,4vw,43px)}
-h2 {font-size:21px;margin:0 0 12px}
-.muted {color:var(--muted)}
-.grid {
+h1{font-size:clamp(26px,4vw,42px);margin:0}
+h2{font-size:21px}
+.muted,small{color:var(--muted)}
+.stats,.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
   gap:12px;
+  margin-bottom:18px;
 }
-.panel,.tile {
+.grid{
+  grid-template-columns:repeat(auto-fill,minmax(205px,1fr));
+}
+.panel,.tile{
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
-  padding:16px;
+  padding:15px;
 }
-.tile img {
-  width:100%;
-  height:135px;
-  object-fit:contain;
-  background:#0d182b;
-  border-radius:9px;
+.stat strong{
+  display:block;
+  font-size:26px;
 }
-.tile h3 {font-size:15px;min-height:42px}
-.tile small {color:var(--muted)}
-.controls {display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
-.controls input {flex:1;min-width:180px}
-.tab {display:none}
-.tab.active {display:block}
-#map {
-  height:480px;
-  border-radius:13px;
-  z-index:1;
+.tab{display:none}
+.tab.active{display:block}
+.controls{margin:14px 0}
+.controls input{
+  flex:1;
+  min-width:160px;
+}
+#map{
+  height:460px;
+  border-radius:12px;
   background:#13263d;
+  z-index:1;
 }
-.legend {display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin:10px 0}
-.dot {
-  display:inline-block;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  margin-right:5px;
+.product-photo{
+  height:190px;
+  background:#0d182b;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
-.good {background:#16a34a}
-.unknown {background:#64748b}
-.warn {background:#eab308}
-.stats {display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
-.stat {flex:1;min-width:130px}
-.stat strong {font-size:25px;display:block}
-.pill {
+.product-photo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.placeholder{
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+}
+.tile h3{
+  font-size:15px;
+  line-height:1.4;
+  min-height:44px;
+}
+.pill{
   display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
   background:#263e55;
-  border-radius:30px;
-  padding:4px 9px;
   color:#bcead9;
   font-size:12px;
 }
-.empty {padding:25px;text-align:center;color:var(--muted)}
-a {color:#7fe5c8}
-footer {padding:30px 5%;color:var(--muted);text-align:center}
-.leaflet-popup-content {color:#172238}
-.leaflet-popup-content a {color:#065f46}
+.action{
+  display:inline-block;
+  background:#087f68;
+  color:white;
+  text-decoration:none;
+  padding:10px 13px;
+  border-radius:9px;
+  font-weight:700;
+  margin-top:7px;
+}
+.action:hover{background:#0a997e}
+.store-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
+  margin-top:14px;
+}
+.store-list .tile h3{min-height:0}
+.store-list .action{display:block;text-align:center}
+#mapInfo,#locationInfo{
+  color:var(--muted);
+  margin:10px 0;
+}
+a{color:#7fe5c8}
+.leaflet-popup-content{color:#172238}
+.leaflet-popup-content a{color:#065f46}
+.leaflet-popup-content .action{color:white}
+.empty{
+  text-align:center;
+  padding:24px;
+  color:var(--muted);
+}
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:30px 4%;
+}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">Poké<b>Stock</b> <small class="muted">V8</small></div>
+  <div class="logo">
+    Poké<b>Stock</b>
+    <small>V8.3</small>
+  </div>
   <nav>
-    <button data-tab="maptab">Live Map</button>
+    <button data-tab="maptab">Stores & GPS</button>
     <button data-tab="products">Products</button>
     <button data-tab="releases">Releases</button>
-    <button data-tab="shipments">Shipment Catcher</button>
+    <button data-tab="shipments">Shipments</button>
     <button data-tab="health">Source Health</button>
   </nav>
 </header>
@@ -132,10 +192,13 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
 <section class="hero">
   <h1>Find your next big pull.</h1>
   <p class="muted">
-    Nationwide TCG discovery for Pokémon, Union Arena, Gundam
-    and One Piece. No invented inventory or shipment claims.
+    Pokémon, Union Arena, Gundam and One Piece.
+    Explore real product listings and discover
+    stores nationwide.
   </p>
-  <div id="updated" class="pill">Loading catalogue…</div>
+  <span id="updated" class="pill">
+    Loading data...
+  </span>
 </section>
 
 <div class="stats">
@@ -145,30 +208,40 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
   </div>
   <div class="panel stat">
     <strong id="storeCount">—</strong>
-    <small>Directory stores</small>
+    <small>Discovered stores</small>
   </div>
   <div class="panel stat">
     <strong id="stockCount">—</strong>
-    <small>Verified in-stock records</small>
+    <small>Verified stock records</small>
   </div>
   <div class="panel stat">
     <strong id="shipmentCount">—</strong>
-    <small>Published shipment events</small>
+    <small>Shipment events</small>
   </div>
 </div>
 
 <section id="maptab" class="tab active">
   <div class="panel">
-    <h2>Nationwide Store Atlas</h2>
+    <h2>Nationwide Store Finder</h2>
     <p class="muted">
-      Location is optional. Store pins do not imply stock
-      unless specifically verified.
+      Find stores and launch GPS directions.
+      A store listing does not guarantee
+      any trading card inventory.
     </p>
+
     <div class="controls">
-      <button id="locate">Use my location</button>
-      <input id="zip" placeholder="ZIP code (US)" inputmode="numeric" maxlength="5">
-      <button id="findZip">Go to ZIP</button>
+      <button id="locate" class="primary">
+        📍 Use My GPS
+      </button>
+      <input id="zip"
+        placeholder="Enter ZIP code"
+        inputmode="numeric"
+        maxlength="5">
+      <button id="findZip">
+        Search ZIP
+      </button>
       <select id="radius">
+        <option value="10">10 miles</option>
         <option value="25">25 miles</option>
         <option value="50" selected>50 miles</option>
         <option value="100">100 miles</option>
@@ -183,21 +256,32 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
         <option>One Piece</option>
       </select>
     </div>
-    <div class="legend">
-      <span><i class="dot good"></i>Verified in stock</span>
-      <span><i class="dot unknown"></i>Store known, stock unknown</span>
-      <span><i class="dot warn"></i>Community report (future)</span>
-    </div>
+
+    <p id="locationInfo">
+      GPS is optional. Allow location access
+      to calculate nearby distances.
+    </p>
+
     <div id="map"></div>
-    <p id="mapInfo" class="muted"></p>
+    <p id="mapInfo"></p>
+
+    <h2>Store Results</h2>
+    <div id="storeList" class="store-list"></div>
   </div>
 </section>
 
 <section id="products" class="tab">
   <div class="panel">
-    <h2>Multi-TCG Catalogue</h2>
+    <h2>Sealed Product Catalogue</h2>
+    <p class="muted">
+      Product packaging photos are displayed
+      when an image is available in the catalogue.
+      Missing photos are clearly identified.
+    </p>
+
     <div class="controls">
-      <input id="search" placeholder="Search products, sets or stores">
+      <input id="search"
+        placeholder="Search products or sets">
       <select id="game">
         <option value="">All games</option>
         <option>Pokémon</option>
@@ -205,7 +289,20 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
         <option>Gundam</option>
         <option>One Piece</option>
       </select>
+      <select id="format">
+        <option value="">All formats</option>
+        <option value="booster box">Booster Boxes</option>
+        <option value="booster bundle">Booster Bundles</option>
+        <option value="booster pack">Single Packs</option>
+        <option value="elite trainer">ETBs</option>
+        <option value="collection">Collections</option>
+        <option value="tin">Tins</option>
+        <option value="deck">Decks</option>
+        <option value="other">Other Products</option>
+      </select>
     </div>
+
+    <p id="productInfo" class="muted"></p>
     <div id="productGrid" class="grid"></div>
   </div>
 </section>
@@ -214,7 +311,8 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
   <div class="panel">
     <h2>Release Calendar</h2>
     <p class="muted">
-      Official dates only where available; blank dates are not inferred.
+      Release dates are shown only when recorded
+      in the catalogue.
     </p>
     <div id="releaseList" class="grid"></div>
   </div>
@@ -224,9 +322,9 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
   <div class="panel">
     <h2>Shipment Catcher</h2>
     <p class="muted">
-      Confirmed shipment schedules, observed restocks, and future
-      evidence-based forecasts will appear here. Shipment arrival
-      is different from shelf restocking.
+      Confirmed shipment events and evidence-based
+      forecasts. A shipment does not guarantee
+      that products are on store shelves.
     </p>
     <div id="shipmentList"></div>
   </div>
@@ -241,13 +339,13 @@ footer {padding:30px 5%;color:var(--muted);text-align:center}
 </main>
 
 <footer>
-  PokéStock V8 · Inventory is not guaranteed.
-  Verify with retailers before travelling.
+  PokéStock V8.3 · Verify stock with stores
+  before travelling.
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-'use strict';
+"use strict";
 
 const $ = id => document.getElementById(id);
 
@@ -258,238 +356,622 @@ let db = {
 };
 
 let stores = [];
-let shipments = {events: [], forecasts: []};
-let map, layer, userPoint = null;
-
-const safe = u => {
-  try {
-    const x = new URL(u);
-    return x.protocol === 'https:' ? x.href : '';
-  } catch {
-    return '';
-  }
+let shipments = {
+  events: [],
+  forecasts: []
 };
 
-const esc = s => String(s ?? '').replace(
-  /[&<>"']/g,
-  c => ({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;',
-    "'":'&#39;'
-  }[c])
-);
+let map;
+let layer;
+let userLayer;
+let userPoint = null;
 
-function link(u, label) {
-  const x = safe(u);
-  return x
-    ? `<a href="${esc(x)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`
-    : '';
-}
+const esc = value =>
+  String(value ?? "").replace(
+    /[&<>"']/g,
+    ch => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[ch])
+  );
 
-function switchTab(id) {
-  document.querySelectorAll('.tab').forEach(x => {
-    x.classList.toggle('active', x.id === id);
-  });
-  if (id === 'maptab') {
-    setTimeout(() => map.invalidateSize(), 100);
+function safeURL(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:"
+      ? url.href
+      : "";
+  } catch {
+    return "";
   }
 }
 
-document.querySelectorAll('[data-tab]').forEach(b => {
-  b.onclick = () => switchTab(b.dataset.tab);
-});
-
-function miles(a,b,c,d) {
-  const R = 3958.8;
-  const rad = Math.PI / 180;
-  const x = (c-a)*rad;
-  const y = (d-b)*rad;
-  const z = Math.sin(x/2)**2 +
-    Math.cos(a*rad)*Math.cos(c*rad)*Math.sin(y/2)**2;
-  return 2*R*Math.asin(Math.sqrt(z));
+function link(url, text) {
+  const href = safeURL(url);
+  return href
+    ? `<a href="${esc(href)}"
+         target="_blank"
+         rel="noopener noreferrer">${esc(text)}</a>`
+    : "";
 }
 
-function fresh(r) {
-  const t = Date.parse(r.verified_at || '');
-  return r.status === 'In stock' &&
-    Number.isFinite(t) &&
-    Date.now()-t >= 0 &&
-    Date.now()-t <= 6*3600000 &&
-    safe(r.source_url);
-}
+function validCoords(store) {
+  const lat = Number(store.lat);
+  const lon = Number(store.lon);
 
-function verified(s) {
-  return (db.store_inventory || []).filter(
-    x => String(x.store_id) === String(s.id) && fresh(x)
+  return (
+    store.lat != null &&
+    store.lon != null &&
+    Number.isFinite(lat) &&
+    Number.isFinite(lon) &&
+    Math.abs(lat) <= 90 &&
+    Math.abs(lon) <= 180
   );
 }
 
-function renderMap() {
-  layer.clearLayers();
+function directionsURL(store) {
+  if (!validCoords(store)) return "";
 
-  const radius = Number($('radius').value);
-  const g = $('mapGame').value;
-  let shown = 0;
+  const destination =
+    Number(store.lat) + "," + Number(store.lon);
 
-  for (const s of stores) {
-    const lat = Number(s.lat);
-    const lon = Number(s.lon);
+  // Google Maps uses device location when
+  // origin is omitted and permission is available.
+  return (
+    "https://www.google.com/maps/dir/?api=1" +
+    "&destination=" +
+    encodeURIComponent(destination) +
+    "&travelmode=driving"
+  );
+}
 
-    if (
-      s.lat == null || s.lon == null ||
-      !Number.isFinite(lat) || !Number.isFinite(lon) ||
-      Math.abs(lat)>90 || Math.abs(lon)>180
-    ) continue;
+function navigationLink(store) {
+  const url = directionsURL(store);
 
-    if (
-      userPoint &&
-      miles(userPoint[0],userPoint[1],lat,lon)>radius
-    ) continue;
+  return url
+    ? `<a class="action"
+         href="${esc(url)}"
+         target="_blank"
+         rel="noopener noreferrer">
+         🧭 Navigate to Store
+       </a>`
+    : "";
+}
 
-    const allVerified = verified(s);
-    const items = allVerified.filter(x => !g || x.game === g);
+function miles(a,b,c,d) {
+  const rad = Math.PI / 180;
+  const x = (c-a)*rad;
+  const y = (d-b)*rad;
 
-    // A game filter narrows verified products, but unknown-stock
-    // stores remain visible unless the store declares supported games.
-    const supported = Array.isArray(s.games) ? s.games : [];
-    if (g && supported.length && !supported.includes(g) && !items.length) {
-      continue;
-    }
+  const z =
+    Math.sin(x/2)**2 +
+    Math.cos(a*rad) *
+    Math.cos(c*rad) *
+    Math.sin(y/2)**2;
 
-    const good = items.length > 0;
+  return 3958.8 * 2 *
+    Math.asin(Math.sqrt(z));
+}
 
-    const marker = L.circleMarker([lat,lon], {
-      radius:good?9:6,
-      color:good?'#15803d':'#64748b',
-      fillColor:good?'#22c55e':'#94a3b8',
-      fillOpacity:.9,
-      weight:2
-    });
-
-    let html =
-      `<strong>${esc(s.name)}</strong>` +
-      `<p>${esc([s.city,s.state].filter(Boolean).join(', '))}</p>` +
-      `<p>${good
-        ? 'Verified in-stock products: '+items.length
-        : 'Physical-store inventory unknown for this selection'
-      }</p>` +
-      items.slice(0,5).map(x =>
-        `<p>${esc(x.product_name)} · ${link(x.source_url,'Evidence')}</p>`
-      ).join('') +
-      link(s.url,'Shop website');
-
-    marker.bindPopup(html).addTo(layer);
-    shown++;
+function distance(store) {
+  if (!userPoint || !validCoords(store)) {
+    return null;
   }
 
-  $('mapInfo').textContent =
-    `${shown} mapped stores shown. ${stores.length} total directory entries. ` +
-    'Stores without coordinates cannot be pinned.';
+  return miles(
+    userPoint[0],
+    userPoint[1],
+    Number(store.lat),
+    Number(store.lon)
+  );
+}
+
+function verifiedRecord(record) {
+  const timestamp = Date.parse(
+    record.verified_at || ""
+  );
+
+  return (
+    record.status === "In stock" &&
+    Number.isFinite(timestamp) &&
+    Date.now() >= timestamp &&
+    Date.now()-timestamp <= 21600000 &&
+    Boolean(safeURL(record.source_url))
+  );
+}
+
+function verifiedFor(store) {
+  return (db.store_inventory || []).filter(
+    record =>
+      String(record.store_id) ===
+        String(store.id) &&
+      verifiedRecord(record)
+  );
+}
+
+function switchTab(id) {
+  document.querySelectorAll(".tab").forEach(
+    tab => tab.classList.toggle(
+      "active",
+      tab.id === id
+    )
+  );
+
+  if (id === "maptab" && map) {
+    setTimeout(
+      () => map.invalidateSize(),
+      100
+    );
+  }
+}
+
+document.querySelectorAll("[data-tab]").forEach(
+  button => {
+    button.onclick = () =>
+      switchTab(button.dataset.tab);
+  }
+);
+
+function renderStores() {
+  layer.clearLayers();
+
+  const radius = Number($("radius").value);
+  const game = $("mapGame").value;
+
+  let visible = [];
+
+  for (const store of stores) {
+    if (!validCoords(store)) continue;
+
+    const dist = distance(store);
+
+    if (
+      dist !== null &&
+      dist > radius
+    ) continue;
+
+    const confirmed = verifiedFor(store);
+
+    const matching = confirmed.filter(
+      record =>
+        !game || record.game === game
+    );
+
+    const supported = Array.isArray(
+      store.games
+    ) ? store.games : [];
+
+    if (
+      game &&
+      supported.length &&
+      !supported.includes(game) &&
+      !matching.length
+    ) continue;
+
+    visible.push({
+      store,
+      dist,
+      matching
+    });
+  }
+
+  visible.sort((a,b) => {
+    if (a.dist === null && b.dist === null) {
+      return String(a.store.name).localeCompare(
+        String(b.store.name)
+      );
+    }
+    if (a.dist === null) return 1;
+    if (b.dist === null) return -1;
+    return a.dist - b.dist;
+  });
+
+  for (const entry of visible) {
+    const s = entry.store;
+    const hasStock = entry.matching.length > 0;
+
+    const marker = L.circleMarker(
+      [Number(s.lat),Number(s.lon)],
+      {
+        radius:hasStock ? 9 : 6,
+        color:hasStock ? "#15803d" : "#64748b",
+        fillColor:hasStock ? "#22c55e" : "#94a3b8",
+        fillOpacity:0.9,
+        weight:2
+      }
+    );
+
+    const distanceText =
+      entry.dist === null
+        ? ""
+        : `<p>${entry.dist.toFixed(1)} miles away
+           (straight-line distance)</p>`;
+
+    const stockText = hasStock
+      ? `${entry.matching.length}
+         recently verified stock record(s)`
+      : "In-store inventory unknown";
+
+    const evidence = entry.matching
+      .slice(0,5)
+      .map(record =>
+        `<p>${esc(record.product_name)}
+         ${link(record.source_url,"Evidence")}</p>`
+      ).join("");
+
+    marker.bindPopup(
+      `<strong>${esc(s.name)}</strong>` +
+      `<p>${esc(
+        [s.city,s.state]
+          .filter(Boolean)
+          .join(", ")
+      )}</p>` +
+      distanceText +
+      `<p>${stockText}</p>` +
+      evidence +
+      `<p>${link(s.url,"Store website")}</p>` +
+      navigationLink(s)
+    ).addTo(layer);
+  }
+
+  $("mapInfo").textContent =
+    visible.length +
+    " mapped stores shown. " +
+    stores.length +
+    " total directory records. " +
+    "Distances are straight-line estimates.";
+
+  $("storeList").innerHTML = visible
+    .slice(0,100)
+    .map(entry => {
+      const s = entry.store;
+
+      const dist = entry.dist === null
+        ? "Distance unavailable"
+        : entry.dist.toFixed(1) +
+          " miles (straight-line)";
+
+      const stock = entry.matching.length
+        ? entry.matching.length +
+          " verified stock record(s)"
+        : "Inventory not verified";
+
+      return (
+        `<article class="tile">` +
+        `<h3>${esc(s.name)}</h3>` +
+        `<p>${esc(
+          [s.city,s.state]
+            .filter(Boolean)
+            .join(", ")
+        )}</p>` +
+        `<p>${esc(dist)}</p>` +
+        `<span class="pill">${esc(stock)}</span>` +
+        `<p>${link(s.url,"Store website")}</p>` +
+        navigationLink(s) +
+        `</article>`
+      );
+    }).join("") ||
+    `<p class="empty">
+      No mapped stores match these filters.
+    </p>`;
+}
+
+function showUserLocation(lat,lon) {
+  userPoint = [lat,lon];
+
+  if (userLayer) {
+    map.removeLayer(userLayer);
+  }
+
+  userLayer = L.circleMarker(
+    userPoint,
+    {
+      radius:9,
+      color:"#ffffff",
+      fillColor:"#2563eb",
+      fillOpacity:1,
+      weight:3
+    }
+  ).addTo(map);
+
+  userLayer.bindPopup(
+    "Your selected location"
+  );
+
+  map.setView(userPoint,11);
+
+  $("locationInfo").textContent =
+    "Location selected. Store distances " +
+    "are straight-line estimates. " +
+    "Navigation opens Google Maps.";
+
+  renderStores();
+}
+
+$("locate").onclick = () => {
+  if (!navigator.geolocation) {
+    $("locationInfo").textContent =
+      "GPS is unavailable in this browser.";
+    return;
+  }
+
+  $("locationInfo").textContent =
+    "Requesting your location...";
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      showUserLocation(
+        position.coords.latitude,
+        position.coords.longitude
+      );
+    },
+    error => {
+      $("locationInfo").textContent =
+        "Location unavailable: " +
+        error.message +
+        ". Try ZIP search.";
+    },
+    {
+      enableHighAccuracy:true,
+      timeout:15000,
+      maximumAge:60000
+    }
+  );
+};
+
+$("findZip").onclick = async () => {
+  const zip = $("zip").value.trim();
+
+  if (!/^\d{5}$/.test(zip)) {
+    $("locationInfo").textContent =
+      "Enter a valid five-digit ZIP code.";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://api.zippopotam.us/us/" +
+      encodeURIComponent(zip)
+    );
+
+    if (!response.ok) {
+      throw new Error("ZIP not found");
+    }
+
+    const result = await response.json();
+    const place = result.places[0];
+
+    showUserLocation(
+      Number(place.latitude),
+      Number(place.longitude)
+    );
+
+    $("locationInfo").textContent =
+      "Showing stores near ZIP " + zip +
+      ". ZIP coordinates represent an " +
+      "approximate area, not your GPS position.";
+
+  } catch {
+    $("locationInfo").textContent =
+      "ZIP lookup failed. Try GPS.";
+  }
+};
+
+function productFormat(product) {
+  const name = String(
+    product.name || ""
+  ).toLowerCase();
+
+  if (/elite trainer box|\betb\b/.test(name)) {
+    return "elite trainer";
+  }
+  if (/booster bundle/.test(name)) {
+    return "booster bundle";
+  }
+  if (/booster box|booster display/.test(name)) {
+    return "booster box";
+  }
+  if (/booster pack|sleeved booster|single pack/.test(name)) {
+    return "booster pack";
+  }
+  if (/collection|premium card/.test(name)) {
+    return "collection";
+  }
+  if (/\btin\b/.test(name)) {
+    return "tin";
+  }
+  if (/starter deck|battle deck|structure deck/.test(name)) {
+    return "deck";
+  }
+
+  return "other";
 }
 
 function renderProducts() {
-  const q = $('search').value.toLowerCase();
-  const g = $('game').value;
+  const query = $("search").value
+    .trim().toLowerCase();
 
-  const items = (db.products || []).filter(x =>
-    (!g || x.game === g) &&
-    (!q || [x.name,x.game,x.type,x.retailer]
-      .join(' ').toLowerCase().includes(q))
-  ).slice(0,180);
+  const game = $("game").value;
+  const format = $("format").value;
 
-  $('productGrid').innerHTML = items.map(p =>
-    `<article class="tile">` +
-    (safe(p.image)
-      ? `<img loading="lazy" src="${esc(safe(p.image))}" alt="">`
-      : '') +
-    `<h3>${esc(p.name)}</h3>` +
-    `<small>${esc(p.game)} · ${esc(p.type || 'Product')}</small>` +
-    `<p class="pill">${esc(
-      p.online_stock_status
-        ? 'Online: '+p.online_stock_status
-        : 'Store inventory not checked'
-    )}</p>` +
-    `<p>${link(p.url,'View source')}</p>` +
-    `</article>`
-  ).join('') || '<p class="empty">No matching products.</p>';
+  const matches = db.products.filter(
+    product => {
+      const text = [
+        product.name,
+        product.game,
+        product.type,
+        product.retailer
+      ].join(" ").toLowerCase();
+
+      return (
+        (!game || product.game === game) &&
+        (!query || text.includes(query)) &&
+        (!format || productFormat(product) === format)
+      );
+    }
+  );
+
+  $("productInfo").textContent =
+    matches.length +
+    " matching products. " +
+    "Images reflect existing catalogue records.";
+
+  $("productGrid").innerHTML =
+    matches.slice(0,300).map(product => {
+      const image = safeURL(
+        product.product_image ||
+        product.image
+      );
+
+      const photo = image
+        ? `<img loading="lazy"
+             src="${esc(image)}"
+             alt="${esc(product.name)}"
+             onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+           <span class="placeholder" hidden>
+             Product image unavailable
+           </span>`
+        : `<span class="placeholder">
+             Product image unavailable
+           </span>`;
+
+      const stock = product.online_stock_status
+        ? "Online: " +
+          product.online_stock_status
+        : "Inventory not checked";
+
+      return (
+        `<article class="tile">` +
+        `<div class="product-photo">${photo}</div>` +
+        `<h3>${esc(product.name)}</h3>` +
+        `<p><small>${esc(product.game)}
+          · ${esc(product.type || "Product")}</small></p>` +
+        `<p><span class="pill">
+          ${esc(productFormat(product))}
+        </span></p>` +
+        `<p><span class="pill">
+          ${esc(stock)}
+        </span></p>` +
+        `<p>${link(product.url,"View product source")}</p>` +
+        `</article>`
+      );
+    }).join("") ||
+    `<p class="empty">
+      No matching products.
+    </p>`;
 }
 
 function renderReleases() {
-  const arr = (db.releases || []).slice().sort((a,b) =>
-    String(b.date || b.release_date || '').localeCompare(
-      String(a.date || a.release_date || '')
-    )
-  ).slice(0,100);
+  const releases = db.releases.slice()
+    .sort((a,b) =>
+      String(
+        b.date || b.release_date || ""
+      ).localeCompare(
+        String(a.date || a.release_date || "")
+      )
+    );
 
-  $('releaseList').innerHTML = arr.map(x =>
-    `<div class="tile">` +
-    `<span class="pill">${esc(x.game)}</span>` +
-    `<h3>${esc(x.name)}</h3>` +
-    `<p>${esc(x.date || x.release_date || 'Date not published')}</p>` +
-    link(x.url,'Official source') +
-    `</div>`
-  ).join('') || '<p class="empty">No release records.</p>';
+  $("releaseList").innerHTML =
+    releases.slice(0,150).map(item =>
+      `<article class="tile">` +
+      `<span class="pill">${esc(item.game)}</span>` +
+      `<h3>${esc(item.name)}</h3>` +
+      `<p>${esc(
+        item.date ||
+        item.release_date ||
+        "Date not published"
+      )}</p>` +
+      link(item.url,"Official source") +
+      `</article>`
+    ).join("") ||
+    `<p class="empty">No release records.</p>`;
 }
 
 function renderShipments() {
-  const ev = shipments.events || [];
-  const fore = shipments.forecasts || [];
+  const events = shipments.events || [];
+  const forecasts = shipments.forecasts || [];
 
-  $('shipmentList').innerHTML = ev.length
-    ? ev.map(x =>
-      `<div class="tile">` +
-      `<h3>${esc(x.store_name || 'Store')}</h3>` +
-      `<p>${esc(x.product_name || 'Product not specified')}</p>` +
-      `<p>${esc(x.date || 'Date unknown')} · ` +
-      `${esc(x.event_type || 'Shipment event')}</p>` +
-      link(x.source_url,'Evidence') +
-      `</div>`
-    ).join('')
-    : '<p class="empty">No confirmed shipment events have been published. Forecasts require historical observations.</p>';
+  $("shipmentList").innerHTML =
+    events.length
+      ? events.map(event =>
+        `<article class="tile">` +
+        `<h3>${esc(
+          event.store_name || "Store"
+        )}</h3>` +
+        `<p>${esc(
+          event.product_name || "Product unspecified"
+        )}</p>` +
+        `<p>${esc(
+          event.date || "Date unknown"
+        )}</p>` +
+        link(event.source_url,"Evidence") +
+        `</article>`
+      ).join("")
+      : `<p class="empty">
+          No confirmed shipment events recorded.
+        </p>`;
 
-  if (fore.length) {
-    $('shipmentList').innerHTML +=
-      `<p class="muted">${fore.length} forecast records available. ` +
-      `Forecasts are not confirmed shipments.</p>`;
+  if (forecasts.length) {
+    $("shipmentList").innerHTML +=
+      `<p class="muted">
+        ${forecasts.length} forecast records.
+        Forecasts are not confirmed shipments.
+      </p>`;
   }
 }
 
 function renderHealth() {
-  const h = db.catalogue_source_status || {};
+  const health = db.catalogue_source_status || {};
 
-  $('healthList').innerHTML =
-    Object.entries(h).map(([k,v]) =>
-      `<p><strong>${esc(k)}</strong>: ${esc(v.status || 'unknown')} ` +
-      `${v.error ? ' — '+esc(v.error) : ''}</p>`
-    ).join('') +
-    `<p>Monitor version: ${esc(db.monitor_version || 'unknown')}</p>` +
-    (db.monitor_errors || []).map(x =>
-      `<p class="muted">${esc(x)}</p>`
-    ).join('');
+  $("healthList").innerHTML =
+    Object.entries(health).map(
+      ([name,value]) =>
+        `<p><strong>${esc(name)}</strong>:
+        ${esc(value.status || "unknown")}
+        ${value.error
+          ? " — " + esc(value.error)
+          : ""}
+        </p>`
+    ).join("") +
+    `<p>Monitor version:
+      ${esc(db.monitor_version || "unknown")}
+    </p>` +
+    (db.monitor_errors || []).map(
+      error =>
+        `<p class="muted">${esc(error)}</p>`
+    ).join("");
 }
 
-async function json(path,fallback) {
+async function getJSON(path,fallback) {
   try {
-    const r = await fetch(path+'?v='+Date.now(), {
-      cache:'no-store'
-    });
-    if (!r.ok) throw Error(r.status);
-    return await r.json();
-  } catch(e) {
-    console.warn(path,e);
+    const response = await fetch(
+      path + "?v=" + Date.now(),
+      {cache:"no-store"}
+    );
+
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+
+    return await response.json();
+  } catch(error) {
+    console.warn(path,error);
     return fallback;
   }
 }
 
 async function init() {
-  map = L.map('map').setView([39,-98],4);
+  map = L.map("map").setView(
+    [39,-98],4
+  );
 
   L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      attribution:'&copy; OpenStreetMap contributors',
+      attribution:"&copy; OpenStreetMap contributors",
       maxZoom:18
     }
   ).addTo(map);
@@ -497,90 +979,72 @@ async function init() {
   layer = L.layerGroup().addTo(map);
 
   [db,stores,shipments] = await Promise.all([
-    json('data/status.json',db),
-    json('data/stores.json',[]),
-    json('data/shipments.json',shipments)
+    getJSON("data/status.json",db),
+    getJSON("data/stores.json",[]),
+    getJSON("data/shipments.json",shipments)
   ]);
 
-  if (!Array.isArray(stores)) stores = [];
-  if (!Array.isArray(db.products)) db.products = [];
-  if (!Array.isArray(db.releases)) db.releases = [];
-  if (!Array.isArray(db.store_inventory)) db.store_inventory = [];
-  if (!Array.isArray(shipments.events)) shipments.events = [];
-  if (!Array.isArray(shipments.forecasts)) shipments.forecasts = [];
+  if (!Array.isArray(stores)) {
+    stores = [];
+  }
 
-  $('updated').textContent =
-    'Data updated: '+(db.last_updated || 'unknown');
-  $('productCount').textContent = db.products.length;
-  $('storeCount').textContent = stores.length;
-  $('stockCount').textContent = db.store_inventory.filter(fresh).length;
-  $('shipmentCount').textContent = shipments.events.length;
+  if (!Array.isArray(db.products)) {
+    db.products = [];
+  }
 
+  if (!Array.isArray(db.releases)) {
+    db.releases = [];
+  }
+
+  if (!Array.isArray(db.store_inventory)) {
+    db.store_inventory = [];
+  }
+
+  if (!Array.isArray(shipments.events)) {
+    shipments.events = [];
+  }
+
+  if (!Array.isArray(shipments.forecasts)) {
+    shipments.forecasts = [];
+  }
+
+  $("updated").textContent =
+    "Data updated: " +
+    (db.last_updated || "unknown");
+
+  $("productCount").textContent =
+    db.products.length;
+
+  $("storeCount").textContent =
+    stores.length;
+
+  $("stockCount").textContent =
+    db.store_inventory.filter(
+      verifiedRecord
+    ).length;
+
+  $("shipmentCount").textContent =
+    shipments.events.length;
+
+  renderStores();
   renderProducts();
   renderReleases();
   renderShipments();
   renderHealth();
-  renderMap();
 }
 
-$('search').oninput = renderProducts;
-$('game').onchange = renderProducts;
-$('radius').onchange = renderMap;
-$('mapGame').onchange = renderMap;
+$("search").oninput = renderProducts;
+$("game").onchange = renderProducts;
+$("format").onchange = renderProducts;
+$("radius").onchange = renderStores;
+$("mapGame").onchange = renderStores;
 
-$('locate').onclick = () => {
-  if (!navigator.geolocation) {
-    $('mapInfo').textContent = 'Geolocation unavailable';
-    return;
-  }
+init().catch(error => {
+  console.error(error);
 
-  navigator.geolocation.getCurrentPosition(
-    p => {
-      userPoint = [p.coords.latitude,p.coords.longitude];
-      map.setView(userPoint,10);
-      renderMap();
-    },
-    () => {
-      $('mapInfo').textContent =
-        'Location permission denied. Enter a ZIP code instead.';
-    },
-    {
-      enableHighAccuracy:false,
-      timeout:12000
-    }
-  );
-};
-
-$('findZip').onclick = async () => {
-  const z = $('zip').value.trim();
-
-  if (!/^\d{5}$/.test(z)) {
-    $('mapInfo').textContent = 'Enter a five-digit US ZIP code.';
-    return;
-  }
-
-  try {
-    const r = await fetch(
-      'https://api.zippopotam.us/us/'+encodeURIComponent(z)
-    );
-    if (!r.ok) throw Error('ZIP not found');
-
-    const p = await r.json();
-
-    userPoint = [
-      Number(p.places[0].latitude),
-      Number(p.places[0].longitude)
-    ];
-
-    map.setView(userPoint,10);
-    renderMap();
-  } catch {
-    $('mapInfo').textContent =
-      'ZIP lookup unavailable. Try sharing your location.';
-  }
-};
-
-init();
+  $("updated").textContent =
+    "Unable to initialize PokéStock.";
+});
 </script>
 </body>
 </html>
