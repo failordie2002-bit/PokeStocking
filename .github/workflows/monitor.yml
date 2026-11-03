@@ -1,5 +1,5 @@
 
-name: PokeStock V8.3 Nationwide Monitor
+name: PokeStock V8.3 Bulk Nationwide Discovery
 
 on:
   workflow_dispatch:
@@ -15,9 +15,9 @@ concurrency:
 
 jobs:
   monitor:
-    name: Discovery Catalogue and Product Images
+    name: Nationwide Stores and Catalogue
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
@@ -33,13 +33,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install requests beautifulsoup4
+          python -m pip install --upgrade pip
+          python -m pip install requests beautifulsoup4 osmium
 
       - name: Validate Python scripts
         run: |
           python -m py_compile scripts/monitor.py
           python -m py_compile scripts/discover_stores.py
           python -m py_compile scripts/product_images.py
+          python -m py_compile scripts/bulk_discovery.py
 
       - name: Save protection baseline
         run: |
@@ -86,17 +88,18 @@ jobs:
           })
           PY
 
-      - name: Run nationwide store discovery
-        id: discovery
+      - name: Run nationwide bulk discovery
+        id: bulk
         continue-on-error: true
+        timeout-minutes: 30
         run: |
-          python scripts/discover_stores.py
+          python scripts/bulk_discovery.py
 
       - name: Run product catalogue monitor
         run: |
           python scripts/monitor.py
 
-      - name: Enrich product packaging images
+      - name: Enrich product images
         id: images
         continue-on-error: true
         run: |
@@ -151,26 +154,33 @@ jobs:
               new = shipments.get(key, [])
 
               if not isinstance(new, list):
-                  raise SystemExit("Invalid shipment data")
+                  raise SystemExit("Invalid shipment records")
 
               if len(new) < len(old):
                   raise SystemExit(
                       "Shipment records were lost"
                   )
 
-          print("DATA PROTECTION PASSED")
+          print("=== DATA PROTECTION PASSED ===")
           print("Products:", len(status["products"]))
           print("Releases:", len(status["releases"]))
           print("Stores:", len(stores))
-          print(
-              "Discovery status:",
-              state.get("v822_status")
-          )
 
-          images = status.get(
-              "v83_image_enrichment", {}
+          print("=== BULK DISCOVERY ===")
+          print(
+              "Status:",
+              state.get("v83_bulk_status")
           )
-          print("Image enrichment:", images)
+          print(
+              "Last state:",
+              state.get("v83_bulk_last_state")
+          )
+          print(
+              "Completed:",
+              state.get("v83_bulk_completed_count", 0),
+              "/",
+              state.get("v83_bulk_total_states", 51)
+          )
           PY
 
       - name: Commit updated data
@@ -185,80 +195,67 @@ jobs:
             data/discovery_state.json
 
           if git diff --cached --quiet; then
-            echo "No data changes."
+            echo "No changes to publish."
           else
-            git commit -m "Update PokeStock V8.3 data"
+            git commit -m "Update PokeStock V8.3 bulk data"
             git push origin HEAD:main
           fi
 
-      - name: Print discovery summary
+      - name: Print bulk discovery summary
         if: always()
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
-          state_path = Path(
-              "data/discovery_state.json"
+          path = Path("data/discovery_state.json")
+
+          if not path.exists():
+              print("No discovery state found")
+              raise SystemExit(0)
+
+          state = json.loads(
+              path.read_text(encoding="utf-8")
           )
-          status_path = Path(
-              "data/status.json"
+
+          print("=== POKESTOCK V8.3 BULK ===")
+          print(
+              "Status:",
+              state.get("v83_bulk_status")
           )
-
-          if state_path.exists():
-              state = json.loads(
-                  state_path.read_text(
-                      encoding="utf-8"
-                  )
-              )
-
-              print("=== STORE DISCOVERY ===")
-              print(
-                  "State:",
-                  state.get("v822_last_state")
-              )
-              print(
-                  "Status:",
-                  state.get("v822_status")
-              )
-              print(
-                  "New stores:",
-                  state.get("v822_last_new_stores")
-              )
-              print(
-                  "Error:",
-                  state.get("v822_last_error")
-              )
-
-          if status_path.exists():
-              status = json.loads(
-                  status_path.read_text(
-                      encoding="utf-8"
-                  )
-              )
-
-              print("=== PRODUCT IMAGES ===")
-              print(
-                  json.dumps(
-                      status.get(
-                          "v83_image_enrichment",
-                          {}
-                      ),
-                      indent=2
-                  )
-              )
+          print(
+              "State:",
+              state.get("v83_bulk_last_state")
+          )
+          print(
+              "New stores:",
+              state.get("v83_bulk_last_new_stores")
+          )
+          print(
+              "Total stores:",
+              state.get("v83_bulk_total_stores")
+          )
+          print(
+              "States completed:",
+              state.get("v83_bulk_completed_count", 0)
+          )
+          print(
+              "Error:",
+              state.get("v83_bulk_last_error")
+          )
           PY
 
-      - name: Report discovery failure
-        if: steps.discovery.outcome == 'failure'
+      - name: Report bulk discovery failure
+        if: steps.bulk.outcome == 'failure'
         run: |
-          echo "::error::Store discovery failed or was incomplete."
-          echo "Review data/discovery_state.json."
+          echo "::error::Bulk discovery failed."
+          echo "Catalogue and existing data were preserved."
+          echo "Review bulk discovery logs and state."
           exit 1
 
       - name: Report image enrichment failure
         if: steps.images.outcome == 'failure'
         run: |
-          echo "::error::Product image enrichment failed."
-          echo "Review the image enrichment step logs."
+          echo "::error::Image enrichment failed."
+          echo "Review product image logs."
           exit 1
