@@ -1,5 +1,5 @@
 
-name: PokeStock V8.2 Nationwide Monitor
+name: PokeStock V8.2.2 Reliable Discovery
 
 on:
   workflow_dispatch:
@@ -10,12 +10,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: pokestock-v82-monitor
+  group: pokestock-monitor
   cancel-in-progress: false
 
 jobs:
   monitor:
-    name: Catalogue and All-State Store Discovery
+    name: Catalogue and Reliable Store Discovery
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -41,65 +41,7 @@ jobs:
           python -m py_compile scripts/monitor.py
           python -m py_compile scripts/discover_stores.py
 
-      - name: Validate existing data
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          required = [
-              "data/status.json",
-              "data/stores.json",
-              "data/shipments.json",
-              "data/discovery_state.json"
-          ]
-
-          for filename in required:
-              p = Path(filename)
-
-              if not p.exists():
-                  raise SystemExit(
-                      "Missing file: " + filename
-                  )
-
-              json.loads(
-                  p.read_text(encoding="utf-8")
-              )
-
-              print("VALID:", filename)
-
-          status = json.loads(
-              Path("data/status.json").read_text(
-                  encoding="utf-8"
-              )
-          )
-
-          if not isinstance(
-              status.get("products"), list
-          ):
-              raise SystemExit(
-                  "Invalid product catalogue"
-              )
-
-          if not isinstance(
-              status.get("releases"), list
-          ):
-              raise SystemExit(
-                  "Invalid release catalogue"
-              )
-
-          print(
-              "Existing products:",
-              len(status["products"])
-          )
-
-          print(
-              "Existing releases:",
-              len(status["releases"])
-          )
-          PY
-
-      - name: Save catalogue protection baseline
+      - name: Save protection baseline
         run: |
           python - <<'PY'
           import json
@@ -110,35 +52,61 @@ jobs:
                   encoding="utf-8"
               )
           )
+
+          stores = json.loads(
+              Path("data/stores.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          shipments = json.loads(
+              Path("data/shipments.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          if not isinstance(status.get("products"), list):
+              raise SystemExit("Invalid products")
+
+          if not isinstance(status.get("releases"), list):
+              raise SystemExit("Invalid releases")
+
+          if not isinstance(stores, list):
+              raise SystemExit("Invalid stores")
+
+          if not isinstance(shipments, dict):
+              raise SystemExit("Invalid shipments")
 
           baseline = {
-              "products": len(
-                  status.get("products", [])
-              ),
-              "releases": len(
-                  status.get("releases", [])
-              )
+              "products": len(status["products"]),
+              "releases": len(status["releases"]),
+              "stores": len(stores),
+              "shipments": shipments
           }
 
-          Path(
-              "/tmp/pokestock_baseline.json"
-          ).write_text(
+          Path("/tmp/pokestock_baseline.json").write_text(
               json.dumps(baseline),
               encoding="utf-8"
           )
 
-          print("Baseline saved:", baseline)
+          print("Protected baseline:", {
+              "products": baseline["products"],
+              "releases": baseline["releases"],
+              "stores": baseline["stores"]
+          })
           PY
 
-      - name: Discover stores across US states
+      - name: Run nationwide store discovery
+        id: discovery
+        continue-on-error: true
         run: |
           python scripts/discover_stores.py
 
-      - name: Update product catalogue
+      - name: Run product catalogue monitor
         run: |
           python scripts/monitor.py
 
-      - name: Validate generated data
+      - name: Validate protected data
         run: |
           python - <<'PY'
           import json
@@ -174,44 +142,41 @@ jobs:
               )
           )
 
-          products = status.get("products", [])
-          releases = status.get("releases", [])
+          if len(status.get("products", [])) < baseline["products"]:
+              raise SystemExit("Products were lost")
 
-          if len(products) < baseline["products"]:
-              raise SystemExit(
-                  "ERROR: Products were lost"
-              )
-
-          if len(releases) < baseline["releases"]:
-              raise SystemExit(
-                  "ERROR: Releases were lost"
-              )
+          if len(status.get("releases", [])) < baseline["releases"]:
+              raise SystemExit("Releases were lost")
 
           if not isinstance(stores, list):
-              raise SystemExit(
-                  "Invalid store directory"
-              )
+              raise SystemExit("Invalid stores")
+
+          if len(stores) < baseline["stores"]:
+              raise SystemExit("Stores were lost")
 
           if not isinstance(shipments, dict):
-              raise SystemExit(
-                  "Invalid shipment data"
-              )
+              raise SystemExit("Invalid shipments")
+
+          for key in ("events", "forecasts"):
+              old = baseline["shipments"].get(key, [])
+              new = shipments.get(key, [])
+
+              if not isinstance(new, list):
+                  raise SystemExit("Invalid shipment records")
+
+              if len(new) < len(old):
+                  raise SystemExit("Shipment records were lost")
 
           if not isinstance(state, dict):
-              raise SystemExit(
-                  "Invalid discovery state"
-              )
+              raise SystemExit("Invalid discovery state")
 
-          print("Products:", len(products))
-          print("Releases:", len(releases))
+          print("Protected data validated")
+          print("Products:", len(status["products"]))
+          print("Releases:", len(status["releases"]))
           print("Stores:", len(stores))
           print(
-              "Last state:",
-              state.get("v82_last_state")
-          )
-          print(
-              "Discovery error:",
-              state.get("v82_last_error")
+              "Discovery status:",
+              state.get("v822_status")
           )
           PY
 
@@ -229,47 +194,40 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to publish."
           else
-            git commit -m "Update PokeStock V8.2 nationwide data"
+            git commit -m "Update PokeStock V8.2.2 data"
             git push origin HEAD:main
           fi
 
-      - name: Display V8.2 summary
+      - name: Print discovery summary
+        if: always()
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
-          status = json.loads(
-              Path("data/status.json").read_text(
-                  encoding="utf-8"
-              )
-          )
+          p = Path("data/discovery_state.json")
+
+          if not p.exists():
+              print("No discovery state found")
+              raise SystemExit(0)
 
           state = json.loads(
-              Path("data/discovery_state.json").read_text(
-                  encoding="utf-8"
-              )
+              p.read_text(encoding="utf-8")
           )
 
-          print("=== POKESTOCK V8.2 ===")
-          print(
-              "Products:",
-              len(status.get("products", []))
-          )
-          print(
-              "Releases:",
-              len(status.get("releases", []))
-          )
-          print(
-              "Stores:",
-              state.get("v82_total_stores")
-          )
-          print(
-              "Completed states:",
-              state.get("v82_completed_states")
-          )
-          print(
-              "Last discovery error:",
-              state.get("v82_last_error")
-          )
+          print("=== POKESTOCK V8.2.2 ===")
+          print("State:", state.get("v822_last_state"))
+          print("Status:", state.get("v822_status"))
+          print("Method:", state.get("v822_last_method"))
+          print("New stores:", state.get("v822_last_new_stores"))
+          print("Total stores:", state.get("v822_total_stores"))
+          print("Error:", state.get("v822_last_error"))
           PY
+
+      - name: Report discovery failure
+        if: steps.discovery.outcome == 'failure'
+        run: |
+          echo "::error::Store discovery failed or was incomplete."
+          echo "Catalogue monitoring and data preservation completed."
+          echo "Review data/discovery_state.json for details."
+          exit 1
