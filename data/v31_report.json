@@ -1,0 +1,21 @@
+{
+  "version": "31",
+  "checked_at": "2026-11-03T23:33:24.052486+00:00",
+  "stores": 1173,
+  "games": 14,
+  "store_game_records": 16422,
+  "catalogue_products": 392,
+  "accepted_sightings": 0,
+  "new_source_candidates": 0,
+  "rejected": {},
+  "product_forecasts": 0,
+  "dated_product_predictions": 0,
+  "source_diagnostics": [
+    {
+      "url": "https://restockd.app/pokemon-in-store",
+      "http_status": 200,
+      "bytes": 433752
+    }
+  ],
+  "warning": "No exact-store observations means no evidence-based prediction. A green run does not confirm stock."
+}
