@@ -1,0 +1,112 @@
+name: PokeStock V23 Pickup and Website
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  upgrade:
+    name: Pickup Monitoring and Website Update
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Validate script
+        run: python -m py_compile scripts/v23_upgrade.py
+
+      - name: Run V23
+        run: python scripts/v23_upgrade.py
+
+      - name: Validate data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rows = json.loads(
+              Path("data/v23_pickup_observations.json")
+              .read_text(encoding="utf-8")
+          )
+          report = json.loads(
+              Path("data/v23_pickup_report.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert isinstance(rows, list)
+          assert report["version"] == "23.0"
+
+          for row in rows:
+              assert row["inventory_scope"] == "store_pickup"
+              assert row["shelf_stock_confirmed"] is False
+              assert row["location_name"]
+              assert row["evidence_url"]
+
+          html = Path("index.html").read_text(
+              encoding="utf-8"
+          )
+          assert 'id="pickup"' in html
+
+          print("V23 validated")
+          PY
+
+      - name: Publish changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            index.html \
+            data/v23_pickup_observations.json \
+            data/v23_pickup_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "Upgrade pickup monitoring and website V23"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "V23 published successfully"
+              exit 0
+            fi
+
+            sleep 3
+          done
+
+          exit 1
