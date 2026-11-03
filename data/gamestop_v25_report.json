@@ -1,6 +1,7 @@
 {
   "version": "25.0",
-  "checked_at": "2026-11-03T23:02:43.440107+00:00",
+  "engine_version": "26.0",
+  "checked_at": "2026-11-03T23:11:27.079964+00:00",
   "retailer": "GameStop",
   "searches_attempted": 10,
   "products_discovered_this_run": 0,
@@ -12,7 +13,123 @@
   "out_of_stock": 0,
   "near_staunton_confirmed": 0,
   "errors": [],
+  "checks": [],
+  "catalog_seeded": 0,
+  "discovery_diagnostics": [
+    {
+      "query": "pokemon trading card",
+      "search_url": "https://www.gamestop.com/search/?q=pokemon%20trading%20card",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=pokemon%20trading%20card",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "union arena",
+      "search_url": "https://www.gamestop.com/search/?q=union%20arena",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=union%20arena",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "one piece trading card",
+      "search_url": "https://www.gamestop.com/search/?q=one%20piece%20trading%20card",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=one%20piece%20trading%20card",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "yu gi oh cards",
+      "search_url": "https://www.gamestop.com/search/?q=yu%20gi%20oh%20cards",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=yu%20gi%20oh%20cards",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "magic the gathering",
+      "search_url": "https://www.gamestop.com/search/?q=magic%20the%20gathering",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=magic%20the%20gathering",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "lorcana",
+      "search_url": "https://www.gamestop.com/search/?q=lorcana",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=lorcana",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "gundam card game",
+      "search_url": "https://www.gamestop.com/search/?q=gundam%20card%20game",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=gundam%20card%20game",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "digimon card game",
+      "search_url": "https://www.gamestop.com/search/?q=digimon%20card%20game",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=digimon%20card%20game",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "dragon ball super cards",
+      "search_url": "https://www.gamestop.com/search/?q=dragon%20ball%20super%20cards",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=dragon%20ball%20super%20cards",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    },
+    {
+      "query": "star wars unlimited",
+      "search_url": "https://www.gamestop.com/search/?q=star%20wars%20unlimited",
+      "product_links": 0,
+      "tiles": 0,
+      "accepted": 0,
+      "http_status": 403,
+      "final_url": "https://www.gamestop.com/search/?q=star%20wars%20unlimited",
+      "page_title": "Attention Required! | Cloudflare",
+      "total_accepted_after_fallback": 0
+    }
+  ],
   "next_cursor": 0,
   "catalog_size": 0,
-  "note": "Availability is reported for the actual GameStop store returned by the website. Store-specific availability does not guarantee pickup or shelf quantity. Unknown results are omitted."
+  "integration_verified_this_run": false,
+  "integration_status": "unverified_no_store_response",
+  "note": "Store-specific availability is not proof of shelf quantity or pickup. Unknown responses are never converted to out of stock. A successful workflow is not proof of a working retailer integration."
 }
