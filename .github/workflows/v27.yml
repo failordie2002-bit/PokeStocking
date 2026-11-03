@@ -1,0 +1,451 @@
+name: PokeStock V27 Verified Inventory
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  inventory:
+    name: Verify Retailer Inventory
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run V27 inventory monitor
+        shell: bash
+        run: |
+          mkdir -p data
+          cat > /tmp/pokestock_v27.py <<'PY'
+          import json
+          import re
+          import time
+          from collections import Counter
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          from urllib.parse import urlparse, unquote
+
+          import requests
+
+          DATA = Path("data")
+          DATA.mkdir(exist_ok=True)
+          NOW = datetime.now(timezone.utc)
+          STAMP = NOW.isoformat()
+
+          MAX_CHECKS = 60
+          MAX_AGE = timedelta(hours=8)
+
+          INPUT = DATA / "online_offers.json"
+          GAMESTOP = DATA / "gamestop_store_inventory.json"
+          OUTPUT = DATA / "v27_inventory.json"
+          REPORT = DATA / "v27_report.json"
+          STATE = DATA / "v27_state.json"
+
+          session = requests.Session()
+          session.headers.update({
+              "User-Agent": "PokeStock/27.0",
+              "Accept": "application/json"
+          })
+
+          def read(path, default):
+              try:
+                  return json.loads(
+                      path.read_text(encoding="utf-8")
+                  )
+              except (OSError, ValueError):
+                  return default
+
+          def write(path, value):
+              temp = path.with_suffix(".tmp")
+              temp.write_text(
+                  json.dumps(
+                      value,
+                      ensure_ascii=False,
+                      indent=2
+                  ),
+                  encoding="utf-8"
+              )
+              temp.replace(path)
+
+          def fresh(row):
+              try:
+                  dt = datetime.fromisoformat(
+                      row["checked_at"].replace(
+                          "Z", "+00:00"
+                      )
+                  )
+                  age = NOW - dt.astimezone(timezone.utc)
+                  return timedelta(0) <= age <= MAX_AGE
+              except (KeyError, ValueError, TypeError,
+                      AttributeError):
+                  return False
+
+          def valid_https(url):
+              try:
+                  p = urlparse(url)
+                  return (
+                      p.scheme == "https"
+                      and bool(p.hostname)
+                      and not p.username
+                      and not p.password
+                      and p.port in (None, 443)
+                  )
+              except (ValueError, TypeError):
+                  return False
+
+          def shopify_json_url(url):
+              if not valid_https(url):
+                  return None
+              p = urlparse(url)
+              match = re.fullmatch(
+                  r"/products/([^/]+)", p.path.rstrip("/")
+              )
+              if not match:
+                  return None
+              handle = unquote(match.group(1))
+              if not re.fullmatch(
+                  r"[A-Za-z0-9_-]{1,180}", handle
+              ):
+                  return None
+              return (
+                  "https://" + p.hostname
+                  + "/products/" + handle + ".js"
+              )
+
+          def check_shopify(offer):
+              url = offer.get("product_url", "")
+              endpoint = shopify_json_url(url)
+              if not endpoint:
+                  return None, "unsupported_product_url"
+
+              try:
+                  response = session.get(
+                      endpoint,
+                      timeout=(5, 12),
+                      allow_redirects=False
+                  )
+                  if response.status_code != 200:
+                      return None, (
+                          "http_" + str(response.status_code)
+                      )
+                  if len(response.content) > 2000000:
+                      return None, "response_too_large"
+
+                  product = response.json()
+                  variants = product.get("variants")
+                  if not isinstance(variants, list):
+                      return None, "invalid_variants"
+
+                  sku = str(offer.get("sku") or "")
+                  selected = []
+
+                  if sku:
+                      selected = [
+                          v for v in variants
+                          if isinstance(v, dict)
+                          and str(v.get("sku") or "") == sku
+                      ]
+
+                  if not selected and len(variants) == 1:
+                      selected = variants
+
+                  if len(selected) != 1:
+                      return None, "ambiguous_variant"
+
+                  available = selected[0].get("available")
+                  if type(available) is not bool:
+                      return None, "unknown_availability"
+
+                  return {
+                      "availability": (
+                          "In stock" if available
+                          else "Out of stock"
+                      ),
+                      "checked_at": STAMP,
+                      "evidence_type":
+                          "shopify_public_variant_recheck",
+                      "evidence_url": endpoint,
+                      "inventory_scope": "online",
+                  }, "verified"
+
+              except (requests.RequestException,
+                      ValueError, TypeError, KeyError):
+                  return None, "request_or_data_error"
+
+          def key(offer):
+              return (
+                  str(offer.get("product_url") or ""),
+                  str(offer.get("sku") or "")
+              )
+
+          def main():
+              source = read(INPUT, [])
+              previous = read(OUTPUT, [])
+              state = read(STATE, {})
+
+              if not isinstance(source, list):
+                  source = []
+              if not isinstance(previous, list):
+                  previous = []
+              if not isinstance(state, dict):
+                  state = {}
+
+              candidates = {}
+              for offer in source:
+                  if not isinstance(offer, dict):
+                      continue
+                  if offer.get("inventory_scope") != "online":
+                      continue
+                  url = offer.get("product_url")
+                  if not valid_https(url):
+                      continue
+                  if not offer.get("product_name"):
+                      continue
+                  candidates[key(offer)] = offer
+
+              ordered = sorted(candidates.values(),
+                               key=key)
+
+              cursor = int(state.get("cursor", 0) or 0)
+              cursor = cursor % len(ordered) if ordered else 0
+
+              batch = [
+                  ordered[(cursor + i) % len(ordered)]
+                  for i in range(
+                      min(MAX_CHECKS, len(ordered))
+                  )
+              ]
+
+              previous_by_key = {
+                  key(row): row
+                  for row in previous
+                  if isinstance(row, dict)
+                  and fresh(row)
+                  and row.get("inventory_scope") == "online"
+                  and row.get("evidence_url")
+                  and row.get("availability") in (
+                      "In stock", "Out of stock"
+                  )
+              }
+
+              results = dict(previous_by_key)
+              outcomes = Counter()
+              checks = []
+
+              for offer in batch:
+                  observation, reason = check_shopify(offer)
+                  outcomes[reason] += 1
+
+                  item_key = key(offer)
+
+                  if observation:
+                      row = dict(offer)
+                      row.update(observation)
+                      results[item_key] = row
+                  else:
+                      # Do not carry forward a prior result
+                      # for a product we just failed to check.
+                      results.pop(item_key, None)
+
+                  checks.append({
+                      "retailer": offer.get("retailer"),
+                      "product": offer.get("product_name"),
+                      "result": reason
+                  })
+
+                  time.sleep(0.15)
+
+              # Include fresh existing online observations
+              # for products not processed in this batch.
+              checked_keys = {key(o) for o in batch}
+              for offer in ordered:
+                  k = key(offer)
+                  if k in checked_keys or k in results:
+                      continue
+                  if (
+                      fresh(offer)
+                      and offer.get("availability") in (
+                          "In stock", "Out of stock"
+                      )
+                      and offer.get("evidence_url")
+                  ):
+                      results[k] = dict(offer)
+
+              online = sorted(
+                  results.values(),
+                  key=lambda x: (
+                      x.get("retailer", ""),
+                      x.get("product_name", "")
+                  )
+              )
+
+              # Import only already verified store records.
+              physical = []
+              for row in read(GAMESTOP, []):
+                  if not isinstance(row, dict):
+                      continue
+                  if not fresh(row):
+                      continue
+                  if row.get("inventory_scope") != "store_specific":
+                      continue
+                  if row.get("availability") not in (
+                      "In stock", "Out of stock"
+                  ):
+                      continue
+                  if not all(row.get(field) for field in (
+                      "store_id", "store_name",
+                      "store_address", "evidence_url"
+                  )):
+                      continue
+                  physical.append(dict(row))
+
+              inventory = online + physical
+              write(OUTPUT, inventory)
+
+              next_cursor = (
+                  (cursor + len(batch)) % len(ordered)
+                  if ordered else 0
+              )
+              write(STATE, {"cursor": next_cursor})
+
+              online_in_stock = sum(
+                  r["availability"] == "In stock"
+                  for r in online
+              )
+              store_in_stock = sum(
+                  r["availability"] == "In stock"
+                  for r in physical
+              )
+
+              report = {
+                  "version": "27.0",
+                  "checked_at": STAMP,
+                  "source_online_candidates":
+                      len(ordered),
+                  "checked_this_run": len(batch),
+                  "verified_this_run":
+                      outcomes["verified"],
+                  "fresh_online_observations":
+                      len(online),
+                  "online_in_stock": online_in_stock,
+                  "online_out_of_stock":
+                      len(online) - online_in_stock,
+                  "verified_store_observations":
+                      len(physical),
+                  "store_in_stock": store_in_stock,
+                  "next_cursor": next_cursor,
+                  "check_outcomes": dict(outcomes),
+                  "checks": checks,
+                  "gamestop_status":
+                      "No access to blocked search pages; "
+                      "only verified existing store data",
+                  "limitations": [
+                      "Online availability is not shelf stock",
+                      "Unverified retailer results are unknown",
+                      "Shopify variants may include preorder",
+                      "Store observations require store evidence",
+                      "Existing source observations expire "
+                      "after eight hours"
+                  ]
+              }
+
+              write(REPORT, report)
+              print(json.dumps(
+                  report, indent=2,
+                  ensure_ascii=False
+              ))
+
+          if __name__ == "__main__":
+              main()
+          PY
+          python -m py_compile /tmp/pokestock_v27.py
+          python /tmp/pokestock_v27.py
+
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path("data/v27_report.json").read_text()
+          )
+          rows = json.loads(
+              Path("data/v27_inventory.json").read_text()
+          )
+
+          assert report["version"] == "27.0"
+          assert isinstance(rows, list)
+
+          for row in rows:
+              assert row["inventory_scope"] in (
+                  "online", "store_specific"
+              )
+              assert row["availability"] in (
+                  "In stock", "Out of stock"
+              )
+              assert row["evidence_url"]
+              assert row["checked_at"]
+
+          print("V27 validation passed")
+          print("Online stock:",
+                report["online_in_stock"])
+          print("Store stock:",
+                report["store_in_stock"])
+          PY
+
+      - name: Publish results
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/v27_inventory.json \
+            data/v27_report.json \
+            data/v27_state.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m "Update V27 verified inventory"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+            if git push origin HEAD:main; then
+              echo "V27 published"
+              exit 0
+            fi
+            sleep 4
+          done
+
+          exit 1
