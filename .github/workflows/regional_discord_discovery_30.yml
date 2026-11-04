@@ -1,0 +1,524 @@
+
+name: Pokestock Script 30 Regional Discord Discovery
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '07 */4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-regional-discord-30
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Discover public regional communities
+        shell: bash
+        run: |
+          mkdir -p data
+
+          cat > /tmp/discord30.py <<'PY'
+          import json
+          import re
+          import time
+          import hashlib
+          import urllib.parse
+          import urllib.request
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from datetime import datetime, timezone, timedelta
+
+          ROOT = Path("data")
+          NOW = datetime.now(timezone.utc)
+
+          STATES = {
+              "AL":"Alabama","AK":"Alaska",
+              "AZ":"Arizona","AR":"Arkansas",
+              "CA":"California","CO":"Colorado",
+              "CT":"Connecticut","DE":"Delaware",
+              "FL":"Florida","GA":"Georgia",
+              "HI":"Hawaii","ID":"Idaho",
+              "IL":"Illinois","IN":"Indiana",
+              "IA":"Iowa","KS":"Kansas",
+              "KY":"Kentucky","LA":"Louisiana",
+              "ME":"Maine","MD":"Maryland",
+              "MA":"Massachusetts","MI":"Michigan",
+              "MN":"Minnesota","MS":"Mississippi",
+              "MO":"Missouri","MT":"Montana",
+              "NE":"Nebraska","NV":"Nevada",
+              "NH":"New Hampshire","NJ":"New Jersey",
+              "NM":"New Mexico","NY":"New York",
+              "NC":"North Carolina","ND":"North Dakota",
+              "OH":"Ohio","OK":"Oklahoma",
+              "OR":"Oregon","PA":"Pennsylvania",
+              "RI":"Rhode Island","SC":"South Carolina",
+              "SD":"South Dakota","TN":"Tennessee",
+              "TX":"Texas","UT":"Utah",
+              "VT":"Vermont","VA":"Virginia",
+              "WA":"Washington","WV":"West Virginia",
+              "WI":"Wisconsin","WY":"Wyoming",
+              "DC":"District of Columbia"
+          }
+
+          NATIONAL = [
+              (
+                  "Pokemon Restocks and Alerts",
+                  "https://discord.com/servers/"
+                  "pokemon-restocks-and-alerts-1369077918244012072",
+                  ["Pokemon"]
+              ),
+              (
+                  "PokePings",
+                  "https://discord.com/servers/"
+                  "pokepings-restock-alerts-1423812860043333695",
+                  ["Pokemon"]
+              ),
+              (
+                  "Restockd",
+                  "https://discord.com/servers/"
+                  "restockd-pokemon-restocks-1331120711405932626",
+                  ["Pokemon"]
+              ),
+              (
+                  "TCG Notify",
+                  "https://discord.com/servers/"
+                  "tcg-notify-1410829344850444380",
+                  ["Pokemon","One Piece","Riftbound"]
+              )
+          ]
+
+          GAMES = {
+              "Pokemon":[
+                  "pokemon","pokémon"
+              ],
+              "Union Arena":[
+                  "union arena"
+              ],
+              "One Piece":[
+                  "one piece"
+              ],
+              "Gundam":[
+                  "gundam"
+              ],
+              "Magic":[
+                  "magic the gathering","mtg"
+              ],
+              "Lorcana":[
+                  "lorcana"
+              ],
+              "Yu-Gi-Oh":[
+                  "yu-gi-oh","yugioh"
+              ],
+              "Riftbound":[
+                  "riftbound"
+              ],
+              "Digimon":[
+                  "digimon"
+              ]
+          }
+
+          def load(path, fallback):
+              try:
+                  return json.loads(
+                      path.read_text(encoding="utf-8")
+                  )
+              except (OSError, ValueError):
+                  return fallback
+
+          def save(path, value):
+              path.write_text(
+                  json.dumps(
+                      value,
+                      indent=2,
+                      ensure_ascii=False
+                  ) + "\n",
+                  encoding="utf-8"
+              )
+
+          def clean(value):
+              return re.sub(
+                  r"\s+"," ",
+                  re.sub(
+                      r"<[^>]+>"," ",
+                      str(value or "")
+                  )
+              ).strip()
+
+          def public_discord_url(value):
+              try:
+                  u = urllib.parse.urlparse(value)
+                  host = (u.hostname or "").lower()
+                  if u.scheme != "https":
+                      return None
+                  if host not in (
+                      "discord.com",
+                      "www.discord.com",
+                      "discord.gg",
+                      "www.discord.gg"
+                  ):
+                      return None
+                  if host.endswith("discord.com"):
+                      if not (
+                          u.path.startswith("/servers/") or
+                          u.path.startswith("/invite/")
+                      ):
+                          return None
+                  if not u.path.strip("/"):
+                      return None
+                  return urllib.parse.urlunparse(
+                      (u.scheme,host,u.path,"","","")
+                  )
+              except Exception:
+                  return None
+
+          def search(query):
+              url = (
+                  "https://www.bing.com/search?format=rss&q="
+                  + urllib.parse.quote(query)
+              )
+
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent":"Mozilla/5.0"
+                  }
+              )
+
+              try:
+                  with urllib.request.urlopen(
+                      req,timeout=9
+                  ) as response:
+                      raw = response.read(500000)
+
+                  root = ET.fromstring(raw)
+                  rows = []
+
+                  for item in root.findall(".//item"):
+                      rows.append({
+                          "title":clean(
+                              item.findtext("title")
+                          ),
+                          "description":clean(
+                              item.findtext("description")
+                          ),
+                          "url":clean(
+                              item.findtext("link")
+                          )
+                      })
+
+                  return rows[:20]
+              except Exception as exc:
+                  print(
+                      "Search unavailable:",
+                      str(exc)[:120]
+                  )
+                  return []
+
+          def matching_games(text):
+              lower = text.lower()
+              return [
+                  game
+                  for game,terms in GAMES.items()
+                  if any(t in lower for t in terms)
+              ]
+
+          def explicit_region(text, code, name):
+              lower = text.lower()
+
+              # A search query alone is not proof
+              # that a server covers the state.
+              if re.search(
+                  r"(?<!\w)" +
+                  re.escape(name.lower()) +
+                  r"(?!\w)",
+                  lower
+              ):
+                  return True
+
+              # Abbreviations require a clear
+              # regional context to reduce
+              # ambiguous matches.
+              if re.search(
+                  r"\b" + re.escape(code) +
+                  r"\b",
+                  text
+              ) and re.search(
+                  r"\b(local|regional|statewide|"
+                  r"restock|community|tcg)\b",
+                  lower
+              ):
+                  return True
+
+              return False
+
+          path = ROOT / "discord_directory_29.json"
+          previous = load(path, [])
+          if not isinstance(previous,list):
+              previous = []
+
+          found = {}
+
+          for name,url,games in NATIONAL:
+              found[url] = {
+                  "name":name,
+                  "url":url,
+                  "games":games,
+                  "states":[],
+                  "cities":[],
+                  "coverage":"nationwide",
+                  "verification":"directory_only",
+                  "message_access":False
+              }
+
+          # Preserve previously discovered
+          # regional entries. Never erase
+          # legitimate entries just because
+          # a search engine is unavailable.
+          for item in previous:
+              if not isinstance(item,dict):
+                  continue
+
+              url = public_discord_url(
+                  item.get("url","")
+              )
+
+              if not url or url in found:
+                  continue
+
+              if not isinstance(
+                  item.get("states"),list
+              ):
+                  continue
+
+              found[url] = item
+
+          codes = list(STATES)
+
+          # Twelve states per run.
+          # Full nationwide cycle in about
+          # 20 hours at four-hour intervals.
+          cycle = int(
+              NOW.timestamp() // (4 * 3600)
+          )
+          offset = (cycle * 12) % len(codes)
+
+          batch = [
+              codes[(offset+i) % len(codes)]
+              for i in range(12)
+          ]
+
+          # Include Virginia in every run
+          # during initial development.
+          if "VA" not in batch:
+              batch.append("VA")
+
+          new_count = 0
+
+          for code in batch:
+              name = STATES[code]
+
+              queries = [
+                  (
+                      'site:discord.com/servers '
+                      '"pokemon" "restock" "' +
+                      name + '"'
+                  ),
+                  (
+                      'site:discord.com/servers '
+                      '"tcg" "' + name + '"'
+                  )
+              ]
+
+              for query in queries:
+                  for result in search(query):
+                      url = public_discord_url(
+                          result["url"]
+                      )
+
+                      if not url:
+                          continue
+
+                      text = (
+                          result["title"] + " " +
+                          result["description"]
+                      )
+
+                      games = matching_games(text)
+
+                      if not games:
+                          continue
+
+                      if not explicit_region(
+                          text,code,name
+                      ):
+                          continue
+
+                      if not re.search(
+                          r"\b(discord|server|community|"
+                          r"restock|tcg|trading card)\b",
+                          text,re.I
+                      ):
+                          continue
+
+                      title = result["title"][:150]
+
+                      if url in found:
+                          old = found[url]
+
+                          states = set(
+                              old.get("states",[])
+                          )
+                          states.add(code)
+
+                          old["states"] = sorted(
+                              states
+                          )
+
+                          old["games"] = sorted(
+                              set(
+                                  old.get("games",[])
+                              ) | set(games)
+                          )
+
+                          # National defaults remain
+                          # nationwide, not relabeled.
+                          if old.get(
+                              "coverage"
+                          ) == "nationwide":
+                              old["states"] = []
+                      else:
+                          found[url] = {
+                              "name":title,
+                              "url":url,
+                              "games":games,
+                              "states":[code],
+                              "cities":[],
+                              "coverage":"state",
+                              "verification":
+                                  "search_index_unverified",
+                              "message_access":False,
+                              "discovered_at":
+                                  NOW.isoformat()
+                          }
+                          new_count += 1
+
+                  time.sleep(0.25)
+
+          directory = list(found.values())
+
+          directory.sort(
+              key=lambda x: (
+                  not bool(x.get("states")),
+                  x.get("name","").lower()
+              )
+          )
+
+          save(path,directory)
+
+          save(
+              ROOT / "discord_discovery_report_30.json",
+              {
+                  "updated_at":NOW.isoformat(),
+                  "states_checked":batch,
+                  "total_directory_entries":
+                      len(directory),
+                  "regional_entries":sum(
+                      bool(x.get("states"))
+                      for x in directory
+                  ),
+                  "new_entries":new_count,
+                  "notes":[
+                      "Indexed listings are not verified invitations.",
+                      "Geographic coverage is inferred from explicit listing text.",
+                      "No Discord messages are accessed.",
+                      "No stock availability is inferred.",
+                      "No exact-radius geographic matching is claimed."
+                  ]
+              }
+          )
+
+          print("States checked:",batch)
+          print("New listings:",new_count)
+          print("Directory size:",len(directory))
+          PY
+
+          python /tmp/discord30.py
+
+      - name: Validate directory
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("data")
+
+          rows = json.loads(
+              (root/"discord_directory_29.json")
+              .read_text(encoding="utf-8")
+          )
+
+          report = json.loads(
+              (root/"discord_discovery_report_30.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert isinstance(rows,list)
+          assert len(rows) >= 4
+          assert report["total_directory_entries"] == len(rows)
+
+          for item in rows:
+              assert isinstance(item["states"],list)
+              assert isinstance(item["cities"],list)
+              assert isinstance(item["games"],list)
+              assert item["url"].startswith("https://")
+              assert item.get("message_access") is not True
+
+          print("Regional directory validated")
+          PY
+
+      - name: Publish discovery results
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            data/discord_directory_29.json \
+            data/discord_discovery_report_30.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+
+          git commit -m \
+            "Script 30 discover regional Discord communities"
+
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main &&
+               git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+
+          echo "Unable to publish discovery results"
+          exit 1
