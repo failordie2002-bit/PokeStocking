@@ -1,13 +1,13 @@
 {
   "version": "34.0",
-  "checked_at": "2026-11-04T11:03:27.078343+00:00",
-  "retailers_configured": 15,
-  "retailers_with_product_feeds": 15,
-  "products_observed": 1580,
-  "total_fresh_offers": 1605,
-  "available_to_order": 996,
+  "checked_at": "2026-11-04T13:21:11.861977+00:00",
+  "retailers_configured": 16,
+  "retailers_with_product_feeds": 16,
+  "products_observed": 1598,
+  "total_fresh_offers": 1623,
+  "available_to_order": 1013,
   "preorders": 70,
-  "out_of_stock": 539,
+  "out_of_stock": 540,
   "independently_rechecked": 0,
   "confirmed_physical_stock": 0,
   "confirmed_pickup": 0,
@@ -138,11 +138,11 @@
       "preorders": 0,
       "out_of_stock": 23,
       "errors": [
-        "direct_big-pack-0ff045abf196ab3f5a427a85: not_json",
-        "direct_big-pack-bb471731e1061037c49083e6: not_json",
-        "direct_big-pack-15db296295b8dad06a4ed9da: not_json",
-        "direct_big-pack-51009b67007e84feef56019d: not_json",
-        "direct_big-pack-3213233f0c9985870793e62b: not_json",
+        "direct_big-pack-14c9ae57e39f56388bd803a4: not_json",
+        "direct_big-pack-1b882a16bd4cce0f623b4d1c: not_json",
+        "direct_big-pack-55de1dd398593788596286f5: not_json",
+        "direct_big-pack-981b7ef6c23b4e36da13a559: not_json",
+        "direct_big-pack-d2622fcc78ff2dca327ddce6: not_json",
         "currency_unverified: not_json"
       ]
     },
@@ -180,6 +180,20 @@
       ]
     },
     {
+      "retailer": "Mamba Collectibles",
+      "website": "https://mambacollectibles.com",
+      "feed_pages_checked": 4,
+      "products_seen": 341,
+      "sealed_tcg_products": 16,
+      "observations": 16,
+      "available_to_order": 16,
+      "preorders": 0,
+      "out_of_stock": 0,
+      "errors": [
+        "currency_unverified: not_json"
+      ]
+    },
+    {
       "retailer": "The Compleat Strategist",
       "website": "https://www.thecompleatstrategist.com",
       "feed_pages_checked": 4,
@@ -204,11 +218,11 @@
       "preorders": 0,
       "out_of_stock": 133,
       "errors": [
-        "direct_pokemon-tcg-30th-anniversary-jp-booster-box: not_json",
+        "direct_pokemon-tcg-151-booster-box-jp: not_json",
+        "direct_pokemon-tcg-151-surprise-vol-3-booster-box: not_json",
         "direct_pokemon-tcg-abyss-eye-m5-booster-box: not_json",
-        "direct_pokemon-tcg-chinese-reward-round-csv4-slim-booster-box-copy: not_json",
+        "direct_pokemon-tcg-amazing-volt-tackle-s4-booster-box-jp: not_json",
         "direct_pokemon-tcg-bright-fantasy-csv8c-slim-booster-box: not_json",
-        "direct_pokemon-tcg-chinese-151-gather-vol-4-booster-box: not_json",
         "currency_unverified: not_json"
       ]
     },
@@ -223,26 +237,25 @@
       "preorders": 0,
       "out_of_stock": 1,
       "errors": [
+        "direct_mtg-booster-box-collector-12ct-edge-of-eternities-eoe: not_json",
+        "direct_mtg-booster-pack-collector-edge-of-eternities-eoe: not_json",
         "currency_unverified: not_json"
       ]
     },
     {
       "retailer": "Waterloo Games",
       "website": "https://www.waterloogames.com",
-      "feed_pages_checked": 2,
-      "products_seen": 0,
-      "sealed_tcg_products": 0,
-      "observations": 0,
-      "available_to_order": 0,
+      "feed_pages_checked": 4,
+      "products_seen": 500,
+      "sealed_tcg_products": 2,
+      "observations": 2,
+      "available_to_order": 1,
       "preorders": 0,
-      "out_of_stock": 0,
+      "out_of_stock": 1,
       "errors": [
-        "/products.json: HTTP_500",
-        "/products.json: HTTP_500",
         "direct_deluxe-battle-deck-assorted: not_json",
-        "direct_union-arena-one-evangelion-new-theatrical-edition-starter-deck: not_json",
-        "direct_union-arena-one-kaiju-no-8-booster-display: not_json",
-        "direct_yu-gi-oh-25th-anniversary-rarity-collection-ii-booster-display: not_json"
+        "direct_yu-gi-oh-25th-anniversary-rarity-collection-ii-booster-display: not_json",
+        "currency_unverified: not_json"
       ]
     }
   ],
