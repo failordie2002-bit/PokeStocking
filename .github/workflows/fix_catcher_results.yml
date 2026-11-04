@@ -1,0 +1,175 @@
+name: Fix Shipment Catcher Results
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Repair Shipment Catcher
+        shell: bash
+        run: |
+          cat > /tmp/fix.py <<'PY'
+          from pathlib import Path
+
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+
+          if 'id="catcherV2"' not in s:
+              raise SystemExit(
+                  "Shipment Catcher V2 not found. "
+                  "No changes made."
+              )
+
+          # General TCG watch records have no game.
+          # They should not silently disappear when
+          # the user selects Pokemon or another game.
+          old = '''if(game&&r.game!==game)
+                  return false;'''
+
+          new = '''if(game && r.game!==game &&
+                   !(r.type==="watch" && !r.game))
+                  return false;'''
+
+          if old not in s:
+              raise SystemExit("Game filter pattern not found.")
+          s = s.replace(old,new,1)
+
+          # Local city reference points are approximate,
+          # never exact store coordinates.
+          # These are only used when address-level
+          # geocoding fails.
+          anchor = '''            async function geocode(s){'''
+
+          fallback = '''
+            const LOCAL_CITY_CENTERS = {
+              "staunton|va":[38.1496,-79.0717],
+              "waynesboro|va":[38.0685,-78.8895],
+              "harrisonburg|va":[38.4496,-78.8689],
+              "charlottesville|va":[38.0293,-78.4767],
+              "fishersville|va":[38.0990,-78.9692],
+              "verona|va":[38.2021,-79.0081],
+              "lexington|va":[37.7840,-79.4428],
+              "bridgewater|va":[38.3821,-78.9767],
+              "elkton|va":[38.4079,-78.6236],
+              "crozet|va":[38.0696,-78.7006]
+            };
+
+            function approximateCityPoint(s){
+              return LOCAL_CITY_CENTERS[
+                norm(s.city)+"|"+norm(s.state)
+              ] || null;
+            }
+
+          '''
+
+          if "LOCAL_CITY_CENTERS" not in s:
+              if anchor not in s:
+                  raise SystemExit("Geocode function not found.")
+              s = s.replace(anchor,fallback+anchor,1)
+
+          # Store-level lookup remains preferred.
+          # If unavailable, use the explicitly
+          # approximate local city center.
+          old = '''                const point=candidate
+                  ?resolved.get(candidateKey(candidate))
+                  :null;'''
+
+          new = '''                const point=candidate
+                  ?(resolved.get(candidateKey(candidate))
+                    ||approximateCityPoint(candidate))
+                  :approximateCityPoint(record);'''
+
+          if old not in s:
+              raise SystemExit("Coordinate lookup not found.")
+          s = s.replace(old,new,1)
+
+          # Distinguish city-estimated distances
+          # from precise address distances.
+          old = '''                const miles=distance(origin,point);
+                if(miles<=radius){
+                  results.push({record,miles});
+                }'''
+
+          new = '''                const exact=candidate &&
+                  Boolean(resolved.get(
+                    candidateKey(candidate)
+                  ));
+
+                const miles=distance(origin,point);
+
+                // City-center distances are estimates.
+                // Add a 10-mile boundary allowance
+                // rather than excluding a potentially
+                // nearby store based on its city center.
+                if(miles <= radius+(exact?0:10)){
+                  results.push({
+                    record,miles,
+                    approximate:!exact
+                  });
+                }'''
+
+          if old not in s:
+              raise SystemExit("Distance filter not found.")
+          s = s.replace(old,new,1)
+
+          # Update card rendering to show whether
+          # distance is exact or approximate.
+          old = '''items.slice(0,150).map(({record:r,miles})=>{'''
+
+          new = '''items.slice(0,150).map(
+                  ({record:r,miles,approximate})=>{'''
+
+          if old not in s:
+              raise SystemExit("Card renderer not found.")
+          s = s.replace(old,new,1)
+
+          old = '''${miles.toFixed(1)} miles
+                          straight-line'''
+
+          new = '''${approximate?"~":""}${miles.toFixed(1)} miles
+                          ${approximate
+                            ?"from approximate city center"
+                            :"straight-line"}'''
+
+          if old not in s:
+              raise SystemExit("Distance label not found.")
+          s = s.replace(old,new,1)
+
+          # Ensure the user can distinguish a general
+          # watch from game-specific evidence.
+          old = '''<p>${esc(r.game||"Game unspecified")}</p>'''
+
+          new = '''<p>${esc(
+                        r.game ||
+                        (r.type==="watch"
+                          ?"General TCG watch — game unverified"
+                          :"Game unspecified")
+                      )}</p>'''
+
+          if old not in s:
+              raise SystemExit("Game label not found.")
+          s = s.replace(old,new,1)
+
+          p.write_text(s,encoding="utf-8")
+          print("Shipment Catcher filters repaired.")
+          PY
+
+          python /tmp/fix.py
+
+      - name: Commit repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix Shipment Catcher filtering and local radius fallback"
+            git push
+          fi
