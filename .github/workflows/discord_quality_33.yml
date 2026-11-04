@@ -1,0 +1,968 @@
+name: Pokestock Script 33 Discord Quality and Intelligence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '49 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-discord-quality-33
+  cancel-in-progress: false
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Build quality-ranked directory
+        shell: bash
+        run: |
+          mkdir -p data assets
+
+          cat > /tmp/ps33.py <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from datetime import datetime,timezone
+
+          root=Path("data")
+          now=datetime.now(timezone.utc).isoformat()
+
+          def read(name,default):
+              try:
+                  return json.loads(
+                      (root/name).read_text(
+                          encoding="utf-8"
+                      )
+                  )
+              except (OSError,ValueError):
+                  return default
+
+          def save(name,obj):
+              (root/name).write_text(
+                  json.dumps(
+                      obj,indent=2,
+                      ensure_ascii=False
+                  )+"\n",
+                  encoding="utf-8"
+              )
+
+          source=read(
+              "discord_directory_29.json",[]
+          )
+          if not isinstance(source,list):
+              source=[]
+
+          games={
+              "Pokemon":r"pok[eé]mon|pokemon",
+              "Union Arena":r"union arena",
+              "One Piece":r"one piece",
+              "Gundam":r"gundam",
+              "Magic":r"magic the gathering|\bmtg\b",
+              "Lorcana":r"lorcana",
+              "Riftbound":r"riftbound",
+              "Yu-Gi-Oh":r"yu.gi.oh|yugioh",
+              "Digimon":r"digimon",
+              "Dragon Ball":r"dragon ball",
+              "Flesh and Blood":r"flesh and blood"
+          }
+
+          positive=[
+              (r"\brestock\b|stock alerts?|"
+               r"inventory|product drops?",5),
+              (r"\btcg\b|trading card|"
+               r"booster boxes?|sealed product",5),
+              (r"buy.sell|marketplace|"
+               r"card trading|collectors?",3),
+              (r"card shop|local game store|"
+               r"\blgs\b|retail",3),
+              (r"tournaments?|deck building|"
+               r"competitive cards?",1)
+          ]
+
+          negative=[
+              (r"pokemon unite|pok[eé]mon go|"
+               r"pokemon showdown",7),
+              (r"video games?|minecraft|"
+               r"fortnite|roblox|console gaming",4),
+              (r"anime roleplay|fan fiction|"
+               r"general gaming|lfg",3),
+              (r"crypto|nft|sports betting",8)
+          ]
+
+          regions={
+              "VA":[
+                  "virginia","shenandoah valley",
+                  "northern virginia","richmond va"
+              ],
+              "MD":["maryland"],
+              "DC":["washington dc","dmv area"],
+              "CA":[
+                  "california","socal",
+                  "bay area","los angeles"
+              ],
+              "TX":[
+                  "texas","dallas","houston",
+                  "san antonio","dfw"
+              ],
+              "PA":["pennsylvania","lehigh valley"],
+              "NY":["new york","nyc"],
+              "FL":["florida","orlando","miami"],
+              "NC":["north carolina","charlotte nc"],
+              "GA":["georgia","atlanta"],
+              "WA":["seattle","washington state"],
+              "IL":["illinois","chicago"],
+              "OH":["ohio","columbus ohio"],
+              "AZ":["arizona","phoenix"],
+              "CO":["colorado","denver"],
+              "MA":["massachusetts","boston"],
+              "OR":["oregon","portland oregon"],
+              "TN":["tennessee","nashville"],
+              "MI":["michigan","detroit"],
+              "MN":["minnesota","twin cities"],
+              "WI":["wisconsin","milwaukee"],
+              "NJ":["new jersey"],
+              "SC":["south carolina"],
+              "IN":["indiana","indianapolis"],
+              "MO":["missouri","st louis"],
+              "NV":["nevada","las vegas"],
+              "UT":["utah","salt lake city"]
+          }
+
+          def has(text,phrase):
+              return bool(re.search(
+                  r"(?<![a-z0-9])"+
+                  re.escape(phrase)+
+                  r"(?![a-z0-9])",
+                  text,re.I
+              ))
+
+          def classify(item):
+              title=str(item.get("name",""))
+              desc=str(item.get("description",""))
+              text=(title+" "+desc).lower()
+
+              known=[
+                  str(g) for g in
+                  item.get("games",[])
+                  if isinstance(g,str)
+              ]
+
+              matched=[
+                  g for g,pattern in games.items()
+                  if re.search(pattern,text,re.I)
+              ]
+
+              matched=sorted(set(known+matched))
+
+              score=0
+              reasons=[]
+
+              for pattern,weight in positive:
+                  if re.search(pattern,text,re.I):
+                      score+=weight
+                      reasons.append("TCG-related evidence")
+
+              for pattern,weight in negative:
+                  if re.search(pattern,text,re.I):
+                      score-=weight
+                      reasons.append(
+                          "Possible unrelated gaming"
+                      )
+
+              if matched:
+                  score+=2
+
+              # Pokemon alone is not evidence
+              # of physical trading cards.
+              if matched==["Pokemon"] and not re.search(
+                  r"\btcg\b|trading card|"
+                  r"cards?|collect|restock|"
+                  r"booster|sealed|retail",
+                  text,re.I
+              ):
+                  score-=3
+
+              original_states=[
+                  s for s in item.get("states",[])
+                  if isinstance(s,str)
+                  and re.fullmatch(
+                      r"[A-Z]{2}",s
+                  )
+              ]
+
+              # Only use descriptions and titles.
+              # Never infer geography from
+              # the user's own location.
+              detected=set(original_states)
+
+              for code,phrases in regions.items():
+                  if any(
+                      has(text,p)
+                      for p in phrases
+                  ):
+                      detected.add(code)
+
+              if re.search(
+                  r"restock|stock alerts?|"
+                  r"inventory|shipment",text,re.I
+              ):
+                  category="Restock Alerts"
+              elif re.search(
+                  r"buy.sell|marketplace|trade",
+                  text,re.I
+              ):
+                  category="Buying and Trading"
+              elif re.search(
+                  r"tournament|deck.building",
+                  text,re.I
+              ):
+                  category="Playing and Tournaments"
+              else:
+                  category="Collector Community"
+
+              if score>=6:
+                  quality="Strong TCG candidate"
+              elif score>=2:
+                  quality="Possible TCG community"
+              else:
+                  quality="Needs review"
+
+              return {
+                  **item,
+                  "games":matched,
+                  "states":sorted(detected),
+                  "category":category,
+                  "quality_score":score,
+                  "quality_label":quality,
+                  "geographic_evidence":
+                      bool(detected),
+                  "message_access":False,
+                  "stock_verified":False,
+                  "quality_updated_at":now,
+                  "quality_method":
+                      "automated_keyword_heuristic"
+              }
+
+          result=[
+              classify(x) for x in source
+              if isinstance(x,dict)
+              and x.get("url")
+              and x.get("name")
+          ]
+
+          # Keep all entries for browsing,
+          # including those needing review.
+          # Don't erase the original directory.
+          result.sort(
+              key=lambda x:(
+                  -x["quality_score"],
+                  x["name"].lower()
+              )
+          )
+
+          save("discord_quality_33.json",result)
+
+          # Authorized ingestion contract.
+          # No fabricated Discord messages.
+          evidence=read(
+              "discord_authorized_reports_33.json",
+              []
+          )
+
+          if not isinstance(evidence,list):
+              evidence=[]
+
+          valid=[]
+          required={
+              "source_url","reported_at",
+              "inventory_scope","status",
+              "game"
+          }
+
+          for row in evidence:
+              if not isinstance(row,dict):
+                  continue
+              if not required.issubset(row):
+                  continue
+              if row.get(
+                  "authorization_confirmed"
+              ) is not True:
+                  continue
+              if row["inventory_scope"] not in (
+                  "physical_store","online",
+                  "shipment"
+              ):
+                  continue
+              if not str(
+                  row["source_url"]
+              ).startswith("https://"):
+                  continue
+              valid.append({
+                  **row,
+                  "current_stock_verified":False,
+                  "evidence_level":
+                      "authorized_community_report"
+              })
+
+          save(
+              "discord_accepted_reports_33.json",
+              valid
+          )
+
+          report={
+              "updated_at":now,
+              "total":len(result),
+              "strong":sum(
+                  x["quality_label"]==
+                  "Strong TCG candidate"
+                  for x in result
+              ),
+              "possible":sum(
+                  x["quality_label"]==
+                  "Possible TCG community"
+                  for x in result
+              ),
+              "needs_review":sum(
+                  x["quality_label"]==
+                  "Needs review"
+                  for x in result
+              ),
+              "location_tagged":sum(
+                  bool(x["states"])
+                  for x in result
+              ),
+              "authorized_reports":len(valid),
+              "limitations":[
+                  "Quality scores are heuristic.",
+                  "Directory links are not verified invitations.",
+                  "No Discord messages are scraped.",
+                  "Geographic labels require review.",
+                  "Community reports are not verified stock."
+              ]
+          }
+
+          save(
+              "discord_quality_report_33.json",
+              report
+          )
+
+          print(json.dumps(report,indent=2))
+          PY
+
+          python /tmp/ps33.py
+
+      - name: Install enhanced community interface
+        shell: bash
+        run: |
+          cat > assets/discord33.js <<'JS'
+          (() => {
+            "use strict";
+
+            const $=id=>document.getElementById(id);
+
+            let communities=[];
+            let reports=[];
+
+            function location() {
+              try {
+                return JSON.parse(
+                  localStorage.getItem(
+                    "ps29Location"
+                  )||"{}"
+                );
+              } catch {
+                return {};
+              }
+            }
+
+            function el(tag,text,parent) {
+              const node=document.createElement(tag);
+              if(text!==undefined) {
+                node.textContent=text;
+              }
+              if(parent) parent.appendChild(node);
+              return node;
+            }
+
+            async function json(path,fallback) {
+              try {
+                const response=await fetch(
+                  path+"?v="+Date.now(),
+                  {cache:"no-store"}
+                );
+                if(!response.ok)
+                  return fallback;
+                return await response.json();
+              } catch {
+                return fallback;
+              }
+            }
+
+            function validLink(value) {
+              try {
+                const url=new URL(value);
+                return url.protocol==="https:"?
+                  url.href:null;
+              } catch {
+                return null;
+              }
+            }
+
+            function init() {
+              const host=$("releases");
+              if(!host||$("ps33")) return;
+
+              // Replace the previous directory
+              // interface without deleting its
+              // underlying source files.
+              const old=$("ps32");
+              if(old) old.style.display="none";
+
+              const panel=el("div",undefined,host);
+              panel.id="ps33";
+              panel.className="ps33-panel";
+
+              panel.innerHTML=`
+                <h2>TCG Discord Community Finder</h2>
+                <p class="ps33-note">
+                  Discover collecting, restock,
+                  trading and tournament communities.
+                  Your location determines priority,
+                  not which communities are allowed.
+                </p>
+                <div class="ps33-filters">
+                  <input id="ps33Search"
+                    placeholder="Search communities">
+                  <select id="ps33Game">
+                    <option value="">All TCGs</option>
+                  </select>
+                  <select id="ps33Quality">
+                    <option value="">All quality levels</option>
+                    <option value="Strong TCG candidate">
+                      Strong TCG candidates
+                    </option>
+                    <option value="Possible TCG community">
+                      Possible TCG communities
+                    </option>
+                    <option value="Needs review">
+                      Needs review
+                    </option>
+                  </select>
+                  <select id="ps33Geo">
+                    <option value="priority">
+                      My location first
+                    </option>
+                    <option value="all">
+                      All locations
+                    </option>
+                    <option value="only">
+                      My state only
+                    </option>
+                  </select>
+                </div>
+                <p id="ps33Summary"
+                  class="ps33-note"></p>
+                <div id="ps33Results"></div>
+              `;
+
+              host.insertBefore(
+                panel,host.firstChild
+              );
+
+              [
+                "ps33Search","ps33Game",
+                "ps33Quality","ps33Geo"
+              ].forEach(id=>{
+                $(id).addEventListener(
+                  "input",render
+                );
+                $(id).addEventListener(
+                  "change",render
+                );
+              });
+
+              load();
+            }
+
+            function render() {
+              const q=$("ps33Search").value
+                .trim().toLowerCase();
+              const game=$("ps33Game").value;
+              const quality=$("ps33Quality").value;
+              const geo=$("ps33Geo").value;
+              const state=String(
+                location().state||""
+              ).toUpperCase();
+
+              let rows=communities.filter(x=>{
+                const text=[
+                  x.name,
+                  x.category,
+                  ...(x.games||[])
+                ].join(" ").toLowerCase();
+
+                if(q&&!text.includes(q))
+                  return false;
+
+                if(game&&!(
+                  x.games||[]
+                ).includes(game))
+                  return false;
+
+                if(quality&&
+                  x.quality_label!==quality)
+                  return false;
+
+                if(geo==="only"&&
+                  (!state||!(
+                    x.states||[]
+                  ).includes(state)))
+                  return false;
+
+                return true;
+              });
+
+              rows.sort((a,b)=>{
+                if(geo==="priority"&&state) {
+                  const am=(
+                    a.states||[]
+                  ).includes(state)?1:0;
+                  const bm=(
+                    b.states||[]
+                  ).includes(state)?1:0;
+                  if(am!==bm)
+                    return bm-am;
+                }
+                return (
+                  (b.quality_score||0)-
+                  (a.quality_score||0)
+                )||a.name.localeCompare(b.name);
+              });
+
+              $("ps33Summary").textContent=
+                rows.length+" communities · "+
+                "Automated classification, not "+
+                "verified membership or live stock";
+
+              const output=$("ps33Results");
+              output.replaceChildren();
+
+              if(!rows.length) {
+                el(
+                  "p",
+                  "No matching communities.",
+                  output
+                );
+                return;
+              }
+
+              rows.slice(0,250).forEach(x=>{
+                const link=validLink(x.url);
+                if(!link) return;
+
+                const card=el(
+                  "article",undefined,output
+                );
+                card.className="ps33-card";
+
+                el(
+                  "strong",x.name,card
+                );
+
+                el(
+                  "p",
+                  [
+                    x.category||
+                      "Collector Community",
+                    (x.games||[]).join(", "),
+                    x.quality_label||
+                      "Needs review"
+                  ].filter(Boolean).join(" · "),
+                  card
+                ).className="ps33-note";
+
+                const local=state&&(
+                  x.states||[]
+                ).includes(state);
+
+                el(
+                  "p",
+                  local?
+                    "Matches your state":
+                    (x.states||[]).length?
+                    "Regional community candidate":
+                    "Location not specified",
+                  card
+                ).className="ps33-note";
+
+                const a=el(
+                  "a","View community listing",card
+                );
+                a.href=link;
+                a.target="_blank";
+                a.rel="noopener noreferrer";
+              });
+            }
+
+            function renderEvidence() {
+              const targets=[
+                ["stores","physical_store"],
+                ["online","online"],
+                ["shipments","shipment"]
+              ];
+
+              targets.forEach(([tab,scope])=>{
+                const host=$(tab);
+                if(!host) return;
+
+                let panel=$("ps33-"+scope);
+
+                if(!panel) {
+                  panel=el(
+                    "div",undefined,host
+                  );
+                  panel.id="ps33-"+scope;
+                  panel.className="ps33-panel";
+                  host.appendChild(panel);
+                }
+
+                panel.replaceChildren();
+
+                const title={
+                  physical_store:
+                    "Authorized Discord Store Reports",
+                  online:
+                    "Authorized Discord Online Reports",
+                  shipment:
+                    "Authorized Discord Shipment Reports"
+                }[scope];
+
+                el("h3",title,panel);
+
+                const state=String(
+                  location().state||""
+                ).toUpperCase();
+
+                const matches=reports.filter(r=>{
+                  if(r.inventory_scope!==scope)
+                    return false;
+
+                  if(scope==="online")
+                    return true;
+
+                  if(!state)
+                    return false;
+
+                  return String(
+                    r.state||""
+                  ).toUpperCase()===state;
+                });
+
+                if(!matches.length) {
+                  el(
+                    "p",
+                    "No authorized Discord reports "+
+                    "available for this section. "+
+                    "No stock or shipment status "+
+                    "has been inferred.",
+                    panel
+                  ).className="ps33-note";
+                  return;
+                }
+
+                matches.slice(0,30).forEach(r=>{
+                  const card=el(
+                    "article",undefined,panel
+                  );
+                  card.className="ps33-card";
+
+                  el(
+                    "strong",
+                    r.product_name||
+                      "Community report",
+                    card
+                  );
+
+                  el(
+                    "p",
+                    [
+                      r.retailer,
+                      r.city,
+                      r.state,
+                      r.reported_at
+                    ].filter(Boolean).join(" · "),
+                    card
+                  );
+
+                  el(
+                    "p",
+                    "Authorized community report. "+
+                    "Current stock not verified.",
+                    card
+                  ).className="ps33-note";
+
+                  const url=validLink(
+                    r.source_url
+                  );
+
+                  if(url) {
+                    const a=el(
+                      "a","View source",card
+                    );
+                    a.href=url;
+                    a.target="_blank";
+                    a.rel="noopener noreferrer";
+                  }
+                });
+              });
+            }
+
+            async function load() {
+              const [directory,evidence]=
+                await Promise.all([
+                  json(
+                    "data/discord_quality_33.json",
+                    []
+                  ),
+                  json(
+                    "data/discord_accepted_reports_33.json",
+                    []
+                  )
+                ]);
+
+              communities=Array.isArray(directory)?
+                directory:[];
+              reports=Array.isArray(evidence)?
+                evidence:[];
+
+              const games=[
+                ...new Set(
+                  communities.flatMap(
+                    x=>x.games||[]
+                  )
+                )
+              ].sort();
+
+              games.forEach(g=>{
+                const option=el(
+                  "option",g,$("ps33Game")
+                );
+                option.value=g;
+              });
+
+              render();
+              renderEvidence();
+
+              window.addEventListener(
+                "storage",()=>{
+                  render();
+                  renderEvidence();
+                }
+              );
+
+              const apply=$("ps29Apply");
+              if(apply) {
+                apply.addEventListener(
+                  "click",()=>{
+                    setTimeout(()=>{
+                      render();
+                      renderEvidence();
+                    },100);
+                  }
+                );
+              }
+            }
+
+            if(document.readyState==="loading") {
+              document.addEventListener(
+                "DOMContentLoaded",init,
+                {once:true}
+              );
+            } else {
+              init();
+            }
+          })();
+          JS
+
+          cat > assets/discord33.css <<'CSS'
+          .ps33-panel {
+            padding:16px;
+            margin:14px 0 22px;
+            background:#14213a;
+            color:#edf5ff;
+            border:1px solid #506480;
+            border-radius:15px;
+          }
+          .ps33-panel * {
+            box-sizing:border-box;
+          }
+          .ps33-panel h2,
+          .ps33-panel h3 {
+            margin:0 0 12px;
+          }
+          .ps33-filters {
+            display:grid;
+            grid-template-columns:
+              repeat(auto-fit,minmax(145px,1fr));
+            gap:10px;
+            margin:12px 0;
+          }
+          .ps33-filters input,
+          .ps33-filters select {
+            min-width:0;
+            width:100%;
+            padding:11px;
+            background:#0b182d;
+            color:white;
+            border:1px solid #587195;
+            border-radius:9px;
+            font:inherit;
+          }
+          .ps33-card {
+            padding:13px;
+            margin:10px 0;
+            background:#20314d;
+            border:1px solid #435b7c;
+            border-radius:11px;
+            overflow-wrap:anywhere;
+          }
+          .ps33-note {
+            font-size:13px;
+            color:#b9c9e0;
+            line-height:1.5;
+          }
+          .ps33-card a {
+            color:#a9e2ff;
+          }
+          CSS
+
+          python - <<'PY'
+          from pathlib import Path
+
+          p=Path("index.html")
+          html=p.read_text(encoding="utf-8")
+
+          assert '<section id="releases"' in html
+
+          css=(
+            '<link rel="stylesheet" '
+            'href="assets/discord33.css">'
+          )
+          js=(
+            '<script defer '
+            'src="assets/discord33.js"></script>'
+          )
+
+          if css not in html:
+            html=html.replace(
+              "</head>",
+              css+"\n</head>",1
+            )
+
+          if js not in html:
+            html=html.replace(
+              "</body>",
+              js+"\n</body>",1
+            )
+
+          p.write_text(
+            html,encoding="utf-8"
+          )
+          PY
+
+      - name: Validate
+        shell: bash
+        run: |
+          node --check assets/discord33.js
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root=Path("data")
+
+          directory=json.loads(
+            (root/"discord_quality_33.json")
+            .read_text()
+          )
+
+          report=json.loads(
+            (root/"discord_quality_report_33.json")
+            .read_text()
+          )
+
+          evidence=json.loads(
+            (root/"discord_accepted_reports_33.json")
+            .read_text()
+          )
+
+          html=Path("index.html").read_text()
+
+          assert isinstance(directory,list)
+          assert isinstance(evidence,list)
+          assert report["total"]==len(directory)
+          assert html.count(
+            'assets/discord33.js'
+          )==1
+          assert html.count(
+            'assets/discord33.css'
+          )==1
+
+          for row in directory:
+            assert "quality_label" in row
+            assert isinstance(row["states"],list)
+            assert row["message_access"] is False
+
+          for row in evidence:
+            assert row["authorization_confirmed"]
+            assert not row["current_stock_verified"]
+
+          print("Script 33 validation passed")
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            index.html \
+            assets/discord33.js \
+            assets/discord33.css \
+            data/discord_quality_33.json \
+            data/discord_quality_report_33.json \
+            data/discord_accepted_reports_33.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "Script 33 Discord quality and intelligence"
+
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main &&
+               git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+
+          echo "Publishing failed"
+          exit 1
