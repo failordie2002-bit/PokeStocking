@@ -1,0 +1,264 @@
+name: Pokestock Script 48 Signal Quality and Useful Leads
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 1,5,9,13,17,21 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock48-curation
+  cancel-in-progress: false
+
+jobs:
+  intelligence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout existing Pokestock
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Generate higher-quality leads and install one visible panel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scripts assets data
+          cat > scripts/curate48.py <<'PY48_ENGINE'
+          #!/usr/bin/env python3
+          """PokéStock 48: conservative quality gate for existing public reports.
+
+          No source is elevated to verified inventory by this classifier.
+          """
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          import json, re, hashlib
+
+          DATA = Path('data'); DATA.mkdir(exist_ok=True)
+          NOW = datetime.now(timezone.utc)
+          GAME = {
+           'Pokémon': r'pok[eé]mon|pokemon', 'Union Arena': r'union arena',
+           'One Piece': r'one piece (?:tcg|card|booster)|\bop[- ]?\d{2}\b',
+           'Magic: The Gathering': r'magic[: ]+the gathering|\bmtg\b',
+           'Disney Lorcana': r'lorcana', 'Yu-Gi-Oh!': r'yu[- ]?gi[- ]?oh',
+           'Gundam': r'gundam (?:tcg|card)', 'Digimon': r'digimon (?:tcg|card)',
+           'Dragon Ball Super': r'dragon ball (?:super|tcg|card)', 'Riftbound': r'riftbound',
+           'Weiß Schwarz': r'wei(?:ss|ß) schwarz', 'Flesh and Blood': r'flesh and blood',
+           'Star Wars Unlimited': r'star wars unlimited', 'Final Fantasy TCG': r'final fantasy (?:tcg|card|booster)',
+           'Cardfight!! Vanguard': r'cardfight|vanguard (?:tcg|card)',
+           'Grand Archive': r'grand archive', 'Altered': r'altered (?:tcg|card game)',
+           'Shadowverse Evolve': r'shadowverse evolve', 'Battle Spirits Saga': r'battle spirits saga',
+           'Naruto': r'naruto (?:tcg|booster|card game)'
+          }
+          STORES = {
+           'Walmart':r'\bwalmart\b','Target':r'\btarget\b','Best Buy':r'\bbest buy\b',
+           'GameStop':r'\bgame\s*stop\b','Costco':r'\bcostco\b',
+           "Sam's Club":r"\bsam['’]?s club\b", "Lowe's":r"\blowe['’]?s\b",
+           'Barnes & Noble':r'\bbarnes (?:&|and) noble\b','Five Below':r'\bfive below\b',
+           'Amazon':r'\bamazon\b','Pokémon Center':r'pok[eé]mon center',
+           'Walgreens':r'\bwalgreens\b','CVS':r'\bcvs\b','Dollar General':r'\bdollar general\b',
+           'Meijer':r'\bmeijer\b','Kroger':r'\bkroger\b',
+          }
+          CITIES = ['Staunton','Waynesboro','Harrisonburg','Charlottesville','Richmond','Roanoke',
+                    'Fredericksburg','Alexandria','Fairfax','Winchester','Lynchburg']
+          PRODUCT = re.compile(r'booster|elite trainer|\betb\b|tin\b|blister|bundle|starter deck|sealed|collection box|premium collection|display box',re.I)
+          STOCK = re.compile(r'restock(?:ed|ing)?|back in stock|stock alert|in stock|shipment|shelf|picked up|found (?:at|in)|spotted|drop(?:ped)?',re.I)
+          SIGHTING = re.compile(r'\bfound\b|spotted|picked up|on (?:the )?shelf|my (?:local )?store|in store',re.I)
+          RELEASE = re.compile(r'release|pre.?order|launch|calendar|where to buy|new products?|lineup|available now|debut',re.I)
+          IRRELEVANT = re.compile(r'skateboard|santa cruz|\besco\b|\blisa\b|sports and entertainment|\bgraded\b|\bsingle card\b|\bplaymat\b|\bbinder\b|\bsleeves?\b',re.I)
+
+          def read(path, key):
+           try:
+            o=json.loads(Path(path).read_text(encoding='utf-8'))
+            return o.get(key,[]) if isinstance(o.get(key,[]),list) else []
+           except (OSError, ValueError, TypeError): return []
+
+          def timestamp(value):
+           try:
+            d=datetime.fromisoformat(value.replace('Z','+00:00'))
+            return d.replace(tzinfo=timezone.utc) if d.tzinfo is None else d.astimezone(timezone.utc)
+           except (ValueError, TypeError, AttributeError):return None
+
+          def curate(original):
+           if not isinstance(original,dict): return None
+           title=str(original.get('title') or '').strip()[:300]
+           details=str(original.get('summary') or '').strip()[:400]
+           url=str(original.get('url') or '')
+           when=timestamp(original.get('published_utc'))
+           if not when or when < NOW-timedelta(days=45) or when>NOW+timedelta(hours=2): return None
+           if urlsplit(url).scheme!='https' or not urlsplit(url).netloc: return None
+           if IRRELEVANT.search(title):return None
+           combined=title+' '+details
+           game=next((g for g,p in GAME.items() if re.search(p,combined,re.I)),None)
+           if not game:
+            # Generic trading cards may describe non-TCG celebrity merchandise.
+            if not (re.search(r'\bTCG\b|trading card game',combined,re.I) and PRODUCT.search(combined)):return None
+            game='Other / emerging TCG'
+           source=str(original.get('source') or '')
+           retailer=next((s for s,p in STORES.items() if re.search(p,combined,re.I)),None)
+           oldstore=str(original.get('retailer') or '')
+           if not retailer and oldstore not in ('Unspecified','Unspecified retailer',''):
+            retailer=oldstore
+           city=next((c+', VA' for c in CITIES if re.search(r'\b'+c+r'\b',combined,re.I)),None)
+           oldcity=str(original.get('location') or '')
+           if not city and oldcity not in ('Location unspecified','Virginia (unspecified)',''):
+            city=oldcity
+           age_days=max(0,(NOW-when).total_seconds()/86400)
+           fresh=age_days<=7
+           has_stock=bool(STOCK.search(title))
+           reddit=('reddit' in source.lower() or 'reddit.com' in urlsplit(url).netloc)
+           local_claim=bool(city and retailer and reddit and SIGHTING.search(combined))
+           if local_claim: kind='Reported local sighting'
+           elif retailer and has_stock: kind='Retailer stock mention'
+           elif RELEASE.search(title): kind='Release / shopping news'
+           else: kind='General TCG mention'
+           # This score prioritizes leads; it is NOT inventory probability.
+           score=10 + (25 if retailer else 0)+(20 if has_stock else 0)+(18 if city else 0)
+           score+=(15 if age_days<=3 else 9 if fresh else 0)
+           score+= (12 if local_claim else 0)
+           score+= (7 if PRODUCT.search(title) else 0)
+           if age_days>14:score-=12
+           if kind=='Release / shopping news':score=min(score,40)
+           score=max(0,min(95,score))
+           uid=str(original.get('id') or hashlib.sha256((url+title).encode()).hexdigest()[:20])
+           return {'id':uid,'title':title,'summary':details[:250], 'game':game,
+            'retailer':retailer or 'Unspecified','location':city or 'Location unspecified',
+            'published_utc':when.isoformat(), 'source':source,'url':url,
+            'status':'UNVERIFIED PUBLIC MENTION','kind':kind,'fresh':fresh,
+            'lead_strength':score,'age_days':round(age_days,1),
+            'evidence_note':'Public post/article; not independently verified inventory.'}
+
+          def main():
+           raw=[]
+           for path in ['data/rumor_signals_46.json','data/public_signal_archive_47.json']:
+            raw.extend(read(path,'signals'))
+           # Preserve recent observations if an upstream file disappears.
+           raw.extend(read('data/restock_intelligence_48.json','signals'))
+           ranked={}
+           for item in raw:
+            x=curate(item)
+            if x and (x['id'] not in ranked or x['lead_strength']>ranked[x['id']]['lead_strength']):
+             ranked[x['id']]=x
+           reports=sorted(ranked.values(),key=lambda x:(x['fresh'],x['lead_strength'],x['published_utc']),reverse=True)[:250]
+           tips=read('data/rumor_forecast_46.json','leads')
+           tips=[{'retailer':str(x.get('retailer','')),'game':str(x.get('game','')),
+                  'location':str(x.get('location','')),'window':str(x.get('window','')),
+                  'reason':str(x.get('reason') or x.get('based_on') or ''),
+                  'confidence':'LOW','status':'UNVERIFIED RUMOR'}
+                 for x in tips if isinstance(x,dict)][:25]
+           result={'generated_utc':NOW.isoformat(), 'disclaimer':'All source reports and forecasts are unverified. No shelf inventory is confirmed.',
+             'signals':reports,'forecasts':tips,
+             'summary':{'raw_candidates':len(raw),'kept':len(reports),'fresh_reports':sum(r['fresh'] for r in reports),
+                'fresh_named_retailer':sum(r['fresh'] and r['retailer']!='Unspecified' for r in reports),
+                'local_explicit_reports':sum(r['location']!='Location unspecified' for r in reports),
+                'local_firsthand_claims':sum(r['kind']=='Reported local sighting' for r in reports)}}
+           (DATA/'restock_intelligence_48.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+           assert all(r['status'].startswith('UNVERIFIED') for r in reports)
+           print('SCRIPT 48 GREEN',json.dumps(result['summary']))
+
+          if __name__=='__main__':main()
+          PY48_ENGINE
+          cat > scripts/install48.py <<'PY48_INSTALL'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          if not p.exists():raise SystemExit('index.html missing; refusing to replace site')
+          s=p.read_text(encoding='utf-8')
+          # Keep the legacy script; its workflow may reinstall it.
+          s=re.sub(r'<script\s+defer\s+src="assets/insights48\.js(?:\?[^\"]*)?"\s*></script>','',s)
+          if '</body>' not in s.lower():raise SystemExit('No closing body tag')
+          at=s.lower().rfind('</body>')
+          s=s[:at]+'<script defer src="assets/insights48.js?v=48"></script>\n'+s[at:]
+          p.write_text(s,encoding='utf-8')
+          PY48_INSTALL
+          cat > assets/insights48.js <<'JS48'
+          (() => {
+            // Script 46 may be re-injected; keep only one visible panel.
+            const style=document.createElement('style');
+            style.textContent='#ps46{display:none!important}#ps48{max-width:1120px;margin:24px auto;padding:20px;color:#f5f8ff;background:#151d30;border:1px solid #384967;border-radius:18px;font-family:inherit}#ps48 *{box-sizing:border-box}#ps48 .filters{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}#ps48 select,#ps48 input{background:#222d46;color:#fff;border:1px solid #465977;border-radius:10px;padding:10px;flex:1;min-width:135px}#ps48 .item{border:1px solid #405270;background:#1d2940;border-radius:11px;padding:13px;margin:9px 0}#ps48 .muted{color:#b3c0d6;font-size:13px}#ps48 .tag{color:#ffd87d;font-size:12px;font-weight:800}#ps48 h2{margin:0;font-size:1.5rem}#ps48 h3{margin:18px 0 8px;font-size:1.08rem}#ps48 a{color:#9ad0ff}#ps48 .stat{display:inline-block;margin:4px 14px 6px 0}';
+            document.head.appendChild(style);
+            const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            const section=document.createElement('section'); section.id='ps48';
+            section.innerHTML='<h2>Restock intelligence</h2><p class="muted">Recent public TCG reports, launches, and local rumors. None are confirmed shelf inventory.</p><div id="ps48stats"></div><div class="filters"><select id="ps48kind"><option value="">All report types</option><option value="Retailer stock mention">Retailer stock mentions</option><option value="Reported local sighting">Reported local sightings</option><option value="Release / shopping news">Releases & shopping news</option></select><select id="ps48game"><option value="">All TCGs</option></select><select id="ps48store"><option value="">All retailers</option></select><input id="ps48search" aria-label="Search restock intelligence" placeholder="Search city, product, or report"></div><h3>Low-confidence store forecasts</h3><div id="ps48tips"></div><h3>Public reports</h3><div id="ps48results">Loading reports…</div><p class="muted" id="ps48footer"></p>';
+            document.body.appendChild(section);
+            const $=id=>section.querySelector('#'+id);
+            fetch('data/restock_intelligence_48.json?t='+Date.now()).then(r=>{if(!r.ok)throw Error('Research data not yet published');return r.json()}).then(data=>{
+              const reports=Array.isArray(data.signals)?data.signals:[];
+              const tips=Array.isArray(data.forecasts)?data.forecasts:[];
+              const summary=data.summary||{};
+              $('ps48stats').innerHTML='<span class="stat"><b>'+esc(summary.fresh_reports||0)+'</b> reports ≤7 days</span><span class="stat"><b>'+esc(summary.fresh_named_retailer||0)+'</b> recent retailer mentions</span><span class="stat"><b>'+esc(summary.local_explicit_reports||0)+'</b> locality-specific reports</span>';
+              const games=[...new Set([...reports,...tips].map(x=>x.game).filter(Boolean))].sort();
+              const stores=[...new Set([...reports,...tips].map(x=>x.retailer).filter(Boolean))].sort();
+              for(const x of games)$('ps48game').add(new Option(x,x));
+              for(const x of stores)$('ps48store').add(new Option(x,x));
+              function draw(){
+                const kind=$('ps48kind').value,game=$('ps48game').value,store=$('ps48store').value,q=$('ps48search').value.toLowerCase().trim();
+                const match=x=>(!game||x.game===game)&&(!store||x.retailer===store)&&(!q||[x.title,x.game,x.retailer,x.location,x.window].join(' ').toLowerCase().includes(q));
+                const rows=reports.filter(x=>(!kind||x.kind===kind)&&match(x)).slice(0,60);
+                $('ps48results').innerHTML=rows.map(x=>{
+                  let link='';try{let u=new URL(x.url);if(u.protocol==='https:')link='<a href="'+esc(u.href)+'" rel="noopener noreferrer" target="_blank">Original source</a>'}catch(e){}
+                  return '<article class="item"><div class="tag">'+esc(x.kind)+' · UNVERIFIED'+(x.fresh?' · Recent':' · Historical')+'</div><b>'+esc(x.title)+'</b><div class="muted">'+esc(x.game)+' · '+esc(x.retailer)+' · '+esc(x.location)+' · '+esc((x.published_utc||'').slice(0,10))+'</div><p class="muted">Lead strength '+esc(x.lead_strength)+'/100 (prioritization only, NOT inventory probability)</p>'+link+'</article>';
+                }).join('')||'<p class="muted">No matching public reports. That does not mean stores are out of stock.</p>';
+                const matching=tips.filter(match);
+                $('ps48tips').innerHTML=matching.map(x=>'<article class="item"><div class="tag">UNVERIFIED · LOW CONFIDENCE</div><b>'+esc(x.retailer)+' · '+esc(x.location)+'</b><div>'+esc(x.game)+' · '+esc(x.window)+'</div><p class="muted">'+esc(x.reason)+'</p></article>').join('')||'<p class="muted">No matching forecast.</p>';
+              }
+              ['ps48kind','ps48game','ps48store','ps48search'].forEach(id=>$(id).addEventListener('input',draw));
+              $('ps48footer').textContent='Last reviewed: '+new Date(data.generated_utc).toLocaleString()+'. Public-source coverage is incomplete; forecasts and lead scores do not confirm inventory.';
+              draw();
+            }).catch(e=>{$('ps48results').textContent='Research results unavailable: '+e.message;$('ps48tips').textContent='Rumor forecasts currently unavailable.'});
+          })();
+          JS48
+          python3 -m py_compile scripts/curate48.py scripts/install48.py
+          python3 scripts/curate48.py
+          python3 scripts/install48.py
+          node --check assets/insights48.js
+          python3 - <<'PY48_CHECK'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/restock_intelligence_48.json').read_text())
+          assert all(x['status'].startswith('UNVERIFIED') for x in d['signals'])
+          assert len(d['signals'])<=250
+          h=Path('index.html').read_text()
+          assert h.count('assets/insights48.js')==1
+          print('GREEN: categorized data + single visible intelligence panel')
+          PY48_CHECK
+
+      - name: Safely publish isolated Script 48 outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ps48/scripts" "$RUNNER_TEMP/ps48/assets" "$RUNNER_TEMP/ps48/data"
+          cp scripts/curate48.py scripts/install48.py "$RUNNER_TEMP/ps48/scripts/"
+          cp assets/insights48.js "$RUNNER_TEMP/ps48/assets/"
+          cp data/restock_intelligence_48.json "$RUNNER_TEMP/ps48/data/"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5; do
+            echo "Publishing attempt $attempt of 5"
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p scripts assets data
+            cp "$RUNNER_TEMP/ps48/scripts/"*.py scripts/
+            cp "$RUNNER_TEMP/ps48/assets/insights48.js" assets/
+            cp "$RUNNER_TEMP/ps48/data/restock_intelligence_48.json" data/
+            python3 scripts/install48.py
+            git add index.html scripts/curate48.py scripts/install48.py assets/insights48.js data/restock_intelligence_48.json
+            if git diff --cached --quiet; then
+              echo 'GREEN: no changes to publish'
+              exit 0
+            fi
+            git commit -m 'Script 48: prioritize recent TCG leads and filter irrelevant reports'
+            if git push origin HEAD:main; then
+              echo 'GREEN: quality-focused restock intelligence published'
+              exit 0
+            fi
+            sleep $((2*attempt))
+          done
+          echo 'RED: could not publish after concurrent updates' >&2
+          exit 1
