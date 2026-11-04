@@ -1,19 +1,29 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-04T09:13:41.327785+00:00",
-  "source_online_candidates": 624,
+  "checked_at": "2026-11-04T11:26:59.331943+00:00",
+  "source_online_candidates": 736,
   "checked_this_run": 60,
   "verified_this_run": 0,
-  "fresh_online_observations": 557,
-  "online_in_stock": 191,
-  "online_out_of_stock": 366,
+  "fresh_online_observations": 404,
+  "online_in_stock": 150,
+  "online_out_of_stock": 254,
   "verified_store_observations": 0,
   "store_in_stock": 0,
-  "next_cursor": 360,
+  "next_cursor": 420,
   "check_outcomes": {
     "http_301": 60
   },
   "checks": [
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Surging Sparks Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Destined Rivals Elite Trainer Box",
+      "result": "http_301"
+    },
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Prismatic Evolutions Elite Trainer Box",
@@ -121,6 +131,11 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "Pitch Black Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Rival Battle Deck [Steven]",
       "result": "http_301"
     },
@@ -181,12 +196,22 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "151 Mini Tin [Magneton & Ekans]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Silver Tempest Booster Box",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "2-Pack Blister [Raikou] (3-tab)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pitch Black Booster Box",
       "result": "http_301"
     },
     {
@@ -287,31 +312,6 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Sword & Shield Elite Trainer Box [Zacian]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Mega Moonlit Tin [Mega Gengar ex]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Night Wanderer Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Astral Radiance Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Prismatic Evolutions Mini Tin [Jolteon]",
       "result": "http_301"
     }
   ],
