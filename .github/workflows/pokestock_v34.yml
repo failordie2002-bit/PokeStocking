@@ -1,3 +1,4 @@
+
 name: Pokestock V34 Public Shelf Sightings
 on:
   workflow_dispatch:
@@ -100,19 +101,45 @@ jobs:
           stores=read('physical_inventory_sources.json',[])
           if not isinstance(stores,list):stores=[]
           def match_store(e):
-              # Only unique branch+city+state+chain matches. City-only is not enough.
+              # Never match across chains/cities/states.
               matches=[]
               for s in stores:
-                  if not isinstance(s,dict):continue
+                  if not isinstance(s,dict) or not s.get('source_id'):continue
                   if norm(s.get('state'))!=norm(e['state']) or norm(s.get('city'))!=norm(e['city']):continue
                   chain=norm(s.get('chain') or s.get('name'))
-                  if norm(e['retailer']) not in chain and chain not in norm(e['retailer']):continue
-                  branch=norm(e['branch']); candidate=norm(s.get('name'))
-                  if branch and branch in candidate and branch!=norm(e['retailer']):matches.append(s)
-              return matches[0].get('source_id') if len(matches)==1 else None
+                  if chain!=norm(e['retailer']):continue
+                  matches.append(s)
+              branch=norm(e['branch'])
+              named=[s for s in matches if branch and branch in norm(s.get('name')) and branch!=norm(e['retailer'])]
+              if len(named)==1: chosen=named[0];method='branch_city_state_chain'
+              elif len(matches)==1: chosen=matches[0];method='unique_chain_city_state'
+              else:return None,'unmatched_or_ambiguous'
+              # The store database contains candidate, not verified identities.
+              return chosen['source_id'],method
+          def stable_key(e):
+              # Stable per store/game/product/status/day. One observation
+              # per day per product; not proof of independent shipments.
+              day=e['reported_at_approx'][:10]
+              parts=[e['retailer'],e['branch'],e['city'],e['state'],e['game'],e['product_name'],e['report_status'],day]
+              return hashlib.sha256('|'.join(norm(v) for v in parts).encode()).hexdigest()[:24]
+          def same_report(a,b):
+              # Relative ages may shift across midnight; accept a one-day
+              # tolerance only for the same retailer/branch/product/status.
+              keys=['retailer','branch','city','state','game','product_name','report_status']
+              if any(norm(a.get(k))!=norm(b.get(k)) for k in keys):return False
+              try:
+                  da=datetime.fromisoformat(a['reported_at_approx']).date()
+                  db=datetime.fromisoformat(b['reported_at_approx']).date()
+                  return abs((da-db).days)<=1
+              except (ValueError,KeyError,TypeError):return False
           old=read('v34_public_sightings.json',[])
-          history={e['event_id']:e for e in old if isinstance(e,dict) and e.get('event_id')}
-          diagnostics={}; new_count=0
+          history={}
+          if isinstance(old,list):
+              for e in old:
+                  if isinstance(e,dict) and e.get('reported_at_approx'):
+                      e['event_id']=stable_key(e)
+                      history[e['event_id']]=e
+          diagnostics={}; new_count=0; provisional_matches=0
           session=requests.Session()
           session.headers.update({'User-Agent':'Mozilla/5.0 (compatible; PokeStockPublicResearch/1.0)','Accept':'text/html'})
           for retailer,url in URLS.items():
@@ -124,8 +151,18 @@ jobs:
                   else:
                       events,detail=parse_rows(response.text,retailer,url);info.update(detail)
                       for e in events:
-                          e['store_id']=match_store(e)
-                          if e['event_id'] not in history:new_count+=1
+                          e['store_id'],e['match_method']=match_store(e)
+                          e['store_match_verified']=False
+                          if e['store_id']:provisional_matches+=1
+                          e['event_id']=stable_key(e)
+                          # Avoid repeated copies from moving relative timestamps.
+                          previous=next((v for v in history.values() if same_report(v,e)),None)
+                          if previous:
+                              e['event_id']=previous['event_id']
+                              # Keep original approximate timestamp, not the
+                              # drifting estimate from the latest page load.
+                              e['reported_at_approx']=previous['reported_at_approx']
+                          else:new_count+=1
                           history[e['event_id']]=e
                   diagnostics[retailer]=info
               except requests.RequestException as exc:
@@ -153,10 +190,13 @@ jobs:
               'source_results':diagnostics,'new_reports':new_count,
               'total_reports_retained':len(events),'matched_store_reports':len(matched),
               'unmatched_reports':len(events)-len(matched),
+              'provisional_store_matches':len(matched),'verified_store_matches':0,
               'store_game_pairs_with_evidence':len(by_game),
               'notes':['Community shelf sightings are not shipment confirmations.',
                        'Relative timestamps are approximate; do not treat as precise shipment dates.',
                        'No game-level predictions until multiple independent restock days are established.',
+                       'All database store identities are candidate-only until independently verified.',
+                       'Daily deduplication can merge separate same-day sightings for one product.',
                        'No Gundam or Union Arena source is connected yet.']})
           print(json.dumps(read('v34_report.json',{}),indent=2))
           PY
