@@ -1,6 +1,6 @@
 [
   {
-    "event_id": "971af383f88fe9954480ff57",
+    "event_id": "1c307f42cf316041a4d77a64",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Eau Claire",
@@ -15,10 +15,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "6a8e385a79e4cc7f43d2de26",
+    "event_id": "ab8fd69eb20548b07962e85b",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Charlottesville",
@@ -33,10 +35,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": "store-1820",
+    "match_method": "unique_chain_city_state",
+    "store_match_verified": false
   },
   {
-    "event_id": "93e354eb2fc5bae66a104b1e",
+    "event_id": "00f1fd417dd169f3b51d78a3",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "West Milwaukee Supercenter",
@@ -51,10 +55,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "219f2ca5dbddbdaca86fc2d8",
+    "event_id": "34e08b6869f4568ff38fb35f",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Shelbyville Supercenter",
@@ -69,10 +75,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "1c5dfc93ca1cc22f422c9b7a",
+    "event_id": "e3b224a09bc6a46a2491dea1",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Cary",
@@ -87,10 +95,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "54f1f72a540263ab9c5bfd8e",
+    "event_id": "ff5c789615c6be2022b50ae3",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "North Attleborough",
@@ -105,10 +115,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "32712d4fb0eecef88e6e753c",
+    "event_id": "3a06255a570cfa116be30583",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Charlotte Blakeney",
@@ -116,17 +128,19 @@
     "state": "NC",
     "product_name": "First Partner Illustration Collection Series 2",
     "reported_at_approx": "2026-11-03T17:07:02.922471+00:00",
-    "reported_age_text": "7h ago",
+    "reported_age_text": "8h ago",
     "report_status": "reported_in_stock",
     "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
     "evidence_level": "public_community_report",
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "2aaf0d95783587ce453433cd",
+    "event_id": "909e33dacb4d79497262a3e6",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Encinitas",
@@ -141,10 +155,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "a010403774221d2d40fd627c",
+    "event_id": "f287cfdc1725a81e368efc11",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Grand Rapids Supercenter",
@@ -159,10 +175,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "63b63fc7b8c4cf50d29167f9",
+    "event_id": "3c39960919396fbfb78d287a",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "NE Polk County",
@@ -177,10 +195,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "8dd416ca63a217c7dd27c61a",
+    "event_id": "f627cdcb121fe984cbafa7af",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Jersey City Journal Square",
@@ -195,10 +215,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "f19f67e25039304bbb51a6cc",
+    "event_id": "560b915621d63274cb6a32f9",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Wauchula Supercenter",
@@ -213,10 +235,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "e7e2e87c6fd8005271ba57f5",
+    "event_id": "9a7200e29b0780f0f32f836c",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Chandler Supercenter (West Warner Road)",
@@ -231,10 +255,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "6c3affb9488dd96ca8fd06a4",
+    "event_id": "ceaa16be09384193842c9075",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Oak Harbor",
@@ -249,10 +275,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "fb027cc024e4cb7976b3027f",
+    "event_id": "8a95fd59e61ec37edac0755e",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Lemont",
@@ -267,10 +295,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "89607f5749351bef6965af70",
+    "event_id": "b107f0e64b69dfcf5e0b74bd",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Paramus",
@@ -285,10 +315,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "b191cdf60df7f25a1fd1e84a",
+    "event_id": "e6ae8769d9a0d3ff10b7664f",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "West Covina",
@@ -303,10 +335,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "0257d6c133151f1c92046053",
+    "event_id": "05eff4a8995e0cf79006fe61",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Timnath Supercenter",
@@ -321,10 +355,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "a695596974b5fcaf726d1cc6",
+    "event_id": "4194ebc08a03cbc5ec21b784",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Medford",
@@ -339,10 +375,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "9bbd9c29c8b5b1e4b7dbe8e1",
+    "event_id": "ca8abb6ca00fe40d44145494",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Belleville Supercenter",
@@ -357,10 +395,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "13e8a6b9f806b920a07100b9",
+    "event_id": "3213a5491507b36a0ba825b2",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Belleville Supercenter",
@@ -375,10 +415,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "8818f5ad535b6f2b3349c22e",
+    "event_id": "fe62e08e8704a9c3cd9b717d",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "West Seattle",
@@ -393,10 +435,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "8615bfeefe274eca60dce9b6",
+    "event_id": "f0ff549c0cc35328d3bfe2c2",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Hanover",
@@ -411,10 +455,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "d6105be89aee0fd11d3936ac",
+    "event_id": "892b4f3697f5d3e3a062bb2c",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Florence Supercenter",
@@ -429,10 +475,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "dc804bcbd4729bb06085e442",
+    "event_id": "f4765a405fe3ea1cd373e35c",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Bowling Green Supercenter",
@@ -447,10 +495,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "f7af99d37474bcfa0690f891",
+    "event_id": "6b3c4a2f42eab197dca6cc46",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "North Augusta Supercenter (Knox Avenue)",
@@ -465,10 +515,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "72715740b5b3358efefed89d",
+    "event_id": "67a3e7ab22a8b5a9b3d29869",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Carrollton Supercenter (East Trinity Mills Road)",
@@ -483,10 +535,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "6be4ce4ec915c1e7a0a37a83",
+    "event_id": "82cda9caccfcd53aa810fb0b",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Gaffney Supercenter",
@@ -501,10 +555,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "b3235eea7cdd6e9fc326f681",
+    "event_id": "214d729c6e93bc1aaed876c5",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Gaffney Supercenter",
@@ -519,10 +575,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "bf4570c33b32afa29ecb6c44",
+    "event_id": "7e06e6c8fd277ed035b5e85e",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Haslet Supercenter",
@@ -537,10 +595,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "9b98cb77b298aa5ecd2cf97b",
+    "event_id": "ce5d8517beff73631fe2a5e4",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Westborough",
@@ -555,10 +615,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "a44ff8d6db91326f10a58b0c",
+    "event_id": "7e6bebe403306065d353e2f9",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Oswego",
@@ -573,10 +635,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "06f6c29c320e5d208d051613",
+    "event_id": "2da2ac224f37c84c7925a472",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Branford",
@@ -591,10 +655,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "d4625c2ef14355daf583cee8",
+    "event_id": "65eb29ab1bfc022583576434",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Harrisonville Supercenter",
@@ -609,10 +675,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "b9d672e2e862a8db7f492ae5",
+    "event_id": "21fbc00d194d5fb35f3f4dd6",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Bowling Green Supercenter",
@@ -627,10 +695,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "3eca1e874e636da080a95c99",
+    "event_id": "aa64f843f2765a044697ae63",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Fort Smith Supercenter (South Zero Street)",
@@ -645,10 +715,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "94c16e6c8edcccb5cfaadd1e",
+    "event_id": "8036f22bb7e4a920011dc369",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Williamston Supercenter",
@@ -663,10 +735,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "0551970d09cd19b63157b1c0",
+    "event_id": "73ef692433ebaf9c08a21c40",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Williamston Supercenter",
@@ -681,10 +755,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "aaff8223542d69926d96fb84",
+    "event_id": "c282eca37923dd708b2a270f",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Simpsonville Neighborhood Market (Highway 14)",
@@ -699,10 +775,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "de695b18299ba53df4fe5e1b",
+    "event_id": "98a8d9e07ead068a1e55d742",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Marysville Supercenter (34th Avenue Northeast)",
@@ -717,10 +795,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "ff1443dc24804774eaba6f6d",
+    "event_id": "71561498c2d19d19ac5de7c4",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Coral Springs",
@@ -735,10 +815,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "d5402cd5585951e38a33dfad",
+    "event_id": "5afb6dd75039e95d490e28f1",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Selma",
@@ -753,10 +835,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "072969153424b5eb7fc3c425",
+    "event_id": "013d628712e5e6cce75c783f",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Little Elm",
@@ -771,10 +855,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "5d07188af15ab095261b9bc1",
+    "event_id": "bb87bffd4cfa9a3199b1e77c",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Williamsburg East",
@@ -789,10 +875,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": "store-1942",
+    "match_method": "unique_chain_city_state",
+    "store_match_verified": false
   },
   {
-    "event_id": "11a686d7261e37d34334b8d1",
+    "event_id": "733c233bbad870c75fce54d2",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Poughkeepsie",
@@ -807,10 +895,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "fd37875b4693d89f5263ea33",
+    "event_id": "cb2a1ec37c95ed1c24045773",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Poughkeepsie",
@@ -825,10 +915,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "006d029db1aada4e208e6ae5",
+    "event_id": "743e0174415f5c591887d736",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Flint",
@@ -843,10 +935,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "aaa28e5caea1afe4cb2e0d11",
+    "event_id": "4b77eda0dc20d8811406185e",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Blakeney",
@@ -861,10 +955,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "2c59f4477f29b31b114221cc",
+    "event_id": "f5be3c4c9eade3648b8453ba",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Lake Worth",
@@ -879,10 +975,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "7155c2c4ff58d3ae32f80e24",
+    "event_id": "989a11adb64f198a720f9201",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Lake Worth",
@@ -897,10 +995,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "6f03b465fa113cf07167918a",
+    "event_id": "1a9a0c25de3c315100073123",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Lake Worth",
@@ -915,10 +1015,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "787a2b4987b4f2bfe7ccb53f",
+    "event_id": "cf212d81933bb177fea10ce5",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Lake Worth",
@@ -933,10 +1035,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "c6aea0f70642940a0602079a",
+    "event_id": "070b88857ac348b456e4f63d",
     "game": "Pokemon",
     "retailer": "Walmart",
     "branch": "Shelbyville Supercenter",
@@ -951,10 +1055,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "00f2ac01869d8eae73d62c73",
+    "event_id": "12372af97c873949f547c00a",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Fairlawn",
@@ -969,10 +1075,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "ec954457bc8d77bf9a46c710",
+    "event_id": "3c8e6ce16b21e7b40e184ea9",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Fairlawn",
@@ -987,10 +1095,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "a9fd5eb86617b916d70b241e",
+    "event_id": "060aa0b4ac88f9c8ba3e606f",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Fairlawn",
@@ -1005,10 +1115,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "0ed0e1980d3b06b74b183889",
+    "event_id": "3b8948bfe448888238d6f657",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Flowery Branch",
@@ -1023,10 +1135,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "3d8daa4c1803d9bf719b1b30",
+    "event_id": "02865fc68d205cf46cfbc05f",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Charlottesville",
@@ -1041,10 +1155,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": "store-1834",
+    "match_method": "unique_chain_city_state",
+    "store_match_verified": false
   },
   {
-    "event_id": "9bc007a4e1746f587e1ee145",
+    "event_id": "5a5a184c073ff31e313786f2",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Medina",
@@ -1059,10 +1175,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "d7aedb36db79de4eda842cb7",
+    "event_id": "e95900e64a76f58078fb680a",
     "game": "Pokemon",
     "retailer": "Target",
     "branch": "Sacramento Madison",
@@ -1077,10 +1195,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "45ccc4bad6102e22718518d6",
+    "event_id": "61b6b2cfd4d65f40767256a0",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Pinole",
@@ -1095,10 +1215,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "62b66c0b6f49d59b9eff1513",
+    "event_id": "bb6e0e86597cae5a441fa001",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Vineland",
@@ -1113,10 +1235,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "46a618977842dacbe19676d7",
+    "event_id": "ff0e5ff2f34a19f682becb10",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Chandler",
@@ -1131,10 +1255,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "24279d8d9ddee201396771ef",
+    "event_id": "877399147d38757ed9de614f",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "North Canton",
@@ -1149,10 +1275,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "cb502f79bc87be855f3f34a4",
+    "event_id": "4aa99fa2f7912d8c150ed1f7",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Charlotte - Rivergate",
@@ -1167,10 +1295,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "d7d9a7e776a33c2b064499a4",
+    "event_id": "60fc177b6676a7a0da75c25a",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Muncie",
@@ -1185,10 +1315,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "daacf138d2489090800d3856",
+    "event_id": "92c80b0b8e74dd4100f14297",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Wooster",
@@ -1203,10 +1335,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "92615fffc494fbddc4581332",
+    "event_id": "a93ac0ce01eff0a853c0b00f",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Roseville",
@@ -1221,10 +1355,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "93918860659cb0168cd60eb9",
+    "event_id": "0f09589b1523cc6a7b510853",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "East Tucson",
@@ -1239,10 +1375,12 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   },
   {
-    "event_id": "f191b43375e197fcdff04fcf",
+    "event_id": "166c4fd6bbe24d9bdf4771c2",
     "game": "Pokemon",
     "retailer": "Best Buy",
     "branch": "Fort Collins",
@@ -1257,6 +1395,8 @@
     "inventory_scope": "physical_store",
     "current_stock_verified": false,
     "time_precision": "relative_age_approximate",
-    "store_id": null
+    "store_id": null,
+    "match_method": "unmatched_or_ambiguous",
+    "store_match_verified": false
   }
 ]

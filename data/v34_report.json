@@ -1,6 +1,6 @@
 {
   "version": "34",
-  "checked_at": "2026-11-04T00:07:02.922471+00:00",
+  "checked_at": "2026-11-04T00:10:39.553761+00:00",
   "source_results": {
     "Walmart": {
       "http_status": 200,
@@ -24,15 +24,19 @@
       "unparsed": 0
     }
   },
-  "new_reports": 70,
+  "new_reports": 0,
   "total_reports_retained": 70,
-  "matched_store_reports": 0,
-  "unmatched_reports": 70,
-  "store_game_pairs_with_evidence": 0,
+  "matched_store_reports": 3,
+  "unmatched_reports": 67,
+  "provisional_store_matches": 3,
+  "verified_store_matches": 0,
+  "store_game_pairs_with_evidence": 1,
   "notes": [
     "Community shelf sightings are not shipment confirmations.",
     "Relative timestamps are approximate; do not treat as precise shipment dates.",
     "No game-level predictions until multiple independent restock days are established.",
+    "All database store identities are candidate-only until independently verified.",
+    "Daily deduplication can merge separate same-day sightings for one product.",
     "No Gundam or Union Arena source is connected yet."
   ]
 }
