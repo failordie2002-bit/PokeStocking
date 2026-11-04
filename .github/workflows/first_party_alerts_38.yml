@@ -1,0 +1,378 @@
+name: Pokestock Script 38 Independent Alerts (No Third-Party Apps)
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - PokeStock V10 Online Inventory
+    types: [completed]
+  schedule:
+    - cron: '19,49 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install complete independent monitoring and browser alert center
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scripts assets data
+          cat > scripts/merchant_watch_38.py <<'PY38_MONITOR'
+          #!/usr/bin/env python3
+          """PokéStock 38: independently observed restock transitions from first-party merchant feeds.
+
+          No user app, token, external notification provider, or competitor alert is required.
+          Only public Shopify variant availability evidence, as observed by the existing
+          PokéStock online-inventory scanner, is eligible for a restock transition.
+          """
+          import hashlib
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          from urllib.parse import urlsplit, urlunsplit
+
+          DATA=Path('data')
+          DATA.mkdir(exist_ok=True)
+          OFFERS=DATA/'online_offers.json'
+          STATE=DATA/'merchant_watch_state_38.json'
+          EVENTS=DATA/'first_party_restocks_38.json'
+          REPORT=DATA/'first_party_report_38.json'
+          NOW=datetime.now(timezone.utc)
+          MAX_AGE=timedelta(hours=4)
+          KEEP=timedelta(days=28)
+          GOOD={'shopify_public_variant'}
+
+
+          def load(path,default):
+              try: return json.loads(path.read_text(encoding='utf-8'))
+              except (OSError, ValueError): return default
+
+
+          def iso_dt(raw):
+              try:
+                  d=datetime.fromisoformat(str(raw).replace('Z','+00:00'))
+                  return d.astimezone(timezone.utc) if d.tzinfo else None
+              except (TypeError,ValueError,OverflowError): return None
+
+
+          def canon_url(raw):
+              try:
+                  z=urlsplit(str(raw))
+                  if z.scheme!='https' or not z.hostname: return ''
+                  return urlunsplit(('https',z.netloc.lower(),z.path.rstrip('/'),'', ''))
+              except (ValueError,TypeError): return ''
+
+
+          def status(raw):
+              v=str(raw or '').strip().lower()
+              if v in ('in stock','available','in_stock'): return True
+              if v in ('out of stock','sold out','unavailable','out_of_stock'): return False
+              return None
+
+
+          def clean(v,maxlen=280): return ' '.join(str(v or '').split())[:maxlen]
+
+
+          def save(path,obj):
+              value=json.dumps(obj,ensure_ascii=False,indent=2)+'\n'
+              if path.exists() and path.read_text(encoding='utf-8')==value: return False
+              path.write_text(value,encoding='utf-8')
+              return True
+
+
+          def main():
+              raw=load(OFFERS,[])
+              if not isinstance(raw,list): raise SystemExit('Invalid offers feed: expected list')
+              prev=load(STATE,{})
+              if not isinstance(prev,dict): prev={}
+              initialized=STATE.exists()
+              records=dict(prev)
+              events=load(EVENTS,[])
+              if not isinstance(events,list): events=[]
+              known={x.get('id') for x in events if isinstance(x,dict)}
+              examined=valid=up=down=0
+              eligible={}
+              for row in raw:
+                  examined+=1
+                  if not isinstance(row,dict) or row.get('evidence_type') not in GOOD: continue
+                  d=iso_dt(row.get('checked_at'))
+                  if d is None or d > NOW+timedelta(minutes=10) or NOW-d > MAX_AGE: continue
+                  st=status(row.get('availability'))
+                  if st is None: continue
+                  url=canon_url(row.get('product_url'))
+                  if not url: continue
+                  retailer=clean(row.get('retailer'),100)
+                  product=clean(row.get('product_name'),300)
+                  if not (retailer and product): continue
+                  variant=clean(row.get('variant'),100)
+                  sku=clean(row.get('sku'),100)
+                  key=hashlib.sha256(('\x1f'.join([retailer,url,sku,variant])).encode()).hexdigest()[:28]
+                  item={'key':key,'retailer':retailer,'product_name':product,'game':clean(row.get('game'),100),
+                        'product_url':url,'sku':sku,'variant':variant,
+                        'available':st,'checked_at':d.isoformat(),'price':clean(row.get('price'),40),
+                        'currency':clean(row.get('currency'),20),'evidence_type':'shopify_public_variant'}
+                  if key not in eligible or iso_dt(eligible[key]['checked_at']) < d:
+                      eligible[key]=item
+              valid=len(eligible)
+              for key,item in eligible.items():
+                  old=records.get(key)
+                  oldtime=iso_dt(old.get('checked_at')) if isinstance(old,dict) else None
+                  dt=iso_dt(item['checked_at'])
+                  if oldtime and dt<=oldtime: continue
+                  if old and isinstance(old,dict) and old.get('available') is False and item['available'] is True:
+                      up+=1
+                      event_id=hashlib.sha256((key+'|'+item['checked_at']).encode()).hexdigest()[:26]
+                      if 'merchant-'+event_id not in known:
+                          events.append({'id':'merchant-'+event_id,'source_kind':'first_party_storefront',
+                             'event_type':'out_to_in_stock','inventory_scope':'online',
+                             'stock_verified_now':False,'physical_store_verified':False,
+                             'availability':'Storefront showed available at observation time',
+                             'product_name':item['product_name'],'game':item['game'],
+                             'retailer':item['retailer'],'price_reported':item['price'],
+                             'currency':item['currency'],'variant':item['variant'],
+                             'checked_at':item['checked_at'],'reported_at':item['checked_at'],
+                             'retailer_url':item['product_url'],'source_url':item['product_url'],
+                             'evidence_type':item['evidence_type'],
+                             'evidence_quality':'direct_public_storefront_at_observation_time'})
+                          known.add('merchant-'+event_id)
+                  if old and isinstance(old,dict) and old.get('available') is True and item['available'] is False:
+                      down+=1
+                  records[key]={'available':item['available'],'checked_at':item['checked_at']}
+              # A product omitted from a partial scan is NOT out of stock.
+              recent=[]
+              for e in events:
+                  if not isinstance(e,dict): continue
+                  t=iso_dt(e.get('checked_at'))
+                  if t and NOW-t<=KEEP and t<=NOW+timedelta(minutes=10): recent.append(e)
+              recent.sort(key=lambda e:e['checked_at'],reverse=True)
+              recent=recent[:300]
+              stale=NOW-timedelta(days=120)
+              records={k:v for k,v in records.items() if isinstance(v,dict) and (iso_dt(v.get('checked_at')) or stale-timedelta(days=1))>=stale}
+              report={'version':'38.0','source':'PokéStock independently checked merchant listings',
+                 'seeded_initial_snapshot':not initialized,'source_offer_rows':examined,
+                 'fresh_explicit_variant_listings':valid,'tracked_variants':len(records),
+                 'new_restock_transitions':up,'new_stockout_transitions':down,
+                 'recent_restock_events':len(recent),
+                 'last_processed_offer_check':max((x['checked_at'] for x in eligible.values()),default=None),
+                 'not_supported':'Retailer shelf availability, online checkout success, push while site closed',
+                 'meaning':'Observations as of a recorded scan, not a promise of current stock'}
+              changed_state=save(STATE,records)
+              changed_events=save(EVENTS,recent)
+              if changed_state or changed_events or not REPORT.exists(): save(REPORT,report)
+              print(json.dumps(report,indent=2))
+
+          if __name__=='__main__':main()
+          PY38_MONITOR
+          cat > assets/independent38.js <<'JS38_UI'
+          (()=>{
+          'use strict';
+          if(document.getElementById('ps38')) return;
+          const online=document.getElementById('online');
+          if(!online) return;
+          const STORE='pokestock38_prefs_v1', SEEN='pokestock38_seen_v1';
+          const escapeHTML=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+          const date=x=>{const d=new Date(x);return Number.isNaN(+d)?'Unknown':d.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});};
+          const safeURL=x=>{try{let u=new URL(x);return u.protocol==='https:'?u.href:'';}catch{return '';}};
+          const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
+          const write=(key,val)=>{try{localStorage.setItem(key,JSON.stringify(val));}catch{}};
+          const el=id=>document.getElementById(id);
+          let prefs=read(STORE,{keyword:'',retailer:'',notify:false}), seen=new Set(read(SEEN,[]));
+          let alerts=[],report={},loaded=false,everLoaded=false;
+          const host=document.createElement('section');host.id='ps38';host.className='ps38';
+          host.innerHTML=`<div class="section-label">First-party PokéStock monitoring</div>
+          <h2>Independent Online Restock Alerts</h2>
+          <p class="muted">Stock transitions observed by PokéStock's own retailer checks. A timestamp is the <strong>last observation</strong>, not a guarantee that the product is still available. Local shelf inventory is not inferred.</p>
+          <div class="ps38-form"><label>Watch product or set <input id="ps38keyword" type="search" placeholder="All products (or type Pokémon, Union Arena…)" aria-label="Watch product keyword"></label>
+          <label>Retailer <select id="ps38retailer" aria-label="Watch retailer"><option value="">All retailers</option></select></label>
+          <button id="ps38notify" class="primary" type="button">Enable alerts while site is open</button></div>
+          <p class="muted" id="ps38privacy">Watch preferences stay in this browser, not on a third-party service. Notifications work only while this page is open.</p>
+          <p id="ps38status" class="muted" role="status">Loading independent reports…</p>
+          <div id="ps38cards" class="grid"></div>`;
+          online.insertBefore(host,online.firstChild);
+          el('ps38keyword').value=prefs.keyword||'';
+          function match(x){const q=(prefs.keyword||'').trim().toLowerCase();return (!q||[x.product_name,x.game,x.retailer,x.variant].join(' ').toLowerCase().includes(q))&&(!prefs.retailer||x.retailer===prefs.retailer);}
+          function render(){
+            const filtered=alerts.filter(match);
+            el('ps38notify').textContent=prefs.notify?'Alerts on while page is open':'Enable alerts while site is open';
+            el('ps38status').textContent=`${filtered.length} matching independently observed online restocks · ${report.fresh_explicit_variant_listings||0} fresh merchant variants in the most recent evaluated feed · Last merchant check: ${date(report.last_processed_offer_check)}. No shelf stock is implied.`;
+            el('ps38cards').innerHTML=filtered.slice(0,100).map(x=>{
+              const u=safeURL(x.retailer_url),price=x.price_reported;
+              return `<article class="tile ps38-card"><span class="pill unknown">Observed available · verify again before buying</span>
+                <h3>${escapeHTML(x.product_name)}</h3>
+                <p><strong>${escapeHTML(x.retailer)}</strong> · ${escapeHTML(x.game||'TCG')}</p>
+                ${x.variant?`<p>Variant: ${escapeHTML(x.variant)}</p>`:''}
+                ${price?`<p>Listing price: ${escapeHTML(price)} ${escapeHTML(x.currency==='Unverified'?'(currency unverified)':(x.currency||''))}</p>`:''}
+                <p>Observed at: <strong>${escapeHTML(date(x.checked_at))}</strong></p>
+                <p class="muted">Evidence: public merchant product variant · online availability only</p>
+                ${u?`<details><summary>Optional retailer product page</summary><a href="${escapeHTML(u)}" target="_blank" rel="noopener noreferrer">Open source product page</a></details>`:''}</article>`;
+             }).join('')||'<div class="empty">No independently observed restock transitions for these filters yet. This does not mean products are sold out.</div>';
+          }
+          async function notifyNative(x){
+           const title='PokéStock reported online restock';
+           const options={body:`${x.product_name} · ${x.retailer}. Check observed time and availability.`,tag:'ps38-'+x.id};
+           try{
+             if('serviceWorker' in navigator){const registration=await navigator.serviceWorker.register('ps38-sw.js');await registration.showNotification(title,options);return;}
+             new Notification(title,options);
+           }catch{try{new Notification(title,options);}catch{}}
+          }
+          async function check(){
+           try{
+            const q='?v='+Date.now();
+            const [a,r]=await Promise.all([fetch('data/first_party_restocks_38.json'+q,{cache:'no-store'}),fetch('data/first_party_report_38.json'+q,{cache:'no-store'})]);
+            if(!a.ok||!r.ok) throw new Error('feed not published');
+            const data=await a.json();const rep=await r.json();
+            if(!Array.isArray(data)||!rep||typeof rep!=='object') throw Error('invalid feed');
+            alerts=data;report=rep;loaded=true;
+            const names=[...new Set(data.map(x=>x.retailer).filter(Boolean))].sort();
+            el('ps38retailer').replaceChildren(new Option('All retailers',''),...names.map(n=>new Option(n,n)));
+            if(prefs.retailer&&!names.includes(prefs.retailer)) el('ps38retailer').add(new Option(prefs.retailer,prefs.retailer));
+            el('ps38retailer').value=prefs.retailer||'';
+            if(!everLoaded){for(const x of alerts)seen.add(x.id);everLoaded=true;}
+            else if(prefs.notify){const fresh=alerts.filter(x=>!seen.has(x.id)&&match(x));
+              for(const x of fresh.slice(0,3)){
+                if(typeof Notification!=='undefined'&&Notification.permission==='granted'&&document.visibilityState==='visible'){
+                  notifyNative(x);
+                }
+              }
+            }
+            for(const x of alerts)seen.add(x.id);
+            seen=new Set([...seen].slice(-1000));write(SEEN,[...seen]);render();
+           }catch(err){el('ps38status').textContent=loaded?'Unable to refresh independent alerts; showing previously loaded results.':'Independent alert feed not published yet. Run Script 38 once to initialize it.';}
+          }
+          el('ps38keyword').addEventListener('input',e=>{prefs.keyword=e.target.value;write(STORE,prefs);render();});
+          el('ps38retailer').addEventListener('change',e=>{prefs.retailer=e.target.value;write(STORE,prefs);render();});
+          el('ps38notify').addEventListener('click',async()=>{
+           if(prefs.notify){prefs.notify=false;write(STORE,prefs);render();return;}
+           if(typeof Notification==='undefined'){
+             el('ps38privacy').textContent='This browser does not support page-level notifications. Restock alerts remain visible inside PokéStock.';return;
+           }
+           let granted=Notification.permission==='granted';
+           if(!granted&&Notification.permission==='default'){
+             try{granted=(await Notification.requestPermission())==='granted';}catch{}
+           }
+           if(!granted){el('ps38privacy').textContent='Notifications are unavailable or blocked. Alerts still appear in PokéStock without an external app.';return;}
+           prefs.notify=true;write(STORE,prefs);render();
+           el('ps38privacy').textContent='Notifications enabled for new matching reports while this page remains open. Closed-page push requires a separate first-party push backend.';
+          });
+          check();setInterval(check,60000);
+          })();
+          JS38_UI
+          cat > assets/independent38.css <<'CSS38_UI'
+          #ps38{background:#151d30;border:1px solid #405d85;border-radius:18px;padding:18px;margin:14px 0 22px}
+          #ps38 h2{font-size:23px;margin:6px 0 10px}
+          .ps38-form{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:16px 0}
+          .ps38-form label{display:grid;gap:7px;flex:1;min-width:200px;color:#b9d0e5;font-size:13px}
+          .ps38-form input,.ps38-form select{width:100%}
+          .ps38-card details{margin-top:11px;border-top:1px solid #415875;padding-top:8px}
+          .ps38-card summary{cursor:pointer;color:#9ecfff;font-weight:750}
+          .ps38-card a{overflow-wrap:anywhere}
+          @media(max-width:700px){#ps38{padding:12px}.ps38-form label{min-width:100%}}
+          CSS38_UI
+          cat > ps38-sw.js <<'JS38_SW'
+          /* PokéStock-owned service worker: notification display, no third-party SDK */
+          'use strict';
+          self.addEventListener('notificationclick',event=>{
+            event.notification.close();
+            event.waitUntil((async()=>{
+              const tabs=await clients.matchAll({type:'window',includeUncontrolled:true});
+              for(const t of tabs){if(t.url.includes(self.registration.scope) && 'focus' in t) return t.focus();}
+              if(clients.openWindow) return clients.openWindow('./');
+            })());
+          });
+          JS38_SW
+          python3 -m py_compile scripts/merchant_watch_38.py
+          node --check assets/independent38.js
+          node --check ps38-sw.js
+
+      - name: Update first-party restock transitions from existing merchant scanner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/merchant_watch_38.py
+
+      - name: Add in-house watchlist to the existing website
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY38_INSTALL'
+          from pathlib import Path
+          p=Path('index.html')
+          html=p.read_text(encoding='utf-8')
+          assert 'id="online"' in html, 'Online tab not found; stopped without modifying website'
+          css='<link rel="stylesheet" href="assets/independent38.css">'
+          js='<script defer src="assets/independent38.js"></script>'
+          if css not in html:
+              assert '</head>' in html
+              html=html.replace('</head>',css+'\n</head>',1)
+          if js not in html:
+              assert '</body>' in html
+              html=html.replace('</body>',js+'\n</body>',1)
+          p.write_text(html,encoding='utf-8')
+          PY38_INSTALL
+
+      - name: Validate observed evidence, site scripts, and publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY38_CHECK'
+          import json
+          from pathlib import Path
+          alerts=json.loads(Path('data/first_party_restocks_38.json').read_text())
+          state=json.loads(Path('data/merchant_watch_state_38.json').read_text())
+          report=json.loads(Path('data/first_party_report_38.json').read_text())
+          assert isinstance(alerts,list) and isinstance(state,dict)
+          assert len(set(x['id'] for x in alerts))==len(alerts)
+          assert all(x['source_kind']=='first_party_storefront' for x in alerts)
+          assert all(x['evidence_type']=='shopify_public_variant' for x in alerts)
+          assert all(x['physical_store_verified'] is False for x in alerts)
+          assert all(x['stock_verified_now'] is False for x in alerts)
+          assert report['version']=='38.0'
+          html=Path('index.html').read_text(encoding='utf-8')
+          assert html.count('assets/independent38.js')==1
+          assert html.count('assets/independent38.css')==1
+          print('SCRIPT 38 PASSED:',len(alerts),'first-party online restock transitions')
+          PY38_CHECK
+          node --check assets/independent38.js
+          node --check ps38-sw.js
+
+      - name: Publish without overwriting existing workflows or data
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/merchant_watch_38.py assets/independent38.js assets/independent38.css ps38-sw.js \
+            data/merchant_watch_state_38.json data/first_party_restocks_38.json \
+            data/first_party_report_38.json index.html
+          if git diff --cached --quiet; then
+            echo 'No changes to publish'; exit 0
+          fi
+          git commit -m 'Pokestock 38 independent merchant restock alerts'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo 'Rebase conflict; existing data preserved'; exit 1
+            fi
+            if git push origin HEAD:main; then
+              echo 'Script 38 published successfully'; exit 0
+            fi
+            sleep 5
+          done
+          exit 1
