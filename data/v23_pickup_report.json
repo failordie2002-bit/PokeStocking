@@ -1,6 +1,200 @@
 {
-  "version": "29.0",
-  "checked_at": "2026-11-04T21:27:11.491491+00:00",
-  "verified_observations": 0,
-  "source": "public_shopify_pickup"
+  "version": "23.1",
+  "checked_at": "2026-11-04T22:55:15.485192+00:00",
+  "candidate_offers": 643,
+  "checked_this_run": 36,
+  "next_cursor": 36,
+  "verified_pickup_observations": 0,
+  "pickup_available": 0,
+  "pickup_unavailable": 0,
+  "physical_shelf_stock_confirmed": 0,
+  "checks": [
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "digimon-tcg-booster-ex-13-chivalrous-xiii-booster-box",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "star-wars-tcg-unlimited-homeworlds-booster-box",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "star-wars-tcg-unlimited-homeworlds-booster-pack",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "star-wars-tcg-unlimited-homeworlds-carbonite-edition-booster-box",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "star-wars-tcg-unlimited-homeworlds-carbonite-edition-booster-pack",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "yu-gi-oh-beyond-the-brave-booster-box",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "product": "yu-gi-oh-beyond-the-brave-booster-pack",
+      "status": "no_explicit_pickup_evidence",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-054cd6023775495aa7c3f7ba",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-06003304bbb95284d80d47e0",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-0c0d70fd5925f42966622dc7",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-0dbc96ce1d1d4c244e69e141",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-0ff045abf196ab3f5a427a85",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-10eb089a66fae2ccce6ca548",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-143e5cd8765d5548f87e7e5c",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-14c9ae57e39f56388bd803a4",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-15db296295b8dad06a4ed9da",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-18200fc8c9548160feb811ce",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-199695689e7b27356824ce36",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-1a808ee805d5bd00e6ff94df",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-1b6031e933fa4b451bf47998",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-1b882a16bd4cce0f623b4d1c",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-1ca1b0c0f00280cf6938fab4",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-1ea0ba91150ae6772ed2ed09",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-2012e4a7555e45f081a623b0",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-226163ea829f5e8520a04a0e",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-22b793eaffcbbbd5e708d27b",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-22bec0b4ec08e94354b52735",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-256782b93345431a6ee8d46b",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-27b1bca53c840f848b3f2f0f",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-284f165ab8b4f61f22ad351b",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-2856320cec5f58595f38d056",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-2871e966d7f96802571abbb2",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-29b636fd7c0118cfdae92a46",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-2db5546baea03cf45c300afd",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-2fca6781807d983f60757ef6",
+      "status": "public_product_endpoint_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-302013356bb061f6fbd0c296",
+      "status": "public_product_endpoint_unavailable"
+    }
+  ]
 }
