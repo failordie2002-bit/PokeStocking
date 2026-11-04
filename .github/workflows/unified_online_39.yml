@@ -1,0 +1,280 @@
+name: Pokestock Script 39 Unified Online Stock
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - PokeStock V10 Online Inventory
+      - Pokestock Script 34 Real Online Inventory
+    types: [completed]
+  schedule:
+    - cron: '3 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  unify:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out the current website
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Build the complete independent inventory merger
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scripts data
+          cat > scripts/unified_online_39.py <<'PY39'
+          #!/usr/bin/env python3
+          """Merge Pokestock's existing independently collected online offers.
+
+          A product listed as in stock was observed at CHECK TIME only.
+          Never infer pickup, checkout success, or physical shelf inventory.
+          """
+          import json
+          from collections import Counter
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          from urllib.parse import urlsplit, urlunsplit
+
+          ROOT = Path('data')
+          INPUTS = ('v34_inventory.json', 'online_offers.json')
+          OUTPUT = ROOT / 'unified_online_39.json'
+          REPORT = ROOT / 'unified_online_report_39.json'
+          STATES = {'In stock', 'Out of stock', 'Preorder', 'Backorder'}
+          NOW = datetime.now(timezone.utc)
+
+          def read(path):
+              try:
+                  value = json.loads(path.read_text(encoding='utf-8'))
+                  return value if isinstance(value, list) else []
+              except (OSError, ValueError):
+                  return []
+
+          def dt(value):
+              try:
+                  stamp = datetime.fromisoformat(str(value).replace('Z', '+00:00'))
+                  return stamp.astimezone(timezone.utc) if stamp.tzinfo else None
+              except (ValueError, TypeError, OverflowError):
+                  return None
+
+          def uri(value):
+              try:
+                  p = urlsplit(str(value))
+                  if p.scheme != 'https' or not p.hostname: return ''
+                  return urlunsplit(('https', p.netloc.lower(), p.path.rstrip('/'), '', ''))
+              except (ValueError, TypeError):
+                  return ''
+
+          def clean(v, limit=400):
+              return ' '.join(str(v or '').split())[:limit]
+
+          def save(path, value):
+              data = json.dumps(value, indent=2, ensure_ascii=False) + '\n'
+              if path.exists() and path.read_text(encoding='utf-8') == data:
+                  return False
+              path.write_text(data, encoding='utf-8')
+              return True
+
+          def main():
+              merged = {}
+              counts = {}
+
+              for source in INPUTS:
+                  rows = read(ROOT / source)
+                  counts[source] = len(rows)
+
+                  for row in rows:
+                      if not isinstance(row, dict): continue
+                      if row.get('inventory_scope') != 'online': continue
+                      if row.get('availability') not in STATES: continue
+
+                      stamp = dt(row.get('checked_at'))
+                      if not stamp or stamp > NOW + timedelta(minutes=10): continue
+                      if NOW - stamp > timedelta(hours=36): continue
+
+                      product = clean(row.get('product_name'), 300)
+                      retailer = clean(row.get('retailer'), 120)
+                      product_url = uri(row.get('product_url'))
+                      evidence_url = uri(row.get('evidence_url'))
+
+                      if not product or not retailer or not product_url or not evidence_url:
+                          continue
+
+                      normalized = dict(row)
+                      normalized['product_name'] = product
+                      normalized['retailer'] = retailer
+                      normalized['product_url'] = product_url
+                      normalized['evidence_url'] = evidence_url
+                      normalized['inventory_scope'] = 'online'
+                      normalized['checked_at'] = stamp.isoformat()
+                      normalized['evidence_summary'] = 'Observed at retailer check time; current stock not guaranteed'
+
+                      # Preserve different SKUs and product variants separately.
+                      key = (
+                          retailer.casefold(),
+                          product_url,
+                          clean(row.get('sku'), 100),
+                          clean(row.get('variant'), 100)
+                      )
+
+                      old = merged.get(key)
+                      old_stamp = dt(old['checked_at']) if old else None
+
+                      if not old_stamp or stamp > old_stamp:
+                          merged[key] = normalized
+
+              offers = sorted(
+                  merged.values(),
+                  key=lambda v: (
+                      v['availability'] != 'In stock',
+                      -dt(v['checked_at']).timestamp(),
+                      v['retailer'].casefold(),
+                      v['product_name'].casefold()
+                  )
+              )
+
+              available = [
+                  x for x in offers if x['availability'] == 'In stock'
+              ]
+
+              report = {
+                  'version': '39.0',
+                  'source': 'Pokestock direct merchant observations',
+                  'sources': counts,
+                  'merged_offers': len(offers),
+                  'in_stock_at_last_observation': len(available),
+                  'retailers': dict(sorted(
+                      Counter(x['retailer'] for x in offers).items()
+                  )),
+                  'newest_observation': max(
+                      (x['checked_at'] for x in offers),
+                      default=None
+                  ),
+                  'confirmed_shelf_stock': 0,
+                  'confirmed_checkout_success': 0,
+                  'note': 'Availability is historical storefront evidence, not guaranteed live inventory.'
+              }
+
+              save(OUTPUT, offers)
+              save(REPORT, report)
+              print(json.dumps(report, indent=2))
+
+          if __name__ == '__main__':
+              main()
+          PY39
+          python3 -m py_compile scripts/unified_online_39.py
+
+      - name: Merge online availability observations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/unified_online_39.py
+
+      - name: Connect Pokestock Online Stock tab to the unified current feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY39_SITE'
+          from pathlib import Path
+
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+
+          changes = {
+              '"data/v34_inventory.json"': '"data/unified_online_39.json"',
+              '"data/v34_inventory_report.json"': '"data/unified_online_report_39.json"',
+          }
+
+          for old, new in changes.items():
+              if old in text:
+                  text = text.replace(old, new, 1)
+              elif new not in text:
+                  raise SystemExit('Expected website inventory reference missing: ' + old)
+
+          assert text.count('"data/unified_online_39.json"') == 1
+          assert text.count('"data/unified_online_report_39.json"') == 1
+
+          p.write_text(text, encoding='utf-8')
+          PY39_SITE
+
+      - name: Validate publication output and preserve existing features
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY39_VERIFY'
+          import json
+          from pathlib import Path
+
+          offers = json.loads(
+              Path('data/unified_online_39.json').read_text()
+          )
+          report = json.loads(
+              Path('data/unified_online_report_39.json').read_text()
+          )
+          site = Path('index.html').read_text()
+
+          assert isinstance(offers, list)
+          assert report['version'] == '39.0'
+          assert report['merged_offers'] == len(offers)
+          assert all(x['inventory_scope'] == 'online' for x in offers)
+          assert all(
+              x.get('product_url', '').startswith('https://')
+              for x in offers
+          )
+          assert 'assets/independent38.js' in site
+          assert 'assets/alerts37.js' in site
+
+          print(
+              'SCRIPT 39 PASSED:',
+              len(offers),
+              'merged storefront listings'
+          )
+          PY39_VERIFY
+
+      - name: Publish merged data and site connection
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add scripts/unified_online_39.py data/unified_online_39.json \
+            data/unified_online_report_39.json index.html
+
+          if git diff --cached --quiet; then
+            echo 'No changes'
+            exit 0
+          fi
+
+          git commit -m 'Pokestock 39 unify independent online availability'
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo 'Rebase conflict; existing repository preserved'
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo 'SCRIPT 39 PUBLISHED'
+              exit 0
+            fi
+
+            sleep 5
+          done
+
+          exit 1
