@@ -1,0 +1,696 @@
+name: Pokestock Geographic Social Search
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '31 */4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-geographic-social
+  cancel-in-progress: false
+
+jobs:
+  geographic-social:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Collect geographically targeted public reports
+        shell: bash
+        run: |
+          cat > /tmp/geographic_social.py <<'PY'
+          import hashlib
+          import json
+          import re
+          import urllib.parse
+          import urllib.request
+          import xml.etree.ElementTree as ET
+          from collections import defaultdict
+          from datetime import datetime, timezone, timedelta
+          from email.utils import parsedate_to_datetime
+          from pathlib import Path
+
+          ROOT = Path("data")
+          ROOT.mkdir(exist_ok=True)
+          NOW = datetime.now(timezone.utc)
+
+          def load(name, default):
+              try:
+                  return json.loads(
+                      (ROOT / name).read_text(encoding="utf-8")
+                  )
+              except (OSError, ValueError):
+                  return default
+
+          def save(name, data):
+              (ROOT / name).write_text(
+                  json.dumps(
+                      data,
+                      indent=2,
+                      ensure_ascii=False
+                  ) + "\n",
+                  encoding="utf-8"
+              )
+
+          def norm(value):
+              return re.sub(
+                  r"\s+", " ",
+                  str(value or "").strip().lower()
+              )
+
+          def identifier(value):
+              return hashlib.sha256(
+                  value.encode("utf-8")
+              ).hexdigest()[:24]
+
+          def get(url):
+              try:
+                  request = urllib.request.Request(
+                      url,
+                      headers={
+                          "User-Agent":
+                              "Mozilla/5.0 PokestockPublicResearch/1.0",
+                          "Accept":
+                              "application/rss+xml, application/xml"
+                      }
+                  )
+                  with urllib.request.urlopen(
+                      request, timeout=12
+                  ) as response:
+                      return response.read(600000)
+              except Exception as error:
+                  print(
+                      "Unavailable feed:",
+                      type(error).__name__
+                  )
+                  return b""
+
+          def rss(query):
+              url = (
+                  "https://news.google.com/rss/search?q="
+                  + urllib.parse.quote(query)
+                  + "&hl=en-US&gl=US&ceid=US:en"
+              )
+
+              raw = get(url)
+              if not raw:
+                  return []
+
+              try:
+                  tree = ET.fromstring(raw)
+              except ET.ParseError:
+                  return []
+
+              result = []
+
+              for item in tree.findall(".//item")[:35]:
+                  title = item.findtext("title", "")
+                  link = item.findtext("link", "")
+                  description = re.sub(
+                      r"<[^>]+>", " ",
+                      item.findtext("description", "")
+                  )
+                  published = item.findtext("pubDate", "")
+
+                  try:
+                      date = parsedate_to_datetime(
+                          published
+                      ).astimezone(timezone.utc)
+                  except (TypeError, ValueError):
+                      date = None
+
+                  if title and link:
+                      result.append({
+                          "title": title,
+                          "description": description[:600],
+                          "source_url": link,
+                          "published_at":
+                              date.isoformat() if date else None
+                      })
+
+              return result
+
+          stores = load(
+              "physical_inventory_sources.json", []
+          )
+
+          previous = load(
+              "geographic_social_reports.json", {}
+          )
+
+          if not isinstance(stores, list):
+              stores = []
+
+          old_leads = (
+              previous.get("leads", [])
+              if isinstance(previous, dict)
+              else []
+          )
+
+          if not isinstance(old_leads, list):
+              old_leads = []
+
+          leads = {
+              x["lead_id"]: x
+              for x in old_leads
+              if isinstance(x, dict)
+              and x.get("lead_id")
+          }
+
+          priority = [
+              ("Staunton", "VA"),
+              ("Waynesboro", "VA"),
+              ("Harrisonburg", "VA"),
+              ("Charlottesville", "VA"),
+              ("Fishersville", "VA"),
+              ("Verona", "VA"),
+              ("Lexington", "VA"),
+              ("Richmond", "VA"),
+              ("Roanoke", "VA"),
+              ("Winchester", "VA")
+          ]
+
+          discovered = set(priority)
+
+          for store in stores:
+              if not isinstance(store, dict):
+                  continue
+
+              city = str(store.get("city") or "").strip()
+              state = str(store.get("state") or "").strip()
+
+              if city and state:
+                  discovered.add((city, state))
+
+          discovered = sorted(discovered)
+
+          # Rotate the geographic coverage across runs.
+          # Priority locations are always searched.
+          slot = int(NOW.timestamp() // 14400)
+          batch_size = 35
+
+          if discovered:
+              start = (
+                  slot * batch_size
+              ) % len(discovered)
+
+              rotating = [
+                  discovered[(start + i) % len(discovered)]
+                  for i in range(
+                      min(batch_size, len(discovered))
+                  )
+              ]
+          else:
+              rotating = []
+
+          locations = list(dict.fromkeys(
+              priority + rotating
+          ))
+
+          retailers = [
+              "Walmart",
+              "Target",
+              "Best Buy",
+              "GameStop",
+              "Costco",
+              "Walgreens",
+              "CVS"
+          ]
+
+          queries = []
+
+          for city, state in locations:
+              queries.append((
+                  city,
+                  state,
+                  f'"Pokemon" "restock" "{city}" "{state}"'
+              ))
+
+              queries.append((
+                  city,
+                  state,
+                  f'"Pokemon cards" "Walmart" "{city}"'
+              ))
+
+              queries.append((
+                  city,
+                  state,
+                  f'"Pokemon" "Target" "{city}"'
+              ))
+
+              queries.append((
+                  city,
+                  state,
+                  f'"Union Arena" "{city}"'
+              ))
+
+          # Additional searches for publicly indexed
+          # Facebook and Instagram references.
+          for city, state in priority:
+              queries.append((
+                  city,
+                  state,
+                  f'site:facebook.com Pokemon restock "{city}"'
+              ))
+
+              queries.append((
+                  city,
+                  state,
+                  f'site:instagram.com Pokemon restock "{city}"'
+              ))
+
+          # Bound requests to keep the scheduled job
+          # within GitHub Actions runtime limits.
+          queries = queries[:115]
+
+          new_count = 0
+          checked = 0
+
+          keywords = (
+              "pokemon",
+              "pokémon",
+              "union arena",
+              "gundam",
+              "tcg",
+              "booster",
+              "trading card"
+          )
+
+          actions = (
+              "restock",
+              "stock",
+              "shipment",
+              "available",
+              "drop",
+              "release",
+              "packs",
+              "booster",
+              "inventory"
+          )
+
+          for city, state, query in queries:
+              checked += 1
+
+              for item in rss(query):
+                  content = norm(
+                      item["title"] + " " +
+                      item["description"]
+                  )
+
+                  if not any(
+                      word in content for word in keywords
+                  ):
+                      continue
+
+                  if not any(
+                      word in content for word in actions
+                  ):
+                      continue
+
+                  published = item.get("published_at")
+
+                  if published:
+                      try:
+                          date = datetime.fromisoformat(
+                              published
+                          )
+                          if date < NOW - timedelta(days=45):
+                              continue
+                      except ValueError:
+                          pass
+
+                  lead_id = identifier(
+                      item["source_url"] + "|" +
+                      item["title"]
+                  )
+
+                  if lead_id in leads:
+                      continue
+
+                  # A search query's location is not proof
+                  # that the returned post is local.
+                  city_pattern = (
+                      r"(?<!\w)" +
+                      re.escape(city.lower()) +
+                      r"(?!\w)"
+                  )
+
+                  city_mentioned = bool(
+                      re.search(city_pattern, content)
+                  )
+
+                  state_mentioned = (
+                      norm(state) in content.split()
+                      or norm(state) in norm(
+                          item["title"]
+                      ).split()
+                  )
+
+                  location_supported = (
+                      city_mentioned and state_mentioned
+                  )
+
+                  mentions = [
+                      retailer
+                      for retailer in retailers
+                      if norm(retailer) in content
+                  ]
+
+                  platform = "public_web"
+
+                  if "facebook.com" in content:
+                      platform = "facebook_indexed"
+                  elif "instagram.com" in content:
+                      platform = "instagram_indexed"
+                  elif "reddit.com" in content:
+                      platform = "reddit_indexed"
+
+                  game = "unknown"
+
+                  if (
+                      "union arena" in content
+                  ):
+                      game = "Union Arena"
+                  elif "gundam" in content:
+                      game = "Gundam"
+                  elif (
+                      "pokemon" in content
+                      or "pokémon" in content
+                  ):
+                      game = "Pokemon"
+
+                  leads[lead_id] = {
+                      "lead_id": lead_id,
+                      "platform": platform,
+                      "title": item["title"][:250],
+                      "source_url":
+                          item["source_url"],
+                      "published_at": published,
+                      "first_seen_at": NOW.isoformat(),
+                      "game": game,
+                      "retailer_mentions": mentions,
+                      "city":
+                          city if location_supported else None,
+                      "state":
+                          state if location_supported else None,
+                      "location_verified": False,
+                      "location_text_supported":
+                          location_supported,
+                      "search_city": city,
+                      "search_state": state,
+                      "store_id": None,
+                      "status":
+                          "research_lead_unverified",
+                      "forecast_eligible": False
+                  }
+
+                  new_count += 1
+
+          saved = sorted(
+              leads.values(),
+              key=lambda x:
+                  x.get("first_seen_at") or "",
+              reverse=True
+          )[:5000]
+
+          output = {
+              "checked_at": NOW.isoformat(),
+              "searches_attempted": checked,
+              "locations_searched": len(locations),
+              "new_leads": new_count,
+              "lead_count": len(saved),
+              "leads": saved
+          }
+
+          save(
+              "geographic_social_reports.json",
+              output
+          )
+
+          print("Locations searched:", len(locations))
+          print("Queries attempted:", checked)
+          print("New leads:", new_count)
+          print("Total saved leads:", len(saved))
+          PY
+
+          python /tmp/geographic_social.py
+
+      - name: Install visible social discovery dashboard
+        shell: bash
+        run: |
+          cat > /tmp/dashboard.py <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          start = "<!-- POKESTOCK GEO SOCIAL START -->"
+          end = "<!-- POKESTOCK GEO SOCIAL END -->"
+
+          panel = r'''
+          <!-- POKESTOCK GEO SOCIAL START -->
+          <section id="psgeo" style="max-width:1100px;margin:24px auto;padding:20px;border:1px solid #8885;border-radius:14px">
+            <h2>Social Restock Discovery</h2>
+            <p>Publicly indexed social posts and restock leads. These are not confirmed store inventory.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <button id="psgeogps" type="button">Use my location</button>
+              <input id="psgeozip" placeholder="ZIP code" inputmode="numeric" maxlength="5" style="width:110px">
+              <button id="psgeozipgo" type="button">Search ZIP</button>
+              <label>Radius
+                <select id="psgeoradius">
+                  <option value="10">10 miles</option>
+                  <option value="25">25 miles</option>
+                  <option value="50" selected>50 miles</option>
+                  <option value="75">75 miles</option>
+                  <option value="100">100 miles</option>
+                  <option value="150">150 miles</option>
+                  <option value="250">250 miles</option>
+                  <option value="0">Nationwide</option>
+                </select>
+              </label>
+              <label>Retailer
+                <select id="psgeoretailer">
+                  <option value="">All retailers</option>
+                  <option>Walmart</option>
+                  <option>Target</option>
+                  <option>Best Buy</option>
+                  <option>GameStop</option>
+                  <option>Costco</option>
+                  <option>Walgreens</option>
+                  <option>CVS</option>
+                </select>
+              </label>
+              <label>Game
+                <select id="psgeogame">
+                  <option value="">All games</option>
+                  <option value="pokemon">Pokémon</option>
+                  <option value="union arena">Union Arena</option>
+                  <option value="gundam">Gundam</option>
+                </select>
+              </label>
+            </div>
+            <p id="psgeostatus" role="status">Loading public reports...</p>
+            <h3>Reports mentioning locations in your radius</h3>
+            <div id="psgeolocal"></div>
+            <h3>Other social restock leads</h3>
+            <p>These posts have no reliable geographic match. They are displayed for research, not as nearby inventory.</p>
+            <div id="psgeoother"></div>
+          </section>
+          <script>
+          (()=>{
+            "use strict";
+            const $=id=>document.getElementById(id);
+            const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
+              "&":"&amp;","<":"&lt;",">":"&gt;",
+              '"':"&quot;","'":"&#39;"
+            }[c]));
+            const norm=s=>String(s??"").trim().toLowerCase();
+            const centers={
+              "staunton|va":[38.1496,-79.0717],
+              "waynesboro|va":[38.0685,-78.8895],
+              "harrisonburg|va":[38.4496,-78.8689],
+              "charlottesville|va":[38.0293,-78.4767],
+              "fishersville|va":[38.099,-78.9692],
+              "verona|va":[38.2021,-79.0081],
+              "lexington|va":[37.784,-79.4428],
+              "richmond|va":[37.5407,-77.436],
+              "roanoke|va":[37.27097,-79.94143],
+              "winchester|va":[39.1857,-78.1633]
+            };
+            let origin=null;
+            let leads=[];
+            const miles=(a,b)=>{
+              const rad=Math.PI/180;
+              const dl=(b[0]-a[0])*rad;
+              const dn=(b[1]-a[1])*rad;
+              const h=Math.sin(dl/2)**2+
+                Math.cos(a[0]*rad)*Math.cos(b[0]*rad)*
+                Math.sin(dn/2)**2;
+              return 7917.6*Math.asin(Math.min(1,Math.sqrt(h)));
+            };
+            const safe=u=>{
+              try{
+                const x=new URL(u);
+                return x.protocol==="https:"?x.href:"";
+              }catch{return ""}
+            };
+            function card(x,distance){
+              const url=safe(x.source_url);
+              const location=x.city&&x.state?
+                x.city+", "+x.state:"Location unknown";
+              const when=x.published_at?
+                String(x.published_at).slice(0,10):"Date unknown";
+              return `<article style="padding:12px 0;border-bottom:1px solid #8884">
+                <strong>${esc(x.title)}</strong>
+                <p>${esc(x.platform||"Public web")} · ${esc(when)}</p>
+                <p>${esc(location)}${distance!=null?
+                  " · approximately "+distance.toFixed(1)+" miles":""}</p>
+                <p>Unverified public lead; not confirmed stock.</p>
+                ${url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">View source</a>`:""}
+              </article>`;
+            }
+            function render(){
+              const radius=+$("psgeoradius").value;
+              const retailer=norm($("psgeoretailer").value);
+              const game=norm($("psgeogame").value);
+              const local=[],other=[];
+              for(const x of leads){
+                if(retailer&&!(
+                  (x.retailer_mentions||[]).some(y=>norm(y)===retailer)
+                ))continue;
+                if(game&&norm(x.game)!==game)continue;
+                const p=centers[
+                  norm(x.city)+"|"+norm(x.state)
+                ];
+                const d=origin&&p?miles(origin,p):null;
+                if(p&&(!radius||(origin&&d<=radius+10))){
+                  local.push({x,d});
+                }else if(!p){
+                  other.push(x);
+                }
+              }
+              local.sort((a,b)=>
+                radius&&origin?(a.d??99999)-(b.d??99999):
+                String(b.x.published_at||"").localeCompare(String(a.x.published_at||""))
+              );
+              $("psgeolocal").innerHTML=
+                local.slice(0,100).map(v=>card(v.x,v.d)).join("")||
+                "<p>No geographically matched public leads found for these filters.</p>";
+              $("psgeoother").innerHTML=
+                other.slice(0,100).map(x=>card(x,null)).join("")||
+                "<p>No additional leads match the selected filters.</p>";
+              $("psgeostatus").textContent=
+                local.length+" geographically matched leads; "+
+                other.length+" other public leads. "+
+                (radius&&!origin?"Use GPS or ZIP to enable local radius matching.":"");
+            }
+            $("psgeogps").onclick=()=>{
+              if(!navigator.geolocation){
+                $("psgeostatus").textContent="GPS unavailable; use ZIP.";
+                return;
+              }
+              navigator.geolocation.getCurrentPosition(
+                p=>{
+                  origin=[p.coords.latitude,p.coords.longitude];
+                  render();
+                },
+                e=>$("psgeostatus").textContent="GPS error: "+e.message,
+                {timeout:15000}
+              );
+            };
+            $("psgeozipgo").onclick=async()=>{
+              const z=$("psgeozip").value.trim();
+              if(!/^\d{5}$/.test(z)){
+                $("psgeostatus").textContent="Enter a five-digit ZIP.";
+                return;
+              }
+              try{
+                const r=await fetch("https://api.zippopotam.us/us/"+z);
+                if(!r.ok)throw Error("ZIP not found");
+                const data=await r.json();
+                const p=data.places[0];
+                origin=[+p.latitude,+p.longitude];
+                render();
+              }catch(e){
+                $("psgeostatus").textContent=e.message;
+              }
+            };
+            $("psgeozip").onkeydown=e=>{
+              if(e.key==="Enter")$("psgeozipgo").click();
+            };
+            ["psgeoradius","psgeoretailer","psgeogame"].forEach(id=>{
+              $(id).onchange=render;
+            });
+            Promise.all([
+              fetch("data/geographic_social_reports.json?t="+Date.now())
+                .then(r=>r.ok?r.json():{leads:[]})
+                .catch(()=>({leads:[]})),
+              fetch("data/social_restock_leads.json?t="+Date.now())
+                .then(r=>r.ok?r.json():{leads:[]})
+                .catch(()=>({leads:[]}))
+            ]).then(([geo,social])=>{
+              const all=[
+                ...(geo.leads||[]),
+                ...(social.leads||[])
+              ];
+              const unique=new Map();
+              for(const x of all){
+                const id=x.source_url||x.lead_id;
+                if(id&&!unique.has(id))unique.set(id,x);
+              }
+              leads=[...unique.values()];
+              render();
+            });
+          })();
+          </script>
+          <!-- POKESTOCK GEO SOCIAL END -->
+          '''
+
+          if start in html and end in html:
+              html = re.sub(
+                  re.escape(start) + r".*?" + re.escape(end),
+                  lambda _: panel,
+                  html,
+                  count=1,
+                  flags=re.S
+              )
+          elif re.search(r"</body>", html, flags=re.I):
+              html = re.sub(
+                  r"</body>",
+                  lambda m: panel + "\n" + m.group(0),
+                  html,
+                  count=1,
+                  flags=re.I
+              )
+          else:
+              html += "\n" + panel
+
+          path.write_text(html, encoding="utf-8")
+          print("Geographic social dashboard installed")
+          PY
+
+          python /tmp/dashboard.py
+
+      - name: Commit generated data and dashboard
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html data/geographic_social_reports.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Add geographic social discovery"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "No changes to commit"
+          fi
