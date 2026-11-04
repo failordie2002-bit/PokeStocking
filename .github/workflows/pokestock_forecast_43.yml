@@ -1,0 +1,833 @@
+name: Pokestock Script 43 Local Forecast Intelligence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pokestock_forecast_43.yml'
+  workflow_run:
+    workflows:
+      - Pokestock Script 41 Bold Four-Tab Collector App
+    types: [completed]
+  schedule:
+    - cron: '13 */3 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-frontend-upgrade
+  cancel-in-progress: false
+
+jobs:
+  improve-forecast:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+
+    steps:
+      - name: Check out current website
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Build geographic evidence collector and revised forecast view
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scripts data assets
+
+          cat > scripts/forecast43.py <<'PY43'
+          import json
+          import re
+          from datetime import datetime, timedelta, timezone
+          from collections import defaultdict
+          from pathlib import Path
+          from statistics import median
+          from urllib.parse import urlsplit
+
+          DATA = Path('data')
+          NOW = datetime.now(timezone.utc)
+
+          def read(name, fallback):
+              try:
+                  result = json.loads(
+                      (DATA / name).read_text(encoding='utf-8')
+                  )
+                  return result if isinstance(
+                      result, type(fallback)
+                  ) else fallback
+              except (OSError, ValueError):
+                  return fallback
+
+          def text(x, n=250):
+              return ' '.join(str(x or '').split())[:n]
+
+          def norm(x):
+              return re.sub(
+                  r'[^a-z0-9]', '', text(x).lower()
+              )
+
+          def iso(x):
+              try:
+                  d = datetime.fromisoformat(
+                      str(x).replace('Z', '+00:00')
+                  )
+                  return d.astimezone(timezone.utc) if d.tzinfo else None
+              except (ValueError, TypeError, OverflowError):
+                  return None
+
+          def https(x):
+              try:
+                  u = urlsplit(str(x))
+                  return str(x)[:900] if (
+                      u.scheme == 'https' and u.netloc
+                  ) else ''
+              except ValueError:
+                  return ''
+
+          def point(row):
+              try:
+                  a = float(row.get('lat'))
+                  b = float(
+                      row.get('lon', row.get('long'))
+                  )
+                  return (a, b) if (
+                      abs(a) <= 90 and abs(b) <= 180
+                  ) else None
+              except (ValueError, TypeError):
+                  return None
+
+          stores = read('stores.json', [])
+          places = defaultdict(list)
+          by_id = {}
+
+          for s in stores:
+              if not isinstance(s, dict):
+                  continue
+              p = point(s)
+              if p is None:
+                  continue
+
+              sid = text(s.get('id'), 120)
+              if sid:
+                  by_id[sid] = p
+
+              if s.get('city') and s.get('state'):
+                  places[
+                      (norm(s['city']), norm(s['state']))
+                  ].append(p)
+
+          centers = {
+              k: (
+                  median(z[0] for z in v),
+                  median(z[1] for z in v)
+              )
+              for k, v in places.items() if v
+          }
+
+          seen = set()
+          events = []
+
+          def add(event):
+              if event['id'] in seen:
+                  return
+
+              d = iso(event['reported_at'])
+              if not d:
+                  return
+              if d > NOW + timedelta(hours=1):
+                  return
+              if NOW - d > timedelta(days=60):
+                  return
+              if not https(event['source_url']):
+                  return
+              if event['lat'] is None or event['lon'] is None:
+                  return
+
+              seen.add(event['id'])
+              events.append(event)
+
+          for row in read('v34_public_sightings.json', []):
+              if not isinstance(row, dict):
+                  continue
+
+              sid = text(row.get('store_id'), 120)
+              city = text(row.get('city'), 90)
+              state = text(row.get('state'), 20)
+
+              p = by_id.get(sid) if (
+                  row.get('store_match_verified') is True
+              ) else None
+
+              p = p or centers.get(
+                  (norm(city), norm(state))
+              )
+              if not p:
+                  continue
+
+              eid = text(row.get('event_id'), 130)
+              if not eid:
+                  continue
+
+              add({
+                  'id': 'sighting:' + eid,
+                  'kind': 'community_sighting',
+                  'title': text(
+                      row.get('product_name'), 230
+                  ),
+                  'retailer': text(
+                      row.get('retailer'), 90
+                  ),
+                  'game': text(row.get('game'), 80),
+                  'city': city,
+                  'state': state,
+                  'lat': p[0],
+                  'lon': p[1],
+                  'reported_at': text(
+                      row.get('reported_at_approx'), 60
+                  ),
+                  'source_url': https(
+                      row.get('source_url')
+                  ),
+                  'store_id': sid,
+                  'store_match_verified':
+                      row.get('store_match_verified') is True,
+                  'stock_verified_now': False,
+                  'location_precision':
+                      'exact_store' if (
+                          row.get('store_match_verified') is True
+                      ) else 'approximate_city'
+              })
+
+          social = read('social_media_feed.json', {})
+
+          for row in social.get('posts', []):
+              if not isinstance(row, dict):
+                  continue
+
+              loc = row.get('location')
+              if not isinstance(loc, dict):
+                  continue
+
+              p = point(loc)
+              if not p:
+                  continue
+
+              signals = row.get('restock_signals') or []
+              if not isinstance(signals, list) or not signals:
+                  continue
+
+              eid = text(
+                  row.get('id') or row.get('url'), 150
+              )
+              if not eid:
+                  continue
+
+              add({
+                  'id': 'social:' + eid,
+                  'kind': 'social_research_lead',
+                  'title': text(row.get('title'), 230),
+                  'retailer': ', '.join(
+                      text(x, 60)
+                      for x in (
+                          row.get('retailer_mentions') or []
+                      )[:3]
+                  ),
+                  'game': text(row.get('game'), 80),
+                  'city': text(loc.get('city'), 90),
+                  'state': text(loc.get('state'), 20),
+                  'lat': p[0],
+                  'lon': p[1],
+                  'reported_at': text(
+                      row.get('published_at'), 60
+                  ),
+                  'source_url': https(
+                      row.get('original_post_url')
+                      or row.get('url')
+                  ),
+                  'store_id': '',
+                  'store_match_verified': False,
+                  'stock_verified_now': False,
+                  'location_precision':
+                      'source_tagged_approximate'
+              })
+
+          events.sort(
+              key=lambda x: x['reported_at'],
+              reverse=True
+          )
+
+          v34 = read('v34_report.json', {})
+
+          out = {
+              'version': '43.0',
+              'public_sighting_feed_checked': text(
+                  v34.get('checked_at'), 60
+              ),
+              'social_feed_checked': text(
+                  social.get('updated_at'), 60
+              ),
+              'events': events,
+              'community_sighting_count': sum(
+                  x['kind'] == 'community_sighting'
+                  for x in events
+              ),
+              'location_tagged_social_leads': sum(
+                  x['kind'] == 'social_research_lead'
+                  for x in events
+              ),
+              'note': (
+                  'City locations are approximate; social posts '
+                  'and sightings do not prove shelf stock. '
+                  'Only repeated verified exact-store reports '
+                  'support weekday watch patterns.'
+              )
+          }
+
+          path = DATA / 'forecast_activity_43.json'
+          encoded = json.dumps(
+              out, ensure_ascii=False, indent=2
+          ) + '\n'
+
+          if not path.exists() or (
+              path.read_text(encoding='utf-8') != encoded
+          ):
+              path.write_text(
+                  encoded, encoding='utf-8'
+              )
+
+          print(
+              'Script 43 collected',
+              len(events),
+              'dated location-tagged research signals'
+          )
+          PY43
+
+          cat > /tmp/forecast_view_43.js <<'JS43'
+          /* Script 43: honest, location-aware forecast. */
+          function renderForecast(){
+           const select=$('ps2ForecastStore');
+           const candidates=nearby().filter(s=>String(s.city||s.address||'').trim());
+           const used=new Set();
+           const list=candidates.filter(s=>{
+             const k=[
+               String(s.name||'').toLowerCase(),
+               String(s.address||'').toLowerCase(),
+               Number(s.lat).toFixed(4),
+               Number(s.lon??s.long).toFixed(4)
+             ].join('|');
+             if(used.has(k))return false;
+             used.add(k);
+             return true;
+           });
+
+           const prev=selectedForecast?.id||select.value;
+           const shown=list.slice(0,250);
+
+           if(prev&&!shown.some(s=>String(s.id)===String(prev))){
+             const x=list.find(s=>String(s.id)===String(prev));
+             if(x)shown.unshift(x);
+           }
+
+           select.replaceChildren(
+             new Option('Select a nearby branch',''),
+             ...shown.map(s=>new Option(
+               [
+                 labelStore(s),
+                 s.address||s.city||'Nearby location',
+                 s._miles.toFixed(1)+' mi'
+               ].filter(Boolean).join(' · '),
+               String(s.id)
+             ))
+           );
+
+           const wanted=shown.find(
+             s=>String(s.id)===String(prev)
+           )||shown[0];
+
+           if(wanted)select.value=String(wanted.id);
+           selectedForecast=wanted||null;
+
+           const output=$('ps2ForecastBody');
+
+           if(!wanted){
+             output.innerHTML='<div class="ps2empty">Use GPS or enter a ZIP in Near Me to see identifiable stores and their local evidence. No nationwide store is substituted.</div>';
+             return;
+           }
+
+           const store=wanted;
+           const evidence=storeEvidence(store);
+           const id=String(store.id);
+           const normal=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+           const retailer=normal(chain(store));
+           const cutoff=Date.now()-45*86400000;
+
+           const geo=forecast43Records.filter(x=>
+             Number.isFinite(+x.lat)&&
+             Number.isFinite(+x.lon)&&
+             Number.isFinite(Date.parse(x.reported_at))&&
+             Date.parse(x.reported_at)>=cutoff&&
+             distance(
+               location.lat,location.lon,
+               +x.lat,+x.lon
+             )<=radius
+           ).sort(
+             (a,b)=>Date.parse(b.reported_at)-Date.parse(a.reported_at)
+           );
+
+           const exact=[],city=[],area=[],posts=[];
+
+           for(const x of geo){
+             if(x.kind==='social_research_lead'){
+               posts.push(x);
+               continue;
+             }
+             if(String(x.store_id)===id&&x.store_match_verified===true){
+               exact.push(x);
+               continue;
+             }
+             if(
+               retailer===normal(x.retailer)&&
+               normal(store.city)&&
+               normal(store.city)===normal(x.city)&&
+               normal(store.state)===normal(x.state)
+             ){
+               city.push(x);
+               continue;
+             }
+             area.push(x);
+           }
+
+           const bins=Array.from(
+             {length:7},
+             (_,i)=>({
+               day:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i],
+               exact:0,city:0,area:0,social:0
+             })
+           );
+
+           for(const [bucket,records] of [
+             ['exact',exact],
+             ['city',city],
+             ['area',area],
+             ['social',posts]
+           ]){
+             for(const event of records){
+               const d=new Date(event.reported_at);
+               const index=(d.getDay()+6)%7;
+               bins[index][bucket]++;
+             }
+           }
+
+           const peak=Math.max(
+             5,
+             ...bins.map(x=>x.exact+x.city+x.area+x.social)
+           );
+
+           const any=geo.length>0;
+
+           const chart=any?`
+             <div class="ps43chart">
+               <div class="ps43chartgrid">
+                 ${bins.map(x=>{
+                   const num=x.exact+x.city+x.area+x.social;
+                   return `
+                   <div class="ps43day">
+                     <span class="ps43num">${num||'·'}</span>
+                     <div class="ps43track" title="${esc(x.day)}: ${num} public research signals">
+                       <div class="ps43fill social" style="height:${Math.round(x.social/peak*132)}px"></div>
+                       <div class="ps43fill area" style="height:${Math.round(x.area/peak*132)}px"></div>
+                       <div class="ps43fill city" style="height:${Math.round(x.city/peak*132)}px"></div>
+                       <div class="ps43fill exact" style="height:${Math.round(x.exact/peak*132)}px"></div>
+                     </div>
+                     <span>${x.day}</span>
+                   </div>`;
+                 }).join('')}
+               </div>
+               <p class="ps43small">Counts of collected public reports by weekday, not delivery probabilities. Location and time are approximate for many sources.</p>
+             </div>`:
+             '<div class="ps43none"><strong>No nearby dated reports in the connected feeds.</strong><p>We cannot infer a restock day from missing observations. Try a larger radius or another branch; future source reports will appear when collected.</p></div>';
+
+           const link=x=>{
+             const u=safe(x.source_url);
+             return u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">View original evidence</a>`:'';
+           };
+
+           const recent=geo.slice(0,12).map(x=>`
+             <article class="ps43event">
+               <div>
+                 <b>${esc(x.title||'Public collector report')}</b>
+                 <p>
+                   ${esc(x.city||'Area')}
+                   ${x.state?', '+esc(x.state):''}
+                   · ${esc(when(x.reported_at))}
+                   · ${esc(
+                     x.kind==='social_research_lead'?
+                     'Geotagged social lead':
+                     exact.includes(x)?
+                     'Branch-matched report':
+                     city.includes(x)?
+                     'Retailer/city report':
+                     'Nearby community sighting'
+                   )}
+                 </p>
+               </div>
+               <div>${link(x)}</div>
+             </article>
+           `).join('');
+
+           const research=evidence.research_watch?`
+             <div class="ps43research">
+               <strong>Retailer-wide research exists</strong>
+               <p>${esc(evidence.research_basis||'General vendor or retailer guidance')}</p>
+               <p>It does not establish a shipment date for this particular branch.</p>
+               ${evidence.research_source&&safe(evidence.research_source)?
+                 `<a href="${esc(safe(evidence.research_source))}" target="_blank" rel="noopener noreferrer">Research source</a>`:''}
+             </div>`:'';
+
+           const upcoming=releases.filter(r=>{
+             const time=Date.parse(r.date);
+             return Number.isFinite(time)&&
+               time>=Date.now()-86400000&&
+               time<=Date.now()+30*86400000;
+           }).slice(0,4);
+
+           const releaseItems=upcoming.map(r=>`
+             <div class="ps43event">
+               <div>
+                 <b>${esc(r.name||'TCG release')}</b>
+                 <p>Official release ${esc(day(r.date))}; not branch inventory</p>
+               </div>
+               ${safe(r.source_url)?
+                 `<a href="${esc(safe(r.source_url))}" target="_blank" rel="noopener noreferrer">Official source</a>`:''}
+             </div>
+           `).join('');
+
+           output.innerHTML=`
+             <div class="ps2card ps43branch">
+               <span class="ps2badge purple">${esc(chain(store))}</span>
+               <h2>${esc(labelStore(store))}</h2>
+               <p>${esc([store.address,store.city,store.state].filter(Boolean).join(', '))} · ${store._miles.toFixed(1)} miles from your selected location</p>
+               <p><strong>In-store stock: Unknown.</strong> We have no verified live shelf quantities here.</p>
+             </div>
+
+             <div class="ps43stats">
+               <div class="ps43stat">
+                 <strong>${exact.length}</strong>
+                 <span>Verified branch-matched reports</span>
+               </div>
+               <div class="ps43stat">
+                 <strong>${city.length}</strong>
+                 <span>Same retailer &amp; city reports</span>
+               </div>
+               <div class="ps43stat">
+                 <strong>${area.length+posts.length}</strong>
+                 <span>Other nearby research signals</span>
+               </div>
+             </div>
+
+             <div class="ps2card ps43panel">
+               <div class="ps43heading">
+                 <h2>Nearby activity by weekday</h2>
+                 <span class="ps2badge ${any?'warn':'purple'}">
+                   ${any?geo.length+' reports · 45 days':'Not enough local evidence'}
+                 </span>
+               </div>
+               <p>Only sources inside your ${radius}-mile radius. Same-city and nearby activity are not proof for ${esc(labelStore(store))}.</p>
+               ${chart}
+               <div class="ps43legend">
+                 <span><i class="exact"></i>Verified branch match</span>
+                 <span><i class="city"></i>Same retailer/city</span>
+                 <span><i class="area"></i>Other local sightings</span>
+                 <span><i class="social"></i>Social research</span>
+               </div>
+             </div>
+
+             <div class="ps43research">
+               <strong>${evidence.watch_weekday?
+                 'Limited historical weekday pattern: '+esc(evidence.watch_weekday):
+                 'Store-level forecast: insufficient history'}</strong>
+               <p>${evidence.watch_weekday?
+                 'Repeated exact-store reports support a limited watch pattern, not guaranteed delivery.':
+                 'No defensible next delivery date exists for this branch. A retailer-wide schedule or another store’s report cannot be treated as confirmation.'}</p>
+               <p>Verified historical report dates in store database: ${Number(evidence.verified_store_sightings)||0}. Current inventory: unknown.</p>
+             </div>
+
+             ${research}
+
+             <div class="ps2card ps43panel">
+               <h2>Evidence timeline</h2>
+               <p>Latest available local source reports. Each is labeled as unverified research unless independently confirmed.</p>
+               ${recent||'<div class="ps43none">No geographically supported public reports within this radius yet.</div>'}
+             </div>
+
+             ${releaseItems?`
+               <div class="ps2card ps43panel">
+                 <h2>Upcoming official releases</h2>
+                 <p>National launch information for planning, not proof of local shipments.</p>
+                 ${releaseItems}
+               </div>`:''}
+           `;
+          }
+          JS43
+
+          cat > /tmp/forecast_style_43.css <<'CSS43'
+          /* POKESTOCK SCRIPT 43: compact local evidence charts */
+
+          /* Keep Script 42's layout fix if the older UI installer reruns. */
+          body.ps2-ready > #psgeo{display:none!important}
+          body.ps2-ready #ps2root .ps2top{position:relative;top:auto;z-index:10}
+          body.ps2-ready #ps2root .ps2tabs{position:sticky;top:0;z-index:1200}
+
+          #ps2root .ps43branch h2{font-size:22px;margin:9px 0 5px}
+          #ps2root .ps43stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:13px 0}
+          #ps2root .ps43stat{padding:15px 11px;background:#1d2a42;border:1px solid #41536d;border-radius:13px}
+          #ps2root .ps43stat strong{display:block;font-size:26px;color:#f8d79f;line-height:1.2}
+          #ps2root .ps43stat span{font-size:11px;color:#b6c5d8;line-height:1.4;display:block;margin-top:6px}
+          #ps2root .ps43panel{margin:13px 0}
+          #ps2root .ps43heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+          #ps2root .ps43chart{background:#101c31;border:1px solid #384e67;border-radius:13px;padding:14px 12px 7px;margin-top:13px}
+          #ps2root .ps43chartgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end}
+          #ps2root .ps43day{min-width:0;display:flex;flex-direction:column;align-items:center;gap:7px;color:#b2c0da;font-size:11px}
+          #ps2root .ps43num{font-weight:850;color:#f7d694}
+          #ps2root .ps43track{height:135px;width:100%;max-width:48px;background:#202d44;border-radius:9px 9px 0 0;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+          #ps2root .ps43fill{flex:none;width:100%}
+          #ps2root .ps43fill.exact,#ps2root .ps43legend i.exact{background:#71edc8}
+          #ps2root .ps43fill.city,#ps2root .ps43legend i.city{background:#efc781}
+          #ps2root .ps43fill.area,#ps2root .ps43legend i.area{background:#9b91fa}
+          #ps2root .ps43fill.social,#ps2root .ps43legend i.social{background:#5a9bd8}
+          #ps2root .ps43legend{display:flex;gap:11px 17px;flex-wrap:wrap;margin:15px 0;font-size:11px;color:#c7d2e8}
+          #ps2root .ps43legend span{display:flex;align-items:center;gap:6px}
+          #ps2root .ps43legend i{display:inline-block;width:10px;height:10px;border-radius:3px}
+          #ps2root .ps43small{font-size:11px;color:#9cb0cd}
+          #ps2root .ps43none{background:#1c2b43;border:1px dashed #5c6b89;border-radius:13px;padding:15px;margin:12px 0}
+          #ps2root .ps43none strong{color:#f0d298}
+          #ps2root .ps43research{background:#273044;border:1px solid #625b71;border-radius:14px;padding:17px;margin:14px 0;color:#d6dfed}
+          #ps2root .ps43research strong{color:#f6d69b}
+          #ps2root .ps43event{padding:12px 2px;border-bottom:1px solid #35435e;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+          #ps2root .ps43event b{font-size:12px;line-height:1.45}
+          #ps2root .ps43event a,#ps2root .ps43research a{font-size:12px;color:#b7e2ff}
+
+          @media(max-width:480px){
+            #ps2root .ps43stat{padding:11px 7px}
+            #ps2root .ps43stat strong{font-size:22px}
+            #ps2root .ps43stat span{font-size:10px}
+            #ps2root .ps43chartgrid{gap:4px}
+            #ps2root .ps43day{font-size:10px}
+          }
+          CSS43
+
+          python3 - <<'PY43_INSTALL'
+          from pathlib import Path
+          import re
+
+          p=Path('assets/pokestock2.js')
+          js=p.read_text(encoding='utf-8')
+
+          start=js.find('function renderForecast(){')
+          end=js.find(
+              "\n$('ps2ForecastStore').onchange",start
+          )
+
+          assert start>=0 and end>start, (
+              'Existing forecast function not located'
+          )
+
+          new=Path(
+              '/tmp/forecast_view_43.js'
+          ).read_text(encoding='utf-8').strip()
+
+          js=js[:start]+new+js[end:]
+
+          state='let forecast43Records=[];'
+
+          if state not in js:
+              anchor=(
+                  "let stores=[],offers=[],social=[],sightings=[],"
+                  "outlook=new Map(),releases=[],news=[],map=null,"
+                  "pins=null,routeLayer=null,gpsLayer=null,"
+                  "selected=null,selectedForecast=null,navWatch=null,"
+                  "findGame='',postFilter='local',postsLimit=18;"
+              )
+
+              assert anchor in js, (
+                  'State declaration changed'
+              )
+
+              js=js.replace(
+                  anchor,anchor+'\n'+state,1
+              )
+
+          old=(
+              'renderHome();renderNear();'
+              'renderSocial();renderForecast();'
+          )
+
+          newload=(
+              "renderHome();renderNear();"
+              "renderSocial();renderForecast();"
+              "get('data/forecast_activity_43.json',{}).then(v=>{"
+              "forecast43Records=Array.isArray(v.events)?v.events:[];"
+              "renderForecast();});"
+          )
+
+          if old in js:
+              js=js.replace(old,newload,1)
+          elif newload not in js:
+              raise SystemExit(
+                  'Load hook changed; nothing saved'
+              )
+
+          p.write_text(js,encoding='utf-8')
+
+          style=Path('assets/pokestock2.css')
+          css=style.read_text(encoding='utf-8')
+
+          marker=(
+              '/* POKESTOCK SCRIPT 43: '
+              'compact local evidence charts */'
+          )
+
+          if marker in css:
+              css=css.split(marker,1)[0].rstrip()+'\n'
+
+          css+=Path(
+              '/tmp/forecast_style_43.css'
+          ).read_text(encoding='utf-8')
+
+          style.write_text(css,encoding='utf-8')
+
+          html=Path('index.html')
+          h=html.read_text(encoding='utf-8')
+
+          assert 'assets/pokestock2.css' in h
+          assert 'assets/pokestock2.js' in h
+
+          h,n=re.subn(
+              r'assets/pokestock2\.css(?:\?v=[^"\']+)?',
+              'assets/pokestock2.css?v=43',
+              h,count=1
+          )
+          assert n==1
+
+          h,n=re.subn(
+              r'assets/pokestock2\.js(?:\?v=[^"\']+)?',
+              'assets/pokestock2.js?v=43',
+              h,count=1
+          )
+          assert n==1
+
+          html.write_text(h,encoding='utf-8')
+          PY43_INSTALL
+
+      - name: Build sourced local activity feed and validate website
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 scripts/forecast43.py
+          python3 -m py_compile scripts/forecast43.py
+          node --check assets/pokestock2.js
+
+          python3 - <<'PY43_TEST'
+          import json
+          from pathlib import Path
+
+          data=json.loads(
+              Path('data/forecast_activity_43.json').read_text(
+                  encoding='utf-8'
+              )
+          )
+
+          assert data['version']=='43.0'
+          assert isinstance(data['events'],list)
+
+          assert all(
+              x['kind'] in (
+                  'community_sighting',
+                  'social_research_lead'
+              )
+              for x in data['events']
+          )
+
+          assert all(
+              x['stock_verified_now'] is False
+              and x['source_url'].startswith('https://')
+              for x in data['events']
+          )
+
+          js=Path(
+              'assets/pokestock2.js'
+          ).read_text(encoding='utf-8')
+
+          css=Path(
+              'assets/pokestock2.css'
+          ).read_text(encoding='utf-8')
+
+          html=Path(
+              'index.html'
+          ).read_text(encoding='utf-8')
+
+          assert js.count('function renderForecast(){')==1
+          assert 'let forecast43Records=[];' in js
+          assert 'ps2-social' in js
+          assert 'router.project-osrm.org' in js
+
+          assert css.count(
+              '/* POKESTOCK SCRIPT 43: '
+              'compact local evidence charts */'
+          )==1
+
+          assert 'assets/pokestock2.js?v=43' in html
+          assert 'assets/pokestock2.css?v=43' in html
+
+          print(
+              'SCRIPT 43 PASSED: '
+              'local evidence, compact charts, '
+              'existing features preserved'
+          )
+          PY43_TEST
+
+      - name: Publish without overwriting existing data collectors
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add \
+            scripts/forecast43.py \
+            data/forecast_activity_43.json \
+            assets/pokestock2.js \
+            assets/pokestock2.css \
+            index.html
+
+          if git diff --cached --quiet; then
+            echo 'Already installed; no new changes'
+            exit 0
+          fi
+
+          git commit -m 'Pokestock 43 local forecast evidence and charts'
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo 'Concurrent changes detected; no force push'
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo 'SCRIPT 43 PUBLISHED'
+              exit 0
+            fi
+
+            sleep 5
+          done
+
+          exit 1
