@@ -1,0 +1,34 @@
+{
+  "version": "39.0",
+  "source": "Pokestock direct merchant observations",
+  "sources": {
+    "v34_inventory.json": 1623,
+    "online_offers.json": 728
+  },
+  "merged_offers": 2293,
+  "in_stock_at_last_observation": 1233,
+  "retailers": {
+    "Atlantis Games & Comics": 103,
+    "Big Pack Hobby Shop": 151,
+    "Bleecker Trading": 288,
+    "Charm City Collectibles": 174,
+    "Columbia Sports Cards": 37,
+    "Curio Cavern": 36,
+    "GodPull TCG": 369,
+    "Kayou Official Store": 11,
+    "Mamba Collectibles": 26,
+    "Matrix TCG": 13,
+    "OffCourt TCG": 56,
+    "PixelThat TCG": 21,
+    "TCG Supply": 373,
+    "The Compleat Strategist": 19,
+    "The Eternal Forge": 473,
+    "Twenty Sided Store": 39,
+    "VGMX": 32,
+    "Waterloo Games": 72
+  },
+  "newest_observation": "2026-11-04T15:20:50.017488+00:00",
+  "confirmed_shelf_stock": 0,
+  "confirmed_checkout_success": 0,
+  "note": "Availability is historical storefront evidence, not guaranteed live inventory."
+}
