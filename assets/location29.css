@@ -1,0 +1,58 @@
+#ps29Location,
+.ps29-panel {
+  box-sizing:border-box;
+  margin:14px 0 22px;
+  padding:16px;
+  background:#152139;
+  color:#edf4ff;
+  border:1px solid #506480;
+  border-radius:15px;
+}
+.ps29-panel h3 {
+  margin:0 0 10px;
+}
+.ps29-panel h4 {
+  margin:15px 0 8px;
+}
+.ps29-muted {
+  font-size:13px;
+  color:#b9c9e0;
+  line-height:1.5;
+}
+.ps29-controls {
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(145px,1fr));
+  gap:9px;
+  margin:12px 0;
+}
+.ps29-controls input,
+.ps29-controls select,
+.ps29-controls button {
+  min-width:0;
+  width:100%;
+  padding:11px;
+  border:1px solid #587195;
+  border-radius:9px;
+  background:#0b182d;
+  color:white;
+  font:inherit;
+}
+.ps29-controls button {
+  cursor:pointer;
+  background:#244d80;
+}
+.ps29-card {
+  margin:9px 0;
+  padding:12px;
+  border:1px solid #435b7c;
+  border-radius:11px;
+  background:#20314d;
+  overflow-wrap:anywhere;
+}
+.ps29-card p {
+  margin:6px 0;
+}
+.ps29-card a {
+  color:#a9e2ff;
+}
