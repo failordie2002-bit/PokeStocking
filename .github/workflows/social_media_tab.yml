@@ -17,1199 +17,263 @@ jobs:
   social-media:
     runs-on: ubuntu-latest
     timeout-minutes: 18
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Collect and classify public posts
+      - name: Collect public posts and classify restock sightings
         shell: bash
         run: |
           mkdir -p data assets
-
-          cat > /tmp/social_collect.py <<'PY'
-          import json
-          import re
-          import html
-          import hashlib
-          import urllib.parse
-          import urllib.request
-          import xml.etree.ElementTree as ET
+          cat > /tmp/collect.py <<'PY'
+          import json, re, html, hashlib, urllib.parse, urllib.request, xml.etree.ElementTree as ET
           from pathlib import Path
           from datetime import datetime, timezone, timedelta
           from email.utils import parsedate_to_datetime
+          from collections import Counter
 
-          ROOT = Path("data")
+          DATA = Path('data')
           NOW = datetime.now(timezone.utc)
-
-          def load(name, default):
+          def load(path, fallback):
+              try: return json.loads(Path(path).read_text(encoding='utf-8'))
+              except (OSError, ValueError): return fallback
+          def clean(s):
+              s = html.unescape(re.sub(r'<[^>]+>', ' ', str(s or '')))
+              return re.sub(r'\s+', ' ', s).strip()
+          def low(s): return clean(s).casefold()
+          def date(s):
+              if not s: return None
+              try: d = datetime.fromisoformat(str(s).replace('Z','+00:00'))
+              except ValueError:
+                  try: d = parsedate_to_datetime(str(s))
+                  except (TypeError, ValueError): return None
+              if d.tzinfo is None: d = d.replace(tzinfo=timezone.utc)
+              return d.astimezone(timezone.utc)
+          def request(url):
               try:
-                  return json.loads(
-                      (ROOT / name).read_text(encoding="utf-8")
-                  )
-              except (OSError, ValueError):
-                  return default
+                  req = urllib.request.Request(url, headers={'User-Agent':'Mozilla/5.0 (compatible; PokeStockPublicResearch/2.0)', 'Accept':'application/rss+xml, application/atom+xml, application/xml'})
+                  with urllib.request.urlopen(req, timeout=8) as r: return r.read(500000)
+              except Exception as e:
+                  print('Unavailable:',type(e).__name__,url[:90]); return b''
+          def feed(url):
+              raw = request(url)
+              if not raw: return []
+              try: root = ET.fromstring(raw)
+              except ET.ParseError: return []
+              out=[]
+              for x in root.findall('.//item')[:25]:
+                  out.append(dict(title=clean(x.findtext('title')), description=clean(x.findtext('description')), url=clean(x.findtext('link')), published=x.findtext('pubDate')))
+              ns={'a':'http://www.w3.org/2005/Atom'}
+              for x in root.findall('a:entry',ns)[:25]:
+                  links=[y.attrib.get('href','') for y in x.findall('a:link',ns) if y.attrib.get('rel','alternate')=='alternate']
+                  out.append(dict(title=clean(x.findtext('a:title','',ns)),description=clean(x.findtext('a:content','',ns) or x.findtext('a:summary','',ns)),url=links[0] if links else '',published=x.findtext('a:published','',ns) or x.findtext('a:updated','',ns)))
+              return [x for x in out if x['url'] and x['title']]
 
-          def save(name, value):
-              (ROOT / name).write_text(
-                  json.dumps(
-                      value,
-                      ensure_ascii=False,
-                      indent=2
-                  ) + "\n",
-                  encoding="utf-8"
-              )
-
-          def clean(value):
-              value = html.unescape(str(value or ""))
-              value = re.sub(r"<[^>]*>", " ", value)
-              return re.sub(r"\s+", " ", value).strip()
-
-          def norm(value):
-              return clean(value).casefold()
-
-          def uid(value):
-              return hashlib.sha256(
-                  value.encode("utf-8")
-              ).hexdigest()[:24]
-
-          def date(value):
-              if not value:
-                  return None
-              try:
-                  result = datetime.fromisoformat(
-                      str(value).replace("Z", "+00:00")
-                  )
-                  if not result.tzinfo:
-                      result = result.replace(
-                          tzinfo=timezone.utc
-                      )
-                  return result.astimezone(timezone.utc)
-              except (TypeError, ValueError):
-                  try:
-                      return parsedate_to_datetime(
-                          str(value)
-                      ).astimezone(timezone.utc)
-                  except (TypeError, ValueError, OverflowError):
-                      return None
-
-          def fetch(url):
-              try:
-                  request = urllib.request.Request(
-                      url,
-                      headers={
-                          "User-Agent":
-                              "PokeStockPublicResearch/1.0",
-                          "Accept":
-                              "application/rss+xml, application/atom+xml, application/xml"
-                      }
-                  )
-                  with urllib.request.urlopen(
-                      request,
-                      timeout=9
-                  ) as response:
-                      return response.read(450000)
-              except Exception as error:
-                  print(
-                      "Feed unavailable:",
-                      type(error).__name__
-                  )
-                  return b""
-
-          def parse_feed(url, platform):
-              raw = fetch(url)
-              if not raw:
-                  return []
-
-              try:
-                  root = ET.fromstring(raw)
-              except ET.ParseError:
-                  return []
-
-              output = []
-
-              for item in root.findall(".//item")[:35]:
-                  output.append({
-                      "title": clean(
-                          item.findtext("title")
-                      ),
-                      "description": clean(
-                          item.findtext("description")
-                      )[:1600],
-                      "url": clean(
-                          item.findtext("link")
-                      ),
-                      "published": clean(
-                          item.findtext("pubDate")
-                      ),
-                      "platform": platform
-                  })
-
-              ns = {
-                  "a": "http://www.w3.org/2005/Atom"
-              }
-
-              for item in root.findall("a:entry", ns)[:35]:
-                  link = ""
-                  for element in item.findall("a:link", ns):
-                      href = element.attrib.get("href", "")
-                      rel = element.attrib.get(
-                          "rel", "alternate"
-                      )
-                      if href and rel == "alternate":
-                          link = href
-                          break
-
-                  output.append({
-                      "title": clean(
-                          item.findtext("a:title", "", ns)
-                      ),
-                      "description": clean(
-                          item.findtext("a:content", "", ns)
-                          or item.findtext(
-                              "a:summary", "", ns
-                          )
-                      )[:1600],
-                      "url": link,
-                      "published": clean(
-                          item.findtext(
-                              "a:published", "", ns
-                          ) or item.findtext(
-                              "a:updated", "", ns
-                          )
-                      ),
-                      "platform": platform
-                  })
-
-              return [
-                  x for x in output
-                  if x["title"] and x["url"]
-              ]
-
-          CITIES = {
-              "staunton|va": [38.1496, -79.0717],
-              "waynesboro|va": [38.0685, -78.8895],
-              "harrisonburg|va": [38.4496, -78.8689],
-              "charlottesville|va": [38.0293, -78.4767],
-              "fishersville|va": [38.099, -78.9692],
-              "verona|va": [38.2021, -79.0081],
-              "lexington|va": [37.784, -79.4428],
-              "bridgewater|va": [38.3821, -78.9767],
-              "elkton|va": [38.4079, -78.6236],
-              "crozet|va": [38.0696, -78.7006],
-              "richmond|va": [37.5407, -77.436],
-              "roanoke|va": [37.271, -79.9414],
-              "winchester|va": [39.1857, -78.1633],
-              "fredericksburg|va": [38.3032, -77.4605],
-              "lynchburg|va": [37.4138, -79.1422],
-              "blacksburg|va": [37.2296, -80.4139],
-              "alexandria|va": [38.8048, -77.0469],
-              "fairfax|va": [38.8462, -77.3064],
-              "manassas|va": [38.7509, -77.4753],
-              "culpeper|va": [38.4732, -77.9967],
-              "front royal|va": [38.9182, -78.1944],
-              "woodstock|va": [38.8818, -78.5058],
-              "strasburg|va": [38.9887, -78.3586],
-              "new market|va": [38.6479, -78.6717],
-              "luray|va": [38.6654, -78.4595],
-              "virginia beach|va": [36.8529, -75.978],
-              "norfolk|va": [36.8508, -76.2859],
-              "chesapeake|va": [36.7682, -76.2875],
-              "newport news|va": [37.0871, -76.473],
-              "hampton|va": [37.0299, -76.3452],
-              "williamsburg|va": [37.2707, -76.7075],
-              "petersburg|va": [37.2279, -77.4019],
-              "danville|va": [36.586, -79.395],
-              "bristol|va": [36.5951, -82.1887],
-              "abingdon|va": [36.7098, -81.9773]
+          # Coordinates are approximate city centers, not individual stores.
+          CITY={
+              'Staunton, VA':(38.1496,-79.0717),'Waynesboro, VA':(38.0685,-78.8895),
+              'Harrisonburg, VA':(38.4496,-78.8689),'Charlottesville, VA':(38.0293,-78.4767),
+              'Fishersville, VA':(38.099,-78.9692),'Verona, VA':(38.2021,-79.0081),
+              'Lexington, VA':(37.784,-79.4428),'Bridgewater, VA':(38.3821,-78.9767),
+              'Elkton, VA':(38.4079,-78.6236),'Crozet, VA':(38.0696,-78.7006),
+              'Richmond, VA':(37.5407,-77.436),'Roanoke, VA':(37.271,-79.9414),
+              'Winchester, VA':(39.1857,-78.1633),'Fredericksburg, VA':(38.3032,-77.4605),
+              'Lynchburg, VA':(37.4138,-79.1422),'Blacksburg, VA':(37.2296,-80.4139),
+              'Alexandria, VA':(38.8048,-77.0469),'Fairfax, VA':(38.8462,-77.3064),
+              'Manassas, VA':(38.7509,-77.4753),'Culpeper, VA':(38.4732,-77.9967),
+              'Front Royal, VA':(38.9182,-78.1944),'Woodstock, VA':(38.8818,-78.5058),
+              'Strasburg, VA':(38.9887,-78.3586),'New Market, VA':(38.6479,-78.6717),
+              'Luray, VA':(38.6654,-78.4595),'Virginia Beach, VA':(36.8529,-75.978),
+              'Norfolk, VA':(36.8508,-76.2859),'Chesapeake, VA':(36.7682,-76.2875),
+              'Newport News, VA':(37.0871,-76.473),'Hampton, VA':(37.0299,-76.3452),
+              'Williamsburg, VA':(37.2707,-76.7075),'Danville, VA':(36.586,-79.395)
           }
+          RETAILERS=['Walmart','Target','Best Buy','GameStop','Costco','Walgreens','CVS','Barnes & Noble','Sam\'s Club','Five Below','Dollar General','Meijer','Fred Meyer']
+          GAME={'Union Arena':['union arena','unionarena'], 'Gundam':['gundam card game'], 'Pokemon':['pokemon','pokémon','prismatic evolutions','delta reign']}
+          SIGNALS=['restock','restocked','just stocked','stocked today','in stock','on shelves','on the shelf','found at','found packs','found boxes','shipment arrived','vendor stocked','saw packs','saw boxes','booster boxes','booster packs','etbs','elite trainer box']
+          EXCLUDE=['card show','card convention','vendor booth','raffle','giveaway','sweepstakes','buy my','selling my','looking to buy','wanted to buy','affiliate link','download our app','join our discord','sign up for alerts','restock notification service']
+          def classify(title,description):
+              content=low(title+' '+description)
+              game=next((g for g,terms in GAME.items() if any(x in content for x in terms)),None)
+              if not game: return None
+              retailer=[x for x in RETAILERS if low(x) in content]
+              signals=[x for x in SIGNALS if x in content]
+              excluded=any(x in content for x in EXCLUDE)
+              # Do not label general questions or advertisements as sightings.
+              question=bool(re.search(r'\b(when|does anyone|anyone know|what day|how often)\b',content)) and '?' in content
+              matched=[]
+              for place,coords in CITY.items():
+                  city,state=place.rsplit(', ',1)
+                  city_match=bool(re.search(r'(?<!\w)'+re.escape(city.casefold())+r'(?!\w)',content))
+                  state_match=bool(re.search(r'(?<!\w)(va|virginia)(?!\w)',content))
+                  if city_match and state_match: matched.append((place,coords))
+              location=None
+              if len(matched)==1:
+                  place,coords=matched[0]; city,state=place.rsplit(', ',1)
+                  location={'city':city,'state':state,'lat':coords[0],'lon':coords[1],'precision':'city_center','evidence':'caption_or_description'}
+              sighting=bool(signals and retailer and not excluded and not question)
+              kind='retail_sighting_lead' if sighting else ('general_discussion' if not excluded else 'promotional_or_event')
+              return dict(game=game,retailer_mentions=retailer,location=location,location_ambiguous=len(matched)>1,report_type=kind,restock_signals=signals[:5],status='unverified_public_lead')
 
-          RETAILERS = [
-              "Walmart", "Target", "Best Buy",
-              "GameStop", "Costco", "Walgreens",
-              "CVS", "Barnes & Noble",
-              "Sam's Club", "Five Below"
-          ]
+          old=load(DATA/'social_media_feed.json',{})
+          posts={}
+          # Re-evaluate old entries with stricter classification.
+          for x in old.get('posts',[]) if isinstance(old,dict) else []:
+              if not isinstance(x,dict): continue
+              title=clean(x.get('title')); description=clean(x.get('description')); url=x.get('url','')
+              info=classify(title,description)
+              if not info or not url: continue
+              x.update(info); posts[x.get('id') or hashlib.sha256(url.encode()).hexdigest()[:24]]=x
+          # Include older indexed leads, but not as confirmed sightings.
+          for name in ['social_restock_leads.json','geographic_social_reports.json']:
+              d=load(DATA/name,{})
+              for x in d.get('leads',[]) if isinstance(d,dict) else []:
+                  if not isinstance(x,dict): continue
+                  title=clean(x.get('title')); desc=clean(x.get('description')); url=x.get('source_url','')
+                  info=classify(title,desc)
+                  if not info or not url: continue
+                  key=hashlib.sha256((url+'|'+title).encode()).hexdigest()[:24]
+                  if key not in posts: posts[key]=dict(id=key,title=title,description=desc,url=url,platform=x.get('platform','indexed_web'),published_at=x.get('published_at'),first_seen_at=NOW.isoformat(),**info)
 
-          GAMES = {
-              "Union Arena": [
-                  "union arena", "nikke",
-                  "chainsaw man", "re:zero"
-              ],
-              "Gundam": ["gundam card"],
-              "Pokemon": [
-                  "pokemon", "pokémon",
-                  "prismatic evolutions",
-                  "delta reign"
-              ]
-          }
-
-          ACTIONS = [
-              "restock", "restocked", "shipment",
-              "in stock", "on shelves",
-              "on the shelf", "found packs",
-              "found boxes", "just stocked",
-              "stocked today", "booster box",
-              "booster packs", "etb",
-              "card aisle", "vendor",
-              "pokemon cards", "pokémon cards"
-          ]
-
-          def classify(title, description):
-              content = norm(title + " " + description)
-
-              game = "Unknown"
-              for name, words in GAMES.items():
-                  if any(word in content for word in words):
-                      game = name
-                      break
-
-              if game == "Unknown":
-                  return None
-
-              if not any(
-                  word in content for word in ACTIONS
-              ):
-                  return None
-
-              retailers = [
-                  x for x in RETAILERS
-                  if norm(x) in content
-              ]
-
-              matches = []
-
-              for key, coords in CITIES.items():
-                  city, state = key.split("|")
-                  pattern = (
-                      r"(?<!\w)" +
-                      re.escape(city) +
-                      r"(?!\w)"
-                  )
-
-                  if not re.search(pattern, content):
-                      continue
-
-                  # Do not infer location from the
-                  # search query that found a post.
-                  # Require the text itself to
-                  # mention the city and state.
-                  state_match = bool(re.search(
-                      r"(?<!\w)(va|virginia)(?!\w)",
-                      content
-                  ))
-
-                  if state_match:
-                      matches.append({
-                          "city": city.title(),
-                          "state": "VA",
-                          "lat": coords[0],
-                          "lon": coords[1],
-                          "precision": "city_center"
-                      })
-
-              if len(matches) == 1:
-                  location = matches[0]
-              else:
-                  location = None
-
-              return {
-                  "game": game,
-                  "retailer_mentions": retailers,
-                  "location": location,
-                  "location_ambiguous":
-                      len(matches) > 1
-              }
-
-          old = load("social_media_feed.json", {})
-          old_items = (
-              old.get("posts", [])
-              if isinstance(old, dict)
-              else []
-          )
-
-          posts = {
-              x["id"]: x
-              for x in old_items
-              if isinstance(x, dict) and x.get("id")
-          }
-
-          # Include previously discovered leads.
-          for filename in [
-              "social_restock_leads.json",
-              "geographic_social_reports.json"
-          ]:
-              source = load(filename, {})
-              for lead in source.get("leads", []):
-                  if not isinstance(lead, dict):
-                      continue
-
-                  url = lead.get("source_url", "")
-                  title = clean(lead.get("title"))
-                  description = clean(
-                      lead.get("description", "")
-                  )
-
-                  if not url or not title:
-                      continue
-
-                  info = classify(title, description)
-                  if not info:
-                      continue
-
-                  key = uid(url + "|" + title)
-
-                  if key in posts:
-                      continue
-
-                  posts[key] = {
-                      "id": key,
-                      "title": title,
-                      "description": description,
-                      "url": url,
-                      "platform": lead.get(
-                          "platform", "public_web"
-                      ),
-                      "published_at": lead.get(
-                          "published_at"
-                      ),
-                      "first_seen_at": NOW.isoformat(),
-                      **info,
-                      "status": "unverified_public_lead"
-                  }
-
-          # Search direct public Reddit RSS feeds
-          # and indexed public social references.
-          queries = [
-              "pokemon restock",
-              "pokemon walmart restock",
-              "pokemon target restock",
-              "pokemon virginia restock",
-              "union arena restock",
-              "pokemon cards store shipment"
-          ]
-
-          priority = [
-              "Staunton", "Waynesboro",
-              "Harrisonburg", "Charlottesville",
-              "Richmond", "Roanoke",
-              "Winchester", "Alexandria"
-          ]
-
-          slot = int(NOW.timestamp() // 14400)
-          all_cities = [
-              key.split("|")[0]
-              for key in CITIES
-          ]
-
-          rotating = [
-              all_cities[(slot * 8 + i) % len(all_cities)]
-              for i in range(8)
-          ]
-
-          for city in dict.fromkeys(
-              priority + rotating
-          ):
-              queries.append(
-                  f'"pokemon" "restock" "{city}" "Virginia"'
-              )
-              queries.append(
-                  f'"pokemon cards" "Walmart" "{city}"'
-              )
-
-          feeds = [
-              (
-                  "reddit",
-                  "https://www.reddit.com/r/PKMNTCGDeals/new/.rss"
-              ),
-              (
-                  "reddit",
-                  "https://www.reddit.com/r/PokemonTCG/new/.rss"
-              ),
-              (
-                  "reddit",
-                  "https://www.reddit.com/r/UnionArenaTCG/new/.rss"
-              )
-          ]
-
-          for q in queries:
-              feeds.append((
-                  "reddit",
-                  "https://www.reddit.com/search.rss?q="
-                  + urllib.parse.quote(q)
-                  + "&sort=new&t=month"
-              ))
-
-          for q in queries:
-              feeds.append((
-                  "indexed_web",
-                  "https://news.google.com/rss/search?q="
-                  + urllib.parse.quote(q)
-                  + "&hl=en-US&gl=US&ceid=US:en"
-              ))
-
-          for city in priority:
-              for domain in [
-                  "facebook.com",
-                  "instagram.com"
-              ]:
-                  q = (
-                      f'site:{domain} '
-                      f'"pokemon" "restock" "{city}"'
-                  )
-                  feeds.append((
-                      "indexed_social",
-                      "https://news.google.com/rss/search?q="
-                      + urllib.parse.quote(q)
-                      + "&hl=en-US&gl=US&ceid=US:en"
-                  ))
-
-          new_count = 0
-          attempted = 0
-
-          for platform, url in feeds[:95]:
-              attempted += 1
-
-              for item in parse_feed(url, platform):
-                  title = item["title"]
-                  description = item["description"]
-                  source = item["url"]
-
-                  info = classify(
-                      title, description
-                  )
-                  if not info:
-                      continue
-
-                  published = date(item["published"])
-
-                  if published and published < (
-                      NOW - timedelta(days=45)
-                  ):
-                      continue
-
-                  key = uid(source + "|" + title)
-                  if key in posts:
-                      continue
-
-                  posts[key] = {
-                      "id": key,
-                      "title": title[:300],
-                      "description": description[:1200],
-                      "url": source,
-                      "platform": platform,
-                      "published_at":
-                          published.isoformat()
-                          if published else None,
-                      "first_seen_at": NOW.isoformat(),
-                      **info,
-                      "status": "unverified_public_lead"
-                  }
-                  new_count += 1
-
-          # Reclassify archived items so updates
-          # to the location parser take effect.
-          for key, post in posts.items():
-              info = classify(
-                  post.get("title", ""),
-                  post.get("description", "")
-              )
-              if info:
-                  post.update(info)
-
-          # Old undated material is not presented
-          # as a newly published restock report.
-          saved = sorted(
-              posts.values(),
-              key=lambda x: (
-                  x.get("published_at")
-                  or x.get("first_seen_at")
-                  or ""
-              ),
-              reverse=True
-          )[:2500]
-
-          save("social_media_feed.json", {
-              "updated_at": NOW.isoformat(),
-              "queries_attempted": attempted,
-              "new_posts": new_count,
-              "total_posts": len(saved),
-              "located_posts": sum(
-                  bool(x.get("location"))
-                  for x in saved
-              ),
-              "posts": saved,
-              "disclaimer":
-                  "Public discovery leads, not verified inventory."
-          })
-
-          print("Queries attempted:", attempted)
-          print("New posts:", new_count)
-          print("Total posts:", len(saved))
-          print(
-              "Location-matched posts:",
-              sum(bool(x.get("location")) for x in saved)
-          )
+          cities=list(CITY)
+          priority=['Staunton, VA','Waynesboro, VA','Harrisonburg, VA','Charlottesville, VA','Fishersville, VA','Richmond, VA','Roanoke, VA']
+          slot=int(NOW.timestamp()//14400)
+          rotating=[cities[(slot*6+i)%len(cities)] for i in range(6)]
+          areas=list(dict.fromkeys(priority+rotating))
+          searches=[]
+          # Google News RSS indexes some public Facebook group posts, but not private ones.
+          for place in areas:
+              city,_=place.rsplit(', ',1)
+              searches.extend([
+                  ('facebook_group_index','site:facebook.com/groups/ "pokemon" "restock" "'+city+'"'),
+                  ('facebook_group_index','site:facebook.com/groups/ "pokemon cards" "walmart" "'+city+'"'),
+                  ('facebook_public_index','site:facebook.com "pokemon cards" "restocked" "'+city+'"'),
+                  ('instagram_index','site:instagram.com "pokemon" "restock" "'+city+'"'),
+                  ('indexed_web','"pokemon cards" "restock" "'+city+'" "Virginia"')
+              ])
+          searches.extend([
+              ('facebook_group_index','site:facebook.com/groups/ "pokemon" "restock" "Virginia"'),
+              ('facebook_group_index','site:facebook.com/groups/ "union arena" "restock"'),
+              ('indexed_web','"pokemon" "just stocked" "walmart" "Virginia"'),
+              ('indexed_web','"pokemon" "on shelves" "target" "Virginia"')
+          ])
+          feeds=[]
+          for platform,q in searches[:78]:
+              feeds.append((platform,'https://news.google.com/rss/search?q='+urllib.parse.quote(q)+'&hl=en-US&gl=US&ceid=US:en'))
+          for q in ['pokemon restock','pokemon walmart restock','pokemon target restock','union arena restock','pokemon virginia restock']:
+              feeds.append(('reddit','https://www.reddit.com/search.rss?q='+urllib.parse.quote(q)+'&sort=new&t=month'))
+          feeds.extend([('reddit','https://www.reddit.com/r/PKMNTCGDeals/new/.rss'),('reddit','https://www.reddit.com/r/PokemonTCG/new/.rss')])
+          found=0
+          for platform,url in feeds:
+              for x in feed(url):
+                  title=x['title']; desc=x['description'][:1800]; link=x['url']
+                  info=classify(title,desc)
+                  if not info: continue
+                  when=date(x['published'])
+                  if when and when < NOW-timedelta(days=45): continue
+                  key=hashlib.sha256((link+'|'+title).encode()).hexdigest()[:24]
+                  if key in posts: continue
+                  posts[key]=dict(id=key,title=title[:320],description=desc,url=link,platform=platform,published_at=when.isoformat() if when else None,first_seen_at=NOW.isoformat(),**info)
+                  found+=1
+          saved=sorted(posts.values(),key=lambda x:x.get('published_at') or x.get('first_seen_at') or '',reverse=True)[:2500]
+          result=dict(updated_at=NOW.isoformat(),queries_attempted=len(feeds),new_posts=found,total_posts=len(saved),located_posts=sum(bool(x.get('location')) for x in saved),retail_sighting_leads=sum(x.get('report_type')=='retail_sighting_lead' for x in saved),facebook_group_indexed=sum(x.get('platform')=='facebook_group_index' for x in saved),posts=saved,disclaimer='Public indexed reports are unverified. Private Facebook groups are not accessed.')
+          (DATA/'social_media_feed.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          print({k:v for k,v in result.items() if k!='posts'})
           PY
+          python /tmp/collect.py
 
-          python /tmp/social_collect.py
-
-      - name: Install homepage Social Media tab
+      - name: Upgrade Social Media tab and feed filters
         shell: bash
         run: |
-          cat > /tmp/install_social.py <<'PY'
+          cat > /tmp/install.py <<'PY'
           from pathlib import Path
           import re
-
-          path = Path("index.html")
-          html = path.read_text(encoding="utf-8")
-
-          # Remove the old standalone panels.
-          for name in [
-              "POKESTOCK LOCAL SOCIAL",
-              "POKESTOCK GEO SOCIAL"
-          ]:
-              pattern = (
-                  r"<!-- " + re.escape(name) +
-                  r" START -->.*?<!-- " +
-                  re.escape(name) + r" END -->"
-              )
-              html = re.sub(
-                  pattern, "", html,
-                  flags=re.S
-              )
-
-          nav_button = (
-              '<button data-tab="social">'
-              '📱 Social Media</button>'
-          )
-
+          path=Path('index.html'); html=path.read_text(encoding='utf-8')
+          # Remove legacy panels, if present.
+          for name in ['POKESTOCK LOCAL SOCIAL','POKESTOCK GEO SOCIAL']:
+              html=re.sub(r'<!-- '+name+r' START -->.*?<!-- '+name+r' END -->','',html,flags=re.S)
           if 'data-tab="social"' not in html:
-              html = html.replace(
-                  "</nav>",
-                  "  " + nav_button + "\n  </nav>",
-                  1
-              )
-
-          section = '''
-          <section id="social" class="panel">
-            <div class="section-label">
-              Community Restock Intelligence
-            </div>
-            <h2>Social Media Restock Alerts</h2>
-            <p class="muted">
-              Public social posts, captions and
-              descriptions mentioning TCG restocks.
-              These reports are not verified inventory.
-            </p>
-
-            <div class="controls">
-              <button id="smGPS" class="primary"
-                type="button">Use My Location</button>
-              <input id="smZIP"
-                placeholder="ZIP code"
-                maxlength="5"
-                inputmode="numeric">
-              <button id="smZIPGo"
-                type="button">Search ZIP</button>
-              <select id="smRadius">
-                <option value="10">10 miles</option>
-                <option value="25">25 miles</option>
-                <option value="50" selected>50 miles</option>
-                <option value="75">75 miles</option>
-                <option value="100">100 miles</option>
-                <option value="150">150 miles</option>
-                <option value="250">250 miles</option>
-                <option value="0">Nationwide</option>
-              </select>
-              <select id="smRetailer">
-                <option value="">All retailers</option>
-                <option>Walmart</option>
-                <option>Target</option>
-                <option>Best Buy</option>
-                <option>GameStop</option>
-                <option>Costco</option>
-                <option>Walgreens</option>
-                <option>CVS</option>
-              </select>
-              <select id="smGame">
-                <option value="">All TCGs</option>
-                <option value="Pokemon">Pokémon</option>
-                <option value="Union Arena">
-                  Union Arena
-                </option>
-                <option value="Gundam">Gundam</option>
-              </select>
-              <select id="smSort">
-                <option value="newest">
-                  Newest first
-                </option>
-                <option value="nearest">
-                  Nearest first
-                </option>
-              </select>
-            </div>
-
-            <p id="smStatus" class="muted"
-              role="status">Loading reports...</p>
-
-            <h3>📍 Reports near you</h3>
-            <div id="smLocal" class="grid"></div>
-
-            <h3 style="margin-top:28px">
-              🌐 Other recent social posts
-            </h3>
-            <p class="muted">
-              Posts without a supported local
-              location are displayed separately.
-            </p>
-            <div id="smOther" class="grid"></div>
-
-            <button id="smMore" type="button"
-              style="margin-top:16px">
-              Show More Posts
-            </button>
-          </section>
-          '''
-
+              html=html.replace('</nav>','<button data-tab="social">📱 Social Media</button>\n</nav>',1)
           if 'id="social" class="panel"' not in html:
-              marker = '<section id="sources"'
-              position = html.find(marker)
-              if position < 0:
-                  raise RuntimeError(
-                      "Could not locate homepage tabs"
-                  )
-              html = (
-                  html[:position] +
-                  section + "\n" +
-                  html[position:]
-              )
-
-          css = '''
-          <style id="smStyles">
-          #social .grid {
-            grid-template-columns:
-              repeat(auto-fill,minmax(280px,1fr));
-          }
-          .sm-card {
-            background:#1b2740;
-            border:1px solid #435574;
-            border-radius:16px;
-            padding:16px;
-            min-width:0;
-            overflow-wrap:anywhere;
-          }
-          .sm-card h3 {
-            font-size:16px;
-            margin:10px 0;
-            line-height:1.45;
-          }
-          .sm-card p {
-            color:#c0cce0;
-            font-size:13px;
-            line-height:1.55;
-          }
-          .sm-tag {
-            display:inline-block;
-            border-radius:20px;
-            padding:5px 9px;
-            font-size:11px;
-            font-weight:800;
-            background:#2c4263;
-            margin:3px;
-          }
-          .sm-embed {
-            margin-top:12px;
-            width:100%;
-            border:1px solid #536581;
-            border-radius:12px;
-            background:#fff;
-            min-height:200px;
-          }
-          #smLocal:empty:after,
-          #smOther:empty:after {
-            content:"No matching reports available.";
-            color:#b7c6db;
-          }
-          </style>
-          '''
-
-          if 'id="smStyles"' not in html:
-              html = html.replace(
-                  "</head>", css + "\n</head>", 1
-              )
-
-          script = (
-              '<script defer src="assets/social-media.js">'
-              '</script>'
-          )
-
+              section='''<section id="social" class="panel"><div class="section-label">Community Restock Intelligence</div><h2>Social Media Restock Alerts</h2><p class="muted">Public posts and indexed Facebook group discussions. Every report is unverified until checked with the store.</p><div class="controls"><button class="primary" id="smGPS">Use My Location</button><input id="smZIP" placeholder="ZIP code" inputmode="numeric" maxlength="5"><button id="smZIPGo">Search ZIP</button><select id="smRadius"><option value="10">10 miles</option><option value="25">25 miles</option><option value="50" selected>50 miles</option><option value="75">75 miles</option><option value="100">100 miles</option><option value="150">150 miles</option><option value="250">250 miles</option><option value="0">Nationwide</option></select><select id="smRetailer"><option value="">All retailers</option><option>Walmart</option><option>Target</option><option>Best Buy</option><option>GameStop</option><option>Costco</option><option>Walgreens</option><option>CVS</option></select><select id="smGame"><option value="">All TCGs</option><option value="Pokemon">Pokémon</option><option value="Union Arena">Union Arena</option><option value="Gundam">Gundam</option></select><select id="smSort"><option value="newest">Newest first</option><option value="nearest">Nearest first</option></select></div><p id="smStatus" class="muted" role="status">Loading reports...</p><h3>📍 Nearby retail restock leads</h3><div id="smLocal" class="grid"></div><h3>🌐 Other public posts and Facebook group discussions</h3><p class="muted">Unlocated posts and general discussions are shown separately, not as nearby stock.</p><div id="smOther" class="grid"></div><button id="smMore" type="button">Show More Posts</button></section>'''
+              pos=html.find('<section id="sources"')
+              if pos<0: raise RuntimeError('Could not find homepage tab container')
+              html=html[:pos]+section+'\n'+html[pos:]
           if 'src="assets/social-media.js"' not in html:
-              html = html.replace(
-                  "</body>", script + "\n</body>", 1
-              )
-
-          path.write_text(
-              html, encoding="utf-8"
-          )
-
-          print("Social Media navigation installed")
+              html=html.replace('</body>','<script defer src="assets/social-media.js"></script>\n</body>',1)
+          if 'id="smStyles"' not in html:
+              html=html.replace('</head>','<style id="smStyles">#social .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}.sm-card{background:#1b2740;border:1px solid #435574;border-radius:16px;padding:16px;overflow-wrap:anywhere}.sm-card h3{font-size:16px}.sm-card p{color:#c0cce0;font-size:13px;line-height:1.5}.sm-tag{display:inline-block;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800;background:#2c4263;margin:3px}.sm-embed{width:100%;min-height:200px;border:1px solid #536581;border-radius:12px;background:white}</style></head>',1)
+          path.write_text(html,encoding='utf-8')
           PY
-
-          python /tmp/install_social.py
-
+          python /tmp/install.py
           cat > assets/social-media.js <<'JS'
-          (() => {
-            "use strict";
-
-            const $ = id =>
-              document.getElementById(id);
-
-            if (!$("social")) return;
-
-            const esc = value =>
-              String(value ?? "").replace(
-                /[&<>"']/g,
-                c => ({
-                  "&": "&amp;",
-                  "<": "&lt;",
-                  ">": "&gt;",
-                  '"': "&quot;",
-                  "'": "&#39;"
-                })[c]
-              );
-
-            const norm = value =>
-              String(value ?? "")
-                .trim().toLowerCase();
-
-            const safe = value => {
-              try {
-                const u = new URL(value);
-                return u.protocol === "https:"
-                  ? u.href : "";
-              } catch {
-                return "";
-              }
-            };
-
-            let posts = [];
-            let origin = null;
-            let visible = 24;
-
-            const miles = (a, b) => {
-              const rad = Math.PI / 180;
-              const lat = (b[0] - a[0]) * rad;
-              const lon = (b[1] - a[1]) * rad;
-              const h =
-                Math.sin(lat / 2) ** 2 +
-                Math.cos(a[0] * rad) *
-                Math.cos(b[0] * rad) *
-                Math.sin(lon / 2) ** 2;
-
-              return 7917.6 * Math.asin(
-                Math.min(1, Math.sqrt(h))
-              );
-            };
-
-            function time(value) {
-              if (!value) return "Date unknown";
-              const d = new Date(value);
-              if (Number.isNaN(d.getTime())) {
-                return "Date unknown";
-              }
-              return d.toLocaleDateString(
-                "en-US",
-                {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric"
-                }
-              );
+          (()=>{
+            'use strict';
+            const $=id=>document.getElementById(id);
+            if(!$('social'))return;
+            const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            const norm=v=>String(v??'').trim().toLowerCase();
+            const safe=v=>{try{const u=new URL(v);return u.protocol==='https:'?u.href:''}catch{return ''}};
+            let posts=[],origin=null,visible=24;
+            const miles=(a,b)=>{const r=Math.PI/180,lat=(b[0]-a[0])*r,lon=(b[1]-a[1])*r,h=Math.sin(lat/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(lon/2)**2;return 7917.6*Math.asin(Math.min(1,Math.sqrt(h)))};
+            const when=v=>{if(!v)return 'Date unknown';const d=new Date(v);return Number.isNaN(d.getTime())?'Date unknown':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
+            function embed(p){
+              const url=safe(p.url);if(!url)return '';
+              try{const u=new URL(url);if((u.hostname==='reddit.com'||u.hostname.endsWith('.reddit.com'))&&u.pathname.includes('/comments/')){
+                const src='https://www.redditmedia.com'+u.pathname.replace(/\/$/,'')+'?ref_source=embed&ref=share';
+                return `<details><summary>View embedded Reddit post</summary><iframe class="sm-embed" loading="lazy" title="Reddit post" sandbox="allow-scripts allow-same-origin allow-popups" src="${esc(src)}"></iframe></details>`;
+              }}catch{}
+              return '';
             }
-
-            function embed(post) {
-              const url = safe(post.url);
-              if (!url) return "";
-
-              // Reddit's official public embed.
-              // Other platforms can restrict embeds.
-              try {
-                const u = new URL(url);
-                if (
-                  (u.hostname === "reddit.com" ||
-                   u.hostname.endsWith(".reddit.com")) &&
-                  u.pathname.includes("/comments/")
-                ) {
-                  const src =
-                    "https://www.redditmedia.com" +
-                    u.pathname.replace(/\/$/, "") +
-                    "?ref_source=embed&ref=share";
-
-                  return `
-                    <details>
-                      <summary>View Reddit post</summary>
-                      <iframe class="sm-embed"
-                        loading="lazy"
-                        title="Reddit public post"
-                        sandbox="allow-scripts allow-same-origin allow-popups"
-                        src="${esc(src)}">
-                      </iframe>
-                    </details>`;
-                }
-              } catch {}
-
-              return "";
+            function card(p,d){
+              const loc=p.location,place=loc?`${loc.city}, ${loc.state}`:'Location not established',url=safe(p.url),desc=String(p.description||'').slice(0,480),kind=p.report_type==='retail_sighting_lead'?'Possible retail sighting':'General discussion / promotion';
+              return `<article class="sm-card"><span class="sm-tag">${esc(p.platform||'Public web')}</span><span class="sm-tag">${esc(p.game||'TCG')}</span><span class="sm-tag">${esc(kind)}</span><h3>${esc(p.title)}</h3><p>${esc(when(p.published_at))} · ${esc(place)}</p>${d!==null?`<p>Approx. ${d.toFixed(1)} miles (city-center distance)</p>`:''}${desc?`<p>${esc(desc)}</p>`:''}<p><strong>Unverified public lead — not confirmed store stock.</strong></p>${url?`<a class="action" href="${esc(url)}" target="_blank" rel="noopener noreferrer">View original post</a>`:''}${embed(p)}</article>`;
             }
-
-            function card(post, distance) {
-              const url = safe(post.url);
-              const loc = post.location;
-              const place = loc
-                ? `${loc.city}, ${loc.state}`
-                : "Location not established";
-
-              const platform =
-                post.platform || "Public web";
-
-              const desc =
-                String(post.description || "")
-                  .slice(0, 450);
-
-              return `
-                <article class="sm-card">
-                  <div>
-                    <span class="sm-tag">
-                      ${esc(platform)}
-                    </span>
-                    <span class="sm-tag">
-                      ${esc(post.game || "TCG")}
-                    </span>
-                  </div>
-
-                  <h3>${esc(post.title)}</h3>
-
-                  <p>
-                    ${esc(time(post.published_at))}
-                    · ${esc(place)}
-                  </p>
-
-                  ${distance !== null ? `
-                    <p>
-                      Approximately
-                      ${distance.toFixed(1)} miles
-                      straight-line, using
-                      city-center coordinates
-                    </p>` : ""}
-
-                  ${desc ? `
-                    <p>${esc(desc)}</p>
-                  ` : ""}
-
-                  <p>
-                    <strong>
-                      Unverified public report.
-                      Not confirmed stock.
-                    </strong>
-                  </p>
-
-                  ${url ? `
-                    <a class="action"
-                      href="${esc(url)}"
-                      target="_blank"
-                      rel="noopener noreferrer">
-                      View original post
-                    </a>` : ""}
-
-                  ${embed(post)}
-                </article>`;
+            function render(){
+              const radius=+$('smRadius').value,retailer=norm($('smRetailer').value),game=norm($('smGame').value),sort=$('smSort').value;
+              const local=[],other=[];
+              for(const p of posts){
+                if(retailer&&!(p.retailer_mentions||[]).some(x=>norm(x)===retailer))continue;
+                if(game&&norm(p.game)!==game)continue;
+                const l=p.location,coords=l&&Number.isFinite(+l.lat)&&Number.isFinite(+l.lon)?[+l.lat,+l.lon]:null,d=coords&&origin?miles(origin,coords):null;
+                if(p.report_type==='retail_sighting_lead'&&coords&&(radius===0||(origin&&d<=radius)))local.push({p,d});
+                else if(!coords||p.report_type!=='retail_sighting_lead')other.push({p,d:null});
+              }
+              const recent=(a,b)=>String(b.p.published_at||b.p.first_seen_at||'').localeCompare(String(a.p.published_at||a.p.first_seen_at||''));
+              local.sort((a,b)=>sort==='nearest'&&origin?(a.d??Infinity)-(b.d??Infinity):recent(a,b));other.sort(recent);
+              $('smLocal').innerHTML=local.slice(0,visible).map(x=>card(x.p,x.d)).join('')||'<p class="muted">No geographically matched retail restock leads found for this radius.</p>';
+              $('smOther').innerHTML=other.slice(0,visible).map(x=>card(x.p,null)).join('')||'<p class="muted">No other public posts match these filters.</p>';
+              $('smMore').hidden=local.length<=visible&&other.length<=visible;
+              $('smStatus').textContent=`${local.length} local retail leads; ${other.length} other public posts. `+(radius&&!origin?'Use GPS or ZIP to filter nearby reports.':'All reports are unverified.');
             }
-
-            function render() {
-              const radius =
-                Number($("smRadius").value);
-
-              const retailer =
-                norm($("smRetailer").value);
-
-              const game =
-                norm($("smGame").value);
-
-              const sort =
-                $("smSort").value;
-
-              const local = [];
-              const other = [];
-
-              for (const post of posts) {
-                if (
-                  retailer &&
-                  !(post.retailer_mentions || [])
-                    .some(x => norm(x) === retailer)
-                ) continue;
-
-                if (
-                  game &&
-                  norm(post.game) !== game
-                ) continue;
-
-                const loc = post.location;
-
-                const p =
-                  loc &&
-                  Number.isFinite(+loc.lat) &&
-                  Number.isFinite(+loc.lon)
-                    ? [+loc.lat, +loc.lon]
-                    : null;
-
-                const d =
-                  p && origin
-                    ? miles(origin, p)
-                    : null;
-
-                if (
-                  p &&
-                  (radius === 0 ||
-                    (origin && d <= radius))
-                ) {
-                  local.push({post, distance:d});
-                } else if (!p) {
-                  other.push({
-                    post,
-                    distance:null
-                  });
-                }
-              }
-
-              const recent = (a, b) =>
-                String(
-                  b.post.published_at ||
-                  b.post.first_seen_at || ""
-                ).localeCompare(
-                  String(
-                    a.post.published_at ||
-                    a.post.first_seen_at || ""
-                  )
-                );
-
-              local.sort((a,b) => {
-                if (
-                  sort === "nearest" &&
-                  origin
-                ) {
-                  return (
-                    (a.distance ?? Infinity) -
-                    (b.distance ?? Infinity)
-                  );
-                }
-                return recent(a,b);
-              });
-
-              other.sort(recent);
-
-              $("smLocal").innerHTML =
-                local.slice(0,visible)
-                  .map(x => card(
-                    x.post,x.distance
-                  )).join("") ||
-                `<p class="muted">
-                  No location-matched reports
-                  found within this radius.
-                </p>`;
-
-              $("smOther").innerHTML =
-                other.slice(0,visible)
-                  .map(x => card(
-                    x.post,null
-                  )).join("") ||
-                `<p class="muted">
-                  No other reports match.
-                </p>`;
-
-              $("smMore").hidden =
-                local.length <= visible &&
-                other.length <= visible;
-
-              $("smStatus").textContent =
-                `${local.length} location-matched leads; ` +
-                `${other.length} unlocated leads. ` +
-                (radius && !origin
-                  ? "Use GPS or ZIP to activate local filtering."
-                  : "Reports are unverified.");
-            }
-
-            $("smGPS").onclick = () => {
-              if (!navigator.geolocation) {
-                $("smStatus").textContent =
-                  "GPS unavailable. Use ZIP.";
-                return;
-              }
-
-              $("smStatus").textContent =
-                "Requesting location...";
-
-              navigator.geolocation
-                .getCurrentPosition(
-                  p => {
-                    origin = [
-                      p.coords.latitude,
-                      p.coords.longitude
-                    ];
-                    visible = 24;
-                    render();
-                  },
-                  error => {
-                    $("smStatus").textContent =
-                      "GPS unavailable: " +
-                      error.message;
-                  },
-                  {
-                    enableHighAccuracy:false,
-                    timeout:15000
-                  }
-                );
-            };
-
-            $("smZIPGo").onclick = async () => {
-              const zip =
-                $("smZIP").value.trim();
-
-              if (!/^\d{5}$/.test(zip)) {
-                $("smStatus").textContent =
-                  "Enter a valid ZIP code.";
-                return;
-              }
-
-              try {
-                $("smStatus").textContent =
-                  "Looking up ZIP...";
-
-                const r = await fetch(
-                  "https://api.zippopotam.us/us/" +
-                  zip
-                );
-
-                if (!r.ok) {
-                  throw Error("ZIP not found");
-                }
-
-                const data = await r.json();
-                const place = data.places?.[0];
-
-                if (!place) {
-                  throw Error("ZIP not found");
-                }
-
-                origin = [
-                  Number(place.latitude),
-                  Number(place.longitude)
-                ];
-
-                if (!origin.every(Number.isFinite)) {
-                  throw Error(
-                    "Invalid ZIP coordinates"
-                  );
-                }
-
-                visible = 24;
-                render();
-              } catch (error) {
-                $("smStatus").textContent =
-                  error.message;
-              }
-            };
-
-            $("smZIP").onkeydown = event => {
-              if (event.key === "Enter") {
-                $("smZIPGo").click();
-              }
-            };
-
-            [
-              "smRadius",
-              "smRetailer",
-              "smGame",
-              "smSort"
-            ].forEach(id => {
-              $(id).onchange = () => {
-                visible = 24;
-                render();
-              };
-            });
-
-            $("smMore").onclick = () => {
-              visible += 24;
-              render();
-            };
-
-            fetch(
-              "data/social_media_feed.json?t=" +
-              Date.now(),
-              {cache:"no-store"}
-            )
-              .then(r => {
-                if (!r.ok) {
-                  throw Error(
-                    "Social feed unavailable"
-                  );
-                }
-                return r.json();
-              })
-              .then(data => {
-                posts = Array.isArray(data.posts)
-                  ? data.posts : [];
-                render();
-              })
-              .catch(error => {
-                $("smStatus").textContent =
-                  "Could not load social reports: " +
-                  error.message;
-              });
+            $('smGPS').onclick=()=>{if(!navigator.geolocation){$('smStatus').textContent='GPS unavailable; use ZIP.';return}navigator.geolocation.getCurrentPosition(p=>{origin=[p.coords.latitude,p.coords.longitude];visible=24;render()},e=>{$('smStatus').textContent='GPS unavailable: '+e.message},{timeout:15000})};
+            $('smZIPGo').onclick=async()=>{const z=$('smZIP').value.trim();if(!/^\d{5}$/.test(z)){$('smStatus').textContent='Enter a five-digit ZIP.';return}try{const r=await fetch('https://api.zippopotam.us/us/'+z);if(!r.ok)throw Error('ZIP not found');const p=(await r.json()).places[0];origin=[+p.latitude,+p.longitude];visible=24;render()}catch(e){$('smStatus').textContent=e.message}};
+            $('smZIP').onkeydown=e=>{if(e.key==='Enter')$('smZIPGo').click()};
+            ['smRadius','smRetailer','smGame','smSort'].forEach(id=>$(id).onchange=()=>{visible=24;render()});
+            $('smMore').onclick=()=>{visible+=24;render()};
+            fetch('data/social_media_feed.json?t='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Feed unavailable');return r.json()}).then(d=>{posts=Array.isArray(d.posts)?d.posts:[];render()}).catch(e=>{$('smStatus').textContent='Could not load social posts: '+e.message});
           })();
           JS
-
-      - name: Validate generated files
+      - name: Validate
         shell: bash
         run: |
-          python -m json.tool \
-            data/social_media_feed.json \
-            > /dev/null
-
+          python -m json.tool data/social_media_feed.json > /dev/null
+          node --check assets/social-media.js
           python - <<'PY'
           from pathlib import Path
-          html = Path("index.html").read_text()
-          js = Path("assets/social-media.js").read_text()
-
-          assert 'data-tab="social"' in html
-          assert 'id="social" class="panel"' in html
-          assert 'src="assets/social-media.js"' in html
-          assert 'smLocal' in js
-          assert 'smOther' in js
-
-          print("Homepage and feed validation passed")
+          h=Path('index.html').read_text()
+          assert 'data-tab="social"' in h
+          assert 'id="social" class="panel"' in h
+          assert 'assets/social-media.js' in h
           PY
-
-          if command -v node >/dev/null; then
-            node --check assets/social-media.js
-          fi
-
       - name: Commit and publish
         shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add \
-            index.html \
-            assets/social-media.js \
-            data/social_media_feed.json
-
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html assets/social-media.js data/social_media_feed.json
           if ! git diff --cached --quiet; then
-            git commit -m \
-              "Add location-filtered social media tab"
-
+            git commit -m 'Improve social location extraction and indexed Facebook group discovery'
             git pull --rebase origin main
             git push origin HEAD:main
           else
-            echo "No changes to commit"
+            echo 'No changes to commit'
           fi
