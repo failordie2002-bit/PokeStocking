@@ -1,5 +1,5 @@
 
-name: Fix Shipment Catcher Results
+name: Rebuild Shipment Catcher
 
 on:
   workflow_dispatch:
@@ -8,143 +8,778 @@ permissions:
   contents: write
 
 jobs:
-  fix:
+  rebuild:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Repair Shipment Catcher
+      - name: Install Shipment Catcher V3
         shell: bash
         run: |
-          cat > /tmp/fix_catcher.py <<'PYTHON'
+          cat > /tmp/rebuild.py <<'PY'
           from pathlib import Path
           import re
 
           path = Path("index.html")
           html = path.read_text(encoding="utf-8")
 
-          if 'id="catcherV2"' not in html:
-              raise SystemExit(
-                  "ERROR: Shipment Catcher V2 not found."
-              )
-
-          changes = []
-
-          # FIX 1:
-          # Repair the incorrectly escaped ZIP regex.
-          # Correct JavaScript expression: /^\d{5}$/
-          bad_zip = r'/^\\d{5}$/'
-          good_zip = r'/^\d{5}$/'
-
-          if bad_zip in html:
-              html = html.replace(bad_zip, good_zip)
-              changes.append("ZIP code validation")
-
-          # FIX 2:
-          # Keep general TCG watch windows visible
-          # when a particular TCG is selected.
-          if '!(r.type==="watch" && !r.game)' not in html:
-              pattern = (
-                  r'if\s*\(\s*game\s*&&\s*'
-                  r'r\.game\s*!==\s*game\s*\)'
-                  r'\s*return false;'
-              )
-
-              replacement = (
-                  'if(game && r.game!==game &&\n'
-                  '   !(r.type==="watch" && !r.game))\n'
-                  '  return false;'
-              )
-
-              html, count = re.subn(
-                  pattern, replacement, html, count=1
-              )
-
-              if count:
-                  changes.append("TCG filtering")
-
-          # FIX 3:
-          # Preserve local approximate city fallback.
-          if "LOCAL_CITY_CENTERS" not in html:
-              helper = '''
-              const LOCAL_CITY_CENTERS = {
-                "staunton|va":[38.1496,-79.0717],
-                "waynesboro|va":[38.0685,-78.8895],
-                "harrisonburg|va":[38.4496,-78.8689],
-                "charlottesville|va":[38.0293,-78.4767],
-                "fishersville|va":[38.0990,-78.9692],
-                "verona|va":[38.2021,-79.0081],
-                "lexington|va":[37.7840,-79.4428],
-                "bridgewater|va":[38.3821,-78.9767],
-                "elkton|va":[38.4079,-78.6236],
-                "crozet|va":[38.0696,-78.7006]
-              };
-
-              function approximateCityPoint(s){
-                return LOCAL_CITY_CENTERS[
-                  norm(s.city)+"|"+norm(s.state)
-                ] || null;
-              }
-
-              '''
-
-              match = re.search(
-                  r'async\s+function\s+geocode\s*\(\s*s\s*\)\s*\{',
-                  html
-              )
-
-              if not match:
-                  raise SystemExit(
-                      "ERROR: Geocode function missing."
-                  )
-
-              html = (
-                  html[:match.start()] +
-                  helper +
-                  html[match.start():]
-              )
-              changes.append("Local city fallback")
-
-          # FIX 4:
-          # Verify essential functionality exists.
-          required = [
-              'id="catcherZip"',
-              'id="catcherRadius"',
-              'id="catcherRetailer"',
-              'id="catcherGame"',
-              'id="catcherGPS"',
-              'id="catcherResults"',
-              "approximateCityPoint",
-              "filteredRecords()",
-              "async function findZIP()"
-          ]
-
-          missing = [
-              item for item in required
-              if item not in html
-          ]
-
-          if missing:
-              raise SystemExit(
-                  "ERROR: Missing features: " +
-                  ", ".join(missing)
-              )
-
-          path.write_text(
+          # Remove previous V2 JavaScript.
+          html, removed = re.subn(
+              r'<!-- POKESTOCK CATCHER V2 START -->.*?'
+              r'<!-- POKESTOCK CATCHER V2 END -->',
+              '',
               html,
-              encoding="utf-8"
+              flags=re.S
           )
 
-          print("Shipment Catcher validation complete.")
-          print("Applied fixes:", changes)
-          print("All essential controls present.")
-          PYTHON
+          if removed != 1:
+              raise SystemExit(
+                  "Expected one existing V2 script."
+              )
 
-          python /tmp/fix_catcher.py
+          # Replace V2 controls and styling.
+          start = html.find('<div id="catcherV2"')
+          end = html.find(
+              '<div id="shipmentList"',
+              start
+          )
 
-      - name: Commit repaired website
+          if start < 0 or end < 0:
+              raise SystemExit(
+                  "Existing Shipment Catcher not found."
+              )
+
+          controls = '''
+          <div id="catcherV3">
+            <style>
+              #catcherV3{
+                --cv3-border:#40516c;
+                --cv3-bg:#152139;
+                --cv3-card:#202e49;
+                color:#eef3fc;
+              }
+              #catcherV3 *{box-sizing:border-box}
+              #catcherV3 .cv3-box{
+                background:var(--cv3-bg);
+                border:1px solid var(--cv3-border);
+                border-radius:18px;
+                padding:18px;
+                margin:15px 0;
+              }
+              #catcherV3 .cv3-filters{
+                display:grid;
+                grid-template-columns:repeat(
+                  auto-fit,minmax(150px,1fr)
+                );
+                gap:12px;
+              }
+              #catcherV3 label{
+                display:block;
+                color:#bac9e0;
+                font-size:12px;
+                margin-bottom:6px;
+              }
+              #catcherV3 input,
+              #catcherV3 select{
+                display:block;
+                width:100%;
+                min-width:0;
+                padding:11px;
+                border-radius:9px;
+                border:1px solid #526583;
+                background:#0d1729;
+                color:#fff;
+              }
+              #catcherV3 .cv3-actions{
+                display:flex;
+                flex-wrap:wrap;
+                gap:9px;
+                margin-top:15px;
+              }
+              #catcherV3 button{
+                padding:11px 15px;
+                border:1px solid #7188a9;
+                border-radius:10px;
+                cursor:pointer;
+              }
+              #catcherV3 .cv3-grid{
+                display:grid;
+                grid-template-columns:repeat(
+                  auto-fill,minmax(260px,1fr)
+                );
+                gap:12px;
+                margin:15px 0;
+              }
+              #catcherV3 .cv3-card{
+                background:var(--cv3-card);
+                border:1px solid var(--cv3-border);
+                border-radius:15px;
+                padding:16px;
+              }
+              #catcherV3 .cv3-card h3{
+                margin:8px 0;
+                font-size:18px;
+              }
+              #catcherV3 .cv3-card p{
+                margin:8px 0;
+                color:#c1cce0;
+                font-size:13px;
+                line-height:1.5;
+              }
+              #catcherV3 .cv3-tag{
+                display:inline-block;
+                background:#344662;
+                border-radius:30px;
+                padding:5px 9px;
+                font-size:11px;
+                font-weight:700;
+              }
+              #catcherV3 .cv3-date{
+                font-weight:800;
+                color:#ffce63;
+                font-size:18px;
+              }
+              #catcherV3 .cv3-muted{
+                color:#b7c7dd;
+                font-size:13px;
+                line-height:1.5;
+              }
+              #catcherV3 .cv3-stats{
+                display:flex;
+                flex-wrap:wrap;
+                gap:15px;
+                padding:12px 0;
+                font-size:13px;
+              }
+              #catcherV3 .cv3-stats strong{
+                display:block;
+                font-size:23px;
+              }
+              #catcherV3 .cv3-link{
+                display:inline-block;
+                margin-top:8px;
+                color:#a5d5ff;
+              }
+            </style>
+
+            <div class="cv3-box">
+              <h2>Shipment Catcher</h2>
+              <p class="cv3-muted">
+                Store-by-store TCG restock intelligence.
+                Research-only dates are not confirmed deliveries.
+              </p>
+
+              <div class="cv3-filters">
+                <div>
+                  <label for="cv3Zip">ZIP code</label>
+                  <input id="cv3Zip"
+                    inputmode="numeric"
+                    maxlength="5"
+                    placeholder="24401">
+                </div>
+                <div>
+                  <label for="cv3Radius">Travel radius</label>
+                  <select id="cv3Radius">
+                    <option value="10">10 miles</option>
+                    <option value="25">25 miles</option>
+                    <option value="50" selected>50 miles</option>
+                    <option value="75">75 miles</option>
+                    <option value="100">100 miles</option>
+                    <option value="150">150 miles</option>
+                    <option value="250">250 miles</option>
+                    <option value="0">Nationwide</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="cv3Retailer">Retailer</label>
+                  <select id="cv3Retailer">
+                    <option value="">All retailers</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="cv3Game">TCG</label>
+                  <select id="cv3Game">
+                    <option value="">All TCGs</option>
+                    <option value="Pokemon">Pokémon</option>
+                    <option value="Union Arena">Union Arena</option>
+                    <option value="Gundam">Gundam</option>
+                    <option value="One Piece">One Piece</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="cv3Status">Restock status</label>
+                  <select id="cv3Status">
+                    <option value="">All stores</option>
+                    <option value="sighting">
+                      Community sighting
+                    </option>
+                    <option value="watch">
+                      Research watch date
+                    </option>
+                    <option value="none">
+                      No known date
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label for="cv3Search">Search</label>
+                  <input id="cv3Search"
+                    placeholder="Store or city">
+                </div>
+              </div>
+
+              <div class="cv3-actions">
+                <button id="cv3ZipButton" type="button">
+                  Search ZIP
+                </button>
+                <button id="cv3GPS" type="button">
+                  Use my location
+                </button>
+                <button id="cv3Refresh" type="button">
+                  Refresh data
+                </button>
+              </div>
+              <p id="cv3Message" class="cv3-muted">
+                Loading store records...
+              </p>
+            </div>
+
+            <div class="cv3-stats" id="cv3Stats"></div>
+            <div class="cv3-grid" id="cv3Results"></div>
+            <div id="cv3More"></div>
+
+            <p class="cv3-muted">
+              Store listings are candidates, not proof
+              that TCG products are carried or stocked.
+              Dates labeled research-only are unverified.
+              Distances based on city centers are approximate.
+              A radius is straight-line, not driving distance.
+            </p>
+          </div>
+          '''
+
+          html = html[:start] + controls + html[end:]
+
+          # Keep original shipmentList available
+          # for existing application functions.
+          script = r'''
+          <!-- POKESTOCK CATCHER V3 START -->
+          <script>
+          (function(){
+            "use strict";
+            const el=id=>document.getElementById(id);
+            const esc=x=>String(x??"").replace(
+              /[&<>"']/g,c=>({
+                "&":"&amp;","<":"&lt;",
+                ">":"&gt;",'"':"&quot;",
+                "'":"&#39;"
+              }[c])
+            );
+            const norm=x=>String(x??"")
+              .trim().toLowerCase();
+
+            const centers={
+              "staunton|va":[38.1496,-79.0717],
+              "waynesboro|va":[38.0685,-78.8895],
+              "harrisonburg|va":[38.4496,-78.8689],
+              "charlottesville|va":[38.0293,-78.4767],
+              "fishersville|va":[38.099,-78.9692],
+              "verona|va":[38.2021,-79.0081],
+              "lexington|va":[37.784,-79.4428],
+              "bridgewater|va":[38.3821,-78.9767],
+              "elkton|va":[38.4079,-78.6236],
+              "crozet|va":[38.0696,-78.7006]
+            };
+
+            let stores=[];
+            let sightings=[];
+            let watches=[];
+            let origin=null;
+            let shown=60;
+            let renderToken=0;
+
+            function msg(s){
+              el("cv3Message").textContent=s;
+            }
+
+            function miles(a,b){
+              const r=Math.PI/180;
+              const dlat=(b[0]-a[0])*r;
+              const dlon=(b[1]-a[1])*r;
+              const h=Math.sin(dlat/2)**2+
+                Math.cos(a[0]*r)*
+                Math.cos(b[0]*r)*
+                Math.sin(dlon/2)**2;
+              return 7917.6*Math.asin(
+                Math.min(1,Math.sqrt(h))
+              );
+            }
+
+            function validPoint(p){
+              return Array.isArray(p) &&
+                p.length===2 &&
+                p.every(Number.isFinite) &&
+                Math.abs(p[0])<=90 &&
+                Math.abs(p[1])<=180;
+            }
+
+            function locationFor(s){
+              if(s.lat!=null && s.lon!=null){
+                const p=[Number(s.lat),Number(s.lon)];
+                if(validPoint(p))return {
+                  point:p,approx:false
+                };
+              }
+              const p=centers[
+                norm(s.city)+"|"+norm(s.state)
+              ];
+              return p
+                ?{point:p,approx:true}
+                :null;
+            }
+
+            async function json(path,fallback){
+              try{
+                const response=await fetch(
+                  path+"?t="+Date.now(),
+                  {cache:"no-store"}
+                );
+                if(!response.ok)throw Error(
+                  "HTTP "+response.status
+                );
+                return await response.json();
+              }catch(e){
+                console.warn(path,e);
+                return fallback;
+              }
+            }
+
+            function safeUrl(x){
+              try{
+                const u=new URL(x);
+                return u.protocol==="https:"
+                  ?u.href:"";
+              }catch{return "";}
+            }
+
+            function date(x){
+              if(!x)return "";
+              const d=new Date(x);
+              if(!Number.isFinite(d.getTime()))
+                return String(x);
+              return d.toLocaleDateString(
+                "en-US",{
+                  month:"short",day:"numeric",
+                  year:"numeric",timeZone:"UTC"
+                }
+              );
+            }
+
+            function storeKey(s){
+              return s.source_id||
+                [s.chain,s.address,s.city,s.state]
+                .map(norm).join("|");
+            }
+
+            function sameStore(r,s){
+              if(r.store_id &&
+                 r.store_id===s.source_id){
+                return true;
+              }
+
+              if(r.store_id)return false;
+
+              if(norm(r.retailer)!==norm(s.chain) ||
+                 norm(r.city)!==norm(s.city) ||
+                 norm(r.state)!==norm(s.state)){
+                return false;
+              }
+
+              // City-only sightings cannot establish
+              // which branch was involved.
+              return stores.filter(t=>
+                norm(t.chain)===norm(s.chain) &&
+                norm(t.city)===norm(s.city) &&
+                norm(t.state)===norm(s.state)
+              ).length===1;
+            }
+
+            function evidence(s){
+              return {
+                reports:sightings.filter(r=>
+                  sameStore(r,s)
+                ),
+                watches:watches.filter(r=>
+                  sameStore(r,s)
+                )
+              };
+            }
+
+            function render(){
+              const token=++renderToken;
+              const radius=Number(
+                el("cv3Radius").value
+              );
+              const retailer=norm(
+                el("cv3Retailer").value
+              );
+              const game=el("cv3Game").value;
+              const state=el("cv3Status").value;
+              const search=norm(
+                el("cv3Search").value
+              );
+
+              if(radius!==0 && !origin){
+                el("cv3Results").innerHTML="";
+                el("cv3Stats").innerHTML="";
+                msg(
+                  "Enter a ZIP code and tap Search ZIP, "+
+                  "or use GPS. Choose Nationwide to "+
+                  "browse without location."
+                );
+                return;
+              }
+
+              const rows=[];
+              let unknownLocation=0;
+
+              for(const s of stores){
+                if(retailer &&
+                   norm(s.chain)!==retailer)continue;
+
+                const hay=[
+                  s.name,s.chain,s.address,
+                  s.city,s.state
+                ].map(norm).join(" ");
+
+                if(search&&!hay.includes(search))
+                  continue;
+
+                const loc=locationFor(s);
+                let distance=null;
+
+                if(radius!==0){
+                  if(!loc){
+                    unknownLocation++;
+                    continue;
+                  }
+                  distance=miles(origin,loc.point);
+                  // City centers are approximate.
+                  // Allow 10 miles at the boundary.
+                  if(distance>radius+
+                    (loc.approx?10:0))continue;
+                }
+
+                const ev=evidence(s);
+
+                const reports=ev.reports.filter(r=>
+                  !game || norm(r.game)===norm(game)
+                );
+
+                // A general watch date does not
+                // prove a game-specific shipment.
+                const watch=ev.watches.filter(r=>
+                  !game || !r.game ||
+                  norm(r.game)===norm(game)
+                );
+
+                let category="none";
+                if(reports.length)category="sighting";
+                else if(watch.length)category="watch";
+
+                if(state&&category!==state)
+                  continue;
+
+                rows.push({
+                  s,reports,watch,category,
+                  distance,approx:loc?.approx||false
+                });
+              }
+
+              rows.sort((a,b)=>{
+                if(radius!==0){
+                  return a.distance-b.distance;
+                }
+                return (
+                  a.s.state.localeCompare(b.s.state)||
+                  a.s.city.localeCompare(b.s.city)||
+                  a.s.chain.localeCompare(b.s.chain)
+                );
+              });
+
+              if(token!==renderToken)return;
+
+              const reported=rows.filter(r=>
+                r.category==="sighting"
+              ).length;
+              const watched=rows.filter(r=>
+                r.category==="watch"
+              ).length;
+
+              el("cv3Stats").innerHTML=`
+                <div><strong>${rows.length}</strong>
+                  Stores</div>
+                <div><strong>${reported}</strong>
+                  With community reports</div>
+                <div><strong>${watched}</strong>
+                  With research watch dates</div>
+              `;
+
+              el("cv3Results").innerHTML=
+                rows.slice(0,shown).map(r=>{
+                  const s=r.s;
+                  const latest=r.reports.slice().sort(
+                    (a,b)=>String(
+                      b.reported_at_approx||""
+                    ).localeCompare(
+                      String(a.reported_at_approx||"")
+                    )
+                  )[0];
+
+                  const next=r.watch.slice().sort(
+                    (a,b)=>String(
+                      a.predicted_date||""
+                    ).localeCompare(
+                      String(b.predicted_date||"")
+                    )
+                  )[0];
+
+                  const url=safeUrl(
+                    latest?.source_url||
+                    next?.source_url||""
+                  );
+
+                  const label=latest
+                    ?"Community report available"
+                    :next
+                    ?"Research-only watch date"
+                    :"No verified restock date";
+
+                  return `
+                    <article class="cv3-card">
+                      <span class="cv3-tag">
+                        ${esc(label)}
+                      </span>
+                      <h3>${esc(s.chain||s.name)}</h3>
+                      <p>${esc([
+                        s.address,s.city,s.state
+                      ].filter(Boolean).join(", "))}</p>
+                      ${r.distance!=null?`
+                        <p>${r.approx?"Approximately ":""}
+                          ${r.distance.toFixed(1)} miles
+                          straight-line
+                          ${r.approx?"(city center)":""}
+                        </p>`:""}
+                      ${latest?`
+                        <p><strong>Latest report:</strong>
+                          ${esc(date(
+                            latest.reported_at_approx
+                          ))}
+                        </p>
+                        <p>${esc(
+                          latest.product_name||"TCG"
+                        )}</p>
+                        <p>${esc(
+                          latest.report_status||
+                          "Community report"
+                        )} — not verified current stock</p>
+                      `:""}
+                      ${next?`
+                        <p><strong>Research watch:</strong>
+                          <span class="cv3-date">
+                            ${esc(date(
+                              next.predicted_date
+                            ))}
+                          </span>
+                        </p>
+                        <p>Unverified vendor-route
+                          watch window, not a delivery
+                          confirmation.</p>
+                      `:""}
+                      ${!latest&&!next?`
+                        <p>No store-specific restock
+                          observation or supported
+                          forecast date available.</p>
+                      `:""}
+                      ${url?`
+                        <a class="cv3-link"
+                          href="${esc(url)}"
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          View evidence source
+                        </a>`:""}
+                    </article>
+                  `;
+                }).join("")||
+                '<p>No matching stores found.</p>';
+
+              el("cv3More").innerHTML=
+                rows.length>shown
+                  ?'<button id="cv3LoadMore" type="button">Show more stores</button>'
+                  :"";
+
+              const more=el("cv3LoadMore");
+              if(more)more.onclick=()=>{
+                shown+=60;
+                render();
+              };
+
+              msg(
+                "Showing "+Math.min(shown,rows.length)+
+                " of "+rows.length+" stores."+
+                (unknownLocation
+                  ?" "+unknownLocation+
+                  " stores excluded because their "+
+                  "location could not be resolved."
+                  :"")
+              );
+            }
+
+            async function searchZip(){
+              const zip=el("cv3Zip").value.trim();
+              if(!new RegExp("^[0-9]{5}$").test(zip)){
+                msg("Enter a valid five-digit ZIP.");
+                return;
+              }
+              msg("Looking up ZIP "+zip+"...");
+              try{
+                const response=await fetch(
+                  "https://api.zippopotam.us/us/"+zip
+                );
+                if(!response.ok)
+                  throw Error("ZIP lookup unavailable");
+
+                const data=await response.json();
+                const p=data.places?.[0];
+
+                if(!p)throw Error("ZIP not found");
+
+                const point=[
+                  Number(p.latitude),
+                  Number(p.longitude)
+                ];
+
+                if(!validPoint(point))
+                  throw Error("Invalid coordinates");
+
+                origin=point;
+                shown=60;
+                render();
+              }catch(e){
+                msg("ZIP lookup failed: "+e.message);
+              }
+            }
+
+            el("cv3ZipButton").onclick=searchZip;
+            el("cv3Zip").addEventListener(
+              "keydown",e=>{
+                if(e.key==="Enter")searchZip();
+              }
+            );
+
+            el("cv3GPS").onclick=()=>{
+              if(!navigator.geolocation){
+                msg("GPS unavailable. Use ZIP.");
+                return;
+              }
+              msg("Requesting GPS...");
+              navigator.geolocation.getCurrentPosition(
+                p=>{
+                  origin=[
+                    p.coords.latitude,
+                    p.coords.longitude
+                  ];
+                  shown=60;
+                  render();
+                },
+                e=>msg(
+                  "GPS unavailable: "+e.message+
+                  ". Try ZIP."
+                ),
+                {timeout:15000}
+              );
+            };
+
+            for(const id of [
+              "cv3Radius","cv3Retailer",
+              "cv3Game","cv3Status","cv3Search"
+            ]){
+              el(id).addEventListener("input",()=>{
+                shown=60;
+                render();
+              });
+            }
+
+            async function load(){
+              msg("Loading store and restock data...");
+
+              const [s,r,w]=await Promise.all([
+                json(
+                  "data/physical_inventory_sources.json",
+                  []
+                ),
+                json(
+                  "data/v34_public_sightings.json",
+                  []
+                ),
+                json("data/shipments.json",{})
+              ]);
+
+              stores=Array.isArray(s)?s:[];
+              sightings=Array.isArray(r)?r:[];
+              watches=Array.isArray(w.forecasts)
+                ?w.forecasts:[];
+
+              const chains=[...new Set(
+                stores.map(s=>s.chain)
+                  .filter(Boolean)
+              )].sort();
+
+              const selected=el("cv3Retailer").value;
+              el("cv3Retailer").innerHTML=
+                '<option value="">All retailers</option>';
+
+              for(const chain of chains){
+                const option=document.createElement(
+                  "option"
+                );
+                option.value=chain;
+                option.textContent=chain;
+                el("cv3Retailer").appendChild(option);
+              }
+
+              el("cv3Retailer").value=selected;
+              shown=60;
+              render();
+            }
+
+            el("cv3Refresh").onclick=load;
+
+            // Nationwide initially shows data
+            // without requesting GPS permission.
+            el("cv3Radius").value="0";
+            load();
+          })();
+          </script>
+          <!-- POKESTOCK CATCHER V3 END -->
+          '''
+
+          if "</body>" not in html:
+              raise SystemExit("Missing </body>.")
+
+          html=html.replace(
+              "</body>",
+              script+"\n</body>",
+              1
+          )
+
+          path.write_text(html,encoding="utf-8")
+          print("Shipment Catcher V3 installed.")
+          PY
+
+          python /tmp/rebuild.py
+
+      - name: Commit upgrade
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -154,8 +789,8 @@ jobs:
           git add index.html
 
           if git diff --cached --quiet; then
-            echo "Website already contains these fixes."
+            echo "No changes required."
           else
-            git commit -m "Fix Shipment Catcher ZIP validation"
+            git commit -m "Rebuild Shipment Catcher V3"
             git push
           fi
