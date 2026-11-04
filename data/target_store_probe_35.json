@@ -1,0 +1,15 @@
+{
+  "result": "NOT_PROVEN",
+  "reason": "Playwright/Chromium installation failed or was skipped",
+  "observations": [],
+  "products": [],
+  "workflow_stages": {
+    "PYTHON_STEP": "success",
+    "BROWSER_STEP": "failure",
+    "SCANNER_STEP": "success",
+    "TEST_STEP": "skipped"
+  },
+  "diagnostic_saved_at": "2026-11-04T12:39:42.864053+00:00",
+  "install_log_tail": "Collecting playwright==1.56.0\n  Downloading playwright-1.56.0-py3-none-manylinux1_x86_64.whl.metadata (3.5 kB)\nCollecting pyee<14,>=13 (from playwright==1.56.0)\n  Downloading pyee-13.0.1-py3-none-any.whl.metadata (3.0 kB)\nCollecting greenlet<4.0.0,>=3.1.1 (from playwright==1.56.0)\n  Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)\nCollecting typing-extensions (from pyee<14,>=13->playwright==1.56.0)\n  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)\nDownloading playwright-1.56.0-py3-none-manylinux1_x86_64.whl (46.3 MB)\n   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 46.3/46.3 MB 164.1 MB/s  0:00:00\nDownloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)\n   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 621.4/621.4 kB 59.6 MB/s  0:00:00\nDownloading pyee-13.0.1-py3-none-any.whl (15 kB)\nDownloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)\nInstalling collected packages: typing-extensions, greenlet, pyee, playwright\n\nSuccessfully installed greenlet-3.5.6 playwright-1.56.0 pyee-13.0.1 typing-extensions-4.16.0\n\n[notice] A new release of pip is available: 26.2.2 -> 26.3\n[notice] To update, run: pip install --upgrade pip\nBEWARE: your OS is not officially supported by Playwright; installing dependencies for ubuntu26.04-x64 as a fallback.\nCannot install dependencies for ubuntu26.04-x64 with Playwright 1.56.1!\nFailed to install browsers\nError: ERROR: Playwright does not support chromium on ubuntu26.04-x64\n",
+  "scan_log_tail": ""
+}
