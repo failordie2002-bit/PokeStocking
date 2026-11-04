@@ -1,0 +1,558 @@
+name: Pokestock Script 31 Regional Discord Fix
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '21 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-regional-discord
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install parser
+        run: |
+          python -m pip install \
+            requests beautifulsoup4
+
+      - name: Discover and classify communities
+        shell: bash
+        run: |
+          mkdir -p data
+
+          cat > /tmp/ps31.py <<'PY'
+          import json
+          import re
+          import time
+          import requests
+          from bs4 import BeautifulSoup
+          from pathlib import Path
+          from datetime import datetime,timezone
+          from urllib.parse import (
+              urljoin,urlparse,quote
+          )
+
+          NOW=datetime.now(timezone.utc).isoformat()
+          ROOT=Path("data")
+          DIRECTORY=ROOT/"discord_directory_29.json"
+
+          STATES={
+            "AL":"Alabama","AK":"Alaska",
+            "AZ":"Arizona","AR":"Arkansas",
+            "CA":"California","CO":"Colorado",
+            "CT":"Connecticut","DE":"Delaware",
+            "FL":"Florida","GA":"Georgia",
+            "HI":"Hawaii","ID":"Idaho",
+            "IL":"Illinois","IN":"Indiana",
+            "IA":"Iowa","KS":"Kansas",
+            "KY":"Kentucky","LA":"Louisiana",
+            "ME":"Maine","MD":"Maryland",
+            "MA":"Massachusetts","MI":"Michigan",
+            "MN":"Minnesota","MS":"Mississippi",
+            "MO":"Missouri","MT":"Montana",
+            "NE":"Nebraska","NV":"Nevada",
+            "NH":"New Hampshire","NJ":"New Jersey",
+            "NM":"New Mexico","NY":"New York",
+            "NC":"North Carolina","ND":"North Dakota",
+            "OH":"Ohio","OK":"Oklahoma",
+            "OR":"Oregon","PA":"Pennsylvania",
+            "RI":"Rhode Island","SC":"South Carolina",
+            "SD":"South Dakota","TN":"Tennessee",
+            "TX":"Texas","UT":"Utah",
+            "VT":"Vermont","VA":"Virginia",
+            "WA":"Washington","WV":"West Virginia",
+            "WI":"Wisconsin","WY":"Wyoming",
+            "DC":"District of Columbia"
+          }
+
+          REGIONS={
+            "DMV":["VA","MD","DC"],
+            "Northern Virginia":["VA"],
+            "Shenandoah Valley":["VA"],
+            "Hampton Roads":["VA"],
+            "Lehigh Valley":["PA"],
+            "Eastern PA":["PA"],
+            "DFW":["TX"],
+            "Dallas-Fort Worth":["TX"],
+            "North Texas":["TX"],
+            "Bay Area":["CA"],
+            "SoCal":["CA"],
+            "Southern California":["CA"],
+            "Upstate New York":["NY"],
+            "NYC":["NY"],
+            "New England":["MA","CT","RI","NH","VT","ME"],
+            "Pacific Northwest":["WA","OR"]
+          }
+
+          GAMES={
+            "Pokemon":[
+              "pokemon","pokémon","pok mon"
+            ],
+            "Union Arena":["union arena"],
+            "One Piece":["one piece"],
+            "Gundam":["gundam"],
+            "Magic":["mtg","magic the gathering"],
+            "Lorcana":["lorcana"],
+            "Riftbound":["riftbound"],
+            "Yu-Gi-Oh":["yugioh","yu-gi-oh"],
+            "Digimon":["digimon"],
+            "Dragon Ball":["dragon ball"],
+            "Flesh and Blood":["flesh and blood"]
+          }
+
+          SEARCH_PAGES=[
+            "https://disboard.org/servers/tag/tcg",
+            "https://disboard.org/servers/tag/pokemon-tcg",
+            "https://disboard.org/servers/tag/pokemon-restock",
+            "https://disboard.org/servers/tag/trading-cards",
+            "https://disboard.org/servers/tag/union-arena",
+            "https://disboard.org/servers/tag/one-piece",
+            "https://disboard.org/servers/tag/lorcana",
+            "https://disboard.org/servers/tag/mtg",
+            "https://disboard.org/servers/tag/restock",
+            "https://discord.me/servers/tag/tcg",
+            "https://discord.me/servers/tag/pokemon",
+            "https://discord.com/servers"
+          ]
+
+          session=requests.Session()
+          session.headers.update({
+            "User-Agent":
+              "Mozilla/5.0 (compatible; "
+              "PokeStockPublicDirectory/1.0)"
+          })
+
+          def get(url):
+            try:
+              r=session.get(
+                url,timeout=12,
+                allow_redirects=True
+              )
+              if r.status_code!=200:
+                return None,str(r.status_code)
+              if len(r.content)>2500000:
+                return None,"too_large"
+              return BeautifulSoup(
+                r.text,"html.parser"
+              ),"ok"
+            except requests.RequestException as e:
+              return None,type(e).__name__
+
+          def normalize(text):
+            return re.sub(
+              r"\s+"," ",str(text or "")
+            ).strip()
+
+          def mentions(text,phrase):
+            return bool(re.search(
+              r"(?<![a-z0-9])"+
+              re.escape(phrase.lower())+
+              r"(?![a-z0-9])",
+              text.lower()
+            ))
+
+          def classify(text):
+            games=[]
+            lower=text.lower()
+            for game,terms in GAMES.items():
+              if any(t in lower for t in terms):
+                games.append(game)
+
+            if not games and re.search(
+              r"\b(trading card games?|tcg)\b",
+              lower
+            ):
+              games=["Other TCG"]
+
+            states=set()
+            regions=[]
+
+            for region,codes in REGIONS.items():
+              if mentions(text,region):
+                states.update(codes)
+                regions.append(region)
+
+            for code,name in STATES.items():
+              if mentions(text,name):
+                states.add(code)
+              elif re.search(
+                r"\b(?:based in|located in|"
+                r"serving|across|local to)\s+"+
+                re.escape(code)+r"\b",
+                text,re.I
+              ):
+                states.add(code)
+
+            return (
+              sorted(states),games,regions
+            )
+
+          def valid_url(url):
+            try:
+              p=urlparse(url)
+              if p.scheme!="https":
+                return False
+              if p.hostname not in (
+                "disboard.org",
+                "discord.me",
+                "discord.com",
+                "discord.gg",
+                "top.gg"
+              ):
+                return False
+              return True
+            except ValueError:
+              return False
+
+          def individual_listing(url):
+            p=urlparse(url)
+            host=p.hostname or ""
+            path=p.path.rstrip("/")
+
+            if host=="disboard.org":
+              return bool(re.fullmatch(
+                r"/server/\d+",path
+              ))
+
+            if host=="discord.me":
+              return bool(re.fullmatch(
+                r"/[a-zA-Z0-9_-]+",path
+              )) and path!="/servers"
+
+            if host=="discord.com":
+              return bool(re.fullmatch(
+                r"/servers/[a-zA-Z0-9_-]+",
+                path
+              ))
+
+            if host=="top.gg":
+              return bool(re.fullmatch(
+                r"/discord/servers/\d+",
+                path
+              ))
+
+            if host=="discord.gg":
+              return bool(re.fullmatch(
+                r"/[a-zA-Z0-9_-]+",path
+              ))
+
+            return False
+
+          def load(path,default):
+            try:
+              return json.loads(
+                path.read_text(encoding="utf-8")
+              )
+            except (OSError,ValueError):
+              return default
+
+          def save(path,obj):
+            path.write_text(
+              json.dumps(
+                obj,indent=2,
+                ensure_ascii=False
+              )+"\n",
+              encoding="utf-8"
+            )
+
+          old=load(DIRECTORY,[])
+          if not isinstance(old,list):
+            old=[]
+
+          entries={}
+          for item in old:
+            if not isinstance(item,dict):
+              continue
+            url=item.get("url","")
+            if valid_url(url):
+              entries[url]=item
+
+          checked=[]
+          rejected={
+            "not_individual_listing":0,
+            "no_geographic_evidence":0,
+            "not_tcg":0,
+            "duplicate":0
+          }
+
+          added=0
+          candidates=0
+
+          def consider(url,text,source):
+            global added,candidates
+
+            url=url.split("#")[0]
+            if not valid_url(url):
+              return
+
+            if not individual_listing(url):
+              rejected["not_individual_listing"]+=1
+              return
+
+            candidates+=1
+            states,games,regions=classify(text)
+
+            if not games:
+              rejected["not_tcg"]+=1
+              return
+
+            if not states:
+              rejected["no_geographic_evidence"]+=1
+              return
+
+            if url in entries:
+              rejected["duplicate"]+=1
+              old_item=entries[url]
+              if old_item.get("coverage")!="nationwide":
+                old_item["states"]=sorted(set(
+                  old_item.get("states",[])
+                )|set(states))
+                old_item["games"]=sorted(set(
+                  old_item.get("games",[])
+                )|set(games))
+              return
+
+            name=normalize(text)[:110]
+            if not name:
+              name="Regional TCG Community"
+
+            entries[url]={
+              "name":name,
+              "url":url,
+              "games":games,
+              "states":states,
+              "cities":[],
+              "regions":regions,
+              "coverage":"regional_candidate",
+              "verification":
+                "public_listing_unverified",
+              "message_access":False,
+              "source_url":source,
+              "discovered_at":NOW
+            }
+            added+=1
+
+          for page in SEARCH_PAGES:
+            soup,status=get(page)
+            checked.append({
+              "url":page,
+              "status":status
+            })
+
+            if soup is None:
+              continue
+
+            # Parse individual server listing links
+            # and their nearest descriptive card.
+            seen=set()
+
+            for a in soup.find_all(
+              "a",href=True
+            ):
+              url=urljoin(page,a["href"])
+
+              if url in seen:
+                continue
+              seen.add(url)
+
+              if not individual_listing(url):
+                continue
+
+              parent=a
+              for _ in range(3):
+                if parent.parent:
+                  parent=parent.parent
+
+              text=normalize(
+                parent.get_text(
+                  " ",strip=True
+                )
+              )[:2500]
+
+              if len(text)<15:
+                continue
+
+              consider(url,text,page)
+
+            time.sleep(0.5)
+
+          # Search engine fallback.
+          # Only links to individual server
+          # listings can enter the directory.
+          queries=[
+            '"Virginia" "Pokemon" "Discord" "TCG"',
+            '"Northern Virginia" "TCG" "Discord"',
+            '"Shenandoah Valley" "Pokemon" "Discord"',
+            '"Dallas Fort Worth" "Pokemon" "Discord"',
+            '"California" "Pokemon" "Discord" "TCG"',
+            '"Pennsylvania" "Pokemon" "Discord" "restock"',
+            '"New York" "TCG" "Discord" community',
+            '"Florida" "Pokemon" "Discord" collectors',
+            '"Texas" "Union Arena" "Discord"',
+            '"California" "One Piece TCG" "Discord"'
+          ]
+
+          for q in queries:
+            url=(
+              "https://www.bing.com/search"
+              "?q="+quote(q)
+            )
+            soup,status=get(url)
+            checked.append({
+              "url":"Bing: "+q,
+              "status":status
+            })
+
+            if soup is None:
+              continue
+
+            for result in soup.select(
+              "li.b_algo"
+            )[:12]:
+              a=result.find(
+                "a",href=True
+              )
+              if not a:
+                continue
+
+              link=a["href"]
+              text=normalize(
+                result.get_text(
+                  " ",strip=True
+                )
+              )[:1800]
+
+              consider(link,text,url)
+
+            time.sleep(0.5)
+
+          result=list(entries.values())
+          result.sort(
+            key=lambda x:(
+              not bool(x.get("states")),
+              x.get("name","").lower()
+            )
+          )
+
+          save(DIRECTORY,result)
+
+          report={
+            "updated_at":NOW,
+            "sources_checked":checked,
+            "individual_candidates":candidates,
+            "new_regional_entries":added,
+            "total_entries":len(result),
+            "regional_entries":sum(
+              bool(x.get("states"))
+              for x in result
+            ),
+            "rejected":rejected,
+            "limitations":[
+              "Regional entries are public directory leads.",
+              "Server membership and invitation validity are not confirmed.",
+              "Geographic classification depends on public descriptions.",
+              "No Discord messages were accessed.",
+              "No inventory or shipment status was inferred.",
+              "A green workflow can still discover zero servers."
+            ]
+          }
+
+          save(
+            ROOT/"discord_discovery_report_31.json",
+            report
+          )
+
+          print(json.dumps(
+            {
+              "new":added,
+              "regional":report["regional_entries"],
+              "total":len(result),
+              "rejected":rejected
+            },
+            indent=2
+          ))
+          PY
+
+          python /tmp/ps31.py
+
+      - name: Validate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          directory=json.loads(
+            Path(
+              "data/discord_directory_29.json"
+            ).read_text()
+          )
+
+          report=json.loads(
+            Path(
+              "data/discord_discovery_report_31.json"
+            ).read_text()
+          )
+
+          assert isinstance(directory,list)
+          assert len(directory)>=4
+          assert report["total_entries"]==len(directory)
+
+          urls=set()
+
+          for item in directory:
+            assert item["url"] not in urls
+            urls.add(item["url"])
+            assert isinstance(item["states"],list)
+            assert isinstance(item["cities"],list)
+            assert isinstance(item["games"],list)
+            assert item.get("message_access") is not True
+
+          print("Script 31 validation passed")
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            data/discord_directory_29.json \
+            data/discord_discovery_report_31.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "Script 31 improve regional Discord discovery"
+
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main &&
+               git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+
+          echo "Publish failed"
+          exit 1
