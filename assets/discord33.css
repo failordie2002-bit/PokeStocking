@@ -1,0 +1,49 @@
+.ps33-panel {
+  padding:16px;
+  margin:14px 0 22px;
+  background:#14213a;
+  color:#edf5ff;
+  border:1px solid #506480;
+  border-radius:15px;
+}
+.ps33-panel * {
+  box-sizing:border-box;
+}
+.ps33-panel h2,
+.ps33-panel h3 {
+  margin:0 0 12px;
+}
+.ps33-filters {
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(145px,1fr));
+  gap:10px;
+  margin:12px 0;
+}
+.ps33-filters input,
+.ps33-filters select {
+  min-width:0;
+  width:100%;
+  padding:11px;
+  background:#0b182d;
+  color:white;
+  border:1px solid #587195;
+  border-radius:9px;
+  font:inherit;
+}
+.ps33-card {
+  padding:13px;
+  margin:10px 0;
+  background:#20314d;
+  border:1px solid #435b7c;
+  border-radius:11px;
+  overflow-wrap:anywhere;
+}
+.ps33-note {
+  font-size:13px;
+  color:#b9c9e0;
+  line-height:1.5;
+}
+.ps33-card a {
+  color:#a9e2ff;
+}
