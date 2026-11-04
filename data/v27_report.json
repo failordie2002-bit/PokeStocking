@@ -1,222 +1,19 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-03T23:13:50.723512+00:00",
-  "source_online_candidates": 226,
+  "checked_at": "2026-11-04T01:25:10.163158+00:00",
+  "source_online_candidates": 392,
   "checked_this_run": 60,
-  "verified_this_run": 28,
-  "fresh_online_observations": 194,
-  "online_in_stock": 113,
-  "online_out_of_stock": 81,
+  "verified_this_run": 0,
+  "fresh_online_observations": 332,
+  "online_in_stock": 193,
+  "online_out_of_stock": 139,
   "verified_store_observations": 0,
   "store_in_stock": 0,
-  "next_cursor": 60,
+  "next_cursor": 120,
   "check_outcomes": {
-    "verified": 28,
-    "http_404": 11,
-    "ambiguous_variant": 1,
-    "http_301": 20
+    "http_301": 60
   },
   "checks": [
-    {
-      "retailer": "Atlantis Games & Comics",
-      "product": "KAYOU: My Little Pony TCG Booster Pack 04 (BP04) - Hearth's Warming Eve Booster Box (Release Date 10.30.26)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "product": "MTG: Reality Fracture - Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "product": "MTG: Reality Fracture - Play Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Battle Spirits Saga - Dawn of History Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Battle Spirits Saga - False Gods Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Knights of Rebirth Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Dimensional Transcendence Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Fated Clash Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Lorcana: Floodborn Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Magic the Gathering: March of the Machines Epilogue Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Magic the Gathering: Murders at Karlov Manor Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "ONE PIECE TCG Starter Deck",
-      "result": "ambiguous_variant"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "PRE-ORDER: Magic: The Gathering - Star Trek Beam Me Up Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "PRE-ORDER: Magic: The Gathering - Star Trek Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "PRE-ORDER: Magic: The Gathering - Star Trek Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Sorcery: Contested Realm Beta Starter Decks",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Disney Lorcana TCG: The First Chapter Booster Box - Japanese",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - My Little Pony Friendship Eternal Cards Collector Box (5 Packs) - Moon Edition",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - My Little Pony - Friendship Eternal Cards - Moon Edition 4 Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - My Little Pony - Friendship Eternal Cards - Moon Edition Collector Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou My Little Pony Nightmare Nights TCG Booster Box Trading Card Game",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Lisia Exclusive Shiny Collection Gift Box Pokémon TCG Chinese 2026",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Naruto Kayou Smriti Earth Scroll Pearl Collector Box Sealed English 5 Packs",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Pokemon Chinese 30th Celebration Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Pokémon Simplified Chinese 2026 Dragon Boat Festival Gift Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Pokemon TCG S-Chinese Dragon Return Advance Gift Box Exclusive Rayquaza",
-      "result": "verified"
-    },
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Pokemon GO Tin [Pikachu]",
@@ -225,6 +22,11 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Hidden Fates Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Sun & Moon Elite Trainer Box [Solgaleo]",
       "result": "http_301"
     },
     {
@@ -249,7 +51,22 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "White Flare Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Surging Sparks Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "XY Steam Siege Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "XY - BREAKpoint Sleeved Booster Pack",
       "result": "http_301"
     },
     {
@@ -260,6 +77,11 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Pitch Black Single Pack Blister [Slowpoke]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Evolving Skies Sleeved Booster Pack",
       "result": "http_301"
     },
     {
@@ -289,12 +111,32 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "Stellar Crown Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Chaos Rising Pokemon Center Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Crown Zenith Mini Tin [Leon & Charizard]",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration ex Tin [Sylveon ex] (Retail Version)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Scarlet & Violet Pokemon Center Elite Trainer Box (Exclusive) [Miraidon]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Perfect Order 3 Pack Blister [Chikorita]",
       "result": "http_301"
     },
     {
@@ -309,12 +151,167 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin [Zapdos]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Torchic - 017 (EX Deck Tin)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Chaos Rising Booster Pack",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "Chilling Reign Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Cosmic Eclipse Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "One Piece Tin Pack Set Vol. 1 -Monkey.D.Luffy-",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Wings of the Captain - Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together 3 Pack Blister [Yanmega]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Perfect Order Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Destined Rivals Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pitch Black Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pokemon GO Pokemon Center Elite Trainer Box Plus (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "FINAL FANTASY - Play Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "500 Years in the Future - Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "V Battle Deck [Rayquaza V]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "One Piece Tin Pack Set Vol. 1 -Gol.D.Roger-",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Lost Origin Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Silver Tempest Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin Display",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Carrying On His Will Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "2-Pack Blister [Zarude] (3-Tab)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Darkness Ablaze Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Black Bolt Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "FINAL FANTASY - Gift Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Paldea Evolved Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin [Lapras]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Premium Booster - Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "XY - Fates Collide Sleeved Booster Pack [Delphox BREAK]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Greninja EX & Kingdra EX Special Collection Box",
       "result": "http_301"
     }
   ],
