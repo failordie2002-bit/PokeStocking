@@ -1759,7 +1759,27 @@ init().catch(error=>{
     return null;
   }
 
-  async function geocode(s){
+  
+    const LOCAL_CITY_CENTERS = {
+      "staunton|va":[38.1496,-79.0717],
+      "waynesboro|va":[38.0685,-78.8895],
+      "harrisonburg|va":[38.4496,-78.8689],
+      "charlottesville|va":[38.0293,-78.4767],
+      "fishersville|va":[38.0990,-78.9692],
+      "verona|va":[38.2021,-79.0081],
+      "lexington|va":[37.7840,-79.4428],
+      "bridgewater|va":[38.3821,-78.9767],
+      "elkton|va":[38.4079,-78.6236],
+      "crozet|va":[38.0696,-78.7006]
+    };
+
+    function approximateCityPoint(s){
+      return LOCAL_CITY_CENTERS[
+        norm(s.city)+"|"+norm(s.state)
+      ] || null;
+    }
+
+    async function geocode(s){
     if(!s||!s.address||!s.city||!s.state){
       return null;
     }
@@ -1908,8 +1928,9 @@ init().catch(error=>{
     return records.filter(r=>{
       if(retailer&&r.retailer!==retailer)
         return false;
-      if(game&&r.game!==game)
-        return false;
+      if(game && r.game!==game &&
+           !(r.type==="watch" && !r.game))
+          return false;
       if(type&&r.type!==type)
         return false;
 
@@ -1924,7 +1945,7 @@ init().catch(error=>{
 
   function renderCards(items,unlocated){
     $("catcherResults").innerHTML=
-      items.slice(0,150).map(({record:r,miles})=>{
+      items.slice(0,150).map(({record:r,miles,approximate})=>{
         const store=getCandidate(r);
         const name=r.store_name||
           [r.retailer,r.city,r.state]
@@ -1952,13 +1973,20 @@ init().catch(error=>{
             <div class="date">
               ${esc(dateLabel(r.date))}
             </div>
-            <p>${esc(r.game||"Game unspecified")}</p>
+            <p>${esc(
+          r.game ||
+          (r.type==="watch"
+            ?"General TCG watch — game unverified"
+            :"Game unspecified")
+        )}</p>
             <p>${esc(r.product)}</p>
             <p>${esc(r.description)}</p>
             ${miles!=null?`
               <p><strong>
-                ${miles.toFixed(1)} miles
-                straight-line
+                ${approximate?"~":""}${miles.toFixed(1)}
+          miles ${approximate
+            ?"from approximate city center"
+            :"straight-line"}
               </strong></p>`:""}
             ${link?`
               <a href="${esc(link)}"
@@ -2058,18 +2086,28 @@ init().catch(error=>{
     for(const record of matches){
       const candidate=getCandidate(record);
       const point=candidate
-        ?resolved.get(candidateKey(candidate))
-        :null;
+          ?(resolved.get(candidateKey(candidate))
+            ||approximateCityPoint(candidate))
+          :approximateCityPoint(record);
 
       if(!point){
         unlocated++;
         continue;
       }
 
-      const miles=distance(origin,point);
-      if(miles<=radius){
-        results.push({record,miles});
-      }
+      const exact=Boolean(
+          candidate &&
+          resolved.get(candidateKey(candidate))
+        );
+        const miles=distance(origin,point);
+
+        if(miles<=radius+(exact?0:10)){
+          results.push({
+            record,
+            miles,
+            approximate:!exact
+          });
+        }
     }
 
     results.sort((a,b)=>a.miles-b.miles);
