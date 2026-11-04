@@ -1,3 +1,4 @@
+
 name: Restock Intelligence Daily
 
 on:
@@ -11,48 +12,52 @@ permissions:
 jobs:
   forecast:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Build evidence-based store forecasts
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate forecasts and repair integration
+        shell: bash
         run: |
-          cat > /tmp/restock_intelligence.py <<'PY'
+          cat > /tmp/build.py <<'PY'
           import json
+          import re
           import statistics
           from collections import defaultdict
           from datetime import datetime, timedelta, timezone
           from pathlib import Path
 
-          ROOT = Path('data')
-          NOW = datetime.now(timezone.utc)
+          root = Path("data")
+          now = datetime.now(timezone.utc)
 
-          def read(name, fallback):
+          def read(name, default):
               try:
                   return json.loads(
-                      (ROOT / name).read_text(encoding='utf-8')
+                      (root / name).read_text(encoding="utf-8")
                   )
               except (OSError, ValueError):
-                  return fallback
+                  return default
 
-          def dt(value):
+          def parse_date(value):
               if not value:
                   return None
               try:
                   d = datetime.fromisoformat(
-                      str(value).replace('Z', '+00:00')
+                      str(value).replace("Z", "+00:00")
                   )
                   if d.tzinfo is None:
-                      return d.replace(tzinfo=timezone.utc)
+                      d = d.replace(tzinfo=timezone.utc)
                   return d.astimezone(timezone.utc)
-              except ValueError:
+              except (TypeError, ValueError):
                   return None
 
-          def key(s):
-              return str(s or '').strip().casefold()
+          def norm(value):
+              return str(value or "").strip().lower()
 
-          stores = read('physical_inventory_sources.json', [])
-          sightings = read('v34_public_sightings.json', [])
-          history = read('restock_observations.json', [])
+          stores = read("physical_inventory_sources.json", [])
+          sightings = read("v34_public_sightings.json", [])
+          history = read("restock_observations.json", [])
 
           if not isinstance(stores, list):
               stores = []
@@ -62,336 +67,335 @@ jobs:
               history = []
 
           by_id = {
-              s.get('source_id'): s
-              for s in stores if s.get('source_id')
+              s["source_id"]: s
+              for s in stores
+              if isinstance(s, dict) and s.get("source_id")
           }
 
-          by_city = defaultdict(list)
+          by_location = defaultdict(list)
+
           for s in stores:
+              if not isinstance(s, dict):
+                  continue
               k = (
-                  key(s.get('chain')),
-                  key(s.get('city')),
-                  key(s.get('state'))
+                  norm(s.get("chain")),
+                  norm(s.get("city")),
+                  norm(s.get("state"))
               )
-              by_city[k].append(s)
+              by_location[k].append(s)
 
           observations = defaultdict(list)
           seen = set()
 
-          for record in sightings + history:
-              if not isinstance(record, dict):
+          for r in sightings + history:
+              if not isinstance(r, dict):
                   continue
 
-              if record.get('report_status') not in (
-                  'reported_in_stock',
-                  'verified_in_stock',
-                  'confirmed_delivery'
+              if r.get("report_status") not in (
+                  "reported_in_stock",
+                  "verified_in_stock",
+                  "confirmed_delivery"
               ):
                   continue
 
-              date = dt(
-                  record.get('observed_at') or
-                  record.get('reported_at_approx')
+              d = parse_date(
+                  r.get("observed_at") or
+                  r.get("reported_at_approx")
               )
 
-              if not date or date > NOW + timedelta(days=1):
+              if not d or d > now:
                   continue
 
-              sid = record.get('store_id')
+              sid = r.get("store_id")
 
               if sid not in by_id:
-                  matches = by_city[(
-                      key(record.get('retailer')),
-                      key(record.get('city')),
-                      key(record.get('state'))
+                  matches = by_location[(
+                      norm(r.get("retailer")),
+                      norm(r.get("city")),
+                      norm(r.get("state"))
                   )]
 
                   if len(matches) != 1:
                       continue
 
-                  sid = matches[0]['source_id']
+                  sid = matches[0].get("source_id")
 
-              dedup = (
-                  sid,
-                  date.date().isoformat(),
-                  key(record.get('game'))
-              )
-
-              if dedup in seen:
+              if sid not in by_id:
                   continue
 
-              seen.add(dedup)
+              game = norm(r.get("game") or "unknown")
+              day = d.date().isoformat()
+              unique = (sid, game, day)
 
-              observations[(
-                  sid,
-                  key(record.get('game') or 'unknown')
-              )].append({
-                  'date': date.date().isoformat(),
-                  'source_url': record.get('source_url') or '',
-                  'status': record.get('report_status')
+              if unique in seen:
+                  continue
+
+              seen.add(unique)
+
+              observations[(sid, game)].append({
+                  "date": day,
+                  "source_url": r.get("source_url") or ""
               })
 
-          output = []
+          forecasts = []
 
-          for (sid, game), obs in observations.items():
-              s = by_id.get(sid)
-              if not s:
-                  continue
+          for (sid, game), reports in observations.items():
+              store = by_id[sid]
 
               dates = sorted({
-                  datetime.fromisoformat(x['date']).date()
-                  for x in obs
+                  datetime.fromisoformat(x["date"]).date()
+                  for x in reports
               })
 
-              recent = [
+              dates = [
                   d for d in dates
-                  if d >= (NOW - timedelta(days=180)).date()
+                  if d >= (now - timedelta(days=180)).date()
               ]
 
-              if not recent:
+              if not dates:
                   continue
-
-              last = recent[-1]
 
               gaps = [
                   (b - a).days
-                  for a, b in zip(recent, recent[1:])
+                  for a, b in zip(dates, dates[1:])
                   if 2 <= (b - a).days <= 45
               ]
 
-              result = {
-                  'store_id': sid,
-                  'retailer': s.get('chain'),
-                  'city': s.get('city'),
-                  'state': s.get('state'),
-                  'game': game,
-                  'last_observed_date': last.isoformat(),
-                  'observation_count': len(recent),
-                  'basis': (
-                      'Store-matched positive community '
-                      'observations; not confirmed deliveries'
-                  ),
-                  'source_urls': list(dict.fromkeys(
-                      x['source_url']
-                      for x in obs if x['source_url']
-                  ))[:3],
-                  'generated_at': NOW.isoformat(),
-                  'forecast_type': 'insufficient_evidence',
-                  'confidence': 'insufficient',
-                  'earliest_date': None,
-                  'latest_date': None
+              entry = {
+                  "store_id": sid,
+                  "retailer": store.get("chain"),
+                  "city": store.get("city"),
+                  "state": store.get("state"),
+                  "game": game,
+                  "last_observed_date": dates[-1].isoformat(),
+                  "observation_count": len(dates),
+                  "confidence": "insufficient",
+                  "forecast_type": "insufficient_evidence",
+                  "earliest_date": None,
+                  "latest_date": None,
+                  "source_urls": list(dict.fromkeys(
+                      r["source_url"]
+                      for r in reports if r["source_url"]
+                  ))[:3]
               }
 
-              if len(recent) >= 3 and len(gaps) >= 2:
-                  period = statistics.median(gaps)
+              if len(dates) >= 3 and len(gaps) >= 2:
+                  interval = statistics.median(gaps)
 
-                  variability = statistics.median([
-                      abs(g - period) for g in gaps
+                  variation = statistics.median([
+                      abs(g - interval) for g in gaps
                   ])
 
-                  if variability <= max(3, period * .4):
-                      target = last + timedelta(
-                          days=round(period)
-                      )
+                  if variation <= max(3, interval * 0.4):
+                      step = max(2, round(interval))
+                      target = dates[-1] + timedelta(days=step)
 
-                      while target < NOW.date():
-                          target += timedelta(
-                              days=round(period)
-                          )
+                      while target < now.date():
+                          target += timedelta(days=step)
 
                       margin = max(
                           2,
-                          round(variability * 2),
-                          round(period * .2)
+                          round(variation * 2),
+                          round(interval * 0.2)
                       )
 
-                      result.update({
-                          'forecast_type':
-                              'historical_estimate',
-                          'confidence':
-                              'medium'
-                              if len(recent) >= 5
-                              and len(gaps) >= 4
-                              else 'low',
-                          'earliest_date': (
+                      entry.update({
+                          "confidence": (
+                              "medium" if len(dates) >= 5
+                              else "low"
+                          ),
+                          "forecast_type": "historical_estimate",
+                          "earliest_date": (
                               target - timedelta(days=margin)
                           ).isoformat(),
-                          'latest_date': (
+                          "latest_date": (
                               target + timedelta(days=margin)
                           ).isoformat(),
-                          'median_interval_days':
-                              round(period, 1)
+                          "median_interval_days": interval
                       })
 
-              output.append(result)
+              forecasts.append(entry)
 
-          ROOT.mkdir(exist_ok=True)
+          root.mkdir(exist_ok=True)
 
-          (ROOT / 'restock_intelligence.json').write_text(
+          (root / "restock_intelligence.json").write_text(
               json.dumps({
-                  'generated_at': NOW.isoformat(),
-                  'stores_with_evidence': len({
-                      x['store_id'] for x in output
+                  "generated_at": now.isoformat(),
+                  "stores_with_evidence": len({
+                      f["store_id"] for f in forecasts
                   }),
-                  'forecasts': output
-              }, indent=2) + '\n',
-              encoding='utf-8'
+                  "forecasts": forecasts
+              }, indent=2) + "\n",
+              encoding="utf-8"
           )
 
-          print(
-              'Stores with evidence:',
-              len({x['store_id'] for x in output})
-          )
-          print(
-              'Evidence-based date windows:',
-              sum(
-                  x['earliest_date'] is not None
-                  for x in output
-              )
-          )
-          PY
+          print("Forecast database generated.")
+          print("Evidence records:", len(forecasts))
+          print("Estimated date windows:", sum(
+              bool(f["earliest_date"]) for f in forecasts
+          ))
 
-          python /tmp/restock_intelligence.py
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
 
-      - name: Connect intelligence to Shipment Catcher V3
-        run: |
-          cat > /tmp/connect_intelligence.py <<'PY'
-          from pathlib import Path
+          start_marker = "<!-- POKESTOCK CATCHER V3 START -->"
+          end_marker = "<!-- POKESTOCK CATCHER V3 END -->"
 
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
+          if start_marker not in html or end_marker not in html:
+              raise SystemExit("Shipment Catcher V3 not found.")
 
-          if 'POKESTOCK CATCHER V3 START' not in s:
-              raise SystemExit('Shipment Catcher V3 missing')
+          if "POKESTOCK INTELLIGENCE V2" in html:
+              print("Integration already installed.")
+          else:
+              start = html.index(start_marker)
+              end = html.index(end_marker, start)
 
-          if 'POKESTOCK INTELLIGENCE V1' in s:
-              print('Integration already installed')
-              raise SystemExit(0)
+              before = html[:start]
+              block = html[start:end]
+              after = html[end:]
 
-          start = s.index(
-              '<!-- POKESTOCK CATCHER V3 START -->'
-          )
-          end = s.index(
-              '<!-- POKESTOCK CATCHER V3 END -->',
-              start
-          )
-
-          head, block, tail = (
-              s[:start], s[start:end], s[end:]
-          )
-
-          def change(old, new):
-              global block
-              if block.count(old) != 1:
-                  raise SystemExit(
-                      'Unexpected V3 structure: ' + old[:75]
+              def replace_once(pattern, replacement):
+                  global block
+                  block, count = re.subn(
+                      pattern,
+                      lambda match: replacement,
+                      block,
+                      count=1
                   )
-              block = block.replace(old, new, 1)
+                  if count != 1:
+                      raise SystemExit(
+                          "Integration pattern missing: " + pattern
+                      )
 
-          change(
-              'let watches=[];',
-              'let watches=[];\n'
-              '            let intelligence=[]; '
-              '// POKESTOCK INTELLIGENCE V1'
-          )
+              replace_once(
+                  r"let\s+watches\s*=\s*\[\s*\]\s*;",
+                  """let watches=[];
+                  let intelligence=[]; // POKESTOCK INTELLIGENCE V2"""
+              )
 
-          change(
-              'const ev=evidence(s);',
-              '''const ev=evidence(s);
-                const estimates=intelligence.filter(x=>
-                  x.store_id===s.source_id &&
-                  (!game || norm(x.game)===norm(game))
-                );'''
-          )
+              replace_once(
+                  r"const\s+ev\s*=\s*evidence\(s\)\s*;",
+                  """const ev=evidence(s);
+                  const estimates=intelligence.filter(x=>
+                    x.store_id===s.source_id &&
+                    (!game || norm(x.game)===norm(game))
+                  );"""
+              )
 
-          change(
-              'rows.push({\n                  s,reports,watch,category,',
-              'rows.push({\n'
-              '                  s,reports,watch,estimates,category,'
-          )
+              replace_once(
+                  r"rows\.push\(\{\s*s,reports,watch,category,",
+                  "rows.push({s,reports,watch,estimates,category,"
+              )
 
-          change(
-              'const url=safeUrl(',
-              '''const forecast=r.estimates.find(x=>
+              replace_once(
+                  r"const\s+url\s*=\s*safeUrl\(",
+                  """const forecast=r.estimates.find(x=>
                     x.earliest_date && x.latest_date
                   );
                   const lastEvidence=r.estimates.find(x=>
                     x.last_observed_date
                   );
-                  const url=safeUrl('''
-          )
+                  const url=safeUrl("""
+              )
 
-          change(
-              'const label=latest',
-              'const label=forecast '
-              '? "Historical estimate available" : latest'
-          )
+              replace_once(
+                  r"const\s+label\s*=\s*latest",
+                  """const label=forecast
+                    ? "Historical estimate available"
+                    : latest"""
+              )
 
-          change(
-              '${next?`',
-              '''${forecast?`
-                <p><strong>Estimated next restock window:</strong></p>
-                <p class="cv3-date">
-                  ${esc(date(forecast.earliest_date))}
-                  –
-                  ${esc(date(forecast.latest_date))}
-                </p>
-                <p>
-                  ${esc(forecast.confidence)} confidence;
-                  based on ${forecast.observation_count}
-                  observed dates. Not a confirmed delivery.
-                </p>
-              `:lastEvidence?`
-                <p>
-                  <strong>Last positive report:</strong>
-                  ${esc(date(lastEvidence.last_observed_date))}
-                </p>
-                <p>
-                  Not enough observations to estimate
-                  a defensible next date.
-                </p>
-              `:""}
-              ${next?`'''
-          )
+              replace_once(
+                  re.escape("${next?`"),
+                  """${forecast?`
+                    <p><strong>Estimated restock window:</strong></p>
+                    <p class="cv3-date">
+                      ${esc(date(forecast.earliest_date))}
+                      –
+                      ${esc(date(forecast.latest_date))}
+                    </p>
+                    <p>
+                      ${esc(forecast.confidence)} confidence,
+                      based on ${forecast.observation_count}
+                      distinct observed dates.
+                      Not a confirmed delivery.
+                    </p>
+                  `:lastEvidence?`
+                    <p>
+                      <strong>Last positive report:</strong>
+                      ${esc(date(lastEvidence.last_observed_date))}
+                    </p>
+                    <p>
+                      Insufficient evidence for a reliable
+                      future restock date.
+                    </p>
+                  `:""}
+                  ${next?`"""
+              )
 
-          change(
-              'const [s,r,w]=await Promise.all([',
-              'const [s,r,w,i]=await Promise.all(['
-          )
+              replace_once(
+                  r"const\s*\[\s*s\s*,\s*r\s*,\s*w\s*\]"
+                  r"\s*=\s*await\s+Promise\.all\(\[",
+                  "const [s,r,w,i]=await Promise.all(["
+              )
 
-          change(
-              'json("data/shipments.json",{})',
-              'json("data/shipments.json",{}),\n'
-              '                json("data/restock_intelligence.json",{})'
-          )
+              replace_once(
+                  r'json\("data/shipments\.json",\{\}\)',
+                  '''json("data/shipments.json",{}),
+                  json("data/restock_intelligence.json",{})'''
+              )
 
-          change(
-              'stores=Array.isArray(s)?s:[];',
-              'stores=Array.isArray(s)?s:[];\n'
-              '              intelligence=Array.isArray(i.forecasts)'
-              '?i.forecasts:[];'
-          )
+              replace_once(
+                  r"stores\s*=\s*Array\.isArray\(s\)\s*\?\s*s\s*:\s*\[\s*\]\s*;",
+                  """stores=Array.isArray(s)?s:[];
+                  intelligence=Array.isArray(i.forecasts)
+                    ?i.forecasts:[];"""
+              )
 
-          p.write_text(
-              head + block + tail,
-              encoding='utf-8'
-          )
+              html = before + block + after
+              path.write_text(html, encoding="utf-8")
+              print("Shipment Catcher integration installed.")
 
-          print('V3 intelligence connected')
           PY
 
-          python /tmp/connect_intelligence.py
+          python /tmp/build.py
 
-      - name: Commit updated evidence and site
+      - name: Validate generated files
+        shell: bash
         run: |
-          git config user.name 'github-actions[bot]'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("data/restock_intelligence.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert isinstance(data["forecasts"], list)
+
+          html = Path("index.html").read_text(
+              encoding="utf-8"
+          )
+
+          assert "POKESTOCK INTELLIGENCE V2" in html
+          assert "data/restock_intelligence.json" in html
+
+          print("Database and integration validated.")
+          PY
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
           git config user.email \
-            '41898282+github-actions[bot]@users.noreply.github.com'
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add index.html data/restock_intelligence.json
 
-          if ! git diff --cached --quiet; then
-            git commit -m \
-              'Update evidence-based store restock intelligence'
+          if git diff --cached --quiet; then
+            echo "No changes needed."
+          else
+            git commit -m "Repair restock intelligence integration"
             git push
           fi
