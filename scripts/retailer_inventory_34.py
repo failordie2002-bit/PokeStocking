@@ -1,0 +1,753 @@
+#!/usr/bin/env python3
+"""Pokestock 34: public storefront online orderability."""
+import json, re, time, hashlib
+from datetime import datetime, timezone, date
+from html import unescape
+from pathlib import Path
+from urllib.parse import urlparse
+from urllib.robotparser import RobotFileParser
+import requests
+
+DATA=Path('data')
+DATA.mkdir(exist_ok=True)
+NOW=datetime.now(timezone.utc).isoformat()
+TODAY=datetime.now(timezone.utc).date()
+UA='PokeStock/34 (github.com/failordie2002-bit/PokeStocking)'
+SESSION=requests.Session()
+SESSION.headers.update({
+ 'User-Agent':UA,
+ 'Accept':'application/json, text/plain;q=0.9, */*;q=0.5'
+})
+
+SEEDS=[
+ ('Columbia Sports Cards','https://columbiasportscard.com'),
+ ('Charm City Collectibles','https://www.charmcitycollectibles.com'),
+ ('VGMX','https://vgmx.com'),
+ ('Matrix TCG','https://matrixtcg.com'),
+ ('GodPull TCG','https://godpulltcg.myshopify.com'),
+ ('OffCourt TCG','https://offcourttcg.com'),
+ ('TCG Supply','https://storetcgsupply.myshopify.com'),
+]
+
+GAME_RULES=[
+ ('Pokémon',r'pok[eé]mon|pokemon'),
+ ('Union Arena',r'union\s*arena|\bue\d{2}bt\b'),
+ ('One Piece',r'\bone\s*piece\b'),
+ ('Gundam',r'\bgundam\b'),
+ ('Disney Lorcana',r'\blorcana\b'),
+ ('Magic: The Gathering',r'magic[: ]*the gathering|\bmtg\b'),
+ ('Yu-Gi-Oh!',r'yu[-\s]?gi[-\s]?oh'),
+ ('Digimon',r'\bdigimon\b'),
+ ('Dragon Ball Super',r'dragon\s*ball'),
+ ('Riftbound',r'\briftbound\b'),
+ ('Flesh and Blood',r'flesh\s*(?:and|&)\s*blood'),
+ ('Star Wars: Unlimited',r'star\s*wars[: ]*unlimited'),
+ ('Weiß Schwarz',r'wei(?:ss|ß)\s*schwarz'),
+ ('Cardfight!! Vanguard',r'\bvanguard\b'),
+ ('Kayou',r'\bkayou\b'),
+]
+
+FORMAT_RULES=[
+ ('Factory-sealed case',
+  r'booster\s*(?:box\s*)?case|factory\s*sealed\s*case|sealed\s*case'),
+ ('Booster box',r'booster\s*(?:box|display)|display\s*box'),
+ ('Booster bundle',r'booster\s*bundle'),
+ ('Elite Trainer Box',r'elite\s*trainer\s*box|\betb\b'),
+ ('Booster pack',
+  r'booster\s*pack|sleeved\s*booster|checklane\s*blister|blister\s*pack'),
+ ('Deck',
+  r'starter\s*deck|trial\s*deck|structure\s*deck|battle\s*deck|commander\s*deck|precon(?:structed)?\s*deck'),
+ ('Collection',
+  r'collection\s*(?:box|set)|premium\s*collection|special\s*collection|ex\s*box|battle\s*box'),
+ ('Tin',r'\bmini\s*tin\b|\btin\b'),
+ ('Collection',r'\bcollector\s*chest\b|build\s*(?:and|&)\s*battle'),
+]
+
+EXCLUDE=re.compile(
+ r'near[ -]?mint|lightly[ -]?played|moderately[ -]?played|'
+ r'\b(?:psa|bgs|cgc)\s*\d|single\s*card|singles\b|'
+ r'alternate\s*art|alt[ -]?art|\bparallel\b|\bgraded\b|'
+ r'proxy\b|orica\b|\bdigital\b|\bcode\s*card\b|'
+ r'\blot\s*of\b|\bempty\s*(?:box|pack)\b|\bopened\b|'
+ r'\brepack\b|mystery\s*(?:pack|box)|\bplaymat\b|'
+ r'\bbinder\b|\bsleeves\b|\btoploader\b|'
+ r'\bdeck\s*box\b|\bfigur(?:e|ine)\b|'
+ r'\bplush\b|\bkeychain\b',re.I
+)
+
+PREORDER=re.compile(
+ r'pre[ -]?order|pre[ -]?sale|pre[ -]?sell|'
+ r'presell|prepurchase|pre[ -]?purchase',re.I
+)
+
+def load(file,default):
+ try:
+  return json.loads(
+   (DATA/file).read_text(encoding='utf-8')
+  )
+ except (OSError,ValueError):
+  return default
+
+def write(file,value):
+ p=DATA/file
+ tmp=p.with_suffix('.tmp')
+ tmp.write_text(
+  json.dumps(value,indent=2,ensure_ascii=False)+'\n',
+  encoding='utf-8'
+ )
+ tmp.replace(p)
+
+def host_base(url):
+ try:
+  u=urlparse(str(url))
+  if u.scheme!='https' or not u.hostname:
+   return None
+  if not re.fullmatch(r'[a-zA-Z0-9.-]+',u.hostname):
+   return None
+  if u.hostname in {'localhost','127.0.0.1'}:
+   return None
+  if u.hostname.endswith('.local'):
+   return None
+  return 'https://'+u.hostname.lower()
+ except ValueError:
+  return None
+
+def sources():
+ rows=load('online_retailers.json',[])
+ found={}
+ existing=[
+  (x.get('name',''),x.get('base',''))
+  for x in rows if isinstance(x,dict)
+ ]
+ for name,url in SEEDS+existing:
+  b=host_base(url)
+  if b:
+   found[b]=(name,b)
+ return list(found.values())
+
+def game_of(product):
+ text=' '.join(
+  str(product.get(k,'') or '')
+  for k in ('title','product_type','tags','vendor')
+ ).lower()
+ for game,pattern in GAME_RULES:
+  if re.search(pattern,text,re.I):
+   return game
+ return None
+
+def format_of(product):
+ title=str(product.get('title',''))
+ typ=str(product.get('product_type',''))
+ tags=str(product.get('tags',''))
+
+ if EXCLUDE.search(title):
+  return None
+ if re.search(
+  r'\bsingles\b|\bgraded\b|\bsupplies\b',
+  tags,re.I
+ ):
+  return None
+
+ for name,pattern in FORMAT_RULES:
+  if re.search(pattern,title,re.I):
+   return name
+
+ for name,pattern in FORMAT_RULES:
+  if re.search(pattern,typ,re.I):
+   return name
+
+ return None
+
+releases=load('status.json',{}).get('releases',[])
+upcoming=[]
+
+for x in releases:
+ try:
+  d=date.fromisoformat(x.get('date',''))
+  if d<=TODAY:
+   continue
+  phrase=re.split(
+   r'[—–]',x.get('name','')
+  )[-1].strip().lower()
+  if len(phrase)>=9 and len(phrase.split())>=2:
+   upcoming.append((phrase,d))
+ except (ValueError,AttributeError):
+  pass
+
+def preorder_of(product):
+ title=str(product.get('title',''))
+ tags=str(product.get('tags',''))
+ desc=unescape(re.sub(
+  r'<[^>]*>',' ',
+  str(product.get('body_html') or '')
+ ))
+ text=' '.join([title,tags,desc[:260]])
+
+ if PREORDER.search(text):
+  return True
+
+ m=re.search(
+  r'(?:release\s*date|ships?\s+(?:on|after)|release\s+on)'
+  r'\s*[:\-]?\s*(\d{1,2})[./-](\d{1,2})'
+  r'[./-](\d{2,4})',
+  text,re.I
+ )
+ if m:
+  try:
+   mm,dd,yy=map(int,m.groups())
+   yy=yy+2000 if yy<100 else yy
+   if date(yy,mm,dd)>TODAY:
+    return True
+  except ValueError:
+   pass
+
+ name=title.lower()
+ return any(
+  phrase in name for phrase,_ in upcoming
+ )
+
+def image_of(product):
+ image=(
+  product.get('featured_image')
+  or product.get('image')
+ )
+ if isinstance(image,dict):
+  image=image.get('src')
+
+ if not image and isinstance(
+  product.get('images'),list
+ ) and product['images']:
+  image=product['images'][0]
+  if isinstance(image,dict):
+   image=image.get('src')
+
+ if not isinstance(image,str):
+  return ''
+ if image.startswith('//'):
+  image='https:'+image
+ return image if image.startswith('https://') else ''
+
+def fetch(url,robots):
+ if robots is not None and not robots.can_fetch(UA,url):
+  return None,'robots_disallowed'
+ try:
+  r=SESSION.get(
+   url,timeout=(5,11),allow_redirects=True
+  )
+  if r.status_code!=200:
+   return None,'HTTP_'+str(r.status_code)
+  if len(r.content)>5000000:
+   return None,'oversized_response'
+  if 'json' not in r.headers.get(
+   'Content-Type',''
+  ).lower():
+   return None,'not_json'
+  return r.json(),'ok'
+ except (requests.RequestException,ValueError) as e:
+  return None,type(e).__name__
+
+def robot_for(base):
+ try:
+  r=SESSION.get(
+   base+'/robots.txt',timeout=(4,7)
+  )
+  if r.status_code==200:
+   rp=RobotFileParser()
+   rp.parse(r.text.splitlines())
+   return rp,None
+  if r.status_code in (401,403):
+   return 'blocked','robots_HTTP_'+str(r.status_code)
+  return None,None
+ except requests.RequestException:
+  return None,None
+
+# Old offers are candidate URLs only.
+# Their previous stock values are NEVER trusted.
+old_rows=(
+ load('online_offers.json',[])
+ +load('v27_inventory.json',[])
+)
+cached_candidates={}
+
+for old in old_rows:
+ if not isinstance(old,dict):
+  continue
+
+ url=str(old.get('product_url') or '')
+ m=re.fullmatch(
+  r'(https://[a-zA-Z0-9.-]+)/products/([\w-]+)',
+  url
+ )
+ if not m:
+  continue
+
+ title=str(old.get('product_name') or '')
+ game=str(old.get('game') or '')
+
+ if format_of({
+  'title':title,'tags':game
+ }) is None:
+  continue
+
+ if game not in {g for g,_ in GAME_RULES}:
+  continue
+
+ key=(m.group(1).lower(),m.group(2))
+ cached_candidates[key]={
+  'url':url,'title':title,'game':game
+ }
+
+results=[]
+statuses=[]
+seen=set()
+
+for retailer,base in sources():
+ row={
+  'retailer':retailer,
+  'website':base,
+  'feed_pages_checked':0,
+  'products_seen':0,
+  'sealed_tcg_products':0,
+  'observations':0,
+  'available_to_order':0,
+  'preorders':0,
+  'out_of_stock':0,
+  'errors':[]
+ }
+ statuses.append(row)
+
+ robots,robots_err=robot_for(base)
+ if robots_err:
+  row['errors'].append(robots_err)
+  continue
+
+ scans=[
+  '/collections/pokemon/products.json?limit=250&page=1',
+  '/collections/union-arena/products.json?limit=250&page=1',
+  '/products.json?limit=250&page=1',
+  '/products.json?limit=250&page=2'
+ ]
+
+ own=[]
+
+ for route in scans:
+  url=base+route
+  data,status=fetch(url,robots)
+
+  if status!='ok':
+   row['errors'].append(
+    route.split('?')[0]+': '+status
+   )
+   continue
+
+  products=(
+   data.get('products')
+   if isinstance(data,dict) else None
+  )
+
+  if not isinstance(products,list):
+   row['errors'].append(
+    'invalid_product_feed: '+route
+   )
+   continue
+
+  row['feed_pages_checked']+=1
+  row['products_seen']+=len(products)
+
+  for p in products:
+   if not isinstance(p,dict):
+    continue
+
+   h=str(p.get('handle') or '').strip()
+   if not re.fullmatch(r'[\w-]{1,250}',h):
+    continue
+
+   key=(base,h)
+   if key in seen:
+    continue
+   seen.add(key)
+
+   game=game_of(p)
+   fmt=format_of(p)
+
+   if not game or not fmt:
+    continue
+
+   variants=p.get('variants',[])
+   if not isinstance(variants,list) or not variants:
+    continue
+
+   row['sealed_tcg_products']+=1
+   preorder=preorder_of(p)
+
+   for v in variants[:8]:
+    if not isinstance(v,dict):
+     continue
+    if type(v.get('available')) is not bool:
+     continue
+
+    name=str(p.get('title') or h)
+    available=v['available']
+    state=(
+     'Preorder' if preorder and available
+     else 'In stock' if available
+     else 'Out of stock'
+    )
+
+    product_url=base+'/products/'+h
+
+    offer={
+     'product_name':name,
+     'product_url':product_url,
+     'evidence_url':product_url,
+     'source_feed_url':url,
+     'retailer':retailer,
+     'game':game,
+     'format':fmt,
+     'variant':str(
+      v.get('title') or 'Default Title'
+     ),
+     'variant_id':str(v.get('id') or ''),
+     'sku':str(v.get('sku') or ''),
+     'availability':state,
+     'online_orderable':available,
+     'inventory_scope':'online',
+     'physical_stock_verified':False,
+     'evidence_type':'shopify_public_variant',
+     'evidence_meaning':
+      'Public storefront purchase flag; on-hand quantity unknown',
+     'checked_at':NOW,
+     'image_candidate':image_of(p),
+     'price':str(v.get('price') or ''),
+     'currency':'Unverified'
+    }
+    own.append(offer)
+
+  time.sleep(0.25)
+
+ # Try individual public product URLs
+ # when a full catalogue feed is unavailable.
+ direct=[
+  (k,v) for k,v in cached_candidates.items()
+  if k[0]==base and k not in seen
+ ]
+
+ direct.sort(key=lambda kv:(
+  kv[1]['game']!='Pokémon',
+  kv[1]['game']!='Union Arena',
+  'booster box' not in kv[1]['title'].lower()
+ ))
+
+ limit=12 if not own else 5
+
+ for (domain,handle),candidate in direct[:limit]:
+  endpoint=base+'/products/'+handle+'.js'
+  p,status=fetch(endpoint,robots)
+
+  if not isinstance(p,dict) or not isinstance(
+   p.get('variants'),list
+  ):
+   row['errors'].append(
+    'direct_'+handle+': '+status
+   )
+   continue
+
+  seen.add((base,handle))
+
+  product={
+   'title':p.get('title') or candidate['title'],
+   'product_type':p.get('type') or '',
+   'tags':p.get('tags') or candidate['game'],
+   'body_html':p.get('description') or ''
+  }
+
+  game=game_of(product) or candidate['game']
+  fmt=(
+   format_of(product)
+   or format_of({'title':candidate['title']})
+  )
+
+  if not fmt or game not in {
+   g for g,_ in GAME_RULES
+  }:
+   continue
+
+  row['sealed_tcg_products']+=1
+  preorder=preorder_of(product)
+
+  for v in p['variants'][:8]:
+   if not isinstance(v,dict):
+    continue
+   if type(v.get('available')) is not bool:
+    continue
+
+   av=v['available']
+   price=v.get('price')
+
+   try:
+    price=(
+     f'{int(price)/100:.2f}'
+     if price is not None else ''
+    )
+   except (TypeError,ValueError):
+    price=''
+
+   url=base+'/products/'+handle
+
+   own.append({
+    'product_name':str(product['title']),
+    'product_url':url,
+    'evidence_url':url,
+    'source_feed_url':endpoint,
+    'retailer':retailer,
+    'game':game,
+    'format':fmt,
+    'variant':str(
+     v.get('title') or 'Default Title'
+    ),
+    'variant_id':str(v.get('id') or ''),
+    'sku':str(v.get('sku') or ''),
+    'availability':
+     'Preorder' if av and preorder
+     else 'In stock' if av
+     else 'Out of stock',
+    'online_orderable':av,
+    'inventory_scope':'online',
+    'physical_stock_verified':False,
+    'evidence_type':
+     'shopify_public_variant_recheck',
+    'evidence_meaning':
+     'Fresh product flag; inventory quantity unknown',
+    'checked_at':
+     datetime.now(timezone.utc).isoformat(),
+    'image_candidate':image_of(p),
+    'price':price,
+    'currency':'Unverified'
+   })
+
+  time.sleep(0.25)
+
+ # Currency is used only if explicitly
+ # reported by the merchant.
+ if own:
+  currency_data,cs=fetch(
+   base+'/cart.js',robots
+  )
+  currency=(
+   currency_data.get('currency')
+   if isinstance(currency_data,dict)
+   else None
+  )
+
+  if isinstance(currency,str) and re.fullmatch(
+   r'[A-Z]{3}',currency
+  ):
+   for o in own:
+    o['currency']=currency
+  else:
+   row['errors'].append(
+    'currency_unverified: '+cs
+   )
+
+ # Recheck a subset of positive listings.
+ ordered=sorted(
+  [o for o in own if o['online_orderable']],
+  key=lambda x:(
+   x['game']!='Pokémon',
+   x['game']!='Union Arena',
+   x['format']!='Booster box'
+  )
+ )
+
+ checked_product=set()
+
+ for offer in ordered:
+  if len(checked_product)>=6:
+   break
+
+  path=urlparse(offer['product_url']).path
+  if path in checked_product:
+   continue
+  checked_product.add(path)
+
+  data,check=fetch(
+   base+path+'.js',robots
+  )
+
+  if not isinstance(data,dict) or not isinstance(
+   data.get('variants'),list
+  ):
+   continue
+
+  matches=[
+   v for v in data['variants']
+   if str(v.get('id') or '')==
+   offer['variant_id']
+  ]
+
+  if not matches or type(
+   matches[0].get('available')
+  ) is not bool:
+   continue
+
+  for o in own:
+   if o['product_url']!=offer['product_url']:
+    continue
+
+   matches=[
+    v for v in data['variants']
+    if str(v.get('id') or '')==
+    o['variant_id']
+   ]
+
+   if not matches or type(
+    matches[0].get('available')
+   ) is not bool:
+    continue
+
+   was_preorder=o['availability']=='Preorder'
+   av=matches[0]['available']
+   o['online_orderable']=av
+   o['availability']=(
+    'Preorder' if av and was_preorder
+    else 'In stock' if av
+    else 'Out of stock'
+   )
+   o['evidence_type']=(
+    'shopify_public_variant_recheck'
+   )
+   o['source_feed_url']=base+path+'.js'
+   o['checked_at']=(
+    datetime.now(timezone.utc).isoformat()
+   )
+
+  time.sleep(0.25)
+
+ row['observations']=len(own)
+ row['available_to_order']=sum(
+  o['availability']=='In stock' for o in own
+ )
+ row['preorders']=sum(
+  o['availability']=='Preorder' for o in own
+ )
+ row['out_of_stock']=sum(
+  o['availability']=='Out of stock'
+  for o in own
+ )
+
+ results.extend(own)
+
+ print(
+  retailer,
+  'products=',row['sealed_tcg_products'],
+  'offers=',row['observations'],
+  'orderable=',row['available_to_order'],
+  'preorders=',row['preorders'],
+  'errors=',len(row['errors']),
+  flush=True
+ )
+
+# Only this run's observations become
+# current inventory claims.
+results.sort(key=lambda x:(
+ x['availability']!='In stock',
+ x['availability']!='Preorder',
+ x['game']!='Pokémon',
+ x['game']!='Union Arena',
+ x['product_name'].lower()
+))
+
+write('v34_inventory.json',results)
+
+previous=load('v34_inventory_history.json',[])
+if not isinstance(previous,list):
+ previous=[]
+
+last={}
+for event in previous:
+ if isinstance(event,dict):
+  last[event.get('key')]=event.get(
+   'availability'
+  )
+
+new_events=[]
+for o in results:
+ key=hashlib.sha1((
+  o['product_url']+'|'+o['variant_id']
+ ).encode()).hexdigest()[:20]
+
+ if key in last and last[key]!=o['availability']:
+  new_events.append({
+   'key':key,
+   'product_name':o['product_name'],
+   'retailer':o['retailer'],
+   'old':last[key],
+   'availability':o['availability'],
+   'observed_at':o['checked_at'],
+   'product_url':o['product_url']
+  })
+ elif key not in last:
+  new_events.append({
+   'key':key,
+   'product_name':o['product_name'],
+   'retailer':o['retailer'],
+   'old':None,
+   'availability':o['availability'],
+   'observed_at':o['checked_at'],
+   'product_url':o['product_url']
+  })
+
+history_index={
+ e['key']:e for e in previous
+ if isinstance(e,dict) and e.get('key')
+}
+for e in new_events:
+ history_index[e['key']]=e
+
+write(
+ 'v34_inventory_history.json',
+ list(history_index.values())[-5000:]
+)
+
+report={
+ 'version':'34.0',
+ 'checked_at':NOW,
+ 'retailers_configured':len(statuses),
+ 'retailers_with_product_feeds':sum(
+  x['feed_pages_checked']>0 for x in statuses
+ ),
+ 'products_observed':sum(
+  x['sealed_tcg_products'] for x in statuses
+ ),
+ 'total_fresh_offers':len(results),
+ 'available_to_order':sum(
+  o['availability']=='In stock' for o in results
+ ),
+ 'preorders':sum(
+  o['availability']=='Preorder' for o in results
+ ),
+ 'out_of_stock':sum(
+  o['availability']=='Out of stock' for o in results
+ ),
+ 'independently_rechecked':sum(
+  o['evidence_type']=='shopify_public_variant_recheck'
+  for o in results
+ ),
+ 'confirmed_physical_stock':0,
+ 'confirmed_pickup':0,
+ 'checks':statuses,
+ 'limitations':[
+  'Available to order is a storefront purchase flag.',
+  'Overselling can occur without units on hand.',
+  'Preorders are not current stock.',
+  'No store shelf or pickup stock is inferred.',
+  'Inaccessible retailers remain unknown.'
+ ]
+}
+
+write('v34_inventory_report.json',report)
+
+print(json.dumps({
+ k:v for k,v in report.items()
+ if k not in ('checks','limitations')
+},indent=2),flush=True)

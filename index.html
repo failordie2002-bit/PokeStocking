@@ -457,6 +457,7 @@ footer{
         Prices and availability can change after the last check.
       </p>
       <div class="controls">
+        <p class="note">Online orderable means the retailer currently accepts an order, not that units are physically on hand. Preorders are separate.</p>
         <input id="onlineSearch" placeholder="Search products or sets">
         <select id="onlineGame">
           <option value="">All Games</option>
@@ -2001,8 +2002,8 @@ async function init() {
   const data=await Promise.all([
     jsonFile("data/status.json",database),
     jsonFile("data/stores.json",[]),
-    jsonFile("data/v27_inventory.json",null),
-    jsonFile("data/online_inventory_report.json",{}),
+    jsonFile("data/v34_inventory.json",[]),
+    jsonFile("data/v34_inventory_report.json",{}),
     jsonFile("data/shipments.json",shipments)
   ]);
 
