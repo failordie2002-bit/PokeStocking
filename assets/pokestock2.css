@@ -17,3 +17,31 @@ body.ps2-ready>header,body.ps2-ready>main,body.ps2-ready>footer{display:none!imp
 #ps2return{position:fixed;bottom:15px;right:15px;z-index:9999;background:#aa8ffa;color:#170c2e;border:0;border-radius:12px;padding:12px 16px;font-weight:900;box-shadow:0 8px 25px #0008}
 @media(max-width:680px){#ps2root .ps2top{padding:12px}#ps2root .ps2brand{font-size:21px}#ps2root .ps2place{font-size:10px;padding:7px}#ps2root .ps2tabs{gap:2px;padding:7px 8px}#ps2root .ps2tab{font-size:11px;padding:10px 2px}#ps2root .ps2wrap{padding:14px 11px}#ps2root .ps2hero{padding:24px 17px}#ps2root .ps2grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#ps2root .ps2grid .ps2card{padding:11px}#ps2root .ps2product{display:block}#ps2root .ps2product img{width:64px;height:72px}#ps2root .ps2map{height:285px}#ps2root .ps2metrics{gap:6px}#ps2root .ps2metric{padding:9px}#ps2root .ps2metric b{font-size:18px}#ps2root .ps2chart{padding:11px}#ps2root .ps2chartbars,#ps2root .ps2daylabels{gap:4px}}
 @media(max-width:380px){#ps2root .ps2grid{grid-template-columns:1fr}#ps2root .ps2tabs{padding:5px}#ps2root .ps2tab{font-size:10px}}
+
+/* POKESTOCK SCRIPT 42 FIX - VERSION 2 */
+
+/* Hide old standalone Social Discovery in Pokestock 2.0. */
+body.ps2-ready > #psgeo {
+  display: none !important;
+}
+
+/* Keep the streamlined four-tab navigation visible. */
+body.ps2-ready #ps2root .ps2top {
+  position: relative;
+  top: auto;
+  z-index: 10;
+}
+
+body.ps2-ready #ps2root .ps2tabs {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  background: #10172af7;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 9px 25px #050a1988;
+}
+
+html {
+  scroll-padding-top: 66px;
+}
+
