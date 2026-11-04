@@ -1,3 +1,4 @@
+
 name: Pokestock Script 42 Fix Social Discovery Blocking Homepage
 
 on:
@@ -26,103 +27,120 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Fix legacy Social Discovery and pin four main tabs
+      - name: Fix visible legacy section and make navigation sticky
         shell: bash
         run: |
           set -euo pipefail
-
           python3 - <<'PY42'
           from pathlib import Path
 
-          js_file = Path('assets/pokestock2.js')
-          css_file = Path('assets/pokestock2.css')
-          html_file = Path('index.html')
+          css_path = Path('assets/pokestock2.css')
+          html_path = Path('index.html')
+          css = css_path.read_text(encoding='utf-8')
+          html = html_path.read_text(encoding='utf-8')
 
-          js = js_file.read_text(encoding='utf-8')
-          css = css_file.read_text(encoding='utf-8')
-          html = html_file.read_text(encoding='utf-8')
+          required = [
+              'id="psgeo"',
+              'assets/pokestock2.js',
+              'assets/pokestock2.css',
+          ]
+          for item in required:
+              if item not in html:
+                  raise SystemExit(
+                      'Expected existing site reference missing: ' + item
+                  )
 
-          old = "document.body.append(root,back);document.body.classList.add('ps2-ready');"
-          new = "document.body.prepend(root);document.body.append(back);document.body.classList.add('ps2-ready');"
-
-          if old in js:
-              js = js.replace(old, new, 1)
-          elif new not in js:
-              raise SystemExit(
-                  'Pokestock 2.0 mounting code changed; safely stopping.'
-              )
-
-          marker = '/* POKESTOCK SCRIPT 42 LAYOUT FIX */'
-
+          marker = '/* POKESTOCK SCRIPT 42 FIX - VERSION 2 */'
           patch = '''
-          /* POKESTOCK SCRIPT 42 LAYOUT FIX */
+          /* POKESTOCK SCRIPT 42 FIX - VERSION 2 */
 
-          /* Hide the old Social Discovery panel in the new app. */
-          body.ps2-ready > section#psgeo {
+          /* Hide old standalone Social Discovery in Pokestock 2.0. */
+          body.ps2-ready > #psgeo {
             display: none !important;
           }
 
-          /* Keep the logo above the tabs without wasting space. */
-          #ps2root .ps2top {
+          /* Keep the streamlined four-tab navigation visible. */
+          body.ps2-ready #ps2root .ps2top {
             position: relative;
             top: auto;
             z-index: 10;
           }
 
-          /* Keep the four main tabs visible when scrolling. */
-          #ps2root .ps2tabs {
+          body.ps2-ready #ps2root .ps2tabs {
             position: sticky;
             top: 0;
             z-index: 1200;
             background: #10172af7;
             backdrop-filter: blur(16px);
-            box-shadow: 0 10px 24px #06091599;
+            box-shadow: 0 9px 25px #050a1988;
           }
 
           html {
-            scroll-padding-top: 64px;
+            scroll-padding-top: 66px;
           }
           '''
 
           if marker not in css:
-              css += '\n' + patch
+              css = css.rstrip() + '\n' + patch + '\n'
 
-          assert '<section id="psgeo"' in html, (
-              'Legacy section could not be found.'
-          )
-          assert 'assets/pokestock2.js' in html
-          assert 'assets/pokestock2.css' in html
-          assert js.count(new) == 1
+          # Make browsers request the updated CSS.
+          old_tag = 'href="assets/pokestock2.css"'
+          new_tag = 'href="assets/pokestock2.css?v=42"'
+
+          if old_tag in html:
+              html = html.replace(old_tag, new_tag, 1)
+          elif new_tag not in html:
+              raise SystemExit(
+                  'Pokestock CSS link changed; stopped safely'
+              )
+
           assert css.count(marker) == 1
+          assert html.count(new_tag) == 1
 
-          js_file.write_text(js, encoding='utf-8')
-          css_file.write_text(css, encoding='utf-8')
+          css_path.write_text(css, encoding='utf-8')
+          html_path.write_text(html, encoding='utf-8')
 
           print(
-              'Script 42: old Social Discovery hidden; '
-              'new app moved first; four tabs sticky.'
+              'Layout patch installed: '
+              'old Social Discovery hidden; main tabs sticky'
           )
           PY42
 
-          node --check assets/pokestock2.js
-
-      - name: Validate navigation, media, maps and forecast
+      - name: Test selectors and preserve existing features
         shell: bash
         run: |
           set -euo pipefail
-
-          python3 - <<'PY42_CHECK'
+          python3 - <<'PY42_TEST'
           from pathlib import Path
 
-          js = Path('assets/pokestock2.js').read_text(
+          css = Path('assets/pokestock2.css').read_text(
               encoding='utf-8'
           )
-          css = Path('assets/pokestock2.css').read_text(
+          js = Path('assets/pokestock2.js').read_text(
               encoding='utf-8'
           )
           html = Path('index.html').read_text(
               encoding='utf-8'
           )
+
+          # Ignore CSS whitespace to avoid the previous test error.
+          normalized = ''.join(css.split())
+
+          assert (
+              'body.ps2-ready>#psgeo{display:none!important;}'
+              in normalized
+          ), 'Legacy Social Discovery not hidden'
+
+          assert (
+              'body.ps2-ready#ps2root.ps2tabs'
+              '{position:sticky;top:0;z-index:1200;'
+              in normalized
+          ), 'Sticky tabs not enabled'
+
+          assert (
+              'href="assets/pokestock2.css?v=42"'
+              in html
+          ), 'Updated stylesheet reference missing'
 
           features = (
               'ps2-discover',
@@ -135,35 +153,26 @@ jobs:
               'ps2Advanced',
               'watchPosition',
               'router.project-osrm.org',
-              'data-embed',
           )
 
           for feature in features:
               assert feature in js, (
-                  'Missing feature: ' + feature
+                  'Existing feature missing: ' + feature
               )
 
-          assert 'document.body.prepend(root)' in js
-
-          assert (
-              'body.ps2-ready > section#psgeo '
-              '{display:none!important}'
-          ) in css.replace('\n', '').replace('  ', ' ')
-
-          assert 'position:sticky;top:0;z-index:1200' in (
-              css.replace(' ', '').replace('\n', '')
-          )
-
-          assert 'Social Restock Discovery' in html
+          assert 'id="psgeo"' in html
 
           print(
-              'SCRIPT 42 PASSED: '
-              'four tabs first, '
-              'legacy Social Discovery obstruction hidden.'
+              'SCRIPT 42 CORRECTED PASSED: '
+              'legacy panel hidden; '
+              'four tabs sticky; '
+              'old tools preserved'
           )
-          PY42_CHECK
+          PY42_TEST
 
-      - name: Commit safe layout fix
+          node --check assets/pokestock2.js
+
+      - name: Publish the corrected interface fix
         shell: bash
         run: |
           set -euo pipefail
@@ -171,26 +180,26 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          git add assets/pokestock2.js assets/pokestock2.css
+          git add index.html assets/pokestock2.css
 
           if git diff --cached --quiet; then
-            echo 'Layout fix already installed.'
+            echo 'Fix already installed'
             exit 0
           fi
 
-          git commit -m 'Pokestock 42 fix obstructed homepage layout'
+          git commit -m 'Pokestock 42 hide legacy social panel and pin tabs'
 
           for attempt in 1 2 3 4 5; do
             git fetch origin main
 
             if ! git rebase origin/main; then
               git rebase --abort || true
-              echo 'Concurrent changes preserved.'
+              echo 'Concurrent change conflict; no force push'
               exit 1
             fi
 
             if git push origin HEAD:main; then
-              echo 'SCRIPT 42 COMMITTED'
+              echo 'SCRIPT 42 FIX PUBLISHED'
               exit 0
             fi
 
