@@ -1,0 +1,397 @@
+name: Restock Intelligence Daily
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 11 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build evidence-based store forecasts
+        run: |
+          cat > /tmp/restock_intelligence.py <<'PY'
+          import json
+          import statistics
+          from collections import defaultdict
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          ROOT = Path('data')
+          NOW = datetime.now(timezone.utc)
+
+          def read(name, fallback):
+              try:
+                  return json.loads(
+                      (ROOT / name).read_text(encoding='utf-8')
+                  )
+              except (OSError, ValueError):
+                  return fallback
+
+          def dt(value):
+              if not value:
+                  return None
+              try:
+                  d = datetime.fromisoformat(
+                      str(value).replace('Z', '+00:00')
+                  )
+                  if d.tzinfo is None:
+                      return d.replace(tzinfo=timezone.utc)
+                  return d.astimezone(timezone.utc)
+              except ValueError:
+                  return None
+
+          def key(s):
+              return str(s or '').strip().casefold()
+
+          stores = read('physical_inventory_sources.json', [])
+          sightings = read('v34_public_sightings.json', [])
+          history = read('restock_observations.json', [])
+
+          if not isinstance(stores, list):
+              stores = []
+          if not isinstance(sightings, list):
+              sightings = []
+          if not isinstance(history, list):
+              history = []
+
+          by_id = {
+              s.get('source_id'): s
+              for s in stores if s.get('source_id')
+          }
+
+          by_city = defaultdict(list)
+          for s in stores:
+              k = (
+                  key(s.get('chain')),
+                  key(s.get('city')),
+                  key(s.get('state'))
+              )
+              by_city[k].append(s)
+
+          observations = defaultdict(list)
+          seen = set()
+
+          for record in sightings + history:
+              if not isinstance(record, dict):
+                  continue
+
+              if record.get('report_status') not in (
+                  'reported_in_stock',
+                  'verified_in_stock',
+                  'confirmed_delivery'
+              ):
+                  continue
+
+              date = dt(
+                  record.get('observed_at') or
+                  record.get('reported_at_approx')
+              )
+
+              if not date or date > NOW + timedelta(days=1):
+                  continue
+
+              sid = record.get('store_id')
+
+              if sid not in by_id:
+                  matches = by_city[(
+                      key(record.get('retailer')),
+                      key(record.get('city')),
+                      key(record.get('state'))
+                  )]
+
+                  if len(matches) != 1:
+                      continue
+
+                  sid = matches[0]['source_id']
+
+              dedup = (
+                  sid,
+                  date.date().isoformat(),
+                  key(record.get('game'))
+              )
+
+              if dedup in seen:
+                  continue
+
+              seen.add(dedup)
+
+              observations[(
+                  sid,
+                  key(record.get('game') or 'unknown')
+              )].append({
+                  'date': date.date().isoformat(),
+                  'source_url': record.get('source_url') or '',
+                  'status': record.get('report_status')
+              })
+
+          output = []
+
+          for (sid, game), obs in observations.items():
+              s = by_id.get(sid)
+              if not s:
+                  continue
+
+              dates = sorted({
+                  datetime.fromisoformat(x['date']).date()
+                  for x in obs
+              })
+
+              recent = [
+                  d for d in dates
+                  if d >= (NOW - timedelta(days=180)).date()
+              ]
+
+              if not recent:
+                  continue
+
+              last = recent[-1]
+
+              gaps = [
+                  (b - a).days
+                  for a, b in zip(recent, recent[1:])
+                  if 2 <= (b - a).days <= 45
+              ]
+
+              result = {
+                  'store_id': sid,
+                  'retailer': s.get('chain'),
+                  'city': s.get('city'),
+                  'state': s.get('state'),
+                  'game': game,
+                  'last_observed_date': last.isoformat(),
+                  'observation_count': len(recent),
+                  'basis': (
+                      'Store-matched positive community '
+                      'observations; not confirmed deliveries'
+                  ),
+                  'source_urls': list(dict.fromkeys(
+                      x['source_url']
+                      for x in obs if x['source_url']
+                  ))[:3],
+                  'generated_at': NOW.isoformat(),
+                  'forecast_type': 'insufficient_evidence',
+                  'confidence': 'insufficient',
+                  'earliest_date': None,
+                  'latest_date': None
+              }
+
+              if len(recent) >= 3 and len(gaps) >= 2:
+                  period = statistics.median(gaps)
+
+                  variability = statistics.median([
+                      abs(g - period) for g in gaps
+                  ])
+
+                  if variability <= max(3, period * .4):
+                      target = last + timedelta(
+                          days=round(period)
+                      )
+
+                      while target < NOW.date():
+                          target += timedelta(
+                              days=round(period)
+                          )
+
+                      margin = max(
+                          2,
+                          round(variability * 2),
+                          round(period * .2)
+                      )
+
+                      result.update({
+                          'forecast_type':
+                              'historical_estimate',
+                          'confidence':
+                              'medium'
+                              if len(recent) >= 5
+                              and len(gaps) >= 4
+                              else 'low',
+                          'earliest_date': (
+                              target - timedelta(days=margin)
+                          ).isoformat(),
+                          'latest_date': (
+                              target + timedelta(days=margin)
+                          ).isoformat(),
+                          'median_interval_days':
+                              round(period, 1)
+                      })
+
+              output.append(result)
+
+          ROOT.mkdir(exist_ok=True)
+
+          (ROOT / 'restock_intelligence.json').write_text(
+              json.dumps({
+                  'generated_at': NOW.isoformat(),
+                  'stores_with_evidence': len({
+                      x['store_id'] for x in output
+                  }),
+                  'forecasts': output
+              }, indent=2) + '\n',
+              encoding='utf-8'
+          )
+
+          print(
+              'Stores with evidence:',
+              len({x['store_id'] for x in output})
+          )
+          print(
+              'Evidence-based date windows:',
+              sum(
+                  x['earliest_date'] is not None
+                  for x in output
+              )
+          )
+          PY
+
+          python /tmp/restock_intelligence.py
+
+      - name: Connect intelligence to Shipment Catcher V3
+        run: |
+          cat > /tmp/connect_intelligence.py <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          if 'POKESTOCK CATCHER V3 START' not in s:
+              raise SystemExit('Shipment Catcher V3 missing')
+
+          if 'POKESTOCK INTELLIGENCE V1' in s:
+              print('Integration already installed')
+              raise SystemExit(0)
+
+          start = s.index(
+              '<!-- POKESTOCK CATCHER V3 START -->'
+          )
+          end = s.index(
+              '<!-- POKESTOCK CATCHER V3 END -->',
+              start
+          )
+
+          head, block, tail = (
+              s[:start], s[start:end], s[end:]
+          )
+
+          def change(old, new):
+              global block
+              if block.count(old) != 1:
+                  raise SystemExit(
+                      'Unexpected V3 structure: ' + old[:75]
+                  )
+              block = block.replace(old, new, 1)
+
+          change(
+              'let watches=[];',
+              'let watches=[];\n'
+              '            let intelligence=[]; '
+              '// POKESTOCK INTELLIGENCE V1'
+          )
+
+          change(
+              'const ev=evidence(s);',
+              '''const ev=evidence(s);
+                const estimates=intelligence.filter(x=>
+                  x.store_id===s.source_id &&
+                  (!game || norm(x.game)===norm(game))
+                );'''
+          )
+
+          change(
+              'rows.push({\n                  s,reports,watch,category,',
+              'rows.push({\n'
+              '                  s,reports,watch,estimates,category,'
+          )
+
+          change(
+              'const url=safeUrl(',
+              '''const forecast=r.estimates.find(x=>
+                    x.earliest_date && x.latest_date
+                  );
+                  const lastEvidence=r.estimates.find(x=>
+                    x.last_observed_date
+                  );
+                  const url=safeUrl('''
+          )
+
+          change(
+              'const label=latest',
+              'const label=forecast '
+              '? "Historical estimate available" : latest'
+          )
+
+          change(
+              '${next?`',
+              '''${forecast?`
+                <p><strong>Estimated next restock window:</strong></p>
+                <p class="cv3-date">
+                  ${esc(date(forecast.earliest_date))}
+                  –
+                  ${esc(date(forecast.latest_date))}
+                </p>
+                <p>
+                  ${esc(forecast.confidence)} confidence;
+                  based on ${forecast.observation_count}
+                  observed dates. Not a confirmed delivery.
+                </p>
+              `:lastEvidence?`
+                <p>
+                  <strong>Last positive report:</strong>
+                  ${esc(date(lastEvidence.last_observed_date))}
+                </p>
+                <p>
+                  Not enough observations to estimate
+                  a defensible next date.
+                </p>
+              `:""}
+              ${next?`'''
+          )
+
+          change(
+              'const [s,r,w]=await Promise.all([',
+              'const [s,r,w,i]=await Promise.all(['
+          )
+
+          change(
+              'json("data/shipments.json",{})',
+              'json("data/shipments.json",{}),\n'
+              '                json("data/restock_intelligence.json",{})'
+          )
+
+          change(
+              'stores=Array.isArray(s)?s:[];',
+              'stores=Array.isArray(s)?s:[];\n'
+              '              intelligence=Array.isArray(i.forecasts)'
+              '?i.forecasts:[];'
+          )
+
+          p.write_text(
+              head + block + tail,
+              encoding='utf-8'
+          )
+
+          print('V3 intelligence connected')
+          PY
+
+          python /tmp/connect_intelligence.py
+
+      - name: Commit updated evidence and site
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email \
+            '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add index.html data/restock_intelligence.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m \
+              'Update evidence-based store restock intelligence'
+            git push
+          fi
