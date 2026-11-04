@@ -554,6 +554,141 @@ footer{
     </section>
 
     <section id="releases" class="panel">
+<!-- PS28 START -->
+<div id="ps28">
+  <style>
+    #ps28 {
+      padding:16px;
+      margin:12px 0 24px;
+      border:1px solid #455a78;
+      border-radius:16px;
+      background:#14213a;
+      color:#edf5ff;
+    }
+    #ps28 * {box-sizing:border-box}
+    #ps28 .filters {
+      display:grid;
+      grid-template-columns:
+        repeat(auto-fit,minmax(145px,1fr));
+      gap:10px;
+      margin:14px 0;
+    }
+    #ps28 select,#ps28 input {
+      width:100%;
+      padding:11px;
+      border:1px solid #587195;
+      border-radius:9px;
+      background:#0c172b;
+      color:#fff;
+    }
+    #ps28 label {
+      display:block;
+      font-size:12px;
+      margin-bottom:5px;
+    }
+    #ps28 .cards {
+      display:grid;
+      grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+      gap:12px;
+    }
+    #ps28 .card {
+      padding:14px;
+      background:#20304b;
+      border:1px solid #465b7c;
+      border-radius:12px;
+      overflow-wrap:anywhere;
+    }
+    #ps28 .card h3 {
+      margin:6px 0;
+      font-size:16px;
+    }
+    #ps28 .muted {
+      color:#b8c9e2;
+      font-size:13px;
+      line-height:1.5;
+    }
+    #ps28 .status {
+      padding:11px;
+      background:#243753;
+      border-radius:9px;
+      margin:12px 0;
+    }
+    #ps28 a {color:#a9e2ff}
+    #ps28 .tag {
+      display:inline-block;
+      border:1px solid #667e9e;
+      border-radius:7px;
+      padding:3px 7px;
+      margin:3px 4px 3px 0;
+      font-size:11px;
+    }
+    #ps28 .discord {
+      margin-top:24px;
+      border-top:1px solid #465b7c;
+      padding-top:20px;
+    }
+    #releaseGrid {
+      display:none!important;
+    }
+  </style>
+
+  <h2>Upcoming TCG Drops</h2>
+  <p class="muted">
+    Public release announcements, retailer
+    drop leads and preorder news.
+    Updated every two hours.
+  </p>
+
+  <div class="filters">
+    <div>
+      <label for="ps28Game">TCG</label>
+      <select id="ps28Game">
+        <option value="">All TCGs</option>
+      </select>
+    </div>
+    <div>
+      <label for="ps28Retailer">Retailer</label>
+      <select id="ps28Retailer">
+        <option value="">All retailers</option>
+      </select>
+    </div>
+    <div>
+      <label for="ps28StatusFilter">Type</label>
+      <select id="ps28StatusFilter">
+        <option value="">All announcements</option>
+        <option value="dated">Dated leads</option>
+        <option value="undated">No date announced</option>
+      </select>
+    </div>
+    <div>
+      <label for="ps28Search">Search</label>
+      <input id="ps28Search"
+        type="search"
+        placeholder="Product or set name">
+    </div>
+  </div>
+
+  <div id="ps28Status" class="status">
+    Loading release announcements...
+  </div>
+
+  <div id="ps28Cards" class="cards">
+  </div>
+
+  <div class="discord">
+    <h2>Discord Restock Communities</h2>
+    <p class="muted">
+      Join public restock communities.
+      Pokestock does not read Discord
+      messages without authorized access.
+    </p>
+    <div id="ps28Discord" class="cards">
+    </div>
+  </div>
+</div>
+<!-- PS28 END -->
+
       <div class="section-label">Upcoming and Recent</div>
       <h2>TCG Release Tracker</h2>
       <p class="muted">Dates appear only when present in source records.</p>
@@ -2582,5 +2717,6 @@ init().catch(error=>{
 <script defer src="assets/social-shipment-upgrade.js"></script>
 <script defer src="assets/social-evidence-fix.js"></script>
 <script defer src="assets/script27.js"></script>
+<script defer src="assets/script28.js"></script>
 </body>
 </html>
