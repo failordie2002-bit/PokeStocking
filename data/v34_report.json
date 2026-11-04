@@ -1,0 +1,38 @@
+{
+  "version": "34",
+  "checked_at": "2026-11-04T00:07:02.922471+00:00",
+  "source_results": {
+    "Walmart": {
+      "http_status": 200,
+      "bytes": 434348,
+      "table_rows": 25,
+      "parsed": 25,
+      "unparsed": 0
+    },
+    "Target": {
+      "http_status": 200,
+      "bytes": 442065,
+      "table_rows": 25,
+      "parsed": 25,
+      "unparsed": 0
+    },
+    "Best Buy": {
+      "http_status": 200,
+      "bytes": 411519,
+      "table_rows": 20,
+      "parsed": 20,
+      "unparsed": 0
+    }
+  },
+  "new_reports": 70,
+  "total_reports_retained": 70,
+  "matched_store_reports": 0,
+  "unmatched_reports": 70,
+  "store_game_pairs_with_evidence": 0,
+  "notes": [
+    "Community shelf sightings are not shipment confirmations.",
+    "Relative timestamps are approximate; do not treat as precise shipment dates.",
+    "No game-level predictions until multiple independent restock days are established.",
+    "No Gundam or Union Arena source is connected yet."
+  ]
+}
