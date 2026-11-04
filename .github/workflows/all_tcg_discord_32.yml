@@ -1,0 +1,837 @@
+name: Pokestock Script 32 All TCG Discord Communities
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '11 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-discord-directory-32
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: python -m pip install requests beautifulsoup4
+
+      - name: Discover public TCG communities
+        shell: bash
+        run: |
+          mkdir -p data assets
+
+          cat > /tmp/ps32.py <<'PY'
+          import json
+          import re
+          import requests
+          from bs4 import BeautifulSoup
+          from pathlib import Path
+          from urllib.parse import urljoin,urlparse
+          from datetime import datetime,timezone
+
+          ROOT=Path("data")
+          NOW=datetime.now(timezone.utc).isoformat()
+          OUT=ROOT/"discord_directory_29.json"
+
+          SOURCES=[
+            "https://www.guildregister.com/c/tcg",
+            "https://discord.me/servers/tag/tcg",
+            "https://discord.me/servers/tag/pokemon",
+            "https://discordhome.com/servers/tag/pokemontcg",
+            "https://disboard.org/servers/tag/tcg",
+            "https://disboard.org/servers/tag/pokemon",
+            "https://discord.com/servers?query=pokemon%20tcg"
+          ]
+
+          GAMES={
+            "Pokemon":r"pokemon|pokémon|pok[eé]tcg",
+            "Union Arena":r"union.arena",
+            "One Piece":r"one.piece",
+            "Gundam":r"gundam",
+            "Magic":r"magic.the.gathering|\bmtg\b",
+            "Lorcana":r"lorcana",
+            "Riftbound":r"riftbound",
+            "Yu-Gi-Oh":r"yu.gi.oh|yugioh",
+            "Digimon":r"digimon",
+            "Dragon Ball":r"dragon.ball",
+            "Flesh and Blood":r"flesh.and.blood",
+            "Other TCG":r"\btcg\b|trading.card|card.collect"
+          }
+
+          REGIONS={
+            "VA":["virginia","shenandoah valley"],
+            "MD":["maryland"],
+            "DC":["washington dc","district of columbia"],
+            "CA":["california","socal","bay area"],
+            "TX":["texas","dfw","dallas","houston"],
+            "PA":["pennsylvania","lehigh valley"],
+            "NY":["new york"],
+            "FL":["florida"],
+            "NC":["north carolina"],
+            "OH":["ohio"],
+            "GA":["georgia"],
+            "WA":["washington state","seattle"],
+            "MN":["minnesota","twin cities"],
+            "IL":["illinois","chicago"]
+          }
+
+          session=requests.Session()
+          session.headers.update({
+            "User-Agent":"Mozilla/5.0 PokeStockDirectory/1.0"
+          })
+
+          def read(url):
+            try:
+              r=session.get(url,timeout=12)
+              if r.status_code!=200:
+                return None,str(r.status_code)
+              if len(r.content)>2500000:
+                return None,"oversized"
+              return BeautifulSoup(
+                r.text,"html.parser"
+              ),"ok"
+            except requests.RequestException as e:
+              return None,type(e).__name__
+
+          def clean(value):
+            return re.sub(
+              r"\s+"," ",str(value or "")
+            ).strip()
+
+          def valid(url):
+            try:
+              u=urlparse(url)
+              return (
+                u.scheme=="https" and
+                u.hostname in {
+                  "discord.com","discord.gg",
+                  "discord.me","www.discord.me",
+                  "disboard.org","www.disboard.org",
+                  "www.guildregister.com",
+                  "guildregister.com",
+                  "discordhome.com",
+                  "www.discordhome.com"
+                }
+              )
+            except ValueError:
+              return False
+
+          def listing(url):
+            p=urlparse(url)
+            path=p.path.rstrip("/")
+            host=(p.hostname or "").removeprefix("www.")
+
+            if host=="discord.com":
+              return bool(re.fullmatch(
+                r"/servers/[\w-]+",path
+              ))
+            if host=="discord.gg":
+              return bool(re.fullmatch(
+                r"/[\w-]+",path
+              ))
+            if host=="disboard.org":
+              return bool(re.fullmatch(
+                r"/server/\d+",path
+              ))
+            if host=="discord.me":
+              return bool(re.fullmatch(
+                r"/[\w-]+",path
+              )) and path not in {
+                "/servers","/login","/register"
+              }
+            if host=="guildregister.com":
+              return path.startswith("/s/") or (
+                path.startswith("/server/")
+              )
+            if host=="discordhome.com":
+              return (
+                path.startswith("/server/") or
+                path.startswith("/servers/")
+              ) and "/tag/" not in path
+
+            return False
+
+          def games(text):
+            return [
+              name for name,pattern in GAMES.items()
+              if re.search(pattern,text,re.I)
+            ]
+
+          def states(text):
+            result=[]
+            lower=text.lower()
+            for code,terms in REGIONS.items():
+              if any(re.search(
+                r"(?<![a-z])"+re.escape(term)+r"(?![a-z])",
+                lower
+              ) for term in terms):
+                result.append(code)
+            return result
+
+          def category(text):
+            t=text.lower()
+            if re.search(
+              r"restock|stock alert|drop alert|"
+              r"inventory|in.stock|shipment",t
+            ):
+              return "Restock Alerts"
+            if re.search(
+              r"buy.sell|buy/sell|trade|marketplace",t
+            ):
+              return "Buying and Trading"
+            if re.search(
+              r"tournament|competitive|webcam|deckbuild",t
+            ):
+              return "Playing and Tournaments"
+            return "Collector Community"
+
+          def load(path,default):
+            try:
+              return json.loads(path.read_text())
+            except (OSError,ValueError):
+              return default
+
+          existing=load(OUT,[])
+          entries={}
+
+          if isinstance(existing,list):
+            for item in existing:
+              if not isinstance(item,dict):
+                continue
+              url=item.get("url","")
+              if valid(url):
+                item.setdefault(
+                  "category","Collector Community"
+                )
+                item.setdefault("message_access",False)
+                item.setdefault("states",[])
+                item.setdefault("cities",[])
+                item.setdefault("games",[])
+                entries[url]=item
+
+          checked=[]
+          accepted=0
+          rejected=0
+
+          def add(url,text,source):
+            global accepted,rejected
+
+            if not valid(url) or not listing(url):
+              return
+
+            text=clean(text)[:1800]
+            matched=games(text)
+
+            if not matched:
+              rejected+=1
+              return
+
+            if url in entries:
+              item=entries[url]
+              item["games"]=sorted(set(
+                item.get("games",[])
+              )|set(matched))
+              return
+
+            title=text[:110]
+            if len(title)<5:
+              rejected+=1
+              return
+
+            entries[url]={
+              "name":title,
+              "url":url,
+              "games":matched,
+              "states":states(text),
+              "cities":[],
+              "coverage":"public_community",
+              "category":category(text),
+              "verification":"public_listing_unverified",
+              "message_access":False,
+              "source_url":source,
+              "discovered_at":NOW
+            }
+            accepted+=1
+
+          for source in SOURCES:
+            soup,status=read(source)
+            checked.append({
+              "url":source,
+              "status":status
+            })
+
+            if soup is None:
+              continue
+
+            seen=set()
+
+            for a in soup.find_all("a",href=True):
+              url=urljoin(source,a["href"])
+              url=url.split("#")[0]
+
+              if url in seen:
+                continue
+              seen.add(url)
+
+              if not listing(url):
+                continue
+
+              parent=a
+              for _ in range(2):
+                if parent.parent:
+                  parent=parent.parent
+
+              text=clean(
+                parent.get_text(" ",strip=True)
+              )
+
+              if len(text)>1800:
+                text=clean(
+                  a.get_text(" ",strip=True)
+                )
+
+              add(url,text,source)
+
+          # Seed additional public community
+          # listings with directly published links.
+          # These are not authenticated feeds.
+          SEEDS=[
+            {
+              "name":"TCG Dojo - Union Arena",
+              "url":"https://discord.gg/thetcgdojo",
+              "games":["Union Arena"],
+              "category":"Playing and Tournaments"
+            },
+            {
+              "name":"Draw3 - Union Arena",
+              "url":"https://discord.gg/draw3",
+              "games":["Union Arena"],
+              "category":"Playing and Tournaments"
+            },
+            {
+              "name":"r/PokemonTCG Community",
+              "url":"https://discord.do/r-pokemontcg/",
+              "games":["Pokemon"],
+              "category":"Collector Community"
+            }
+          ]
+
+          for seed in SEEDS:
+            url=seed["url"]
+
+            # discord.do is an external directory,
+            # not an authenticated Discord invite.
+            if urlparse(url).hostname=="discord.do":
+              continue
+
+            if url not in entries:
+              entries[url]={
+                **seed,
+                "states":[],
+                "cities":[],
+                "coverage":"nationwide",
+                "verification":"publicly_published_link",
+                "message_access":False,
+                "source_url":
+                  "https://www.reddit.com/r/union_arena/"
+                  "comments/1u29260/",
+                "discovered_at":NOW
+              }
+              accepted+=1
+
+          result=list(entries.values())
+
+          result.sort(key=lambda item:(
+            not bool(item.get("states")),
+            item.get("name","").lower()
+          ))
+
+          OUT.write_text(
+            json.dumps(
+              result,indent=2,
+              ensure_ascii=False
+            )+"\n"
+          )
+
+          report={
+            "updated_at":NOW,
+            "sources_checked":checked,
+            "total_communities":len(result),
+            "new_communities":accepted,
+            "rejected_candidates":rejected,
+            "location_tagged":sum(
+              bool(x.get("states")) for x in result
+            ),
+            "game_counts":{
+              game:sum(
+                game in x.get("games",[])
+                for x in result
+              )
+              for game in GAMES
+            },
+            "limitations":[
+              "Directory listings are not live message feeds.",
+              "Links may expire or become inaccessible.",
+              "Location is inferred from listing descriptions.",
+              "No Discord messages are collected.",
+              "No stock or shipment verification is implied."
+            ]
+          }
+
+          (
+            ROOT/"discord_discovery_report_32.json"
+          ).write_text(
+            json.dumps(report,indent=2)+"\n"
+          )
+
+          print(json.dumps({
+            "total":len(result),
+            "new":accepted,
+            "location_tagged":
+              report["location_tagged"],
+            "sources":checked
+          },indent=2))
+          PY
+
+          python /tmp/ps32.py
+
+      - name: Install searchable directory
+        shell: bash
+        run: |
+          cat > assets/discord32.js <<'JS'
+          (() => {
+            "use strict";
+
+            const $=id=>document.getElementById(id);
+            const esc=s=>String(s??"").replace(
+              /[&<>"']/g,
+              c=>({
+                "&":"&amp;","<":"&lt;",
+                ">":"&gt;",'"':"&quot;","'":"&#39;"
+              }[c])
+            );
+
+            let directory=[];
+
+            function location() {
+              try {
+                return JSON.parse(
+                  localStorage.getItem(
+                    "ps29Location"
+                  )||"{}"
+                );
+              } catch {
+                return {};
+              }
+            }
+
+            function start() {
+              const host=$("releases");
+              if (!host||$("ps32")) return;
+
+              const panel=document.createElement("div");
+              panel.id="ps32";
+              panel.innerHTML=`
+                <h2>Discover TCG Discord Communities</h2>
+                <p class="ps32-note">
+                  All communities are included.
+                  Location-specific groups appear first
+                  when geographic evidence exists.
+                </p>
+                <div class="ps32-controls">
+                  <input id="ps32Search"
+                    placeholder="Search communities">
+                  <select id="ps32Game">
+                    <option value="">All games</option>
+                  </select>
+                  <select id="ps32Type">
+                    <option value="">All community types</option>
+                    <option>Restock Alerts</option>
+                    <option>Buying and Trading</option>
+                    <option>Playing and Tournaments</option>
+                    <option>Collector Community</option>
+                  </select>
+                  <select id="ps32Location">
+                    <option value="all">All locations</option>
+                    <option value="local">My state first</option>
+                    <option value="only">My state only</option>
+                  </select>
+                </div>
+                <p id="ps32Count" class="ps32-note"></p>
+                <div id="ps32Results"></div>
+                <p class="ps32-note">
+                  These are public community listings,
+                  not live Discord message feeds.
+                  Stock and shipment claims are not verified.
+                </p>
+              `;
+
+              host.insertBefore(
+                panel,host.firstChild
+              );
+
+              [
+                "ps32Search","ps32Game",
+                "ps32Type","ps32Location"
+              ].forEach(id=>{
+                $(id).addEventListener(
+                  "input",render
+                );
+                $(id).addEventListener(
+                  "change",render
+                );
+              });
+
+              load();
+            }
+
+            function render() {
+              const q=$("ps32Search").value
+                .trim().toLowerCase();
+              const game=$("ps32Game").value;
+              const type=$("ps32Type").value;
+              const mode=$("ps32Location").value;
+              const state=String(
+                location().state||""
+              ).toUpperCase();
+
+              let rows=directory.filter(d=>{
+                const text=[
+                  d.name,
+                  d.category,
+                  ...(d.games||[])
+                ].join(" ").toLowerCase();
+
+                if(q&&!text.includes(q))
+                  return false;
+
+                if(game&&!(
+                  d.games||[]
+                ).includes(game))
+                  return false;
+
+                if(type&&d.category!==type)
+                  return false;
+
+                if(mode==="only") {
+                  return !!state&&(
+                    d.states||[]
+                  ).includes(state);
+                }
+
+                return true;
+              });
+
+              if(mode!=="all"&&state) {
+                rows.sort((a,b)=>{
+                  const av=(
+                    a.states||[]
+                  ).includes(state)?1:0;
+                  const bv=(
+                    b.states||[]
+                  ).includes(state)?1:0;
+                  return bv-av||
+                    a.name.localeCompare(b.name);
+                });
+              }
+
+              $("ps32Count").textContent=
+                rows.length+
+                " matching community listings";
+
+              const output=$("ps32Results");
+              output.replaceChildren();
+
+              if(!rows.length) {
+                output.textContent=
+                  "No matching communities found.";
+                return;
+              }
+
+              rows.slice(0,250).forEach(d=>{
+                let url;
+                try {
+                  url=new URL(d.url);
+                  if(url.protocol!=="https:")
+                    return;
+                } catch {
+                  return;
+                }
+
+                const card=document.createElement(
+                  "article"
+                );
+                card.className="ps32-card";
+
+                const local=!!state&&(
+                  d.states||[]
+                ).includes(state);
+
+                const title=document.createElement(
+                  "strong"
+                );
+                title.textContent=d.name;
+                card.appendChild(title);
+
+                const detail=document.createElement(
+                  "p"
+                );
+                detail.className="ps32-note";
+                detail.textContent=[
+                  d.category||
+                    "Collector Community",
+                  (d.games||[]).join(", "),
+                  local?"Matches your state":
+                    (d.states||[]).length?
+                    "Regional listing":
+                    "Location unspecified"
+                ].filter(Boolean).join(" · ");
+                card.appendChild(detail);
+
+                const link=document.createElement("a");
+                link.href=url.href;
+                link.target="_blank";
+                link.rel="noopener noreferrer";
+                link.textContent=
+                  "Open public community listing";
+                card.appendChild(link);
+
+                const note=document.createElement("p");
+                note.className="ps32-note";
+                note.textContent=
+                  "Public listing · Invite and " +
+                  "message access not verified";
+                card.appendChild(note);
+
+                output.appendChild(card);
+              });
+            }
+
+            async function load() {
+              try {
+                const response=await fetch(
+                  "data/discord_directory_29.json?v="+
+                  Date.now(),
+                  {cache:"no-store"}
+                );
+
+                if(!response.ok)
+                  throw Error("HTTP "+response.status);
+
+                const data=await response.json();
+
+                directory=Array.isArray(data)?
+                  data.filter(d=>
+                    d&&typeof d.name==="string"&&
+                    typeof d.url==="string"
+                  ):[];
+
+                const games=[
+                  ...new Set(
+                    directory.flatMap(
+                      d=>d.games||[]
+                    )
+                  )
+                ].sort();
+
+                games.forEach(g=>{
+                  const option=document.createElement(
+                    "option"
+                  );
+                  option.value=g;
+                  option.textContent=g;
+                  $("ps32Game").appendChild(option);
+                });
+
+                render();
+              } catch(e) {
+                $("ps32Count").textContent=
+                  "Directory could not be loaded: "+
+                  e.message;
+              }
+            }
+
+            if(document.readyState==="loading") {
+              document.addEventListener(
+                "DOMContentLoaded",start,
+                {once:true}
+              );
+            } else {
+              start();
+            }
+          })();
+          JS
+
+          cat > assets/discord32.css <<'CSS'
+          #ps32 {
+            background:#14213a;
+            color:#edf5ff;
+            padding:16px;
+            margin:14px 0 24px;
+            border:1px solid #506480;
+            border-radius:15px;
+          }
+          #ps32 * {
+            box-sizing:border-box;
+          }
+          #ps32 h2 {
+            margin:0 0 12px;
+          }
+          .ps32-controls {
+            display:grid;
+            grid-template-columns:
+              repeat(auto-fit,minmax(145px,1fr));
+            gap:10px;
+            margin:12px 0;
+          }
+          .ps32-controls input,
+          .ps32-controls select {
+            width:100%;
+            min-width:0;
+            padding:11px;
+            border:1px solid #587195;
+            border-radius:9px;
+            background:#0b182d;
+            color:white;
+            font:inherit;
+          }
+          .ps32-card {
+            margin:10px 0;
+            padding:13px;
+            background:#20314d;
+            border:1px solid #435b7c;
+            border-radius:11px;
+            overflow-wrap:anywhere;
+          }
+          .ps32-note {
+            font-size:13px;
+            color:#b9c9e0;
+            line-height:1.5;
+          }
+          .ps32-card a {
+            color:#a9e2ff;
+          }
+          CSS
+
+          python - <<'PY'
+          from pathlib import Path
+
+          p=Path("index.html")
+          html=p.read_text(encoding="utf-8")
+
+          assert '<section id="releases"' in html
+
+          css=(
+            '<link rel="stylesheet" '
+            'href="assets/discord32.css">'
+          )
+          js=(
+            '<script defer '
+            'src="assets/discord32.js"></script>'
+          )
+
+          if css not in html:
+            html=html.replace(
+              "</head>",css+"\n</head>",1
+            )
+
+          if js not in html:
+            html=html.replace(
+              "</body>",js+"\n</body>",1
+            )
+
+          p.write_text(
+            html,encoding="utf-8"
+          )
+          PY
+
+      - name: Validate
+        shell: bash
+        run: |
+          node --check assets/discord32.js
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          directory=json.loads(
+            Path(
+              "data/discord_directory_29.json"
+            ).read_text()
+          )
+
+          report=json.loads(
+            Path(
+              "data/discord_discovery_report_32.json"
+            ).read_text()
+          )
+
+          html=Path("index.html").read_text()
+
+          assert isinstance(directory,list)
+          assert len(directory)>=4
+          assert report["total_communities"]==len(directory)
+          assert html.count(
+            'assets/discord32.js'
+          )==1
+          assert html.count(
+            'assets/discord32.css'
+          )==1
+
+          for item in directory:
+            assert isinstance(item["states"],list)
+            assert isinstance(item["games"],list)
+            assert item.get("message_access") is not True
+
+          print(
+            "Script 32 validated:",
+            len(directory),"communities"
+          )
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            index.html \
+            assets/discord32.js \
+            assets/discord32.css \
+            data/discord_directory_29.json \
+            data/discord_discovery_report_32.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "Script 32 expand TCG Discord communities"
+
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main &&
+               git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+
+          echo "Publishing failed"
+          exit 1
