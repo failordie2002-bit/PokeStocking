@@ -1,0 +1,9 @@
+#ps38{background:#151d30;border:1px solid #405d85;border-radius:18px;padding:18px;margin:14px 0 22px}
+#ps38 h2{font-size:23px;margin:6px 0 10px}
+.ps38-form{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:16px 0}
+.ps38-form label{display:grid;gap:7px;flex:1;min-width:200px;color:#b9d0e5;font-size:13px}
+.ps38-form input,.ps38-form select{width:100%}
+.ps38-card details{margin-top:11px;border-top:1px solid #415875;padding-top:8px}
+.ps38-card summary{cursor:pointer;color:#9ecfff;font-weight:750}
+.ps38-card a{overflow-wrap:anywhere}
+@media(max-width:700px){#ps38{padding:12px}.ps38-form label{min-width:100%}}
