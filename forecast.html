@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,64 +7,137 @@
 <meta name="theme-color" content="#090d1b">
 <title>PokéStock | Restock Forecast</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#090d1b;color:#f5f8ff}
+:root{
+  color-scheme:dark;
+  font-family:system-ui,sans-serif;
+  background:#090d1b;
+  color:#f5f8ff;
+}
 *{box-sizing:border-box}
 body{margin:0}
-header{padding:20px 5%;background:#151d30;border-bottom:1px solid #354462}
+header{
+  background:#151d30;
+  border-bottom:1px solid #354462;
+  padding:22px 5%;
+}
 main{max-width:1200px;margin:auto;padding:22px 4%}
-a{color:#8dceff}
-h1{margin:12px 0}
+a{color:#89ceff}
+h1{margin:10px 0}
 p{line-height:1.5}
-.muted{color:#b0bfd8}
-.note{background:#29334a;border-left:3px solid #ffc94b;border-radius:9px;padding:14px;margin:18px 0}
-.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:18px 0}
-input,select{background:#202d47;color:white;border:1px solid #4b5e80;border-radius:10px;padding:12px;width:100%;font:inherit}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
-.stat,.card{background:#151d30;border:1px solid #354462;border-radius:16px;padding:17px}
+.muted{color:#b2c0d8}
+.note{
+  background:#29334a;
+  border-left:3px solid #ffc94b;
+  border-radius:10px;
+  padding:15px;
+  margin:18px 0;
+}
+.controls,.stats,.grid{
+  display:grid;
+  gap:12px;
+}
+.controls{
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  margin:20px 0;
+}
+.stats{
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+}
+.grid{
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  margin-top:20px;
+}
+.card,.stat{
+  background:#151d30;
+  border:1px solid #354462;
+  border-radius:16px;
+  padding:18px;
+}
 .stat strong{display:block;font-size:27px}
-.stat small{color:#b0bfd8}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0}
-.card h3{margin:8px 0}
-.date{font-size:23px;font-weight:800;color:#ffc94b}
-.pill{display:inline-block;border-radius:20px;background:#30435e;padding:5px 9px;font-size:12px;font-weight:700}
-.warning{color:#ffce85}
-.ok{color:#79efbb}
-button{background:#2869bd;border:0;color:white;padding:11px 15px;border-radius:10px;cursor:pointer}
+.stat small{color:#b2c0d8}
+input,select{
+  width:100%;
+  background:#202d47;
+  border:1px solid #4b5e80;
+  color:white;
+  border-radius:10px;
+  padding:12px;
+  font:inherit;
+}
+.date{
+  font-size:23px;
+  font-weight:800;
+  color:#ffcc62;
+  margin:12px 0;
+}
+.tag{
+  display:inline-block;
+  background:#30435e;
+  border-radius:20px;
+  padding:5px 10px;
+  font-size:12px;
+  font-weight:700;
+}
+.low{color:#ffce85}
+.unknown{color:#b2c0d8}
+.good{color:#75eeb7}
 </style>
 </head>
 <body>
 <header>
 <a href="index.html">← PokéStock Home</a>
 <h1>Restock Forecast</h1>
-<p class="muted">Experimental store-by-store TCG restock watch dates</p>
-<a href="sightings.html">View public sightings</a>
+<p class="muted">
+Experimental TCG restock check windows by retailer and store location
+</p>
+<a href="sightings.html">View source sightings</a>
 </header>
 <main>
+
 <div class="note">
-<strong>How to read these predictions:</strong>
-A watch date is a statistically suggested day to check a store,
-not a confirmed shipment or guaranteed stock arrival.
-Retailer-wide patterns may not represent an individual store's vendor route.
-Predictions are not validated until actual subsequent sightings confirm them.
+<strong>Forecast interpretation:</strong>
+These are suggested dates to check for inventory,
+not confirmed shipment or restock dates.
+Closed reports indicate previous community activity,
+not proof of a delivery. Retailer-level patterns
+do not establish a particular store's vendor schedule.
 </div>
+
 <div class="stats">
-<div class="stat"><strong id="stores">—</strong><small>Store candidates</small></div>
-<div class="stat"><strong id="observations">—</strong><small>Positive sightings</small></div>
-<div class="stat"><strong id="patterns">—</strong><small>Retailers with usable patterns</small></div>
-<div class="stat"><strong id="updated">—</strong><small>Last data collection</small></div>
+<div class="stat">
+<strong id="storeCount">—</strong>
+<small>Store candidates</small>
 </div>
+<div class="stat">
+<strong id="reportCount">—</strong>
+<small>Community reports</small>
+</div>
+<div class="stat">
+<strong id="forecastCount">—</strong>
+<small>Experimental check forecasts</small>
+</div>
+<div class="stat">
+<strong id="updated">—</strong>
+<small>Last collection</small>
+</div>
+</div>
+
 <div class="controls">
-<input id="search" placeholder="Search store, city or address">
-<select id="state"><option value="">All states</option></select>
-<select id="retailer"><option value="">All retailers</option></select>
+<input id="search" placeholder="Store, city, ZIP or address">
+<select id="state">
+<option value="">All states</option>
+</select>
+<select id="retailer">
+<option value="">All retailers</option>
+</select>
 <select id="game">
 <option value="Pokemon">Pokémon</option>
 <option value="Gundam">Gundam</option>
 <option value="Union Arena">Union Arena</option>
 <option value="One Piece">One Piece</option>
+<option value="Magic The Gathering">Magic</option>
+<option value="Yu-Gi-Oh">Yu-Gi-Oh</option>
 <option value="Lorcana">Lorcana</option>
-<option value="Magic The Gathering">Magic: The Gathering</option>
-<option value="Yu-Gi-Oh">Yu-Gi-Oh!</option>
 <option value="Digimon">Digimon</option>
 <option value="Dragon Ball">Dragon Ball</option>
 <option value="Star Wars Unlimited">Star Wars Unlimited</option>
@@ -73,198 +147,406 @@ Predictions are not validated until actual subsequent sightings confirm them.
 <option value="Cardfight Vanguard">Cardfight Vanguard</option>
 </select>
 <select id="coverage">
-<option value="forecast">Stores with forecasts</option>
-<option value="all">All stores, including unknown</option>
+<option value="forecast">Show available forecasts</option>
+<option value="all">Include stores with insufficient data</option>
 </select>
 </div>
-<p id="summary" class="muted">Loading data...</p>
+
+<p id="summary" class="muted">Loading forecasts...</p>
 <div id="results" class="grid"></div>
+
 </main>
 <script>
 "use strict";
+
 const $=id=>document.getElementById(id);
 const DAY=86400000;
-let stores=[],events=[],report={};
-const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-function esc(s){
-return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function norm(s){return String(s??"").trim().toLowerCase();}
-function dateOnly(s){
-const d=new Date(s);
-return Number.isFinite(d.getTime())?d:null;
-}
-function dayKey(d){
-return d.getUTCFullYear()+"-"+String(d.getUTCMonth()+1).padStart(2,"0")+"-"+String(d.getUTCDate()).padStart(2,"0");
-}
-function utcDay(s){
-const d=dateOnly(s);
-if(!d)return null;
-return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
-}
-function nextDays(){
-const today=new Date();
-const base=new Date(Date.UTC(today.getFullYear(),today.getMonth(),today.getDate()));
-return Array.from({length:14},(_,i)=>new Date(base.getTime()+i*DAY));
-}
-function uniqueOptions(id,values){
-const el=$(id);
-const selected=el.value;
-for(const v of [...new Set(values)].filter(Boolean).sort()){
-const o=document.createElement("option");
-o.value=v;o.textContent=v;el.appendChild(o);
-}
-el.value=selected;
-}
-function positive(e){
-return e.report_status==="reported_in_stock";
-}
-function gameEvents(game){
-return events.filter(e=>e.game===game&&positive(e)&&utcDay(e.reported_at_approx));
-}
-function retailerPattern(chain,game){
-const records=gameEvents(game).filter(e=>norm(e.retailer)===norm(chain));
-const grouped=new Map();
-for(const e of records){
-const d=utcDay(e.reported_at_approx);
-const key=[
-norm(e.retailer),norm(e.branch),norm(e.city),
-norm(e.state),dayKey(d)
-].join("|");
-if(!grouped.has(key))grouped.set(key,{date:d,day:d.getUTCDay()});
-}
-const unique=[...grouped.values()];
-const days=new Set(unique.map(x=>dayKey(x.date)));
-const counts=Array(7).fill(0);
-for(const item of unique)counts[item.day]++;
-const total=counts.reduce((a,b)=>a+b,0);
-return {counts,total,distinctDays:days.size};
-}
-function storePattern(store,game){
-const rows=gameEvents(game).filter(e=>e.store_id===store.source_id);
-const days=[...new Set(rows.map(e=>dayKey(utcDay(e.reported_at_approx))))];
-const counts=Array(7).fill(0);
-for(const day of days){
-const d=utcDay(day);
-if(d)counts[d.getUTCDay()]++;
-}
-return {counts,total:days.length,distinctDays:days.length};
-}
-function buildForecast(store,game){
-const local=storePattern(store,game);
-const chain=retailerPattern(store.chain,game);
-let evidence,scope;
-if(local.distinctDays>=3){
-evidence=local;scope="store";
-}else if(chain.distinctDays>=3&&chain.total>=5){
-evidence=chain;scope="retailer";
-}else{
-return {status:"insufficient",local,chain};
-}
-const max=Math.max(...evidence.counts);
-if(max<2)return {status:"insufficient",local,chain};
-const candidates=nextDays()
-.filter(d=>evidence.counts[d.getUTCDay()]===max);
-if(!candidates.length)return {status:"insufficient",local,chain};
-const chosen=candidates[0];
-return {
-status:"watch",
-date:chosen,
-weekday:DAYS[chosen.getUTCDay()],
-scope,local,chain,
-sample:evidence.total,
-weekdayCount:max,
-weekdayShare:max/evidence.total,
-confidence:"Experimental / unvalidated"
-};
-}
-function render(){
-const game=$("game").value;
-const q=norm($("search").value);
-const state=$("state").value;
-const retailer=$("retailer").value;
-const coverage=$("coverage").value;
-const filtered=stores
-.filter(s=>!state||s.state===state)
-.filter(s=>!retailer||s.chain===retailer)
-.filter(s=>!q||[
-s.name,s.chain,s.city,s.state,s.address
-].join(" ").toLowerCase().includes(q))
-.map(s=>({store:s,forecast:buildForecast(s,game)}))
-.filter(x=>coverage==="all"||x.forecast.status==="watch")
-.sort((a,b)=>{
-if(a.forecast.status!==b.forecast.status)
-return a.forecast.status==="watch"?-1:1;
-if(a.forecast.status==="watch"&&b.forecast.status==="watch"){
-const diff=a.forecast.date-b.forecast.date;
-if(diff)return diff;
-}
-return String(a.store.state).localeCompare(String(b.store.state))||
-String(a.store.city).localeCompare(String(b.store.city));
-});
-$("summary").textContent=filtered.length+
-" matching store locations for "+game+
-". Forecasts are watch dates, not confirmed shipments.";
-$("results").innerHTML=filtered.slice(0,300).map(({store:s,forecast:f})=>{
-const watch=f.status==="watch";
-const evidence=watch
-? f.scope==="store"
-?"Based on "+f.local.distinctDays+" separate sighting days at this candidate location."
-:"Based on "+f.chain.total+" distinct store-day reports across "+f.chain.distinctDays+" days for "+s.chain+". Not a location-specific delivery pattern."
-:"Not enough positive sightings for a defensible watch date.";
-return `<article class="card">
-<span class="pill">${esc(game)}</span>
-<h3>${esc(s.name)}</h3>
-<p>${esc(s.address||"Address unverified")}</p>
-<p>${esc(s.city)}, ${esc(s.state)}</p>
-${watch?`
-<div class="date">${esc(f.weekday)}, ${esc(f.date.toLocaleDateString("en-US",{timeZone:"UTC",month:"short",day:"numeric",year:"numeric"}))}</div>
-<p class="warning"><strong>Experimental restock watch</strong></p>
-<p class="muted">${esc(evidence)}</p>
-<p class="muted">Model basis: ${esc(f.scope==="store"?"Exact-store reports":"Retailer-wide reports")} · ${f.weekdayCount}/${f.sample} observed store-days fell on ${esc(f.weekday)}.</p>
-`:`
-<p class="warning"><strong>Forecast unavailable</strong></p>
-<p class="muted">${esc(evidence)}</p>
-`}
-<p class="muted">Store identity: candidate / unverified. Current shelf stock: unknown.</p>
-</article>`;
-}).join("")||'<div class="card">No matching forecasts. Select "All stores, including unknown" to inspect coverage.</div>';
-if(filtered.length>300)$("summary").textContent+=" Showing first 300 results; narrow your search.";
-}
-async function load(){
-try{
-const suffix="?v="+Date.now();
-const urls=[
-"data/physical_inventory_sources.json",
-"data/v34_public_sightings.json",
-"data/v34_report.json"
+const DAY_NAMES=[
+  "Sunday","Monday","Tuesday","Wednesday",
+  "Thursday","Friday","Saturday"
 ];
-const responses=await Promise.all(urls.map(u=>fetch(u+suffix,{cache:"no-store"})));
-if(responses.some(r=>!r.ok))throw Error("One or more data files are unavailable");
-[stores,events,report]=await Promise.all(responses.map(r=>r.json()));
-if(!Array.isArray(stores)||!Array.isArray(events))throw Error("Invalid data format");
-uniqueOptions("state",stores.map(s=>s.state));
-uniqueOptions("retailer",stores.map(s=>s.chain));
-$("stores").textContent=stores.length.toLocaleString();
-$("observations").textContent=gameEvents("Pokemon").length;
-$("patterns").textContent=[...new Set(stores.map(s=>s.chain))]
-.filter(chain=>{
-const p=retailerPattern(chain,"Pokemon");
-return p.distinctDays>=3&&p.total>=5&&Math.max(...p.counts)>=2;
-}).length;
-$("updated").textContent=report.checked_at?
-new Date(report.checked_at).toLocaleDateString():"Unknown";
-render();
-}catch(err){
-$("summary").textContent="Unable to load forecast data: "+err.message;
-console.error(err);
+let stores=[],reports=[],metadata={};
+
+function esc(value){
+  return String(value??"").replace(
+    /[&<>"']/g,
+    c=>({
+      "&":"&amp;","<":"&lt;",">":"&gt;",
+      '"':"&quot;","'":"&#39;"
+    }[c])
+  );
 }
+function norm(value){
+  return String(value??"").toLowerCase().trim();
 }
-for(const id of ["search","state","retailer","game","coverage"]){
-$(id).addEventListener("input",render);
+function parseDate(value){
+  const d=new Date(value);
+  return Number.isFinite(d.getTime())?d:null;
 }
+function dateKey(value){
+  const d=parseDate(value);
+  if(!d)return null;
+  return d.toISOString().slice(0,10);
+}
+function dateUTC(key){
+  return new Date(key+"T00:00:00Z");
+}
+function todayUTC(){
+  const now=new Date();
+  return new Date(Date.UTC(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  ));
+}
+function formatDate(date){
+  return date.toLocaleDateString("en-US",{
+    timeZone:"UTC",
+    weekday:"short",
+    month:"short",
+    day:"numeric"
+  });
+}
+function uniqueSelect(id,values){
+  const el=$(id);
+  for(const value of [...new Set(values)]
+    .filter(Boolean).sort()){
+    const option=document.createElement("option");
+    option.value=value;
+    option.textContent=value;
+    el.appendChild(option);
+  }
+}
+function isPositive(r){
+  return r.report_status==="reported_in_stock";
+}
+
+/*
+Deduplicate by location and calendar date.
+Multiple products seen at one store on the
+same day count as one store-day, not multiple
+independent restocks.
+*/
+function storeDays(items){
+  const map=new Map();
+
+  for(const r of items){
+    const day=dateKey(r.reported_at_approx);
+    if(!day)continue;
+
+    const location=[
+      norm(r.retailer),
+      norm(r.branch),
+      norm(r.city),
+      norm(r.state)
+    ].join("|");
+
+    const key=location+"|"+day;
+
+    if(!map.has(key)){
+      map.set(key,{
+        day,
+        date:dateUTC(day),
+        positive:false,
+        storeId:r.store_id||null
+      });
+    }
+
+    if(isPositive(r)){
+      map.get(key).positive=true;
+    }
+  }
+
+  return [...map.values()];
+}
+
+function pattern(items){
+  const days=storeDays(items);
+  const counts=Array(7).fill(0);
+  const positiveCounts=Array(7).fill(0);
+
+  for(const item of days){
+    const weekday=item.date.getUTCDay();
+    counts[weekday]++;
+    if(item.positive)positiveCounts[weekday]++;
+  }
+
+  return {
+    days,
+    counts,
+    positiveCounts,
+    distinctDates:new Set(
+      days.map(x=>x.day)
+    ).size,
+    positiveDays:days.filter(x=>x.positive).length
+  };
+}
+
+function buildForecast(store,game){
+  const matching=reports.filter(r=>
+    r.game===game &&
+    norm(r.retailer)===norm(store.chain)
+  );
+
+  const local=matching.filter(r=>
+    r.store_id===store.source_id
+  );
+
+  const localPattern=pattern(local);
+  const retailerPattern=pattern(matching);
+
+  let evidence=null;
+  let scope="";
+
+  // Exact-store evidence takes precedence.
+  if(localPattern.distinctDates>=3 &&
+     localPattern.positiveDays>=2){
+    evidence=localPattern;
+    scope="store";
+  }
+  // Fallback: multiple dates of retailer activity.
+  else if(retailerPattern.distinctDates>=3 &&
+          retailerPattern.days.length>=8 &&
+          retailerPattern.positiveDays>=2){
+    evidence=retailerPattern;
+    scope="retailer";
+  }
+
+  if(!evidence){
+    return {
+      available:false,
+      local:localPattern,
+      retailer:retailerPattern
+    };
+  }
+
+  /*
+  The sample may contain several days but not
+  an entire week. Never interpret absent weekdays
+  as proven no-restock days.
+  */
+  const today=todayUTC();
+  const candidates=[];
+
+  for(let i=0;i<14;i++){
+    const date=new Date(today.getTime()+i*DAY);
+    const weekday=date.getUTCDay();
+
+    if(evidence.counts[weekday]===0)continue;
+
+    const activity=evidence.counts[weekday];
+    const positives=evidence.positiveCounts[weekday];
+
+    /*
+    Positive sightings rank above closed-only
+    activity, while retaining closed reports
+    as weaker evidence of prior activity.
+    */
+    const score=positives*2+activity;
+
+    candidates.push({
+      date,weekday,score,activity,positives
+    });
+  }
+
+  if(!candidates.length){
+    return {available:false};
+  }
+
+  const bestScore=Math.max(
+    ...candidates.map(x=>x.score)
+  );
+
+  const strongest=candidates.filter(
+    x=>x.score===bestScore
+  );
+
+  // Choose the earliest upcoming occurrence
+  // of the strongest observed weekday.
+  strongest.sort((a,b)=>a.date-b.date);
+  const best=strongest[0];
+
+  const end=new Date(best.date.getTime()+DAY);
+
+  return {
+    available:true,
+    scope,
+    date:best.date,
+    end,
+    weekday:DAY_NAMES[best.weekday],
+    activity:best.activity,
+    positives:best.positives,
+    sample:evidence.days.length,
+    distinctDates:evidence.distinctDates,
+    local:localPattern,
+    retailer:retailerPattern,
+    confidence:"Experimental — not validated"
+  };
+}
+
+function render(){
+  const game=$("game").value;
+  const state=$("state").value;
+  const retailer=$("retailer").value;
+  const search=norm($("search").value);
+  const coverage=$("coverage").value;
+
+  const rows=stores
+    .filter(s=>!state||s.state===state)
+    .filter(s=>!retailer||s.chain===retailer)
+    .filter(s=>!search||[
+      s.name,s.chain,s.address,s.city,
+      s.state,s.postal_code
+    ].join(" ").toLowerCase().includes(search))
+    .map(store=>({
+      store,
+      forecast:buildForecast(store,game)
+    }))
+    .filter(x=>
+      coverage==="all"||x.forecast.available
+    );
+
+  rows.sort((a,b)=>{
+    if(a.forecast.available!==b.forecast.available){
+      return a.forecast.available?-1:1;
+    }
+    if(a.forecast.available&&b.forecast.available){
+      const delta=a.forecast.date-b.forecast.date;
+      if(delta)return delta;
+    }
+    const va=Number(a.store.state==="VA");
+    const vb=Number(b.store.state==="VA");
+    if(va!==vb)return vb-va;
+    return String(a.store.city).localeCompare(
+      String(b.store.city)
+    );
+  });
+
+  $("forecastCount").textContent=
+    rows.filter(x=>x.forecast.available).length;
+
+  $("summary").textContent=
+    rows.length+" matching "+game+" store locations. "+
+    "Experimental check dates are not confirmed shipments.";
+
+  $("results").innerHTML=rows.slice(0,300)
+    .map(({store:s,forecast:f})=>{
+      let forecastHTML;
+
+      if(f.available){
+        const basis=f.scope==="store"
+          ?"Evidence from this exact candidate store"
+          :"Retailer-wide activity; not this store's own schedule";
+
+        forecastHTML=`
+          <div class="date">
+            ${esc(formatDate(f.date))}
+            – ${esc(formatDate(f.end))}
+          </div>
+          <p class="low">
+            <strong>Experimental check window</strong>
+          </p>
+          <p class="muted">${esc(basis)}</p>
+          <p class="muted">
+            ${f.activity} observed store-days on
+            ${esc(f.weekday)} across
+            ${f.sample} total store-days.
+            ${f.positives} of those weekday
+            observations were positive.
+          </p>
+          <p class="muted">
+            ${f.distinctDates} distinct calendar
+            dates in the supporting sample.
+          </p>
+        `;
+      }else{
+        forecastHTML=`
+          <p class="unknown">
+            <strong>Insufficient evidence</strong>
+          </p>
+          <p class="muted">
+            No supported check window for this
+            store and TCG game yet.
+          </p>
+        `;
+      }
+
+      return `
+        <article class="card">
+          <span class="tag">${esc(game)}</span>
+          <h3>${esc(s.name)}</h3>
+          <p>${esc(s.address||"Address unverified")}</p>
+          <p>${esc(s.city)}, ${esc(s.state)}</p>
+          ${forecastHTML}
+          <p class="muted">
+            Store identity: candidate / unverified.
+            Current physical inventory: unknown.
+          </p>
+        </article>
+      `;
+    }).join("")||`
+      <div class="card">
+        No qualifying forecasts.
+        Try "Include stores with insufficient data."
+      </div>
+    `;
+
+  if(rows.length>300){
+    $("summary").textContent+=
+      " Showing the first 300; narrow your search.";
+  }
+}
+
+async function load(){
+  try{
+    const suffix="?v="+Date.now();
+    const paths=[
+      "data/physical_inventory_sources.json",
+      "data/v34_public_sightings.json",
+      "data/v34_report.json"
+    ];
+
+    const responses=await Promise.all(
+      paths.map(p=>fetch(p+suffix,{cache:"no-store"}))
+    );
+
+    if(responses.some(r=>!r.ok)){
+      throw Error("One or more data files are unavailable");
+    }
+
+    [stores,reports,metadata]=await Promise.all(
+      responses.map(r=>r.json())
+    );
+
+    if(!Array.isArray(stores)||
+       !Array.isArray(reports)){
+      throw Error("Invalid data format");
+    }
+
+    uniqueSelect("state",stores.map(s=>s.state));
+    uniqueSelect("retailer",stores.map(s=>s.chain));
+
+    $("storeCount").textContent=stores.length;
+    $("reportCount").textContent=reports.length;
+    $("updated").textContent=metadata.checked_at
+      ?new Date(metadata.checked_at).toLocaleDateString()
+      :"Unknown";
+
+    render();
+  }catch(error){
+    $("summary").textContent=
+      "Forecast loading error: "+error.message;
+    console.error(error);
+  }
+}
+
+for(const id of [
+  "search","state","retailer","game","coverage"
+]){
+  $(id).addEventListener("input",render);
+}
+
 load();
 </script>
 </body>
 </html>
-
