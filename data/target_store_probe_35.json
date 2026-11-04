@@ -1,15 +1,153 @@
 {
+  "version": "35.1",
   "result": "NOT_PROVEN",
-  "reason": "Playwright/Chromium installation failed or was skipped",
-  "observations": [],
-  "products": [],
-  "workflow_stages": {
-    "PYTHON_STEP": "success",
-    "BROWSER_STEP": "failure",
-    "SCANNER_STEP": "success",
-    "TEST_STEP": "skipped"
+  "store": {
+    "store_id": "2294",
+    "name": "Waynesboro",
+    "address": "811 Town Center Dr",
+    "zip": "22980"
   },
-  "diagnostic_saved_at": "2026-11-04T12:39:42.864053+00:00",
-  "install_log_tail": "Collecting playwright==1.56.0\n  Downloading playwright-1.56.0-py3-none-manylinux1_x86_64.whl.metadata (3.5 kB)\nCollecting pyee<14,>=13 (from playwright==1.56.0)\n  Downloading pyee-13.0.1-py3-none-any.whl.metadata (3.0 kB)\nCollecting greenlet<4.0.0,>=3.1.1 (from playwright==1.56.0)\n  Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)\nCollecting typing-extensions (from pyee<14,>=13->playwright==1.56.0)\n  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)\nDownloading playwright-1.56.0-py3-none-manylinux1_x86_64.whl (46.3 MB)\n   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 46.3/46.3 MB 164.1 MB/s  0:00:00\nDownloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)\n   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 621.4/621.4 kB 59.6 MB/s  0:00:00\nDownloading pyee-13.0.1-py3-none-any.whl (15 kB)\nDownloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)\nInstalling collected packages: typing-extensions, greenlet, pyee, playwright\n\nSuccessfully installed greenlet-3.5.6 playwright-1.56.0 pyee-13.0.1 typing-extensions-4.16.0\n\n[notice] A new release of pip is available: 26.2.2 -> 26.3\n[notice] To update, run: pip install --upgrade pip\nBEWARE: your OS is not officially supported by Playwright; installing dependencies for ubuntu26.04-x64 as a fallback.\nCannot install dependencies for ubuntu26.04-x64 with Playwright 1.56.1!\nFailed to install browsers\nError: ERROR: Playwright does not support chromium on ubuntu26.04-x64\n",
-  "scan_log_tail": ""
+  "checked_at": "2026-11-04T13:42:30.733576+00:00",
+  "products": [
+    {
+      "tcin": "1013166578",
+      "product": "Delta Reign Booster Bundle",
+      "store": {
+        "store_id": "2294",
+        "name": "Waynesboro",
+        "address": "811 Town Center Dr",
+        "zip": "22980"
+      },
+      "status": "unknown",
+      "reason": "No unambiguous Waynesboro store pickup status found",
+      "http_status": 200,
+      "proof": null,
+      "steps": [
+        "Searched ZIP 22980"
+      ],
+      "network": [
+        {
+          "path": "/location_fulfillment_aggregations/v1/secured/preferred_stores",
+          "status": 200
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/store_location_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/nearby_stores_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/store_location_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/general_recommendations_placement_v1",
+          "status": 435
+        }
+      ],
+      "checked_at": "2026-11-04T13:42:30.951526+00:00",
+      "title": "Pok\u00e9mon Trading Card Game: Mega Evolution\u2014Delta Reign Booster Bundle : Target",
+      "page_excerpt": "skip to main content skip to footer Ship to 50317 Altoona Target Circle\u2122 Target Circle\u2122 Card Target Circle 360\u2122 Registry & Wish List Weekly Ad Find Stores Categories Deals Pickup & delivery search Account TargetToys & GamesTrading CardsTrading Card GamesPok\u00e9mon Trading Cards Skip images Already have this product? Snap a pic for all to see! Upload photo Shop all Pokemon Pok\u00e9mon Trading Card Game: Mega Evolution\u2014Delta "
+    },
+    {
+      "tcin": "94884496",
+      "product": "Phantasmal Flames Booster Bundle",
+      "store": {
+        "store_id": "2294",
+        "name": "Waynesboro",
+        "address": "811 Town Center Dr",
+        "zip": "22980"
+      },
+      "status": "unknown",
+      "reason": "No unambiguous Waynesboro store pickup status found",
+      "http_status": 200,
+      "proof": null,
+      "steps": [
+        "Searched ZIP 22980"
+      ],
+      "network": [
+        {
+          "path": "/redsky_aggregations/v1/web/store_location_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/nearby_stores_v1",
+          "status": 435
+        },
+        {
+          "path": "/location_fulfillment_aggregations/v1/secured/preferred_stores",
+          "status": 200
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/store_location_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/general_recommendations_placement_v1",
+          "status": 435
+        }
+      ],
+      "checked_at": "2026-11-04T13:42:39.315672+00:00",
+      "title": "Pok\u00e9mon Trading Card Game: Mega Evolution\u2014 Phantasmal Flames Booster Bundle : Target",
+      "page_excerpt": "skip to main content skip to footer Ship to 50317 Altoona Target Circle\u2122 Target Circle\u2122 Card Target Circle 360\u2122 Registry & Wish List Weekly Ad Find Stores Categories Deals Pickup & delivery search Account TargetToys & GamesTrading CardsTrading Card GamesPok\u00e9mon Trading Cards Skip images @franaligatr999 \u201cLucky\u201d isn\u2019t the moment the stars align ~ it\u2019s when you finally look up and notice. \u2728 Let\u2019s hope for some good pull"
+    },
+    {
+      "tcin": "1011407490",
+      "product": "30th Celebration Booster Bundle",
+      "store": {
+        "store_id": "2294",
+        "name": "Waynesboro",
+        "address": "811 Town Center Dr",
+        "zip": "22980"
+      },
+      "status": "unknown",
+      "reason": "No unambiguous Waynesboro store pickup status found",
+      "http_status": 200,
+      "proof": null,
+      "steps": [
+        "Searched ZIP 22980"
+      ],
+      "network": [
+        {
+          "path": "/redsky_aggregations/v1/web/store_location_v1",
+          "status": 435
+        },
+        {
+          "path": "/location_fulfillment_aggregations/v1/secured/preferred_stores",
+          "status": 200
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/nearby_stores_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/store_location_v1",
+          "status": 435
+        },
+        {
+          "path": "/redsky_aggregations/v1/web/general_recommendations_placement_v1",
+          "status": 435
+        }
+      ],
+      "checked_at": "2026-11-04T13:42:47.776919+00:00",
+      "title": "Pok\u00e9mon Trading Card Game: 30th Celebration Booster Bundle Box : Target",
+      "page_excerpt": "skip to main content skip to footer Ship to 50317 Altoona Target Circle\u2122 Target Circle\u2122 Card Target Circle 360\u2122 Registry & Wish List Weekly Ad Find Stores Categories Deals Pickup & delivery search Account TargetToys & GamesTrading CardsTrading Card GamesPok\u00e9mon Trading Cards Skip images Valentina Already have this product? Snap a pic for all to see! Upload photo Explore Kids' Gifts Shop all Pokemon Pok\u00e9mon Trading Ca"
+    }
+  ],
+  "observations": [],
+  "note": "Pickup availability is not physical shelf proof.",
+  "reason": "No store-specific observation confirmed",
+  "finished_at": "2026-11-04T13:42:55.579039+00:00",
+  "workflow_stages": {
+    "python": "success",
+    "browser": "success",
+    "scanner": "success",
+    "test": "success"
+  },
+  "runner": "ubuntu-24.04",
+  "diagnostic_saved_at": "2026-11-04T13:42:55.642899+00:00",
+  "install_log_tail": "man-db/auto-update is not 'true'.\nProcessing triggers for fontconfig (2.15.0-1.1ubuntu2) ...\n\nRunning kernel seems to be up-to-date.\n\nNo services need to be restarted.\n\nNo containers need to be restarted.\n\nNo user sessions are running outdated binaries.\n\nNo VM guests are running outdated hypervisor (qemu) binaries on this host.\nDownloading Chromium 141.0.7390.37 (playwright build v1194) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1194/chromium-linux.zip\n|                                                                                |   0% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                                        |  10% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                                |  20% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                        |  30% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                |  40% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                        |  50% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                |  60% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                        |  70% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                |  80% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0        |  90% of 173.9 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0| 100% of 173.9 MiB\nChromium 141.0.7390.37 (playwright build v1194) downloaded to /home/runner/.cache/ms-playwright/chromium-1194\nDownloading FFMPEG playwright build v1011 from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip\n|                                                                                |   0% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                                        |  10% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                                |  20% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                        |  30% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                |  40% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                        |  50% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                |  60% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                        |  70% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                |  80% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0        |  90% of 2.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0| 100% of 2.3 MiB\nFFMPEG playwright build v1011 downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011\nDownloading Chromium Headless Shell 141.0.7390.37 (playwright build v1194) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1194/chromium-headless-shell-linux.zip\n|                                                                                |   0% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                                        |  10% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                                |  20% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                        |  30% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                                |  40% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                        |  50% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                                |  60% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                        |  70% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0                |  80% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0        |  90% of 104.3 MiB\n|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0| 100% of 104.3 MiB\nChromium Headless Shell 141.0.7390.37 (playwright build v1194) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1194\nChromium launched successfully\n",
+  "scan_log_tail": "1013166578 unknown No unambiguous Waynesboro store pickup status found\n94884496 unknown No unambiguous Waynesboro store pickup status found\n1011407490 unknown No unambiguous Waynesboro store pickup status found\nRESULT: NOT_PROVEN\n"
 }
