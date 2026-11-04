@@ -1,0 +1,294 @@
+{
+  "version": "37.0",
+  "updated_at": "2026-11-04T16:28:42.998336+00:00",
+  "inventory_scope": "online_restock_signal",
+  "lookback_days": 90,
+  "weekday_timezone": "America/New_York",
+  "source_count": 82,
+  "retailer_patterns": [
+    {
+      "retailer": "Amazon",
+      "signal_count": 35,
+      "distinct_observation_dates": 8,
+      "date_span_days": 7,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 1
+        },
+        {
+          "day": "Tuesday",
+          "count": 1
+        },
+        {
+          "day": "Wednesday",
+          "count": 2
+        },
+        {
+          "day": "Thursday",
+          "count": 1
+        },
+        {
+          "day": "Friday",
+          "count": 1
+        },
+        {
+          "day": "Saturday",
+          "count": 1
+        },
+        {
+          "day": "Sunday",
+          "count": 1
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
+      "retailer": "Best Buy",
+      "signal_count": 3,
+      "distinct_observation_dates": 2,
+      "date_span_days": 59,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 1
+        },
+        {
+          "day": "Tuesday",
+          "count": 0
+        },
+        {
+          "day": "Wednesday",
+          "count": 0
+        },
+        {
+          "day": "Thursday",
+          "count": 1
+        },
+        {
+          "day": "Friday",
+          "count": 0
+        },
+        {
+          "day": "Saturday",
+          "count": 0
+        },
+        {
+          "day": "Sunday",
+          "count": 0
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
+      "retailer": "Crunchyroll Store",
+      "signal_count": 1,
+      "distinct_observation_dates": 1,
+      "date_span_days": 0,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 0
+        },
+        {
+          "day": "Tuesday",
+          "count": 0
+        },
+        {
+          "day": "Wednesday",
+          "count": 0
+        },
+        {
+          "day": "Thursday",
+          "count": 0
+        },
+        {
+          "day": "Friday",
+          "count": 1
+        },
+        {
+          "day": "Saturday",
+          "count": 0
+        },
+        {
+          "day": "Sunday",
+          "count": 0
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
+      "retailer": "Macy's",
+      "signal_count": 3,
+      "distinct_observation_dates": 2,
+      "date_span_days": 3,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 1
+        },
+        {
+          "day": "Tuesday",
+          "count": 0
+        },
+        {
+          "day": "Wednesday",
+          "count": 0
+        },
+        {
+          "day": "Thursday",
+          "count": 0
+        },
+        {
+          "day": "Friday",
+          "count": 1
+        },
+        {
+          "day": "Saturday",
+          "count": 0
+        },
+        {
+          "day": "Sunday",
+          "count": 0
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
+      "retailer": "Pokémon Center",
+      "signal_count": 1,
+      "distinct_observation_dates": 1,
+      "date_span_days": 0,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 0
+        },
+        {
+          "day": "Tuesday",
+          "count": 0
+        },
+        {
+          "day": "Wednesday",
+          "count": 0
+        },
+        {
+          "day": "Thursday",
+          "count": 1
+        },
+        {
+          "day": "Friday",
+          "count": 0
+        },
+        {
+          "day": "Saturday",
+          "count": 0
+        },
+        {
+          "day": "Sunday",
+          "count": 0
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
+      "retailer": "Target",
+      "signal_count": 16,
+      "distinct_observation_dates": 3,
+      "date_span_days": 5,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 1
+        },
+        {
+          "day": "Tuesday",
+          "count": 0
+        },
+        {
+          "day": "Wednesday",
+          "count": 1
+        },
+        {
+          "day": "Thursday",
+          "count": 0
+        },
+        {
+          "day": "Friday",
+          "count": 1
+        },
+        {
+          "day": "Saturday",
+          "count": 0
+        },
+        {
+          "day": "Sunday",
+          "count": 0
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
+      "retailer": "Walmart",
+      "signal_count": 23,
+      "distinct_observation_dates": 7,
+      "date_span_days": 6,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 1
+        },
+        {
+          "day": "Tuesday",
+          "count": 1
+        },
+        {
+          "day": "Wednesday",
+          "count": 1
+        },
+        {
+          "day": "Thursday",
+          "count": 1
+        },
+        {
+          "day": "Friday",
+          "count": 1
+        },
+        {
+          "day": "Saturday",
+          "count": 1
+        },
+        {
+          "day": "Sunday",
+          "count": 1
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    }
+  ],
+  "product_patterns": [],
+  "method": "Counts distinct dates with alerts, never store inventory; requires 6 distinct dates across 21 days before a retailer-level watch window.",
+  "excluded_from_shipment_forecaster": true,
+  "store_level_inventory_confirmed": 0
+}

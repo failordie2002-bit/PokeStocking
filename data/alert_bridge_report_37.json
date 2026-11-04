@@ -1,0 +1,28 @@
+{
+  "version": "37.0",
+  "updated_at": "2026-11-04T16:28:42.998336+00:00",
+  "external_delayed_alerts": 82,
+  "user_forwarded_notifications": 0,
+  "new_notification_status": "no_dispatch_payload",
+  "new_notification_recorded": false,
+  "total_90d_alerts": 82,
+  "retailers": {
+    "Amazon": 35,
+    "Best Buy": 3,
+    "Crunchyroll Store": 1,
+    "Macy's": 3,
+    "Pokémon Center": 1,
+    "Target": 16,
+    "Walmart": 23
+  },
+  "best_buy_24h": 0,
+  "retailers_with_forecast_watch_window": 0,
+  "verified_online_stock_from_these_alerts": 0,
+  "verified_in_store_stock_from_these_alerts": 0,
+  "notes": [
+    "Data shown in-house. External purchase/source links are optional.",
+    "Third-party restock alerts are historical evidence, not current inventory.",
+    "Online restocks are never added to physical shipment events.",
+    "Live Android forwarding requires an authorized one-time setup."
+  ]
+}
