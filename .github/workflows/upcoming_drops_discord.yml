@@ -1,0 +1,830 @@
+name: Pokestock Script 28 Upcoming Drops and Discord
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-upcoming-drops
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Discover release announcements
+        shell: bash
+        run: |
+          mkdir -p data assets
+
+          cat > /tmp/ps28.py <<'PY'
+          import json
+          import re
+          import hashlib
+          import urllib.parse
+          import urllib.request
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from datetime import datetime, timezone, timedelta
+          from email.utils import parsedate_to_datetime
+
+          ROOT = Path("data")
+          NOW = datetime.now(timezone.utc)
+          GAMES = [
+              "Pokemon", "Union Arena", "One Piece",
+              "Gundam Card Game", "Disney Lorcana",
+              "Magic The Gathering", "Yu-Gi-Oh",
+              "Digimon", "Riftbound",
+              "Star Wars Unlimited",
+              "Dragon Ball Super", "Flesh and Blood"
+          ]
+          RETAILERS = [
+              "Pokemon Center", "Walmart", "Target",
+              "Best Buy", "GameStop", "Amazon",
+              "CVS", "Walgreens", "Dollar General",
+              "Dollar Tree", "Family Dollar",
+              "Five Below", "Barnes & Noble"
+          ]
+          OFFICIAL = [
+              "pokemon.com",
+              "pokemoncenter.com",
+              "pokemoncenter-online.com",
+              "bandai-tcg-plus.com",
+              "en.onepiece-cardgame.com",
+              "unionarena-tcg.com",
+              "gundam-gcg.com",
+              "magic.wizards.com",
+              "disneylorcana.com",
+              "yugioh-card.com",
+              "en.digimoncard.com",
+              "fabtcg.com"
+          ]
+          QUERIES = [
+              '"Pokemon TCG" "release date" 2026',
+              '"Pokemon TCG" "release date" 2027',
+              '"Pokemon" "booster bundle" "release" retailer',
+              '"Pokemon" "exclusive" "release" Target Walmart',
+              '"Pokemon Center" "drop" "November" 2026',
+              '"Union Arena" "release date" 2026',
+              '"Union Arena" "release date" 2027',
+              '"One Piece card game" "release date"',
+              '"Gundam Card Game" "release date"',
+              '"Disney Lorcana" "release date"',
+              '"Magic The Gathering" "release date"',
+              '"Riftbound" "release date"',
+              '"Pokemon" "preorder" "GameStop"',
+              '"Pokemon" "restock" "Best Buy"',
+              '"Pokemon" "release" "CVS" "Walgreens"'
+          ]
+
+          def read(name, fallback):
+              try:
+                  return json.loads(
+                      (ROOT / name).read_text(
+                          encoding="utf-8"
+                      )
+                  )
+              except (OSError, ValueError):
+                  return fallback
+
+          def save(name, value):
+              (ROOT / name).write_text(
+                  json.dumps(
+                      value, indent=2,
+                      ensure_ascii=False
+                  ) + "\n",
+                  encoding="utf-8"
+              )
+
+          def clean(s):
+              return re.sub(
+                  r"\s+", " ",
+                  re.sub(r"<[^>]*>", " ", str(s or ""))
+              ).strip()
+
+          def discover(query):
+              url = (
+                  "https://news.google.com/rss/search?q="
+                  + urllib.parse.quote(query)
+                  + "&hl=en-US&gl=US&ceid=US:en"
+              )
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent":
+                      "Mozilla/5.0 PokestockReleaseMonitor"
+                  }
+              )
+              try:
+                  with urllib.request.urlopen(
+                      req, timeout=12
+                  ) as response:
+                      xml = response.read(900000)
+                  root = ET.fromstring(xml)
+                  return root.findall(".//item")[:30]
+              except Exception as exc:
+                  print("Source unavailable:", str(exc)[:150])
+                  return []
+
+          def explicit_date(text):
+              # Only accept dates with a four-digit
+              # year, not inferred calendar dates.
+              patterns = [
+                  r"\b(20(?:26|27|28))-(0?[1-9]|1[0-2])-"
+                  r"(0?[1-9]|[12]\d|3[01])\b",
+                  r"\b(0?[1-9]|1[0-2])/"
+                  r"(0?[1-9]|[12]\d|3[01])/"
+                  r"(20(?:26|27|28))\b",
+                  r"\b(January|February|March|April|May|June|"
+                  r"July|August|September|October|November|"
+                  r"December)\s+([0-3]?\d),?\s+"
+                  r"(20(?:26|27|28))\b"
+              ]
+              for index, pattern in enumerate(patterns):
+                  for match in re.finditer(
+                      pattern, text, re.I
+                  ):
+                      try:
+                          if index == 0:
+                              y,m,d = map(int,match.groups())
+                          elif index == 1:
+                              m,d,y = map(int,match.groups())
+                          else:
+                              month,day,year = match.groups()
+                              m = datetime.strptime(
+                                  month[:3], "%b"
+                              ).month
+                              d,y = int(day),int(year)
+                          date = datetime(
+                              y,m,d,tzinfo=timezone.utc
+                          ).date()
+                          if (
+                              NOW.date() -
+                              timedelta(days=14)
+                              <= date <=
+                              NOW.date() +
+                              timedelta(days=550)
+                          ):
+                              return date.isoformat()
+                      except ValueError:
+                          continue
+              return None
+
+          def game_for(text, query):
+              lower = text.lower()
+              for game in GAMES:
+                  if game.lower() in lower:
+                      return game
+              for game in GAMES:
+                  if game.lower() in query.lower():
+                      return game
+              return "Other TCG"
+
+          def retailer_for(text):
+              lower = text.lower()
+              return [
+                  r for r in RETAILERS
+                  if r.lower() in lower
+              ]
+
+          old = read("upcoming_drops_28.json", {})
+          previous = old.get("announcements", []) \
+              if isinstance(old, dict) else []
+          found = {}
+
+          for query in QUERIES:
+              for item in discover(query):
+                  title = clean(item.findtext("title"))
+                  desc = clean(item.findtext("description"))
+                  url = clean(item.findtext("link"))
+                  source = clean(
+                      item.findtext("source")
+                  )
+                  published = clean(
+                      item.findtext("pubDate")
+                  )
+                  if not title or not url:
+                      continue
+
+                  try:
+                      pub = parsedate_to_datetime(
+                          published
+                      ).astimezone(timezone.utc)
+                  except Exception:
+                      continue
+
+                  if pub < NOW - timedelta(days=90):
+                      continue
+
+                  text = title + " " + desc
+                  lower = text.lower()
+
+                  if not any(
+                      word in lower for word in [
+                          "release", "launch", "drop",
+                          "preorder", "pre-order",
+                          "restock", "available"
+                      ]
+                  ):
+                      continue
+
+                  date = explicit_date(text)
+                  game = game_for(text, query)
+                  retailers = retailer_for(text)
+
+                  # Google News is a discovery index,
+                  # not an authoritative source.
+                  link_host = urllib.parse.urlparse(
+                      url
+                  ).hostname or ""
+
+                  official = any(
+                      link_host == host or
+                      link_host.endswith("." + host)
+                      for host in OFFICIAL
+                  )
+
+                  status = (
+                      "Official source"
+                      if official else
+                      "Unverified announcement lead"
+                  )
+
+                  ident = hashlib.sha256(
+                      url.encode()
+                  ).hexdigest()[:20]
+
+                  found[ident] = {
+                      "id": ident,
+                      "title": title[:240],
+                      "game": game,
+                      "retailers": retailers,
+                      "release_date": date,
+                      "published_at": pub.isoformat(),
+                      "source": source,
+                      "url": url,
+                      "source_type": (
+                          "original" if official
+                          else "news_index"
+                      ),
+                      "status": status,
+                      "retailer_date_confirmed": False
+                  }
+
+          for item in previous:
+              if not isinstance(item, dict):
+                  continue
+              ident = item.get("id")
+              if not ident or ident in found:
+                  continue
+              try:
+                  pub = datetime.fromisoformat(
+                      item["published_at"]
+                  )
+                  if pub.tzinfo is None:
+                      pub = pub.replace(
+                          tzinfo=timezone.utc
+                      )
+              except (ValueError, KeyError, TypeError):
+                  continue
+              if pub >= NOW - timedelta(days=90):
+                  found[ident] = item
+
+          records = sorted(
+              found.values(),
+              key=lambda x: (
+                  x.get("release_date") is None,
+                  x.get("release_date") or "9999",
+                  x.get("title","")
+              )
+          )[:600]
+
+          save("upcoming_drops_28.json", {
+              "updated_at": NOW.isoformat(),
+              "announcements": records,
+              "games": GAMES,
+              "retailers": RETAILERS,
+              "note": (
+                  "Search-indexed leads are not verified "
+                  "retailer launch dates. Explicit dates "
+                  "in indexed text require source review."
+              )
+          })
+
+          save("discord_sources_28.json", {
+              "updated_at": NOW.isoformat(),
+              "integration_status": (
+                  "Directory links only. No authorized "
+                  "message feeds connected."
+              ),
+              "servers": [
+                  {
+                      "name": "Pokemon Restocks and Alerts",
+                      "url": "https://discord.com/servers/pokemon-restocks-and-alerts-1369077918244012072",
+                      "focus": "Pokemon restock alerts",
+                      "connected": False
+                  },
+                  {
+                      "name": "PokePings",
+                      "url": "https://discord.com/servers/pokepings-restock-alerts-1423812860043333695",
+                      "focus": "Retailer restocks and drops",
+                      "connected": False
+                  },
+                  {
+                      "name": "Restockd",
+                      "url": "https://discord.com/servers/restockd-pokemon-restocks-1331120711405932626",
+                      "focus": "Pokemon retailer monitoring",
+                      "connected": False
+                  },
+                  {
+                      "name": "TCG Notify",
+                      "url": "https://discord.com/servers/tcg-notify-1410829344850444380",
+                      "focus": "Multiple trading card games",
+                      "connected": False
+                  }
+              ]
+          })
+
+          print("Announcements:", len(records))
+          print("Discord directories:", 4)
+          PY
+
+          python /tmp/ps28.py
+
+      - name: Install release calendar
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          marker = '<section id="releases" class="panel">'
+          assert marker in html, (
+              "Release tab missing; refusing unsafe edit"
+          )
+
+          panel = '''
+          <!-- PS28 START -->
+          <div id="ps28">
+            <style>
+              #ps28 {
+                padding:16px;
+                margin:12px 0 24px;
+                border:1px solid #455a78;
+                border-radius:16px;
+                background:#14213a;
+                color:#edf5ff;
+              }
+              #ps28 * {box-sizing:border-box}
+              #ps28 .filters {
+                display:grid;
+                grid-template-columns:
+                  repeat(auto-fit,minmax(145px,1fr));
+                gap:10px;
+                margin:14px 0;
+              }
+              #ps28 select,#ps28 input {
+                width:100%;
+                padding:11px;
+                border:1px solid #587195;
+                border-radius:9px;
+                background:#0c172b;
+                color:#fff;
+              }
+              #ps28 label {
+                display:block;
+                font-size:12px;
+                margin-bottom:5px;
+              }
+              #ps28 .cards {
+                display:grid;
+                grid-template-columns:
+                  repeat(auto-fit,minmax(240px,1fr));
+                gap:12px;
+              }
+              #ps28 .card {
+                padding:14px;
+                background:#20304b;
+                border:1px solid #465b7c;
+                border-radius:12px;
+                overflow-wrap:anywhere;
+              }
+              #ps28 .card h3 {
+                margin:6px 0;
+                font-size:16px;
+              }
+              #ps28 .muted {
+                color:#b8c9e2;
+                font-size:13px;
+                line-height:1.5;
+              }
+              #ps28 .status {
+                padding:11px;
+                background:#243753;
+                border-radius:9px;
+                margin:12px 0;
+              }
+              #ps28 a {color:#a9e2ff}
+              #ps28 .tag {
+                display:inline-block;
+                border:1px solid #667e9e;
+                border-radius:7px;
+                padding:3px 7px;
+                margin:3px 4px 3px 0;
+                font-size:11px;
+              }
+              #ps28 .discord {
+                margin-top:24px;
+                border-top:1px solid #465b7c;
+                padding-top:20px;
+              }
+              #releaseGrid {
+                display:none!important;
+              }
+            </style>
+
+            <h2>Upcoming TCG Drops</h2>
+            <p class="muted">
+              Public release announcements, retailer
+              drop leads and preorder news.
+              Updated every two hours.
+            </p>
+
+            <div class="filters">
+              <div>
+                <label for="ps28Game">TCG</label>
+                <select id="ps28Game">
+                  <option value="">All TCGs</option>
+                </select>
+              </div>
+              <div>
+                <label for="ps28Retailer">Retailer</label>
+                <select id="ps28Retailer">
+                  <option value="">All retailers</option>
+                </select>
+              </div>
+              <div>
+                <label for="ps28StatusFilter">Type</label>
+                <select id="ps28StatusFilter">
+                  <option value="">All announcements</option>
+                  <option value="dated">Dated leads</option>
+                  <option value="undated">No date announced</option>
+                </select>
+              </div>
+              <div>
+                <label for="ps28Search">Search</label>
+                <input id="ps28Search"
+                  type="search"
+                  placeholder="Product or set name">
+              </div>
+            </div>
+
+            <div id="ps28Status" class="status">
+              Loading release announcements...
+            </div>
+
+            <div id="ps28Cards" class="cards">
+            </div>
+
+            <div class="discord">
+              <h2>Discord Restock Communities</h2>
+              <p class="muted">
+                Join public restock communities.
+                Pokestock does not read Discord
+                messages without authorized access.
+              </p>
+              <div id="ps28Discord" class="cards">
+              </div>
+            </div>
+          </div>
+          <!-- PS28 END -->
+          '''
+
+          if "<!-- PS28 START -->" in html:
+              html = re.sub(
+                  r'<!-- PS28 START -->.*?<!-- PS28 END -->',
+                  lambda _: panel,
+                  html,
+                  flags=re.S
+              )
+          else:
+              html = html.replace(
+                  marker, marker + panel, 1
+              )
+
+          tag = (
+              '<script defer '
+              'src="assets/script28.js"></script>'
+          )
+
+          if tag not in html:
+              html = html.replace(
+                  "</body>",
+                  tag + "\n</body>",
+                  1
+              )
+
+          path.write_text(html, encoding="utf-8")
+          PY
+
+          cat > assets/script28.js <<'JS'
+          (() => {
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+            if (!$("ps28")) return;
+
+            let announcements = [];
+
+            const escapeHTML = value =>
+              String(value ?? "").replace(
+                /[&<>"']/g,
+                c => ({
+                  "&":"&amp;",
+                  "<":"&lt;",
+                  ">":"&gt;",
+                  '"':"&quot;",
+                  "'":"&#39;"
+                }[c])
+              );
+
+            const safeURL = value => {
+              try {
+                const url = new URL(value);
+                return url.protocol === "https:"
+                  ? url.href : "";
+              } catch {
+                return "";
+              }
+            };
+
+            async function get(path) {
+              const response = await fetch(
+                path + "?v=" + Date.now(),
+                {cache:"no-store"}
+              );
+              if (!response.ok) {
+                throw Error("HTTP " + response.status);
+              }
+              return response.json();
+            }
+
+            function options(id, values) {
+              const select = $(id);
+              [...new Set(values)]
+                .filter(Boolean)
+                .sort((a,b) => a.localeCompare(b))
+                .forEach(value => {
+                  const option =
+                    document.createElement("option");
+                  option.value = value;
+                  option.textContent = value;
+                  select.appendChild(option);
+                });
+            }
+
+            function draw() {
+              const game = $("ps28Game").value;
+              const retailer = $("ps28Retailer").value;
+              const type = $("ps28StatusFilter").value;
+              const search = $("ps28Search")
+                .value.toLowerCase().trim();
+
+              const matching = announcements.filter(a =>
+                (!game || a.game === game) &&
+                (!retailer ||
+                  (a.retailers || []).includes(retailer)) &&
+                (!search ||
+                  String(a.title).toLowerCase()
+                    .includes(search)) &&
+                (
+                  !type ||
+                  (type === "dated" && a.release_date) ||
+                  (type === "undated" && !a.release_date)
+                )
+              );
+
+              $("ps28Status").textContent =
+                matching.length +
+                " public announcement leads. " +
+                "Dates and retailer availability " +
+                "must be confirmed at the source.";
+
+              $("ps28Cards").innerHTML =
+                matching.slice(0,150).map(a => {
+                  const link = safeURL(a.url);
+                  const retailers = a.retailers || [];
+
+                  return `
+                    <article class="card">
+                      <span class="tag">
+                        ${escapeHTML(a.game)}
+                      </span>
+                      <h3>${escapeHTML(a.title)}</h3>
+                      <p class="muted">
+                        Date mentioned:
+                        <strong>
+                          ${escapeHTML(
+                            a.release_date ||
+                            "Not established"
+                          )}
+                        </strong>
+                      </p>
+                      <p class="muted">
+                        ${escapeHTML(a.status)}
+                      </p>
+                      <p class="muted">
+                        ${escapeHTML(
+                          retailers.length
+                            ? "Retailers mentioned: " +
+                              retailers.join(", ")
+                            : "No retailer identified"
+                        )}
+                      </p>
+                      <p class="muted">
+                        Store-specific drop:
+                        Not verified
+                      </p>
+                      ${link ? `
+                        <a href="${escapeHTML(link)}"
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          Review source
+                        </a>
+                      ` : ""}
+                    </article>
+                  `;
+                }).join("") ||
+                '<p class="muted">' +
+                'No announcements match these filters.' +
+                '</p>';
+            }
+
+            async function init() {
+              try {
+                const data = await get(
+                  "data/upcoming_drops_28.json"
+                );
+
+                announcements = Array.isArray(
+                  data.announcements
+                ) ? data.announcements : [];
+
+                options(
+                  "ps28Game",
+                  data.games || []
+                );
+
+                options(
+                  "ps28Retailer",
+                  data.retailers || []
+                );
+
+                [
+                  "ps28Game",
+                  "ps28Retailer",
+                  "ps28StatusFilter"
+                ].forEach(id => {
+                  $(id).addEventListener(
+                    "change", draw
+                  );
+                });
+
+                $("ps28Search")
+                  .addEventListener("input", draw);
+
+                draw();
+              } catch (error) {
+                $("ps28Status").textContent =
+                  "Release feed unavailable: " +
+                  error.message;
+              }
+
+              try {
+                const data = await get(
+                  "data/discord_sources_28.json"
+                );
+
+                $("ps28Discord").innerHTML =
+                  (data.servers || []).map(s => {
+                    const url = safeURL(s.url);
+                    return `
+                      <article class="card">
+                        <h3>
+                          ${escapeHTML(s.name)}
+                        </h3>
+                        <p class="muted">
+                          ${escapeHTML(s.focus)}
+                        </p>
+                        <p class="muted">
+                          Automated feed:
+                          Not connected
+                        </p>
+                        ${url ? `
+                          <a href="${escapeHTML(url)}"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            Open Discord community
+                          </a>
+                        ` : ""}
+                      </article>
+                    `;
+                  }).join("");
+              } catch {
+                $("ps28Discord").textContent =
+                  "Discord directory unavailable.";
+              }
+            }
+
+            init();
+          })();
+          JS
+
+      - name: Validate generated files
+        shell: bash
+        run: |
+          python -m json.tool \
+            data/upcoming_drops_28.json > /dev/null
+
+          python -m json.tool \
+            data/discord_sources_28.json > /dev/null
+
+          node --check assets/script28.js
+
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          html = Path("index.html").read_text()
+          releases = json.loads(
+              Path("data/upcoming_drops_28.json")
+              .read_text()
+          )
+          discord = json.loads(
+              Path("data/discord_sources_28.json")
+              .read_text()
+          )
+
+          assert html.count('id="ps28"') == 1
+          assert 'assets/script28.js' in html
+          assert 'id="ps28Cards"' in html
+          assert 'id="ps28Discord"' in html
+          assert isinstance(
+              releases["announcements"], list
+          )
+          assert len(discord["servers"]) == 4
+
+          print("Script 28 validated")
+          print(
+              "Announcement leads:",
+              len(releases["announcements"])
+          )
+          PY
+
+      - name: Publish updates
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            index.html \
+            assets/script28.js \
+            data/upcoming_drops_28.json \
+            data/discord_sources_28.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m \
+              "Script 28 release calendar and Discord directory"
+
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main &&
+                 git push origin HEAD:main; then
+                exit 0
+              fi
+              git rebase --abort 2>/dev/null || true
+              sleep 5
+            done
+
+            echo "Could not publish after retries"
+            exit 1
+          fi
+
+          echo "No changes to publish"
