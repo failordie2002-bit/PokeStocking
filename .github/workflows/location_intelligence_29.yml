@@ -1,0 +1,871 @@
+name: Pokestock Script 29 Location Intelligence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 */4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-location-29
+  cancel-in-progress: false
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install location intelligence
+        shell: bash
+        run: |
+          mkdir -p assets data
+
+          cat > assets/location29.js <<'JS'
+          (() => {
+            "use strict";
+
+            const NATIONAL = [
+              {
+                name:"Pokemon Restocks and Alerts",
+                url:"https://discord.com/servers/pokemon-restocks-and-alerts-1369077918244012072",
+                games:["Pokemon"],
+                states:[],
+                cities:[]
+              },
+              {
+                name:"PokePings",
+                url:"https://discord.com/servers/pokepings-restock-alerts-1423812860043333695",
+                games:["Pokemon"],
+                states:[],
+                cities:[]
+              },
+              {
+                name:"Restockd",
+                url:"https://discord.com/servers/restockd-pokemon-restocks-1331120711405932626",
+                games:["Pokemon"],
+                states:[],
+                cities:[]
+              },
+              {
+                name:"TCG Notify",
+                url:"https://discord.com/servers/tcg-notify-1410829344850444380",
+                games:["Pokemon","One Piece","Riftbound"],
+                states:[],
+                cities:[]
+              }
+            ];
+
+            const STATES = {
+              AL:"Alabama",AK:"Alaska",AZ:"Arizona",
+              AR:"Arkansas",CA:"California",CO:"Colorado",
+              CT:"Connecticut",DE:"Delaware",FL:"Florida",
+              GA:"Georgia",HI:"Hawaii",ID:"Idaho",
+              IL:"Illinois",IN:"Indiana",IA:"Iowa",
+              KS:"Kansas",KY:"Kentucky",LA:"Louisiana",
+              ME:"Maine",MD:"Maryland",MA:"Massachusetts",
+              MI:"Michigan",MN:"Minnesota",MS:"Mississippi",
+              MO:"Missouri",MT:"Montana",NE:"Nebraska",
+              NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",
+              NM:"New Mexico",NY:"New York",NC:"North Carolina",
+              ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",
+              OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",
+              SC:"South Carolina",SD:"South Dakota",
+              TN:"Tennessee",TX:"Texas",UT:"Utah",
+              VT:"Vermont",VA:"Virginia",WA:"Washington",
+              WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",
+              DC:"District of Columbia"
+            };
+
+            const $ = id => document.getElementById(id);
+
+            const esc = v => String(v ?? "").replace(
+              /[&<>"']/g,
+              c => ({
+                "&":"&amp;","<":"&lt;",">":"&gt;",
+                '"':"&quot;","'":"&#39;"
+              }[c])
+            );
+
+            const norm = v =>
+              String(v ?? "").trim().toLowerCase();
+
+            const safeURL = v => {
+              try {
+                const u = new URL(v);
+                return u.protocol === "https:" ? u.href : "";
+              } catch {
+                return "";
+              }
+            };
+
+            let location = {
+              city:"",
+              state:"",
+              radius:50
+            };
+
+            let sightings = [];
+            let directory = [];
+
+            try {
+              const saved = JSON.parse(
+                localStorage.getItem("ps29Location") || "null"
+              );
+              if (saved && typeof saved === "object") {
+                location = {
+                  city:String(saved.city || "").slice(0,100),
+                  state:String(saved.state || "").toUpperCase(),
+                  radius:Number(saved.radius) || 50
+                };
+              }
+            } catch {}
+
+            function persist() {
+              try {
+                localStorage.setItem(
+                  "ps29Location",
+                  JSON.stringify(location)
+                );
+              } catch {}
+            }
+
+            function stateCode(value) {
+              const v = String(value || "").trim();
+              const code = v.toUpperCase();
+              if (STATES[code]) return code;
+              return Object.keys(STATES).find(
+                k => norm(STATES[k]) === norm(v)
+              ) || "";
+            }
+
+            function make(tag, attrs = {}, parent) {
+              const el = document.createElement(tag);
+              Object.entries(attrs).forEach(([k,v]) => {
+                if (k === "text") el.textContent = v;
+                else el.setAttribute(k,v);
+              });
+              if (parent) parent.appendChild(el);
+              return el;
+            }
+
+            function section(tab, title, id) {
+              const host = document.getElementById(tab);
+              if (!host) return;
+
+              const box = make("div",{
+                class:"ps29-panel",
+                id
+              });
+
+              make("h3",{text:title},box);
+              make("div",{
+                class:"ps29-content",
+                text:"Loading..."
+              },box);
+
+              host.insertBefore(box,host.firstChild);
+            }
+
+            function labelLocation() {
+              return [
+                location.city,
+                STATES[location.state] || location.state
+              ].filter(Boolean).join(", ") ||
+                "No location selected";
+            }
+
+            function scoped(report) {
+              if (!location.state) return false;
+
+              if (
+                stateCode(report.state) !== location.state
+              ) return false;
+
+              // Without coordinates, only exact city
+              // matching is supported. Never pretend
+              // the radius is a measured distance.
+              if (location.city) {
+                return norm(report.city) ===
+                  norm(location.city);
+              }
+
+              return true;
+            }
+
+            function recent(report) {
+              const raw = report.reported_at_approx;
+              const time = Date.parse(raw || "");
+              if (!Number.isFinite(time)) return false;
+              const age = Date.now() - time;
+              return age >= 0 &&
+                age <= 48 * 60 * 60 * 1000;
+            }
+
+            function communityCard(r) {
+              const url = safeURL(r.source_url);
+              const card = document.createElement("article");
+              card.className = "ps29-card";
+
+              card.innerHTML = `
+                <strong>${esc(r.product_name || "TCG sighting")}</strong>
+                <p>${esc(r.retailer || "Retailer unknown")}
+                  — ${esc(r.city || "")},
+                  ${esc(r.state || "")}</p>
+                <p class="ps29-muted">
+                  Community reported · Not verified stock
+                </p>
+                <p class="ps29-muted">
+                  Reported:
+                  ${esc(r.reported_age_text ||
+                    r.reported_at_approx ||
+                    "Time unknown")}
+                </p>
+                ${url ? `
+                  <a href="${esc(url)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    View original source
+                  </a>
+                ` : ""}
+              `;
+              return card;
+            }
+
+            function drawReports(id, kind) {
+              const box = $(id);
+              if (!box) return;
+              const content = box.querySelector(
+                ".ps29-content"
+              );
+              content.replaceChildren();
+
+              if (!location.state) {
+                content.textContent =
+                  "Select your location above to see " +
+                  "geographically relevant reports.";
+                return;
+              }
+
+              const matches = sightings
+                .filter(scoped)
+                .filter(recent)
+                .filter(r => {
+                  const scope = norm(r.inventory_scope);
+                  if (kind === "online") {
+                    return scope === "online";
+                  }
+                  return scope === "physical_store";
+                })
+                .slice(0,30);
+
+              if (!matches.length) {
+                content.textContent =
+                  "No recent matching community reports. " +
+                  "This does not mean stores are out of stock.";
+                return;
+              }
+
+              make("p",{
+                class:"ps29-muted",
+                text:matches.length +
+                  " recent unverified reports. " +
+                  "Do not treat these as confirmed inventory."
+              },content);
+
+              matches.forEach(r =>
+                content.appendChild(communityCard(r))
+              );
+            }
+
+            function matchingServers() {
+              if (!location.state) {
+                return {
+                  local:[],
+                  national:directory.filter(
+                    d => !(d.states || []).length
+                  )
+                };
+              }
+
+              const local = directory.filter(d => {
+                const states = d.states || [];
+                const cities = d.cities || [];
+
+                if (!states.includes(location.state)) {
+                  return false;
+                }
+
+                if (!cities.length) return true;
+
+                return !!location.city &&
+                  cities.some(c =>
+                    norm(c) === norm(location.city)
+                  );
+              });
+
+              const national = directory.filter(
+                d => !(d.states || []).length
+              );
+
+              return {local,national};
+            }
+
+            function drawDiscord() {
+              const box = $("ps29Discord");
+              if (!box) return;
+
+              const content = box.querySelector(
+                ".ps29-content"
+              );
+              content.replaceChildren();
+
+              const {local,national} = matchingServers();
+
+              make("p",{
+                class:"ps29-muted",
+                text:"Location: " + labelLocation()
+              },content);
+
+              if (!local.length) {
+                make("p",{
+                  class:"ps29-muted",
+                  text:"No verified regional Discord " +
+                    "directory entries are currently " +
+                    "available for this location. " +
+                    "Showing nationwide communities instead."
+                },content);
+              }
+
+              const groups = [
+                ["Regional communities",local],
+                ["Nationwide communities",national]
+              ];
+
+              groups.forEach(([title,items]) => {
+                if (!items.length) return;
+
+                make("h4",{text:title},content);
+
+                items.forEach(s => {
+                  const url = safeURL(s.url);
+                  if (!url) return;
+
+                  const card = make("div",{
+                    class:"ps29-card"
+                  },content);
+
+                  make("strong",{
+                    text:s.name
+                  },card);
+
+                  make("p",{
+                    class:"ps29-muted",
+                    text:(s.games || []).join(", ") ||
+                      "Trading card games"
+                  },card);
+
+                  const link = make("a",{
+                    href:url,
+                    target:"_blank",
+                    rel:"noopener noreferrer",
+                    text:"Open Discord server"
+                  },card);
+                });
+              });
+
+              make("p",{
+                class:"ps29-muted",
+                text:"Directory links only. Pokestock " +
+                  "does not read Discord messages " +
+                  "without authorized integration."
+              },content);
+            }
+
+            function drawShipment() {
+              const box = $("ps29Shipment");
+              if (!box) return;
+
+              const content = box.querySelector(
+                ".ps29-content"
+              );
+              content.replaceChildren();
+
+              if (!location.state) {
+                content.textContent =
+                  "Choose your location to inspect " +
+                  "recent local restock reports.";
+                return;
+              }
+
+              const matches = sightings
+                .filter(scoped)
+                .filter(recent)
+                .filter(r =>
+                  norm(r.inventory_scope) ===
+                  "physical_store"
+                );
+
+              make("p",{
+                class:"ps29-muted",
+                text:matches.length +
+                  " recent community shelf sightings " +
+                  "for " + labelLocation() + ". " +
+                  "These are not confirmed shipments " +
+                  "and are not added to the probability " +
+                  "chart without validated evidence."
+              },content);
+
+              matches.slice(0,20).forEach(r =>
+                content.appendChild(communityCard(r))
+              );
+            }
+
+            function drawAll() {
+              drawReports("ps29Stores","store");
+              drawReports("ps29Online","online");
+              drawShipment();
+              drawDiscord();
+
+              const status = $("ps29LocationStatus");
+              if (status) {
+                status.textContent =
+                  "Active location: " + labelLocation();
+              }
+            }
+
+            function applyLocation() {
+              const city = $("ps29City").value.trim();
+              const state = stateCode(
+                $("ps29State").value
+              );
+
+              if (!state) {
+                $("ps29LocationStatus").textContent =
+                  "Enter a valid US state abbreviation.";
+                return;
+              }
+
+              location.city = city.slice(0,100);
+              location.state = state;
+              location.radius = Number(
+                $("ps29Radius").value
+              ) || 50;
+
+              persist();
+              drawAll();
+            }
+
+            async function detectLocation() {
+              const status = $("ps29LocationStatus");
+
+              if (!navigator.geolocation) {
+                status.textContent =
+                  "Geolocation unavailable. Enter " +
+                  "your city and state manually.";
+                return;
+              }
+
+              status.textContent =
+                "Requesting location permission...";
+
+              navigator.geolocation.getCurrentPosition(
+                async position => {
+                  try {
+                    const lat =
+                      position.coords.latitude;
+                    const lon =
+                      position.coords.longitude;
+
+                    const url =
+                      "https://nominatim.openstreetmap.org/" +
+                      "reverse?format=json&zoom=10" +
+                      "&lat=" + encodeURIComponent(lat) +
+                      "&lon=" + encodeURIComponent(lon);
+
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                      throw Error("Reverse lookup failed");
+                    }
+
+                    const result = await response.json();
+                    const a = result.address || {};
+
+                    const state = stateCode(
+                      a.state_code || a.state
+                    );
+
+                    if (!state) {
+                      throw Error("US state not resolved");
+                    }
+
+                    const city = (
+                      a.city || a.town ||
+                      a.village || a.municipality || ""
+                    );
+
+                    $("ps29City").value = city;
+                    $("ps29State").value = state;
+                    applyLocation();
+                  } catch {
+                    status.textContent =
+                      "Could not resolve your location. " +
+                      "Enter city and state manually.";
+                  }
+                },
+                () => {
+                  status.textContent =
+                    "Location permission unavailable. " +
+                    "Enter city and state manually.";
+                },
+                {
+                  enableHighAccuracy:false,
+                  timeout:12000,
+                  maximumAge:300000
+                }
+              );
+            }
+
+            function installControls() {
+              const host = document.querySelector("main") ||
+                document.body;
+
+              const panel = document.createElement("div");
+              panel.id = "ps29Location";
+              panel.className = "ps29-panel";
+
+              panel.innerHTML = `
+                <h3>Location-Based Stock Intelligence</h3>
+                <p class="ps29-muted">
+                  Your location controls local reports
+                  and Discord recommendations throughout
+                  Pokestock.
+                </p>
+                <div class="ps29-controls">
+                  <input id="ps29City"
+                    placeholder="City"
+                    aria-label="City">
+                  <input id="ps29State"
+                    placeholder="State (VA, CA, TX...)"
+                    aria-label="State">
+                  <select id="ps29Radius"
+                    aria-label="Preferred radius">
+                    <option value="25">25 miles</option>
+                    <option value="50">50 miles</option>
+                    <option value="100">100 miles</option>
+                    <option value="250">250 miles</option>
+                  </select>
+                  <button id="ps29Apply">
+                    Apply location
+                  </button>
+                  <button id="ps29Detect">
+                    Use my location
+                  </button>
+                </div>
+                <p id="ps29LocationStatus"
+                  class="ps29-muted"></p>
+                <p class="ps29-muted">
+                  Current report matching uses exact
+                  city or state. Radius filtering will
+                  require verified coordinates.
+                </p>
+              `;
+
+              host.insertBefore(panel,host.firstChild);
+
+              $("ps29City").value = location.city;
+              $("ps29State").value = location.state;
+              $("ps29Radius").value =
+                String(location.radius);
+
+              $("ps29Apply").addEventListener(
+                "click",applyLocation
+              );
+              $("ps29Detect").addEventListener(
+                "click",detectLocation
+              );
+            }
+
+            async function loadJSON(path, fallback) {
+              try {
+                const response = await fetch(
+                  path + "?v=" + Date.now(),
+                  {cache:"no-store"}
+                );
+                if (!response.ok) return fallback;
+                return await response.json();
+              } catch {
+                return fallback;
+              }
+            }
+
+            async function start() {
+              if ($("ps29Location")) return;
+
+              installControls();
+
+              section(
+                "stores",
+                "Nearby Community Stock Sightings",
+                "ps29Stores"
+              );
+              section(
+                "online",
+                "Community Online Restock Alerts",
+                "ps29Online"
+              );
+              section(
+                "shipments",
+                "Local Restock Evidence",
+                "ps29Shipment"
+              );
+              section(
+                "releases",
+                "Discord Servers for Your Location",
+                "ps29Discord"
+              );
+
+              const [reports,servers] =
+                await Promise.all([
+                  loadJSON(
+                    "data/v34_public_sightings.json",
+                    []
+                  ),
+                  loadJSON(
+                    "data/discord_directory_29.json",
+                    []
+                  )
+                ]);
+
+              sightings = Array.isArray(reports)
+                ? reports : [];
+
+              directory = Array.isArray(servers)
+                ? servers : NATIONAL;
+
+              drawAll();
+            }
+
+            if (document.readyState === "loading") {
+              document.addEventListener(
+                "DOMContentLoaded",start,
+                {once:true}
+              );
+            } else {
+              start();
+            }
+          })();
+          JS
+
+          cat > assets/location29.css <<'CSS'
+          #ps29Location,
+          .ps29-panel {
+            box-sizing:border-box;
+            margin:14px 0 22px;
+            padding:16px;
+            background:#152139;
+            color:#edf4ff;
+            border:1px solid #506480;
+            border-radius:15px;
+          }
+          .ps29-panel h3 {
+            margin:0 0 10px;
+          }
+          .ps29-panel h4 {
+            margin:15px 0 8px;
+          }
+          .ps29-muted {
+            font-size:13px;
+            color:#b9c9e0;
+            line-height:1.5;
+          }
+          .ps29-controls {
+            display:grid;
+            grid-template-columns:
+              repeat(auto-fit,minmax(145px,1fr));
+            gap:9px;
+            margin:12px 0;
+          }
+          .ps29-controls input,
+          .ps29-controls select,
+          .ps29-controls button {
+            min-width:0;
+            width:100%;
+            padding:11px;
+            border:1px solid #587195;
+            border-radius:9px;
+            background:#0b182d;
+            color:white;
+            font:inherit;
+          }
+          .ps29-controls button {
+            cursor:pointer;
+            background:#244d80;
+          }
+          .ps29-card {
+            margin:9px 0;
+            padding:12px;
+            border:1px solid #435b7c;
+            border-radius:11px;
+            background:#20314d;
+            overflow-wrap:anywhere;
+          }
+          .ps29-card p {
+            margin:6px 0;
+          }
+          .ps29-card a {
+            color:#a9e2ff;
+          }
+          CSS
+
+          cat > data/discord_directory_29.json <<'JSON'
+          [
+            {
+              "name":"Pokemon Restocks and Alerts",
+              "url":"https://discord.com/servers/pokemon-restocks-and-alerts-1369077918244012072",
+              "games":["Pokemon"],
+              "states":[],
+              "cities":[]
+            },
+            {
+              "name":"PokePings",
+              "url":"https://discord.com/servers/pokepings-restock-alerts-1423812860043333695",
+              "games":["Pokemon"],
+              "states":[],
+              "cities":[]
+            },
+            {
+              "name":"Restockd",
+              "url":"https://discord.com/servers/restockd-pokemon-restocks-1331120711405932626",
+              "games":["Pokemon"],
+              "states":[],
+              "cities":[]
+            },
+            {
+              "name":"TCG Notify",
+              "url":"https://discord.com/servers/tcg-notify-1410829344850444380",
+              "games":["Pokemon","One Piece","Riftbound"],
+              "states":[],
+              "cities":[]
+            }
+          ]
+          JSON
+
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          assert '<section id="releases"' in html
+          assert '<section id="shipments"' in html
+
+          css = (
+              '<link rel="stylesheet" '
+              'href="assets/location29.css">'
+          )
+          js = (
+              '<script defer '
+              'src="assets/location29.js"></script>'
+          )
+
+          if css not in html:
+              html = html.replace(
+                  "</head>",
+                  css + "\n</head>",
+                  1
+              )
+
+          if js not in html:
+              html = html.replace(
+                  "</body>",
+                  js + "\n</body>",
+                  1
+              )
+
+          path.write_text(
+              html,encoding="utf-8"
+          )
+          PY
+
+      - name: Validate
+        shell: bash
+        run: |
+          node --check assets/location29.js
+          python -m json.tool \
+            data/discord_directory_29.json > /dev/null
+
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          html = Path("index.html").read_text()
+          directory = json.loads(
+              Path("data/discord_directory_29.json")
+              .read_text()
+          )
+
+          assert html.count(
+              'assets/location29.js'
+          ) == 1
+
+          assert html.count(
+              'assets/location29.css'
+          ) == 1
+
+          assert len(directory) == 4
+
+          for server in directory:
+              assert server["url"].startswith(
+                  "https://discord.com/"
+              )
+              assert isinstance(
+                  server["states"],list
+              )
+              assert isinstance(
+                  server["cities"],list
+              )
+
+          print("Script 29 validated")
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            index.html \
+            assets/location29.js \
+            assets/location29.css \
+            data/discord_directory_29.json
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m \
+            "Script 29 location-based TCG intelligence"
+
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main &&
+               git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+
+          echo "Publishing failed"
+          exit 1
