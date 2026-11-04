@@ -1,0 +1,837 @@
+name: Upgrade Shipment Catcher
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Install upgraded Shipment Catcher
+        shell: bash
+        run: |
+          cat > /tmp/upgrade_catcher.py <<'PYTHON'
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          start_marker = "<!-- POKESTOCK CATCHER V2 START -->"
+          end_marker = "<!-- POKESTOCK CATCHER V2 END -->"
+
+          if start_marker in html and end_marker in html:
+              before, rest = html.split(start_marker, 1)
+              _, after = rest.split(end_marker, 1)
+              html = before + after
+
+          target = '<div id="shipmentList"></div>'
+          if target not in html:
+              raise SystemExit(
+                  "Could not locate the original Shipment Catcher. "
+                  "No changes made."
+              )
+
+          controls = '''
+          <div id="catcherV2" class="catcher-v2">
+            <style>
+              .catcher-v2{
+                background:#111b30;
+                border:1px solid #3a4b6b;
+                border-radius:20px;
+                padding:18px;
+                margin:18px 0;
+              }
+              .catcher-v2 .filters{
+                display:grid;
+                grid-template-columns:repeat(
+                  auto-fit,minmax(155px,1fr)
+                );
+                gap:12px;
+                margin:16px 0;
+              }
+              .catcher-v2 label{
+                display:block;
+                font-size:12px;
+                color:#b8c7df;
+                margin-bottom:6px;
+              }
+              .catcher-v2 input,
+              .catcher-v2 select{
+                width:100%;
+                min-width:0;
+              }
+              .catcher-v2 .actions{
+                display:flex;
+                flex-wrap:wrap;
+                gap:10px;
+                margin-bottom:12px;
+              }
+              .catcher-v2 .status{
+                color:#b8c7df;
+                font-size:13px;
+                line-height:1.5;
+              }
+              .catcher-v2 .results{
+                display:grid;
+                grid-template-columns:repeat(
+                  auto-fill,minmax(260px,1fr)
+                );
+                gap:13px;
+                margin-top:18px;
+              }
+              .catcher-v2 .result{
+                background:#1d2941;
+                border:1px solid #3a4b6b;
+                border-radius:15px;
+                padding:16px;
+              }
+              .catcher-v2 .result h3{
+                margin:10px 0;
+                font-size:18px;
+              }
+              .catcher-v2 .result p{
+                margin:8px 0;
+                color:#b8c7df;
+                line-height:1.45;
+              }
+              .catcher-v2 .tag{
+                display:inline-block;
+                border-radius:20px;
+                padding:5px 9px;
+                background:#334460;
+                font-size:12px;
+                font-weight:700;
+              }
+              .catcher-v2 .date{
+                font-size:21px;
+                font-weight:800;
+                color:#ffc94b;
+              }
+              .catcher-v2 .notice{
+                background:#30364a;
+                padding:12px;
+                border-radius:12px;
+                line-height:1.5;
+                font-size:13px;
+                color:#e1e8f4;
+              }
+              .catcher-v2 .small{
+                font-size:12px;
+              }
+            </style>
+
+            <h2>Shipment Catcher</h2>
+            <p class="status">
+              Nearby sightings, delivery evidence and
+              experimental restock-watch windows.
+            </p>
+
+            <div class="filters">
+              <div>
+                <label for="catcherZip">Your ZIP code</label>
+                <input id="catcherZip"
+                  inputmode="numeric"
+                  maxlength="5"
+                  placeholder="Enter ZIP code">
+              </div>
+
+              <div>
+                <label for="catcherRadius">
+                  Travel radius
+                </label>
+                <select id="catcherRadius">
+                  <option value="10">10 miles</option>
+                  <option value="25">25 miles</option>
+                  <option value="50" selected>50 miles</option>
+                  <option value="75">75 miles</option>
+                  <option value="100">100 miles</option>
+                  <option value="150">150 miles</option>
+                  <option value="250">250 miles</option>
+                  <option value="0">Nationwide</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="catcherRetailer">
+                  Retailer
+                </label>
+                <select id="catcherRetailer">
+                  <option value="">All retailers</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="catcherGame">
+                  TCG game
+                </label>
+                <select id="catcherGame">
+                  <option value="">All games</option>
+                  <option value="Pokemon">Pokémon</option>
+                  <option value="Gundam">Gundam</option>
+                  <option value="Union Arena">Union Arena</option>
+                  <option value="One Piece">One Piece</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="catcherType">
+                  Evidence type
+                </label>
+                <select id="catcherType">
+                  <option value="">All evidence</option>
+                  <option value="sighting">
+                    Community sightings
+                  </option>
+                  <option value="watch">
+                    Restock watch windows
+                  </option>
+                  <option value="delivery">
+                    Confirmed deliveries
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label for="catcherSearch">
+                  Search stores or products
+                </label>
+                <input id="catcherSearch"
+                  placeholder="Walmart, Charlottesville...">
+              </div>
+            </div>
+
+            <div class="actions">
+              <button id="catcherGPS" type="button">
+                Use my GPS
+              </button>
+              <button id="catcherFindZip" type="button">
+                Search ZIP
+              </button>
+              <button id="catcherRefresh" type="button">
+                Refresh results
+              </button>
+            </div>
+
+            <p class="notice">
+              Restock-watch dates are not confirmed
+              shipments. Community sightings are
+              not verified current shelf inventory.
+              Radius uses straight-line distance,
+              not driving mileage.
+            </p>
+
+            <p id="catcherStatus" class="status">
+              Loading restock intelligence...
+            </p>
+
+            <div id="catcherResults" class="results"></div>
+          </div>
+          '''
+
+          html = html.replace(
+              target,
+              controls + target,
+              1
+          )
+
+          # Hide the older, unfiltered result list.
+          html = html.replace(
+              target,
+              '<div id="shipmentList" hidden></div>',
+              1
+          )
+
+          script = r'''
+          <script>
+          (function(){
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+            const MILES = 3958.8;
+
+            let records = [];
+            let candidates = [];
+            let mapStores = [];
+            let origin = null;
+            let coordinates = new Map();
+            let generation = 0;
+
+            const esc = value => String(value ?? "")
+              .replace(/[&<>"']/g,c=>({
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#39;"
+              }[c]));
+
+            const norm = value =>
+              String(value ?? "").trim().toLowerCase();
+
+            const safeLink = value => {
+              try {
+                const url = new URL(value);
+                return url.protocol === "https:"
+                  ? url.href : "";
+              } catch {
+                return "";
+              }
+            };
+
+            const status = message => {
+              $("catcherStatus").textContent = message;
+            };
+
+            async function getJSON(path){
+              const response = await fetch(
+                path + "?v=" + Date.now(),
+                {cache:"no-store"}
+              );
+              if(!response.ok){
+                throw Error(path+" returned "+response.status);
+              }
+              return response.json();
+            }
+
+            function distance(a,b){
+              const rad = Math.PI/180;
+              const dLat = (b[0]-a[0])*rad;
+              const dLon = (b[1]-a[1])*rad;
+              const h =
+                Math.sin(dLat/2)**2+
+                Math.cos(a[0]*rad)*
+                Math.cos(b[0]*rad)*
+                Math.sin(dLon/2)**2;
+              return 2*MILES*Math.asin(
+                Math.min(1,Math.sqrt(h))
+              );
+            }
+
+            function isCoord(lat,lon){
+              return Number.isFinite(Number(lat)) &&
+                Number.isFinite(Number(lon)) &&
+                Math.abs(Number(lat))<=90 &&
+                Math.abs(Number(lon))<=180;
+            }
+
+            function getCandidate(record){
+              if(record.store_id){
+                const matched = candidates.find(s=>
+                  s.source_id===record.store_id
+                );
+                if(matched)return matched;
+              }
+
+              // Do not guess a physical branch
+              // from a retailer name alone.
+              const matches=candidates.filter(s=>
+                norm(s.chain)===norm(record.retailer) &&
+                norm(s.city)===norm(record.city) &&
+                norm(s.state)===norm(record.state)
+              );
+
+              return matches.length===1
+                ? matches[0] : null;
+            }
+
+            function candidateKey(s){
+              return s.source_id ||
+                [s.chain,s.address,s.city,s.state]
+                .map(norm).join("|");
+            }
+
+            function mapCoordinates(s){
+              if(!s)return null;
+
+              const found=mapStores.filter(m=>
+                norm(m.city)===norm(s.city) &&
+                norm(m.state)===norm(s.state) &&
+                norm(m.retailer_chain||m.name)
+                  .includes(norm(s.chain)) &&
+                isCoord(m.lat,m.lon)
+              );
+
+              // A city-level match is insufficient
+              // if several branches are possible.
+              if(found.length===1){
+                return [
+                  Number(found[0].lat),
+                  Number(found[0].lon)
+                ];
+              }
+              return null;
+            }
+
+            async function geocode(s){
+              if(!s||!s.address||!s.city||!s.state){
+                return null;
+              }
+
+              const key=candidateKey(s);
+              if(coordinates.has(key)){
+                return coordinates.get(key);
+              }
+
+              const fromMap=mapCoordinates(s);
+              if(fromMap){
+                coordinates.set(key,fromMap);
+                return fromMap;
+              }
+
+              const address=[
+                s.address,s.city,s.state,
+                s.postal_code
+              ].filter(Boolean).join(", ");
+
+              try{
+                const endpoint=
+                  "https://geocoding.geo.census.gov/" +
+                  "geocoder/geographies/onelineaddress" +
+                  "?address="+encodeURIComponent(address)+
+                  "&benchmark=Public_AR_Current" +
+                  "&vintage=Current_Current" +
+                  "&format=json";
+
+                const response=await fetch(endpoint);
+                if(!response.ok)return null;
+
+                const data=await response.json();
+                const matches=
+                  data.result?.addressMatches||[];
+
+                if(matches.length!==1)return null;
+
+                const match=matches[0];
+                const lat=Number(match.coordinates?.y);
+                const lon=Number(match.coordinates?.x);
+
+                if(!isCoord(lat,lon))return null;
+
+                const point=[lat,lon];
+                coordinates.set(key,point);
+                return point;
+              }catch{
+                return null;
+              }
+            }
+
+            function normalizeData(shipments,sightings){
+              const output=[];
+
+              for(const e of shipments.events||[]){
+                if(e.delivery_confirmed!==true)continue;
+
+                output.push({
+                  type:"delivery",
+                  retailer:e.retailer||"",
+                  store_id:e.store_id||null,
+                  store_name:e.store_name||"",
+                  product:e.product_name||e.name||"",
+                  game:e.game||"",
+                  date:e.date||"",
+                  source:e.source_url||"",
+                  city:e.city||"",
+                  state:e.state||"",
+                  description:"Delivery reported confirmed"
+                });
+              }
+
+              for(const e of shipments.forecasts||[]){
+                output.push({
+                  type:"watch",
+                  retailer:e.retailer||"",
+                  store_id:e.store_id||null,
+                  store_name:e.store_name||"",
+                  product:e.product_name||e.name||"",
+                  game:e.game||"",
+                  date:e.predicted_date||"",
+                  source:e.source_url||"",
+                  city:e.city||"",
+                  state:e.state||"",
+                  description:
+                    "Research-only watch window; " +
+                    "delivery not confirmed"
+                });
+              }
+
+              for(const e of sightings){
+                output.push({
+                  type:"sighting",
+                  retailer:e.retailer||"",
+                  store_id:e.store_id||null,
+                  store_name:e.branch||"",
+                  product:e.product_name||"",
+                  game:e.game||"Pokemon",
+                  date:e.reported_at_approx||"",
+                  source:e.source_url||"",
+                  city:e.city||"",
+                  state:e.state||"",
+                  description:
+                    e.report_status==="reported_in_stock"
+                      ?"Community reported in stock"
+                      :"Community report: closed or sold out"
+                });
+              }
+
+              return output;
+            }
+
+            function updateRetailers(){
+              const select=$("catcherRetailer");
+              const names=[...new Set(
+                records.map(r=>r.retailer).filter(Boolean)
+              )].sort();
+
+              for(const name of names){
+                const option=document.createElement("option");
+                option.value=name;
+                option.textContent=name;
+                select.appendChild(option);
+              }
+            }
+
+            function dateLabel(value){
+              if(!value)return "Date unknown";
+              const d=new Date(value);
+              if(!Number.isFinite(d.getTime())){
+                return String(value);
+              }
+              return d.toLocaleDateString("en-US",{
+                month:"short",day:"numeric",
+                year:"numeric",timeZone:"UTC"
+              });
+            }
+
+            function filteredRecords(){
+              const retailer=$("catcherRetailer").value;
+              const game=$("catcherGame").value;
+              const type=$("catcherType").value;
+              const search=norm($("catcherSearch").value);
+
+              return records.filter(r=>{
+                if(retailer&&r.retailer!==retailer)
+                  return false;
+                if(game&&r.game!==game)
+                  return false;
+                if(type&&r.type!==type)
+                  return false;
+
+                const text=[
+                  r.store_name,r.retailer,
+                  r.product,r.game,r.city,r.state
+                ].join(" ").toLowerCase();
+
+                return !search||text.includes(search);
+              });
+            }
+
+            function renderCards(items,unlocated){
+              $("catcherResults").innerHTML=
+                items.slice(0,150).map(({record:r,miles})=>{
+                  const store=getCandidate(r);
+                  const name=r.store_name||
+                    [r.retailer,r.city,r.state]
+                      .filter(Boolean).join(" — ");
+
+                  const location=store
+                    ?[store.address,store.city,store.state]
+                      .filter(Boolean).join(", ")
+                    :[r.city,r.state]
+                      .filter(Boolean).join(", ");
+
+                  const label={
+                    sighting:"Community sighting",
+                    watch:"Research-only watch",
+                    delivery:"Confirmed delivery"
+                  }[r.type];
+
+                  const link=safeLink(r.source);
+
+                  return `
+                    <article class="result">
+                      <span class="tag">${esc(label)}</span>
+                      <h3>${esc(name)}</h3>
+                      <p>${esc(location)}</p>
+                      <div class="date">
+                        ${esc(dateLabel(r.date))}
+                      </div>
+                      <p>${esc(r.game||"Game unspecified")}</p>
+                      <p>${esc(r.product)}</p>
+                      <p>${esc(r.description)}</p>
+                      ${miles!=null?`
+                        <p><strong>
+                          ${miles.toFixed(1)} miles
+                          straight-line
+                        </strong></p>`:""}
+                      ${link?`
+                        <a href="${esc(link)}"
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          View evidence
+                        </a>`:""}
+                    </article>
+                  `;
+                }).join("")||
+                '<p>No matching records.</p>';
+
+              if(unlocated){
+                status(
+                  items.length+" matching records. "+
+                  unlocated+" records excluded because "+
+                  "their store coordinates could not "+
+                  "be established."
+                );
+              }else{
+                status(
+                  items.length+" matching records. "+
+                  (items.length>150
+                    ?"Showing first 150."
+                    :"")
+                );
+              }
+            }
+
+            async function render(){
+              const run=++generation;
+              const radius=Number($("catcherRadius").value);
+              const matches=filteredRecords();
+
+              if(radius===0){
+                renderCards(matches.map(record=>({
+                  record,miles:null
+                })),0);
+                return;
+              }
+
+              if(!origin){
+                $("catcherResults").innerHTML="";
+                status(
+                  "Enter a ZIP code or use GPS to "+
+                  "activate the travel-radius filter. "+
+                  "Choose Nationwide to view all records."
+                );
+                return;
+              }
+
+              status(
+                "Resolving store locations for "+
+                matches.length+" records..."
+              );
+
+              const results=[];
+              let unlocated=0;
+
+              // Cache by candidate store identity.
+              // Resolve unique locations, not every
+              // product or duplicate sighting.
+              const unique=new Map();
+              for(const record of matches){
+                const candidate=getCandidate(record);
+                if(candidate){
+                  unique.set(candidateKey(candidate),candidate);
+                }
+              }
+
+              const resolved=new Map();
+              const locations=[...unique.values()];
+
+              // Small parallel batches avoid
+              // overwhelming the free geocoder.
+              for(let i=0;i<locations.length;i+=5){
+                if(run!==generation)return;
+
+                const batch=locations.slice(i,i+5);
+                const points=await Promise.all(
+                  batch.map(geocode)
+                );
+
+                batch.forEach((s,j)=>{
+                  resolved.set(candidateKey(s),points[j]);
+                });
+
+                status(
+                  "Resolving locations: "+
+                  Math.min(i+5,locations.length)+
+                  "/"+locations.length
+                );
+              }
+
+              if(run!==generation)return;
+
+              for(const record of matches){
+                const candidate=getCandidate(record);
+                const point=candidate
+                  ?resolved.get(candidateKey(candidate))
+                  :null;
+
+                if(!point){
+                  unlocated++;
+                  continue;
+                }
+
+                const miles=distance(origin,point);
+                if(miles<=radius){
+                  results.push({record,miles});
+                }
+              }
+
+              results.sort((a,b)=>a.miles-b.miles);
+              renderCards(results,unlocated);
+            }
+
+            async function findZIP(){
+              const zip=$("catcherZip").value.trim();
+              if(!/^\\d{5}$/.test(zip)){
+                status("Enter a valid five-digit ZIP code.");
+                return;
+              }
+
+              try{
+                status("Looking up ZIP code...");
+                const response=await fetch(
+                  "https://api.zippopotam.us/us/"+zip
+                );
+                if(!response.ok)throw Error("ZIP unavailable");
+
+                const data=await response.json();
+                const place=data.places?.[0];
+                if(!place)throw Error("ZIP unavailable");
+
+                origin=[
+                  Number(place.latitude),
+                  Number(place.longitude)
+                ];
+
+                if(!isCoord(...origin)){
+                  throw Error("Invalid ZIP coordinates");
+                }
+
+                render();
+              }catch(error){
+                status("ZIP lookup failed: "+error.message);
+              }
+            }
+
+            $("catcherGPS").onclick=()=>{
+              if(!navigator.geolocation){
+                status("GPS unavailable. Enter a ZIP code.");
+                return;
+              }
+
+              status("Requesting your location...");
+
+              navigator.geolocation.getCurrentPosition(
+                position=>{
+                  origin=[
+                    position.coords.latitude,
+                    position.coords.longitude
+                  ];
+                  render();
+                },
+                ()=>{
+                  status(
+                    "Location permission unavailable. "+
+                    "Enter a ZIP code."
+                  );
+                },
+                {enableHighAccuracy:true,timeout:15000}
+              );
+            };
+
+            $("catcherFindZip").onclick=findZIP;
+            $("catcherRefresh").onclick=load;
+
+            $("catcherZip").addEventListener(
+              "keydown",event=>{
+                if(event.key==="Enter")findZIP();
+              }
+            );
+
+            for(const id of [
+              "catcherRadius","catcherRetailer",
+              "catcherGame","catcherType",
+              "catcherSearch"
+            ]){
+              $(id).addEventListener("input",render);
+            }
+
+            async function load(){
+              status("Loading shipment and sighting data...");
+              try{
+                const [shipments,sightings,storesA,storesB]=
+                  await Promise.all([
+                    getJSON("data/shipments.json"),
+                    getJSON("data/v34_public_sightings.json"),
+                    getJSON("data/physical_inventory_sources.json"),
+                    getJSON("data/stores.json").catch(()=>[])
+                  ]);
+
+                candidates=Array.isArray(storesA)
+                  ?storesA:[];
+                mapStores=Array.isArray(storesB)
+                  ?storesB:[];
+                records=normalizeData(
+                  shipments,
+                  Array.isArray(sightings)?sightings:[]
+                );
+
+                const selected=$("catcherRetailer").value;
+                $("catcherRetailer").innerHTML=
+                  '<option value="">All retailers</option>';
+                updateRetailers();
+                $("catcherRetailer").value=selected;
+
+                render();
+              }catch(error){
+                status(
+                  "Could not load Shipment Catcher: "+
+                  error.message
+                );
+              }
+            }
+
+            // Nationwide initially avoids requiring
+            // location permission just to see data.
+            $("catcherRadius").value="0";
+            load();
+          })();
+          </script>
+          '''
+
+          if "</body>" not in html:
+              raise SystemExit("Missing closing body tag.")
+
+          html = html.replace(
+              "</body>",
+              start_marker + script + end_marker +
+              "\n</body>",
+              1
+          )
+
+          path.write_text(html,encoding="utf-8")
+          print("Shipment Catcher V2 installed successfully.")
+
+          PYTHON
+          python /tmp/upgrade_catcher.py
+
+      - name: Commit updated website
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No website changes required."
+          else
+            git commit -m "Integrate restock intelligence into Shipment Catcher"
+            git push
+          fi
