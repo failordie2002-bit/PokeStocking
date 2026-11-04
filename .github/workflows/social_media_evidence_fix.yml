@@ -1,0 +1,767 @@
+name: Pokestock Social Media Evidence Fix
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '55 */4 * * *'
+  workflow_run:
+    workflows:
+      - Pokestock Social Media Tab
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-social-evidence-fix
+  cancel-in-progress: false
+
+jobs:
+  upgrade:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Extract dated community restock evidence
+        shell: bash
+        run: |
+          mkdir -p data assets
+          cat > /tmp/evidence.py <<'PY'
+          import json
+          import re
+          import calendar
+          from pathlib import Path
+          from datetime import datetime, timezone, timedelta
+          from collections import defaultdict
+
+          NOW = datetime.now(timezone.utc)
+          DATA = Path("data")
+
+          def read(name, default):
+              try:
+                  return json.loads(
+                      (DATA/name).read_text(encoding="utf-8")
+                  )
+              except (OSError, ValueError):
+                  return default
+
+          def save(name, obj):
+              (DATA/name).write_text(
+                  json.dumps(obj, indent=2, ensure_ascii=False) + "\n",
+                  encoding="utf-8"
+              )
+
+          def parse(value):
+              try:
+                  dt = datetime.fromisoformat(
+                      str(value).replace("Z", "+00:00")
+                  )
+                  if dt.tzinfo is None:
+                      dt = dt.replace(tzinfo=timezone.utc)
+                  return dt.astimezone(timezone.utc)
+              except (ValueError, TypeError):
+                  return None
+
+          def extract_date(text, published):
+              """
+              Accept only explicit dates or tightly anchored
+              relative dates. Never infer a restock date solely
+              from the publication date.
+              """
+              text = str(text or "")
+              pub = parse(published)
+
+              patterns = [
+                  r'\b(?:restocked|stocked|found|spotted|'
+                  r'available|on shelves|shipment arrived)'
+                  r'\b.{0,65}?\b'
+                  r'(\d{4}-\d{1,2}-\d{1,2})\b',
+
+                  r'\b(?:restocked|stocked|found|spotted|'
+                  r'available|on shelves|shipment arrived)'
+                  r'\b.{0,65}?\b'
+                  r'(\d{1,2}/\d{1,2}/\d{4})\b'
+              ]
+
+              for pattern in patterns:
+                  match = re.search(
+                      pattern, text, re.IGNORECASE
+                  )
+                  if not match:
+                      continue
+                  raw = match.group(1)
+                  for fmt in ("%Y-%m-%d", "%m/%d/%Y"):
+                      try:
+                          d = datetime.strptime(raw, fmt).date()
+                          if (
+                              d <= NOW.date() and
+                              d >= (NOW - timedelta(days=365)).date()
+                          ):
+                              return d.isoformat(), "explicit_date"
+                      except ValueError:
+                          pass
+
+              if not pub:
+                  return None, "unknown"
+
+              # Relative expressions are only usable when
+              # clearly attached to a restock observation.
+              t = text.casefold()
+
+              expressions = {
+                  "restocked today": 0,
+                  "stocked today": 0,
+                  "found today": 0,
+                  "spotted today": 0,
+                  "restocked yesterday": 1,
+                  "stocked yesterday": 1,
+                  "found yesterday": 1
+              }
+
+              for phrase, offset in expressions.items():
+                  if phrase in t:
+                      # Publication time can be delayed or
+                      # cross a timezone boundary. Treat
+                      # these as approximate, not exact.
+                      day = (pub - timedelta(days=offset)).date()
+                      return day.isoformat(), "relative_approximate"
+
+              return None, "unknown"
+
+          def evidence_from_social(post):
+              if not isinstance(post, dict):
+                  return None
+
+              if post.get("report_type") != "retail_sighting_lead":
+                  return None
+
+              loc = post.get("location")
+              if not isinstance(loc, dict):
+                  return None
+
+              if not loc.get("city") or not loc.get("state"):
+                  return None
+
+              retailers = post.get("retailer_mentions") or []
+              if len(retailers) != 1:
+                  return None
+
+              games = post.get("games") or [
+                  post.get("game")
+              ]
+              games = [g for g in games if g]
+              if len(games) != 1:
+                  return None
+
+              title = post.get("title", "")
+              desc = post.get("description", "")
+
+              day, precision = extract_date(
+                  title + " " + desc,
+                  post.get("published_at")
+              )
+
+              if not day:
+                  return None
+
+              if precision == "explicit_date":
+                  weight = 0.35
+              elif precision == "relative_approximate":
+                  weight = 0.15
+              else:
+                  return None
+
+              return {
+                  "source": "social_media",
+                  "source_url": (
+                      post.get("original_post_url") or
+                      post.get("url")
+                  ),
+                  "game": games[0],
+                  "retailer": retailers[0],
+                  "city": loc["city"],
+                  "state": loc["state"],
+                  "date": day,
+                  "date_precision": precision,
+                  "weight": weight,
+                  "status": "unverified_community_report",
+                  "shipment_confirmed": False
+              }
+
+          social = read("social_media_feed.json", {})
+          posts = social.get("posts", []) if isinstance(social, dict) else []
+          observations = read("restock_observations.json", [])
+
+          if not isinstance(observations, list):
+              observations = []
+
+          evidence = []
+          seen = set()
+
+          def add(e):
+              if not e:
+                  return
+              key = (
+                  str(e.get("source_url")) + "|" +
+                  str(e.get("date")) + "|" +
+                  str(e.get("retailer")) + "|" +
+                  str(e.get("city")) + "|" +
+                  str(e.get("game"))
+              )
+              if key not in seen:
+                  seen.add(key)
+                  evidence.append(e)
+
+          for p in posts:
+              add(evidence_from_social(p))
+
+          for o in observations:
+              if not isinstance(o, dict):
+                  continue
+
+              if not (
+                  o.get("forecast_eligible") and
+                  o.get("store_match_verified")
+              ):
+                  continue
+
+              if o.get("time_precision") not in (
+                  "exact", "calendar_day"
+              ):
+                  continue
+
+              dt = parse(o.get("observed_at"))
+              if not dt:
+                  continue
+
+              if not all([
+                  o.get("retailer"), o.get("game"),
+                  o.get("city"), o.get("state")
+              ]):
+                  continue
+
+              add({
+                  "source": "verified_observation",
+                  "source_url": o.get("source_url"),
+                  "game": o["game"],
+                  "retailer": o["retailer"],
+                  "city": o["city"],
+                  "state": o["state"],
+                  "date": dt.date().isoformat(),
+                  "date_precision": "calendar_day",
+                  "weight": 1.0,
+                  "status": "verified_observation",
+                  "shipment_confirmed": False
+              })
+
+          save("social_shipment_evidence.json", {
+              "updated_at": NOW.isoformat(),
+              "events": evidence,
+              "community_reports": sum(
+                  e["source"] == "social_media"
+                  for e in evidence
+              ),
+              "verified_observations": sum(
+                  e["source"] == "verified_observation"
+                  for e in evidence
+              )
+          })
+
+          groups = defaultdict(list)
+
+          for e in evidence:
+              key = (
+                  e["retailer"],
+                  e["game"],
+                  e["city"],
+                  e["state"]
+              )
+              groups[key].append(e)
+
+          results = []
+
+          for key, records in groups.items():
+              # Count at most one observation per
+              # retailer/game/city/date, preventing
+              # duplicate posts from inflating results.
+              by_day = {}
+
+              for e in records:
+                  day = e["date"]
+                  if (
+                      day not in by_day or
+                      e["weight"] > by_day[day]["weight"]
+                  ):
+                      by_day[day] = e
+
+              counts = [0.0] * 7
+              verified = 0
+              community = 0
+
+              for e in by_day.values():
+                  weekday = datetime.fromisoformat(
+                      e["date"]
+                  ).weekday()
+
+                  counts[weekday] += e["weight"]
+
+                  if e["source"] == "verified_observation":
+                      verified += 1
+                  else:
+                      community += 1
+
+              effective = sum(counts)
+
+              # Require multiple distinct observation
+              # days and enough effective evidence.
+              sufficient = (
+                  len(by_day) >= 5 and
+                  effective >= 3 and
+                  verified >= 2
+              )
+
+              if sufficient:
+                  denominator = effective + 7
+                  pct = [
+                      round(
+                          100 * (v + 1) / denominator,
+                          2
+                      )
+                      for v in counts
+                  ]
+              else:
+                  pct = None
+
+              results.append({
+                  "retailer": key[0],
+                  "game": key[1],
+                  "city": key[2],
+                  "state": key[3],
+                  "sample_size": len(by_day),
+                  "verified_count": verified,
+                  "community_count": community,
+                  "effective_weight": round(effective, 2),
+                  "counts": counts,
+                  "percentages": pct,
+                  "status": (
+                      "historical_weekday_distribution"
+                      if sufficient else
+                      "insufficient_evidence"
+                  )
+              })
+
+          save("social_shipment_predictions.json", {
+              "updated_at": NOW.isoformat(),
+              "weekday_labels": list(calendar.day_name),
+              "predictions": results,
+              "method": (
+                  "Weighted historical restock-day distribution. "
+                  "Community reports contribute at reduced weight. "
+                  "A minimum of five distinct dated observations, "
+                  "two verified observations and effective "
+                  "weight of three is required. "
+                  "Not a delivery-truck arrival prediction."
+              )
+          })
+
+          print("Social posts:", len(posts))
+          print("Eligible evidence:", len(evidence))
+          print("Prediction groups:", len(results))
+          print(
+              "Groups with percentages:",
+              sum(x["percentages"] is not None for x in results)
+          )
+          PY
+
+          python /tmp/evidence.py
+
+      - name: Fix real social-media embeds and shipment chart
+        shell: bash
+        run: |
+          cat > assets/social-evidence-fix.js <<'JS'
+          (() => {
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+            const esc = value => String(value ?? "").replace(
+              /[&<>"']/g,
+              c => ({
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#39;"
+              }[c])
+            );
+
+            const valid = value => {
+              try {
+                const u = new URL(value);
+                return u.protocol === "https:" ? u : null;
+              } catch {
+                return null;
+              }
+            };
+
+            // Only exact original post permalinks
+            // qualify for native embeds.
+            function embed(post) {
+              const u = valid(
+                post.original_post_url || post.url
+              );
+              if (!u) return "";
+
+              const host = u.hostname.toLowerCase();
+              const path = u.pathname;
+
+              if (
+                (
+                  host === "www.facebook.com" ||
+                  host === "facebook.com" ||
+                  host === "m.facebook.com"
+                ) &&
+                (
+                  path.includes("/posts/") ||
+                  path.includes("/permalink/") ||
+                  path.includes("/videos/") ||
+                  path.startsWith("/reel/")
+                )
+              ) {
+                const src = path.includes("/videos/")
+                  ? "https://www.facebook.com/plugins/video.php?href="
+                  : "https://www.facebook.com/plugins/post.php?href=";
+
+                return `
+                  <iframe
+                    title="Original public Facebook post"
+                    loading="lazy"
+                    style="width:100%;height:480px;border:0"
+                    src="${esc(
+                      src + encodeURIComponent(u.href) +
+                      "&show_text=true&width=500"
+                    )}">
+                  </iframe>`;
+              }
+
+              if (
+                (
+                  host === "instagram.com" ||
+                  host === "www.instagram.com"
+                ) &&
+                /^\/(p|reel|tv)\/[^/]+/.test(path)
+              ) {
+                const parts = path.split("/").filter(Boolean);
+                const src =
+                  "https://www.instagram.com/" +
+                  parts[0] + "/" + parts[1] + "/embed/";
+
+                return `
+                  <iframe
+                    title="Original public Instagram post"
+                    loading="lazy"
+                    style="width:100%;height:540px;border:0"
+                    src="${esc(src)}">
+                  </iframe>`;
+              }
+
+              if (
+                (
+                  host === "reddit.com" ||
+                  host.endsWith(".reddit.com")
+                ) &&
+                path.includes("/comments/")
+              ) {
+                const src =
+                  "https://www.redditmedia.com" +
+                  path.replace(/\/$/, "") +
+                  "?ref_source=embed&ref=share";
+
+                return `
+                  <iframe
+                    title="Original Reddit post"
+                    loading="lazy"
+                    style="width:100%;height:460px;border:0"
+                    src="${esc(src)}">
+                  </iframe>`;
+              }
+
+              return "";
+            }
+
+            let feed = [];
+            let observing = false;
+
+            function installEmbeds() {
+              const social = $("social");
+              if (!social || !feed.length) return;
+
+              const cards = social.querySelectorAll(
+                "#smLocal .sm-card, #smOther .sm-card"
+              );
+
+              for (const card of cards) {
+                if (card.querySelector(".ps-real-media")) {
+                  continue;
+                }
+
+                const link = card.querySelector(
+                  'a[href^="https://"]'
+                );
+                if (!link) continue;
+
+                const post = feed.find(p =>
+                  p.url === link.href ||
+                  p.original_post_url === link.href
+                );
+
+                if (!post) continue;
+
+                const markup = embed(post);
+                const holder = document.createElement("div");
+                holder.className = "ps-real-media";
+
+                if (markup) {
+                  holder.innerHTML = markup;
+                  holder.style.marginTop = "12px";
+                  card.appendChild(holder);
+                } else {
+                  // Indexed posts without a real permalink
+                  // cannot safely be embedded.
+                  holder.innerHTML =
+                    '<p style="font-size:12px;opacity:.75">' +
+                    'Original media unavailable from this ' +
+                    'indexed source. Open the source link ' +
+                    'to view the post.</p>';
+                  card.appendChild(holder);
+                }
+              }
+            }
+
+            async function loadFeed() {
+              try {
+                const r = await fetch(
+                  "data/social_media_feed.json?t=" +
+                  Date.now(),
+                  {cache:"no-store"}
+                );
+                if (!r.ok) throw Error("Feed unavailable");
+                const data = await r.json();
+                feed = Array.isArray(data.posts)
+                  ? data.posts : [];
+
+                installEmbeds();
+
+                if (!observing && $("social")) {
+                  observing = true;
+
+                  const observer = new MutationObserver(() => {
+                    // Avoid an observer loop: only schedule
+                    // work after a new batch of cards.
+                    if (observer.pending) return;
+                    observer.pending = true;
+                    requestAnimationFrame(() => {
+                      observer.pending = false;
+                      installEmbeds();
+                    });
+                  });
+
+                  for (const id of ["smLocal", "smOther"]) {
+                    if ($(id)) {
+                      observer.observe($(id), {
+                        childList:true
+                      });
+                    }
+                  }
+                }
+              } catch (e) {
+                console.warn("Social media:", e.message);
+              }
+            }
+
+            // Replace the broken, disconnected
+            // window.psSocialMediaPosts dependency.
+            if ($("social")) loadFeed();
+
+            // Upgrade the existing shipment chart to use
+            // the new evidence-weighted percentages.
+            async function loadChart() {
+              const chart = $("psWeekdayForecast");
+              if (!chart) return;
+
+              try {
+                const r = await fetch(
+                  "data/social_shipment_predictions.json?t=" +
+                  Date.now(),
+                  {cache:"no-store"}
+                );
+
+                if (!r.ok) return;
+                const data = await r.json();
+                const predictions = data.predictions || [];
+
+                const retailer = $("psChartRetailer");
+                const game = $("psChartGame");
+                const city = $("psChartCity");
+                const bars = $("psChartBars");
+                const status = $("psChartStatus");
+
+                if (
+                  !retailer || !game || !city ||
+                  !bars || !status
+                ) return;
+
+                function redraw() {
+                  const matches = predictions.filter(p =>
+                    (!retailer.value ||
+                      p.retailer === retailer.value) &&
+                    (!game.value ||
+                      p.game === game.value) &&
+                    (!city.value ||
+                      p.city === city.value)
+                  );
+
+                  const counts = Array(7).fill(0);
+                  let verified = 0;
+                  let community = 0;
+                  let samples = 0;
+
+                  for (const p of matches) {
+                    verified += p.verified_count || 0;
+                    community += p.community_count || 0;
+                    samples += p.sample_size || 0;
+
+                    for (let i = 0; i < 7; i++) {
+                      counts[i] += Number(
+                        (p.counts || [])[i] || 0
+                      );
+                    }
+                  }
+
+                  const effective = counts.reduce(
+                    (a,b) => a+b, 0
+                  );
+
+                  status.textContent =
+                    `${verified} verified observations, ` +
+                    `${community} unverified community reports.`;
+
+                  if (
+                    samples < 5 ||
+                    verified < 2 ||
+                    effective < 3
+                  ) {
+                    bars.innerHTML =
+                      '<p style="grid-column:1/-1">' +
+                      'Not enough evidence for reliable ' +
+                      'weekday percentages yet.</p>';
+                    return;
+                  }
+
+                  const percentages = counts.map(
+                    n => 100 * (n+1)/(effective+7)
+                  );
+                  const max = Math.max(...percentages);
+
+                  const names = [
+                    "Mon","Tue","Wed","Thu",
+                    "Fri","Sat","Sun"
+                  ];
+
+                  bars.innerHTML = names.map((day,i) => `
+                    <div class="ps-col">
+                      <span class="ps-pct">
+                        ${percentages[i].toFixed(1)}%
+                      </span>
+                      <div class="ps-bar-track">
+                        <div class="ps-bar"
+                          style="height:${
+                            145*percentages[i]/max
+                          }px">
+                        </div>
+                      </div>
+                      <span class="ps-day">${esc(day)}</span>
+                    </div>
+                  `).join("");
+                }
+
+                // Replace old chart handlers so this
+                // version remains authoritative.
+                retailer.onchange = redraw;
+                game.onchange = redraw;
+                city.onchange = redraw;
+                redraw();
+
+              } catch (e) {
+                console.warn("Shipment chart:", e.message);
+              }
+            }
+
+            // Chart is installed by a different deferred
+            // script; both scripts run after HTML parsing.
+            loadChart();
+          })();
+          JS
+
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          html = p.read_text(encoding="utf-8")
+
+          tag = (
+              '<script defer '
+              'src="assets/social-evidence-fix.js"></script>'
+          )
+
+          if tag not in html:
+              html = html.replace(
+                  "</body>", tag + "\n</body>", 1
+              )
+
+          p.write_text(html, encoding="utf-8")
+          PY
+
+      - name: Validate files
+        shell: bash
+        run: |
+          python -m json.tool \
+            data/social_shipment_evidence.json > /dev/null
+          python -m json.tool \
+            data/social_shipment_predictions.json > /dev/null
+          node --check assets/social-evidence-fix.js
+
+          python - <<'PY'
+          from pathlib import Path
+          h = Path("index.html").read_text()
+          assert "assets/social-evidence-fix.js" in h
+          assert "assets/social-media.js" in h
+          assert "assets/social-shipment-upgrade.js" in h
+          print("All upgrade files validated")
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            index.html \
+            assets/social-evidence-fix.js \
+            data/social_shipment_evidence.json \
+            data/social_shipment_predictions.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m \
+              "Fix social embeds and dated restock evidence"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "No changes to publish"
+          fi
