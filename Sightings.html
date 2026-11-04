@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d1b">
+<title>PokéStock | Store Sightings</title>
+<style>
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #090d1b;
+  color: #f5f8ff;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+header {
+  padding: 20px 5%;
+  background: #151d30;
+  border-bottom: 1px solid #354462;
+}
+main {
+  max-width: 1150px;
+  margin: auto;
+  padding: 24px 4%;
+}
+a { color: #80caff; }
+h1 { margin: 8px 0; }
+p { line-height: 1.5; }
+.muted { color: #aebdd6; }
+.filters {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit, minmax(170px, 1fr)
+  );
+  gap: 12px;
+  margin: 22px 0;
+}
+input, select, button {
+  width: 100%;
+  background: #202d47;
+  color: white;
+  border: 1px solid #4b5e80;
+  border-radius: 11px;
+  padding: 12px;
+  font: inherit;
+}
+button { cursor: pointer; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit, minmax(145px, 1fr)
+  );
+  gap: 12px;
+}
+.stat, .card {
+  background: #151d30;
+  border: 1px solid #354462;
+  border-radius: 16px;
+  padding: 18px;
+}
+.stat strong {
+  display: block;
+  font-size: 29px;
+}
+.stat small { color: #aebdd6; }
+.results {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill, minmax(280px, 1fr)
+  );
+  gap: 14px;
+  margin-top: 20px;
+}
+.card h3 { margin: 8px 0; }
+.card p { margin: 8px 0; }
+.tag {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 30px;
+  background: #2b3b57;
+  font-size: 12px;
+  font-weight: 700;
+}
+.positive { color: #70f1b9; }
+.closed { color: #ff9fae; }
+.note {
+  background: #29334a;
+  border-left: 3px solid #ffc94b;
+  border-radius: 8px;
+  padding: 14px;
+  margin: 18px 0;
+}
+.link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 13px;
+  background: #295fba;
+  border-radius: 9px;
+  color: white;
+  text-decoration: none;
+}
+#message { padding: 15px 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← PokéStock Home</a>
+  <h1>Store Sightings</h1>
+  <p class="muted">
+    Community-reported trading card sightings.
+    Not guaranteed current stock.
+  </p>
+</header>
+
+<main>
+  <div class="stats">
+    <div class="stat">
+      <strong id="total">—</strong>
+      <small>Reports retained</small>
+    </div>
+    <div class="stat">
+      <strong id="matched">—</strong>
+      <small>Provisional store matches</small>
+    </div>
+    <div class="stat">
+      <strong id="positive">—</strong>
+      <small>Reported in stock</small>
+    </div>
+    <div class="stat">
+      <strong id="updated">—</strong>
+      <small>Latest collection</small>
+    </div>
+  </div>
+
+  <div class="note">
+    Reports are sourced from public community
+    sightings. A positive report describes what
+    someone previously saw, not what is available
+    right now. Store matches may be provisional.
+    Closed reports are not active stock leads.
+  </div>
+
+  <div class="filters">
+    <input id="search"
+      placeholder="City, store, product, game...">
+
+    <select id="retailer">
+      <option value="">All retailers</option>
+    </select>
+
+    <select id="game">
+      <option value="">All TCG games</option>
+    </select>
+
+    <select id="state">
+      <option value="">All states</option>
+    </select>
+
+    <select id="status">
+      <option value="">All report statuses</option>
+      <option value="reported_in_stock">
+        Reported in stock
+      </option>
+      <option value="closed_or_sold_out">
+        Closed / sold out
+      </option>
+    </select>
+
+    <select id="match">
+      <option value="">All store matches</option>
+      <option value="matched">
+        Provisional match
+      </option>
+      <option value="unmatched">
+        Unmatched location
+      </option>
+    </select>
+  </div>
+
+  <p id="message" class="muted">
+    Loading public sightings...
+  </p>
+
+  <div id="results" class="results"></div>
+</main>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+let sightings = [];
+let report = {};
+
+function esc(value) {
+  return String(value ?? "").replace(
+    /[&<>"']/g,
+    c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c])
+  );
+}
+
+function safeUrl(value) {
+  try {
+    const u = new URL(value);
+    return u.protocol === "https:"
+      ? u.href : null;
+  } catch {
+    return null;
+  }
+}
+
+function options(id, values) {
+  const element = $(id);
+  const first = element.options[0].outerHTML;
+  element.innerHTML = first;
+
+  for (const value of [...new Set(values)]
+    .filter(Boolean).sort()) {
+    const opt = document.createElement("option");
+    opt.value = value;
+    opt.textContent = value;
+    element.appendChild(opt);
+  }
+}
+
+function dateText(value) {
+  const d = new Date(value);
+  return Number.isFinite(d.getTime())
+    ? d.toLocaleString()
+    : "Unknown";
+}
+
+function ageText(value) {
+  const d = new Date(value);
+  if (!Number.isFinite(d.getTime())) {
+    return "Unknown age";
+  }
+
+  const hours = Math.floor(
+    (Date.now() - d.getTime()) / 3600000
+  );
+
+  if (hours < 0) return "Approximate timestamp";
+  if (hours < 1) return "Less than 1 hour old";
+  if (hours < 24) return hours + " hours old";
+  return Math.floor(hours / 24) + " days old";
+}
+
+function render() {
+  const q = $("search").value
+    .toLowerCase().trim();
+
+  const retailer = $("retailer").value;
+  const game = $("game").value;
+  const state = $("state").value;
+  const status = $("status").value;
+  const match = $("match").value;
+
+  const filtered = sightings.filter(r => {
+    const searchable = [
+      r.retailer,
+      r.branch,
+      r.city,
+      r.state,
+      r.game,
+      r.product_name
+    ].join(" ").toLowerCase();
+
+    return (!q || searchable.includes(q))
+      && (!retailer || r.retailer === retailer)
+      && (!game || r.game === game)
+      && (!state || r.state === state)
+      && (!status || r.report_status === status)
+      && (!match ||
+        (match === "matched"
+          ? Boolean(r.store_id)
+          : !r.store_id));
+  });
+
+  $("message").textContent =
+    filtered.length + " matching reports. " +
+    "A report does not confirm current stock.";
+
+  $("results").innerHTML = filtered.map(r => {
+    const positive =
+      r.report_status === "reported_in_stock";
+
+    const source = safeUrl(r.source_url);
+
+    const matchLabel = r.store_id
+      ? "Provisional store match"
+      : "Location not matched";
+
+    return `
+      <article class="card">
+        <span class="tag">
+          ${esc(r.game || "TCG")}
+        </span>
+
+        <h3>
+          ${esc(r.retailer)}
+          ${esc(r.branch)}
+        </h3>
+
+        <p>
+          ${esc(r.city)}, ${esc(r.state)}
+        </p>
+
+        <p>
+          ${esc(r.product_name)}
+        </p>
+
+        <p class="${
+          positive ? "positive" : "closed"
+        }">
+          <strong>${
+            positive
+              ? "Previously reported in stock"
+              : "Report closed / sold out"
+          }</strong>
+        </p>
+
+        <p class="muted">
+          ${esc(ageText(r.reported_at_approx))}
+        </p>
+
+        <p class="muted">
+          Reported approximately:
+          ${esc(dateText(r.reported_at_approx))}
+        </p>
+
+        <p>
+          <span class="tag">
+            ${esc(matchLabel)}
+          </span>
+        </p>
+
+        ${
+          source
+            ? `<a class="link"
+                 href="${esc(source)}"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                 View original source
+               </a>`
+            : ""
+        }
+      </article>
+    `;
+  }).join("") || `
+    <div class="card">
+      No reports match these filters.
+      This does not mean stores are out of stock.
+    </div>
+  `;
+}
+
+async function load() {
+  try {
+    const suffix = "?v=" + Date.now();
+
+    const [a, b] = await Promise.all([
+      fetch(
+        "data/v34_public_sightings.json" + suffix,
+        { cache: "no-store" }
+      ),
+      fetch(
+        "data/v34_report.json" + suffix,
+        { cache: "no-store" }
+      )
+    ]);
+
+    if (!a.ok || !b.ok) {
+      throw new Error("Data files unavailable");
+    }
+
+    sightings = await a.json();
+    report = await b.json();
+
+    if (!Array.isArray(sightings)) {
+      throw new Error("Invalid sightings data");
+    }
+
+    sightings.sort((a, b) =>
+      String(b.reported_at_approx).localeCompare(
+        String(a.reported_at_approx)
+      )
+    );
+
+    $("total").textContent = sightings.length;
+    $("matched").textContent =
+      sightings.filter(r => r.store_id).length;
+
+    $("positive").textContent =
+      sightings.filter(r =>
+        r.report_status === "reported_in_stock"
+      ).length;
+
+    $("updated").textContent =
+      report.checked_at
+        ? new Date(report.checked_at)
+            .toLocaleDateString()
+        : "Unknown";
+
+    options(
+      "retailer",
+      sightings.map(r => r.retailer)
+    );
+    options(
+      "game",
+      sightings.map(r => r.game)
+    );
+    options(
+      "state",
+      sightings.map(r => r.state)
+    );
+
+    render();
+  } catch (error) {
+    $("message").textContent =
+      "Unable to load sightings: " + error.message;
+    console.error(error);
+  }
+}
+
+for (const id of [
+  "search", "retailer", "game",
+  "state", "status", "match"
+]) {
+  $(id).addEventListener("input", render);
+}
+
+load();
+</script>
+</body>
+</html>
