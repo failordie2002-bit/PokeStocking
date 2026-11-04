@@ -1,4 +1,4 @@
-name: Pokestock Script 46 Public Restock Intelligence
+name: Pokestock Script 46 - Repaired Restock Intelligence
 
 on:
   workflow_dispatch:
@@ -9,483 +9,242 @@ permissions:
   contents: write
 
 concurrency:
-  group: pokestock-monitor
+  group: pokestock46-research
   cancel-in-progress: false
 
 jobs:
   research:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
-      - name: Checkout main
+      - name: Checkout latest main
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
+          persist-credentials: true
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install entire research engine and website section
+      - name: Generate public signals without API keys
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p scripts assets data
-          cat > scripts/public_signal_46.py <<'PY46'
-          #!/usr/bin/env python3
-          """PokéStock 46: public restock mentions and conservative, labeled rumor leads.
-
-          Reads only publicly readable RSS/Atom feeds. Never equates a post, allocation,
-          search result, or forecast with currently purchasable store inventory.
-          """
-          import argparse
-          import hashlib
-          import html
-          import json
-          import re
-          import urllib.error
-          import urllib.parse
-          import urllib.request
-          import xml.etree.ElementTree as ET
-          from collections import Counter, defaultdict
+          mkdir -p scripts data assets
+          cat > scripts/restock46.py <<'PY46_ENGINE'
           from datetime import datetime, timedelta, timezone
           from email.utils import parsedate_to_datetime
           from pathlib import Path
+          from collections import Counter, defaultdict
           from zoneinfo import ZoneInfo
+          import hashlib, html, json, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 
-          ROOT = Path("data")
-          SIGNALS = ROOT / "rumor_signals_46.json"
-          FORECAST = ROOT / "rumor_forecast_46.json"
-          REPORT = ROOT / "rumor_report_46.json"
-          TZ = ZoneInfo("America/New_York")
-          NOW = datetime.now(timezone.utc)
-          MAX_AGE = timedelta(days=45)
-
-          GAMES = {
-            "Pokémon": r"pok[eé]mon|pokemon|prismatic evolutions|ascended heroes|delta reign",
-            "Union Arena": r"union arena|\bue\d{2}bt\b",
-            "One Piece": r"one piece (?:tcg|card|booster)|\bop[- ]\d{2}\b",
-            "Magic: The Gathering": r"magic[: ]+the gathering|\bmtg\b",
-            "Disney Lorcana": r"lorcana",
-            "Yu-Gi-Oh!": r"yu[- ]?gi[- ]?oh",
-            "Gundam": r"gundam (?:card|tcg)|gundam cg",
-            "Digimon": r"digimon (?:card|tcg|booster)",
-            "Dragon Ball Super": r"dragon ball (?:super|tcg|card)",
-            "Riftbound": r"riftbound",
-            "Weiß Schwarz": r"wei(?:ss|ß) schwarz",
-            "Flesh and Blood": r"flesh and blood (?:tcg|card|booster)",
-            "Star Wars Unlimited": r"star wars unlimited",
-            "Final Fantasy TCG": r"final fantasy (?:tcg|trading card)",
-            "Cardfight!! Vanguard": r"cardfight|vanguard (?:tcg|cards)",
-            "Grand Archive": r"grand archive (?:tcg|card|booster)",
-            "Altered": r"altered (?:tcg|trading card game)",
-            "Shadowverse Evolve": r"shadowverse evolve",
-            "Battle Spirits Saga": r"battle spirits saga",
-            "Naruto": r"naruto (?:tcg|card game|booster)"
+          BASE=Path('data'); BASE.mkdir(exist_ok=True)
+          NOW=datetime.now(timezone.utc)
+          GAMES={
+          'Pokémon':r'pok[eé]mon|pokemon', 'Union Arena':r'union arena',
+          'One Piece':r'one piece', 'Magic: The Gathering':r'magic[: ]+the gathering|\bmtg\b',
+          'Disney Lorcana':r'lorcana', 'Yu-Gi-Oh!':r'yu[- ]?gi[- ]?oh',
+          'Gundam':r'gundam', 'Digimon':r'digimon', 'Dragon Ball Super':r'dragon ball',
+          'Riftbound':r'riftbound', 'Weiß Schwarz':r'wei(?:ss|ß) schwarz',
+          'Flesh and Blood':r'flesh and blood', 'Star Wars Unlimited':r'star wars unlimited',
+          'Final Fantasy TCG':r'final fantasy', 'Cardfight!! Vanguard':r'cardfight|vanguard',
+          'Grand Archive':r'grand archive', 'Altered':r'altered tcg',
+          'Shadowverse Evolve':r'shadowverse evolve', 'Battle Spirits Saga':r'battle spirits',
+          'Naruto':r'naruto',
           }
-          RETAILERS = {
-            "Walmart": r"\bwalmart\b",
-            "Best Buy": r"\bbest buy\b",
-            "Target": r"\btarget\b",
-            "GameStop": r"\bgame\s*stop\b",
-            "Costco": r"\bcostco\b",
-            "Sam's Club": r"\bsam['’]?s club\b",
-            "Lowe's": r"\blowe['’]?s\b",
-            "Barnes & Noble": r"\bbarnes (?:&|and) noble\b",
-            "Five Below": r"\bfive below\b",
-            "Walgreens": r"\bwalgreens\b",
-            "CVS": r"\bcvs\b",
-            "Dollar General": r"\bdollar general\b",
-            "Pokémon Center": r"pok[eé]mon center",
-            "Amazon": r"\bamazon\b",
-            "Meijer": r"\bmeijer\b",
-            "Kroger": r"\bkroger\b",
-            "Macy's": r"\bmacy['’]?s\b"
+          STORES={
+          'Walmart':r'\bwalmart\b','Target':r'\btarget\b','Best Buy':r'\bbest buy\b',
+          'GameStop':r'\bgame\s*stop\b','Costco':r'\bcostco\b',
+          "Sam's Club":r"\bsam['’]?s club\b", "Lowe's":r"\blowe['’]?s\b",
+          'Barnes & Noble':r'\bbarnes (?:&|and) noble\b', 'Five Below':r'\bfive below\b',
+          'Walgreens':r'\bwalgreens\b','CVS':r'\bcvs\b','Amazon':r'\bamazon\b',
+          'Pokémon Center':r'pok[eé]mon center','Dollar General':r'dollar general',
+          'Kroger':r'\bkroger\b','Meijer':r'\bmeijer\b',
           }
-          CITIES = {
-            "Staunton, VA": r"\bstaunton\b",
-            "Waynesboro, VA": r"\bwaynesboro\b",
-            "Harrisonburg, VA": r"\bharrisonburg\b",
-            "Charlottesville, VA": r"\bcharlottesville\b",
-            "Virginia (unspecified)": r"\bvirginia\b",
-          }
-          SEALED = re.compile(r"booster|elite trainer box|\betb\b|blister|sealed|bundle|collection box|"
-                              r"collector box|trading cards?|tcg|starter deck|display box|"
-                              r"premium collection|tin(?:s)?\b|box set|card game", re.I)
-          AVOID = re.compile(r"graded|psa\s*\d|bgs\s*\d|single card|singles|"
-                             r"binder|sleeve|playmat|digital code|proxy cards", re.I)
-          SIGNAL = re.compile(r"restock|restock(?:ing|ed)|back in stock|stock alert|"
-                              r"shelf|shipment|allocation|replenish|release|"
-                              r"dropped|drop date|arriv(?:e|ed|al|ing)|"
-                              r"available|found at|spotted|on sale", re.I)
-          TAG = re.compile(r"<[^>]+>")
-          QUERIES = [
-            "Pokemon cards Walmart restock Virginia",
-            "trading card game booster Costco new stock",
-            "Sam's Club trading card game restock allocations",
-            "Lowe's Pokemon cards stock restock",
-            "Union Arena TCG booster restock",
-            "One Piece TCG cards Target restock",
-            "Magic The Gathering booster Best Buy restock",
-            "Lorcana trading cards Walmart shipment",
-            "Yu Gi Oh booster restock retail",
-            "Gundam card game starter restock",
-            "Digimon card game booster release store",
-            "Dragon Ball Super TCG restock",
-            "Riftbound TCG retail restock",
-            "Weiss Schwarz booster boxes restock",
-            "Flesh and Blood TCG restock",
-            "Star Wars Unlimited booster restock",
-            "Final Fantasy TCG booster restock",
-            "Cardfight Vanguard sealed cards restock",
-            "Grand Archive TCG restock",
-            "Altered TCG booster retail restock",
-            "Shadowverse Evolve booster restock",
-            "Battle Spirits Saga cards retail stock",
-            "new trading card game sealed booster restock",
-            "Pokemon cards Charlottesville Harrisonburg Staunton Waynesboro Walmart restock"
+          SEARCHES=[
+          'Pokemon TCG Walmart restock Virginia', 'Sam\'s Club Pokemon cards shipment',
+          'Costco Pokemon TCG sealed cards restock','Lowes Pokemon cards restock',
+          'Best Buy trading cards back in stock', 'Target One Piece TCG booster restock',
+          'GameStop trading cards release stock', 'Union Arena sealed booster restock',
+          'Lorcana trading card restock retail','Magic the Gathering booster store restock',
+          'Yu Gi Oh booster restock retail','Gundam trading card game booster restock',
+          'Digimon TCG boosters restock','Riftbound TCG restock stores',
+          'Flesh and Blood booster restock','Weiss Schwarz trading cards booster restock',
+          'Star Wars Unlimited booster restock','Dragon Ball Super TCG restock',
+          'Final Fantasy TCG booster restock','Cardfight Vanguard booster restock',
+          'new trading card games sealed products restock',
+          'Pokemon cards Staunton Waynesboro Harrisonburg Charlottesville restock',
+          'new TCG product release retailer allocations',
+          'Pokemon cards Walmart Thursday stocking rumors'
           ]
-          FEEDS = [
-            ("Reddit PKMNTCGDeals", "https://www.reddit.com/r/PKMNTCGDeals/new/.rss"),
-            ("Reddit PokemonTCG", "https://www.reddit.com/r/PokemonTCG/new/.rss")
-          ]
+          SEALED=re.compile(r'booster|trading cards?|\btcg\b|collection box|elite trainer|\betb\b|\btins?\b|blister|sealed|starter deck|box set|bundle|card game',re.I)
+          NEWS=re.compile(r'restock|stock|shipment|allocated|allocation|release|available|arrived|spotted|drop',re.I)
+          BAD=re.compile(r'\b(?:graded|single card|singles|psa\s*\d|playmat|binder|sleeve)\b',re.I)
+          strip_tags=lambda s:re.sub(r'\s+',' ',re.sub('<[^>]+>',' ',html.unescape(s or ''))).strip()
 
-          def clean(s):
-              return re.sub(r"\s+", " ", TAG.sub(" ", html.unescape(s or ""))).strip()
+          def timeparse(s):
+              if not s:return None
+              try:d=parsedate_to_datetime(s)
+              except (ValueError,TypeError):
+                  try:d=datetime.fromisoformat(s.replace('Z','+00:00'))
+                  except (ValueError,TypeError):return None
+              return (d if d.tzinfo else d.replace(tzinfo=timezone.utc)).astimezone(timezone.utc)
 
-          def dt(s):
-              if not s:
-                  return None
+          def read_old():
               try:
-                  d = parsedate_to_datetime(s)
-              except (ValueError, TypeError):
-                  try:
-                      d = datetime.fromisoformat(s.replace("Z", "+00:00"))
-                  except (ValueError, TypeError):
-                      return None
-              if d.tzinfo is None:
-                  d = d.replace(tzinfo=timezone.utc)
-              return d.astimezone(timezone.utc)
+                  old=json.loads((BASE/'rumor_signals_46.json').read_text())
+                  return {x['id']:x for x in old.get('signals',[]) if timeparse(x.get('published_utc'))
+                      and NOW-timedelta(days=45)<=timeparse(x['published_utc'])<=NOW}
+              except (OSError,ValueError,KeyError,TypeError):return {}
 
-          def fetch(url, timeout=7):
-              req = urllib.request.Request(
-                url, headers={"User-Agent": "PokeStock-Restock-Research/1.0 (public RSS; no login)"}
-              )
-              with urllib.request.urlopen(req, timeout=timeout) as res:
-                  raw = res.read(800_000)
-              return ET.fromstring(raw)
-
-          def items(root):
-              # RSS 2.0 and Atom 1.0
-              candidates = root.findall(".//item") + root.findall("{http://www.w3.org/2005/Atom}entry")
-              for item in candidates[:65]:
-                  title = clean(item.findtext("title") or item.findtext("{http://www.w3.org/2005/Atom}title"))
-                  desc = clean(item.findtext("description") or item.findtext("{http://www.w3.org/2005/Atom}summary"))
-                  link = item.findtext("link")
-                  if not link:
-                      atom_link = item.find("{http://www.w3.org/2005/Atom}link")
-                      link = atom_link.get("href", "") if atom_link is not None else ""
-                  published = (item.findtext("pubDate")
-                      or item.findtext("{http://www.w3.org/2005/Atom}published")
-                      or item.findtext("{http://www.w3.org/2005/Atom}updated"))
-                  yield title, desc, link, published
-
-          def classify(title, desc, link, published, channel):
-              title, desc = clean(title)[:320], clean(desc)[:600]
-              content = title + " " + desc
-              moment = dt(published)
-              if not moment or not (NOW - MAX_AGE <= moment <= NOW + timedelta(hours=3)):
-                  return None
-              if not link or not link.startswith("https://"):
-                  return None
-              if not SEALED.search(content) or AVOID.search(title):
-                  return None
-              if not SIGNAL.search(content):
-                  return None
-              game = next((name for name, exp in GAMES.items() if re.search(exp, content, re.I)), "")
-              generic = re.search(r"trading card game|trading cards|\btcg\b|card game", content, re.I)
-              if not game and not generic:
-                  return None
-              game = game or "Other / emerging TCG"
-              retailer = next((name for name, exp in RETAILERS.items() if re.search(exp, content, re.I)), "Unspecified retailer")
-              locality = next((name for name, exp in CITIES.items() if re.search(exp, content, re.I)), "Location unspecified")
-              # Only print the link to the public original, never claim it proves shelf inventory.
-              key = hashlib.sha256((link.split("?")[0] + "|" + title.lower()).encode()).hexdigest()[:20]
-              return {
-                "id": key, "game": game, "retailer": retailer, "location": locality,
-                "title": title, "summary": desc[:250], "url": link,
-                "published_utc": moment.isoformat(), "channel": channel,
-                "evidence": "public RSS mention", "status": "UNVERIFIED",
-                "kind": "reported_mention"
-              }
-
-          def prior():
-              if not SIGNALS.exists():
-                  return []
+          records=read_old(); failures=[]; successes=0
+          slot=(NOW.hour//4)%6
+          queries=SEARCHES[slot*4:slot*4+4]
+          feeds=[]
+          for q in queries:
+              args=urllib.parse.urlencode({'q':q+' when:30d','hl':'en-US','gl':'US','ceid':'US:en'})
+              feeds.append(('Google News: '+q,'https://news.google.com/rss/search?'+args))
+          feeds.append(('Reddit PKMNTCGDeals','https://www.reddit.com/r/PKMNTCGDeals/new/.rss'))
+          for source,url in feeds:
               try:
-                  data = json.loads(SIGNALS.read_text(encoding="utf-8"))
-                  entries = data.get("signals", []) if isinstance(data, dict) else []
-                  return [e for e in entries if isinstance(e, dict) and dt(e.get("published_utc"))
-                          and NOW - MAX_AGE <= dt(e["published_utc"]) <= NOW]
-              except (OSError, ValueError, TypeError):
-                  return []
+                  req=urllib.request.Request(url,headers={'User-Agent':'PokeStock/46 (public RSS research)','Accept':'application/rss+xml, application/xml, text/xml'})
+                  with urllib.request.urlopen(req,timeout=7) as response:
+                      xml=ET.fromstring(response.read(700000))
+                  successes+=1
+                  candidates=xml.findall('.//item')+xml.findall('{http://www.w3.org/2005/Atom}entry')
+                  for e in candidates[:70]:
+                      name='{http://www.w3.org/2005/Atom}'
+                      title=strip_tags(e.findtext('title') or e.findtext(name+'title'))[:240]
+                      desc=strip_tags(e.findtext('description') or e.findtext(name+'summary'))[:400]
+                      pub=timeparse(e.findtext('pubDate') or e.findtext(name+'published') or e.findtext(name+'updated'))
+                      link=e.findtext('link') or ''
+                      if not link:
+                          node=e.find(name+'link'); link=node.get('href','') if node is not None else ''
+                      content=title+' '+desc
+                      if not(pub and NOW-timedelta(days=45)<=pub<=NOW+timedelta(hours=1)):continue
+                      if not link.startswith('https://') or not NEWS.search(content):continue
+                      if not SEALED.search(content) or BAD.search(title):continue
+                      game=next((k for k,v in GAMES.items() if re.search(v,content,re.I)),None)
+                      if not game and not re.search(r'trading card|\btcg\b|card game',content,re.I):continue
+                      store=next((k for k,v in STORES.items() if re.search(v,content,re.I)),'Unspecified')
+                      city=next((c for c in ('Staunton','Waynesboro','Harrisonburg','Charlottesville') if re.search(r'\b'+c+r'\b',content,re.I)),None)
+                      city=(city+', VA') if city else ('Virginia (unspecified)' if re.search(r'\bVirginia\b',content,re.I) else 'Location unspecified')
+                      id=hashlib.sha256((link.split('?')[0]+title.lower()).encode()).hexdigest()[:20]
+                      records[id]={'id':id,'title':title,'summary':desc[:250], 'game':game or 'Other TCG',
+                        'retailer':store,'location':city,'published_utc':pub.isoformat(),
+                        'source':source,'url':link,'status':'UNVERIFIED PUBLIC MENTION'}
+              except Exception as e:
+                  failures.append({'feed':source,'type':type(e).__name__})
 
-          def write(path, data):
-              path.parent.mkdir(parents=True, exist_ok=True)
-              tmp = path.with_suffix(".tmp")
-              tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-              tmp.replace(path)
-
-          def forecast(signals):
-              # A local rumor provided by a user must never be counted as independently verified.
-              leads = [{
-                "id": "staunton-walmart-thursday-user-lead",
-                "retailer": "Walmart", "location": "Staunton, VA",
-                "game": "Pokémon",
-                "window": "Thursday, early morning (local time)",
-                "confidence": "LOW", "status": "UNVERIFIED RUMOR",
-                "based_on": "A user-reported local rumor; no independently verified in-store delivery",
-                "source_count": 0, "source_urls": []
-              }]
-              # Build an independent-source tentative pattern only if same place, multiple
-              # dates and weeks, and a dominant weekday. A national article cannot
-              # establish a specific store's delivery schedule.
-              grouped = defaultdict(list)
-              for s in signals:
-                  if s.get("retailer") == "Unspecified retailer" or s.get("location") in (
-                      "Location unspecified", "Virginia (unspecified)"):
-                      continue
-                  if s.get("status") != "UNVERIFIED":
-                      continue
-                  grouped[(s["retailer"], s["location"], s["game"])].append(s)
-              for (retailer, location, game), group in grouped.items():
-                  dates, weeks = set(), set()
-                  weekdays = Counter()
-                  for s in group:
-                      d = dt(s["published_utc"]).astimezone(TZ)
-                      dates.add(d.date().isoformat())
-                      weeks.add((d.isocalendar().year, d.isocalendar().week))
-                      weekdays[d.strftime("%A")] += 1
-                  top_day, top_count = weekdays.most_common(1)[0]
-                  if len(group) >= 4 and len(dates) >= 3 and len(weeks) >= 2 and top_count >= 3:
-                      leads.append({
-                        "id": hashlib.sha256(str((retailer, location, game)).encode()).hexdigest()[:20],
-                        "retailer": retailer, "location": location, "game": game,
-                        "window": f"{top_day} (time not established)",
-                        "confidence": "LOW", "status": "TENTATIVE PUBLIC-MENTION PATTERN",
-                        "based_on": "Repeated dated public mentions, NOT corroborated in-store deliveries",
-                        "source_count": len({s["url"] for s in group}),
-                        "source_urls": list(dict.fromkeys(s["url"] for s in group))[:6]
-                      })
-              return leads
-
-          def run(offline=False):
-              records = {s["id"]: s for s in prior() if s.get("id")}
-              errors = []
-              checked = 0
-              slot = (NOW.hour // 4) % 6
-              selected = QUERIES[slot * 4 : slot * 4 + 4]
-              if not offline:
-                  sources = [
-                    ("Google News RSS: " + q,
-                     "https://news.google.com/rss/search?" + urllib.parse.urlencode({
-                       "q": f'{q} when:30d', "hl": "en-US", "gl": "US", "ceid": "US:en"
-                     }))
-                    for q in selected
-                  ]
-                  sources += [FEEDS[slot % len(FEEDS)]]
-                  for channel, url in sources:
-                      try:
-                          root = fetch(url)
-                          checked += 1
-                          for row in items(root):
-                              signal = classify(*row, channel)
-                              if signal:
-                                  records[signal["id"]] = signal
-                      except (urllib.error.URLError, TimeoutError, ET.ParseError, ValueError, OSError) as exc:
-                          errors.append({"source": channel, "error": type(exc).__name__})
-              signals = sorted(records.values(), key=lambda x: x.get("published_utc", ""), reverse=True)[:350]
-              leads = forecast(signals)
-              write(SIGNALS, {
-                "generated_utc": NOW.isoformat(), "coverage": "Public RSS/Atom only; not exhaustive",
-                "availability": "NOT VERIFIED", "signals": signals
-              })
-              write(FORECAST, {
-                "generated_utc": NOW.isoformat(),
-                "disclaimer": "Rumor forecasts are not store inventory, shipment confirmations, or guarantees.",
-                "leads": leads
-              })
-              write(REPORT, {
-                "generated_utc": NOW.isoformat(), "queries_attempted": 0 if offline else len(selected),
-                "feeds_succeeded": checked, "source_failures": errors,
-                "public_mentions_stored": len(signals), "rumor_leads": len(leads),
-                "game_categories": len(GAMES) + 1,
-                "note": "Zero signals is valid and does not imply no stock."
-              })
-              assert all(s["status"] == "UNVERIFIED" for s in signals)
-              assert all(l["confidence"] == "LOW" for l in leads)
-              print("SCRIPT 46 PASSED", json.dumps(json.loads(REPORT.read_text())))
-
-          if __name__ == "__main__":
-              parser = argparse.ArgumentParser()
-              parser.add_argument("--offline-test", action="store_true")
-              args = parser.parse_args()
-              run(offline=args.offline_test)
-          PY46
-          cat > assets/rumor46.js <<'JS46'
+          signals=sorted(records.values(),key=lambda x:x['published_utc'],reverse=True)[:350]
+          leads=[{'retailer':'Walmart','location':'Staunton, VA','game':'Pokémon',
+                  'window':'Thursday, early morning','confidence':'LOW',
+                  'status':'UNVERIFIED LOCAL RUMOR',
+                  'reason':'User-reported rumor, not a confirmed shelf restock.'}]
+          # A public post's publication date is NOT necessarily a real store restock date.
+          # Do not extrapolate a delivery calendar from generic articles or press releases.
+          for filename,obj in [
+          ('rumor_signals_46.json',{'generated_utc':NOW.isoformat(),'availability':'NOT VERIFIED',
+           'coverage':'Public RSS feed samples; not comprehensive','signals':signals}),
+          ('rumor_forecast_46.json',{'generated_utc':NOW.isoformat(),
+           'disclaimer':'All forecasts are low-confidence leads, not inventory reports.','leads':leads}),
+          ('rumor_report_46.json',{'generated_utc':NOW.isoformat(),'feeds_attempted':len(feeds),
+           'feeds_succeeded':successes,'feed_failures':failures,'public_mentions':len(signals),
+           'status':'OK - feed coverage may be partial'})]:
+              (BASE/filename).write_text(json.dumps(obj,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          assert all('UNVERIFIED' in s['status'] for s in signals)
+          print('Script 46 collection completed: '+str(len(signals))+' public mentions; '+str(successes)+' feeds accessible')
+          PY46_ENGINE
+          cat > assets/rumor46.js <<'JS46_APP'
           (() => {
-            const base = (() => {
-              const src = document.currentScript?.src || "";
-              return src.slice(0, src.lastIndexOf("/") + 1).replace(/assets\/$/, "");
-            })();
-            const esc = v => String(v ?? "").replace(/[&<>"']/g, m =>
-              ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-            const target = document.querySelector("main") ||
-              document.querySelector(".wrapper") || document.body;
-            const el = document.createElement("section");
-            el.id = "ps46";
-            el.className = "ps46";
-            el.innerHTML = \`<div class="ps46-top"><div><h2>Restock intelligence</h2>
-              <p>Public reports and rumor-based forecasts across non-sports TCGs.
-              <strong>Not verified store inventory.</strong></p></div></div>
-              <div class="ps46-controls">
-                <label>Game <select id="ps46-game"><option value="">All TCGs</option></select></label>
-                <label>Retailer <select id="ps46-store"><option value="">All retailers</option></select></label>
-                <label>Find <input id="ps46-find" type="search" placeholder="TCG, store, city or product"></label>
-              </div><div id="ps46-leads"></div><h3>Recent public mentions</h3>
-              <p class="ps46-fine">Articles and community posts are leads, not proof of products on shelves.
-              Original sources are provided for verification.</p><div id="ps46-feed">Loading…</div>
-              <p id="ps46-status" class="ps46-fine"></p>\`;
-            target.appendChild(el);
-            const gameSel = el.querySelector("#ps46-game");
-            const storeSel = el.querySelector("#ps46-store");
-            const search = el.querySelector("#ps46-find");
-            let signals = [], leads = [];
-            const view = () => {
-              const q = search.value.trim().toLowerCase(), game = gameSel.value, store = storeSel.value;
-              const show = x => (!game || x.game === game) && (!store || x.retailer === store) &&
-                (!q || [x.game, x.retailer, x.location, x.title, x.summary, x.window]
-                  .join(" ").toLowerCase().includes(q));
-              const fs = signals.filter(show).slice(0, 40), fl = leads.filter(show);
-              el.querySelector("#ps46-leads").innerHTML =
-                \`<h3>Forecasts and local tips <small>Low confidence</small></h3>\` +
-                (fl.length ? fl.map(x => \`<article class="ps46-card ps46-tip">
-                  <span class="ps46-flag">UNVERIFIED • \${esc(x.confidence)}</span>
-                  <strong>\${esc(x.retailer)} — \${esc(x.location)}</strong>
-                  <div>\${esc(x.game)} · \${esc(x.window)}</div>
-                  <p>\${esc(x.based_on)}</p></article>\`).join("") :
-                \`<p class="ps46-fine">No matching forecasts. This does not mean stock is unavailable.</p>\`);
-              el.querySelector("#ps46-feed").innerHTML = fs.length ?
-                fs.map(x => {
-                  let safe = "";
-                  try { const u = new URL(x.url); if(u.protocol === "https:") safe = u.href; } catch (_) {}
-                  return \`<article class="ps46-card">
-                    <span class="ps46-flag">PUBLIC MENTION • UNVERIFIED</span>
-                    <strong>\${esc(x.title)}</strong>
-                    <div>\${esc(x.game)} · \${esc(x.retailer)} · \${esc(x.location)}</div>
-                    <div class="ps46-fine">\${esc(x.channel)} · \${esc((x.published_utc || "").slice(0, 10))}</div>
-                    \${x.summary ? \`<p>\${esc(x.summary)}</p>\` : ""}
-                    \${safe ? \`<a href="\${esc(safe)}" target="_blank" rel="noopener noreferrer">Original source</a>\` : ""}
-                  </article>\`;
-                }).join("") :
-                \`<p class="ps46-fine">No matching public mentions yet. This does not mean the product is out of stock.</p>\`;
-            };
-            Promise.all([
-              fetch(base + "data/rumor_signals_46.json?ts=" + Date.now()).then(r => {if(!r.ok)throw Error("signals");return r.json();}),
-              fetch(base + "data/rumor_forecast_46.json?ts=" + Date.now()).then(r => {if(!r.ok)throw Error("forecasts");return r.json();})
-            ]).then(([s,f]) => {
-              signals = Array.isArray(s.signals) ? s.signals : [];
-              leads = Array.isArray(f.leads) ? f.leads : [];
-              const games = [...new Set([...signals,...leads].map(x => x.game).filter(Boolean))].sort();
-              const stores = [...new Set([...signals,...leads].map(x => x.retailer).filter(Boolean))].sort();
-              for (const g of games) gameSel.add(new Option(g,g));
-              for (const s of stores) storeSel.add(new Option(s,s));
-              el.querySelector("#ps46-status").textContent =
-                \`Last research update: \${new Date(s.generated_utc).toLocaleString()} · Public-source coverage is not exhaustive.\`;
-              [gameSel,storeSel,search].forEach(e => e.addEventListener("input",view));
-              view();
-            }).catch(() => {
-              el.querySelector("#ps46-feed").textContent =
-                "Research feed not available yet. Existing PokéStock features remain unaffected.";
-              el.querySelector("#ps46-status").textContent = "Source data could not be loaded.";
-            });
+            const root = document.createElement('section'); root.id='ps46';
+            root.style.cssText='max-width:1100px;margin:22px auto;padding:20px;border:1px solid #44546e;border-radius:16px;background:#152137;color:#fff';
+            root.innerHTML='<h2 style="margin-top:0">Restock intelligence</h2><p>Public TCG restock reports and low-confidence rumors. <b>No verified shelf inventory.</b></p><div id="ps46filters" style="display:flex;flex-wrap:wrap;gap:8px"><select id="ps46game"><option value="">All TCGs</option></select><select id="ps46store"><option value="">All retailers</option></select><input id="ps46query" placeholder="Search city, product, store" aria-label="Search public reports" style="min-width:180px;flex:1"></div><h3>Rumor-based forecast</h3><div id="ps46forecast"></div><h3>Recent public mentions</h3><div id="ps46items">Loading source reports…</div><small id="ps46updated"></small>';
+            document.body.appendChild(root);
+            const get=id=>root.querySelector('#'+id);
+            const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            const css='padding:12px;margin:8px 0;border-radius:9px;border:1px solid #3d5270;background:#1c2b43';
+            Promise.all(['data/rumor_signals_46.json','data/rumor_forecast_46.json'].map(url=>fetch(url+'?t='+Date.now()).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}))).then(([data,forecast])=>{
+              const rows=Array.isArray(data.signals)?data.signals:[], leads=Array.isArray(forecast.leads)?forecast.leads:[];
+              const games=new Set([...rows,...leads].map(x=>x.game).filter(Boolean));
+              const stores=new Set([...rows,...leads].map(x=>x.retailer).filter(Boolean));
+              for(const x of [...games].sort())get('ps46game').add(new Option(x,x));
+              for(const x of [...stores].sort())get('ps46store').add(new Option(x,x));
+              const draw=()=>{
+                const g=get('ps46game').value, s=get('ps46store').value, q=get('ps46query').value.toLowerCase();
+                const match=x=>(!g||x.game===g)&&(!s||x.retailer===s)&&(!q||[x.title,x.retailer,x.location,x.game,x.window].join(' ').toLowerCase().includes(q));
+                const rs=rows.filter(match).slice(0,50), ls=leads.filter(match);
+                get('ps46forecast').innerHTML=ls.map(x=>'<div style="'+css+'"><b>'+esc(x.retailer)+' · '+esc(x.location)+'</b><p>'+esc(x.game)+' — '+esc(x.window)+'</p><small>UNVERIFIED · '+esc(x.confidence)+' confidence · '+esc(x.reason)+'</small></div>').join('') || '<p>No matching rumor forecast.</p>';
+                get('ps46items').innerHTML=rs.map(x=>{let link='';try{let u=new URL(x.url);if(u.protocol==='https:')link='<a href="'+esc(u.href)+'" target="_blank" rel="noopener noreferrer">Source</a>'}catch(e){}return '<article style="'+css+'"><b>'+esc(x.title)+'</b><p>'+esc(x.game)+' · '+esc(x.retailer)+' · '+esc(x.location)+'</p><small>UNVERIFIED public mention · '+esc(x.published_utc?.slice(0,10))+' · '+esc(x.source)+'</small> '+link+'</article>'}).join('') || '<p>No matching public reports. This does not imply out-of-stock.</p>';
+              };
+              ['ps46game','ps46store','ps46query'].forEach(id=>get(id).addEventListener('input',draw));
+              get('ps46updated').textContent='Last checked: '+new Date(data.generated_utc).toLocaleString()+' · Partial public RSS coverage; not real-time store inventory.';
+              draw();
+            }).catch(e=>{get('ps46items').textContent='Research data not published yet ('+e.message+'). Existing PokéStock data is unaffected.';get('ps46forecast').textContent='Forecast unavailable.';});
           })();
-          JS46
-          cat > assets/rumor46.css <<'CSS46'
-          .ps46{box-sizing:border-box;max-width:1200px;margin:34px auto 48px;padding:22px;
-          background:linear-gradient(125deg,#141b29,#1c2739);color:#f0f4fb;border:1px solid #39445b;
-          border-radius:20px;font:inherit;line-height:1.5}
-          .ps46 *{box-sizing:border-box}
-          .ps46 h2{font-size:1.5rem;margin:0 0 6px;color:#fff}
-          .ps46 h3{font-size:1.08rem;margin:20px 0 9px;color:#fff}
-          .ps46 p{margin:7px 0 10px}
-          .ps46-top p{color:#c9d3e2}
-          .ps46-controls{display:flex;gap:12px;flex-wrap:wrap;margin:17px 0}
-          .ps46-controls label{display:flex;flex-direction:column;flex:1;min-width:150px;gap:5px;color:#c9d3e2;font-size:.85rem}
-          .ps46-controls input,.ps46-controls select{padding:10px;border:1px solid #55637a;
-          border-radius:9px;background:#101827;color:#fff;min-height:42px;width:100%}
-          .ps46-card{margin:10px 0;padding:13px 15px;border:1px solid #3b4d64;
-          background:#182538;border-radius:12px;overflow-wrap:anywhere}
-          .ps46-card strong{display:block;color:#fff;margin:4px 0}
-          .ps46-card div{color:#cbd5e1;font-size:.9rem}
-          .ps46-card p{color:#cbd5e1;font-size:.9rem}
-          .ps46-flag{display:inline-block;color:#f6d38a;letter-spacing:.035em;font-size:.7rem;font-weight:800}
-          .ps46-tip{border-left:3px solid #e7b85f}
-          .ps46 a{color:#9ed0ff;text-decoration:underline}
-          .ps46-fine,.ps46 small{font-size:.8rem;color:#aebbd0}
-          @media(max-width:600px){.ps46{margin:25px 8px;padding:15px}.ps46-controls{display:block}.ps46-controls label{margin-bottom:10px}}
-          CSS46
-          python - <<'PY46_HTML'
+          JS46_APP
+          cat > scripts/install46.py <<'PY46_INSTALLER'
           from pathlib import Path
-          p = Path("index.html")
+          p=Path('index.html')
           if not p.exists():
-              raise SystemExit("index.html missing; refusing to replace existing site")
-          html = p.read_text(encoding="utf-8")
-          css = '<link rel="stylesheet" href="assets/rumor46.css">'
-          js  = '<script defer src="assets/rumor46.js"></script>'
-          if css not in html:
-              at = html.lower().rfind("</head>")
-              html = html[:at] + css + "\n" + html[at:] if at >= 0 else css + "\n" + html
-          if js not in html:
-              at = html.lower().rfind("</body>")
-              html = html[:at] + js + "\n" + html[at:] if at >= 0 else html + "\n" + js
-          p.write_text(html,encoding="utf-8")
-          PY46_HTML
-
-      - name: Collect public feeds and preserve previous reports
-        run: |
-          python -m py_compile scripts/public_signal_46.py
-          python scripts/public_signal_46.py
+              raise SystemExit('index.html absent: refusing to create replacement site')
+          text=p.read_text(encoding='utf-8')
+          asset='<script defer src="assets/rumor46.js?v=46repair"></script>'
+          # Remove earlier broken Script 46 tags without altering other scripts.
+          import re
+          text=re.sub(r'<script\s+defer\s+src="assets/rumor46\.js(?:\?[^\"]*)?"\s*></script>','',text)
+          text=re.sub(r'<link\s+rel="stylesheet"\s+href="assets/rumor46\.css"\s*/?>','',text)
+          if '</body>' not in text.lower():
+              raise SystemExit('Missing body close tag; refusing to modify site')
+          pos=text.lower().rfind('</body>')
+          text=text[:pos]+asset+'\n'+text[pos:]
+          p.write_text(text,encoding='utf-8')
+          PY46_INSTALLER
+          python3 -m py_compile scripts/restock46.py scripts/install46.py
+          python3 scripts/restock46.py
           node --check assets/rumor46.js
-
-      - name: Validate honest availability labels
-        run: |
-          python - <<'PY46_CHECK'
+          python3 - <<'PY46_TEST'
           import json
           from pathlib import Path
-          s=json.loads(Path("data/rumor_signals_46.json").read_text())
-          f=json.loads(Path("data/rumor_forecast_46.json").read_text())
-          assert all(x["status"]=="UNVERIFIED" for x in s["signals"])
-          assert all(x["confidence"]=="LOW" for x in f["leads"])
-          assert len([x for x in f["leads"] if x["id"]=="staunton-walmart-thursday-user-lead"]) == 1
-          assert Path("index.html").exists()
-          print("SCRIPT 46 GREEN — feeds preserved; rumors labelled")
-          PY46_CHECK
+          signals=json.loads(Path('data/rumor_signals_46.json').read_text())
+          leads=json.loads(Path('data/rumor_forecast_46.json').read_text())
+          assert all('UNVERIFIED' in x['status'] for x in signals['signals'])
+          assert all(x['confidence']=='LOW' for x in leads['leads'])
+          print('GREEN: data generated with honest labels')
+          PY46_TEST
 
-      - name: Publish only Script 46 changes
+      - name: Publish safely with retries against concurrent workflows
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html scripts/public_signal_46.py assets/rumor46.js assets/rumor46.css \
-            data/rumor_signals_46.json data/rumor_forecast_46.json data/rumor_report_46.json
-          if git diff --cached --quiet; then
-            echo "Nothing changed"
-            exit 0
-          fi
-          git commit -m "Script 46: public-source TCG rumors and low-confidence forecasts"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          mkdir -p "$RUNNER_TEMP/pokestock46/assets" "$RUNNER_TEMP/pokestock46/scripts" "$RUNNER_TEMP/pokestock46/data"
+          cp scripts/restock46.py scripts/install46.py "$RUNNER_TEMP/pokestock46/scripts/"
+          cp assets/rumor46.js "$RUNNER_TEMP/pokestock46/assets/"
+          cp data/rumor_*.json "$RUNNER_TEMP/pokestock46/data/"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5; do
+            echo "PUBLISH ATTEMPT $attempt / 5"
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p scripts data assets
+            cp "$RUNNER_TEMP/pokestock46/scripts/restock46.py" scripts/restock46.py
+            cp "$RUNNER_TEMP/pokestock46/scripts/install46.py" scripts/install46.py
+            cp "$RUNNER_TEMP/pokestock46/assets/rumor46.js" assets/rumor46.js
+            cp "$RUNNER_TEMP/pokestock46/data/"*.json data/
+            python3 scripts/install46.py
+            git add index.html scripts/restock46.py scripts/install46.py assets/rumor46.js \
+              data/rumor_signals_46.json data/rumor_forecast_46.json data/rumor_report_46.json
+            if git diff --cached --quiet; then
+              echo 'GREEN: already published. No changes needed.'
+              exit 0
+            fi
+            git commit -m 'Fix Script 46 TCG public reports and labeled rumor intelligence'
+            if git push origin HEAD:main; then
+              echo 'GREEN: Script 46 data + site published successfully'
+              exit 0
+            fi
+            echo "Concurrent update detected; retrying on latest main"
+            sleep $((attempt * 2))
+          done
+          echo 'RED: push failed 5 times; check branch rules and Contents write permissions' >&2
+          exit 1
