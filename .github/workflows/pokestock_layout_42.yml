@@ -1,0 +1,200 @@
+name: Pokestock Script 42 Fix Social Discovery Blocking Homepage
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pokestock_layout_42.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-frontend-upgrade
+  cancel-in-progress: false
+
+jobs:
+  fix-layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out current Pokestock
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Fix legacy Social Discovery and pin four main tabs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY42'
+          from pathlib import Path
+
+          js_file = Path('assets/pokestock2.js')
+          css_file = Path('assets/pokestock2.css')
+          html_file = Path('index.html')
+
+          js = js_file.read_text(encoding='utf-8')
+          css = css_file.read_text(encoding='utf-8')
+          html = html_file.read_text(encoding='utf-8')
+
+          old = "document.body.append(root,back);document.body.classList.add('ps2-ready');"
+          new = "document.body.prepend(root);document.body.append(back);document.body.classList.add('ps2-ready');"
+
+          if old in js:
+              js = js.replace(old, new, 1)
+          elif new not in js:
+              raise SystemExit(
+                  'Pokestock 2.0 mounting code changed; safely stopping.'
+              )
+
+          marker = '/* POKESTOCK SCRIPT 42 LAYOUT FIX */'
+
+          patch = '''
+          /* POKESTOCK SCRIPT 42 LAYOUT FIX */
+
+          /* Hide the old Social Discovery panel in the new app. */
+          body.ps2-ready > section#psgeo {
+            display: none !important;
+          }
+
+          /* Keep the logo above the tabs without wasting space. */
+          #ps2root .ps2top {
+            position: relative;
+            top: auto;
+            z-index: 10;
+          }
+
+          /* Keep the four main tabs visible when scrolling. */
+          #ps2root .ps2tabs {
+            position: sticky;
+            top: 0;
+            z-index: 1200;
+            background: #10172af7;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 24px #06091599;
+          }
+
+          html {
+            scroll-padding-top: 64px;
+          }
+          '''
+
+          if marker not in css:
+              css += '\n' + patch
+
+          assert '<section id="psgeo"' in html, (
+              'Legacy section could not be found.'
+          )
+          assert 'assets/pokestock2.js' in html
+          assert 'assets/pokestock2.css' in html
+          assert js.count(new) == 1
+          assert css.count(marker) == 1
+
+          js_file.write_text(js, encoding='utf-8')
+          css_file.write_text(css, encoding='utf-8')
+
+          print(
+              'Script 42: old Social Discovery hidden; '
+              'new app moved first; four tabs sticky.'
+          )
+          PY42
+
+          node --check assets/pokestock2.js
+
+      - name: Validate navigation, media, maps and forecast
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY42_CHECK'
+          from pathlib import Path
+
+          js = Path('assets/pokestock2.js').read_text(
+              encoding='utf-8'
+          )
+          css = Path('assets/pokestock2.css').read_text(
+              encoding='utf-8'
+          )
+          html = Path('index.html').read_text(
+              encoding='utf-8'
+          )
+
+          features = (
+              'ps2-discover',
+              'ps2-near',
+              'ps2-social',
+              'ps2-forecast',
+              'ps2Map',
+              'ps2Feed',
+              'ps2ForecastBody',
+              'ps2Advanced',
+              'watchPosition',
+              'router.project-osrm.org',
+              'data-embed',
+          )
+
+          for feature in features:
+              assert feature in js, (
+                  'Missing feature: ' + feature
+              )
+
+          assert 'document.body.prepend(root)' in js
+
+          assert (
+              'body.ps2-ready > section#psgeo '
+              '{display:none!important}'
+          ) in css.replace('\n', '').replace('  ', ' ')
+
+          assert 'position:sticky;top:0;z-index:1200' in (
+              css.replace(' ', '').replace('\n', '')
+          )
+
+          assert 'Social Restock Discovery' in html
+
+          print(
+              'SCRIPT 42 PASSED: '
+              'four tabs first, '
+              'legacy Social Discovery obstruction hidden.'
+          )
+          PY42_CHECK
+
+      - name: Commit safe layout fix
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add assets/pokestock2.js assets/pokestock2.css
+
+          if git diff --cached --quiet; then
+            echo 'Layout fix already installed.'
+            exit 0
+          fi
+
+          git commit -m 'Pokestock 42 fix obstructed homepage layout'
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo 'Concurrent changes preserved.'
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo 'SCRIPT 42 COMMITTED'
+              exit 0
+            fi
+
+            sleep 5
+          done
+
+          exit 1
