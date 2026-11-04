@@ -1,0 +1,782 @@
+name: Pokestock V29 No-Key Store Availability
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 */4 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install requests beautifulsoup4
+
+      - name: Run complete V29 monitor
+        shell: bash
+        run: |
+          mkdir -p data
+
+          cat > /tmp/pokestock_v29.py <<'PY'
+          import json
+          import re
+          import time
+          from collections import Counter
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from urllib.parse import urlparse, quote
+
+          import requests
+          from bs4 import BeautifulSoup
+
+          ROOT = Path("data")
+          ROOT.mkdir(exist_ok=True)
+
+          NOW = datetime.now(timezone.utc)
+          STAMP = NOW.isoformat()
+
+          MAX_CHECKS = 80
+          MAX_BYTES = 1500000
+
+          CHAINS = {
+              "Walmart": "https://www.walmart.com/",
+              "Target": "https://www.target.com/",
+              "Best Buy": "https://www.bestbuy.com/",
+              "Barnes & Noble":
+                  "https://www.barnesandnoble.com/",
+              "Kohls": "https://www.kohls.com/",
+              "Lowes": "https://www.lowes.com/",
+              "GameStop": "https://www.gamestop.com/",
+              "Ross": "https://www.rossstores.com/",
+              "Burlington":
+                  "https://www.burlington.com/",
+              "Five Below":
+                  "https://www.fivebelow.com/",
+              "Walgreens":
+                  "https://www.walgreens.com/",
+              "CVS": "https://www.cvs.com/",
+              "Dollar General":
+                  "https://www.dollargeneral.com/",
+          }
+
+          SESSION = requests.Session()
+          SESSION.headers.update({
+              "User-Agent":
+                  "PokeStock/29.0 (public inventory monitor)",
+              "Accept":
+                  "text/html,application/json",
+          })
+
+          def read(name, default):
+              try:
+                  return json.loads(
+                      (ROOT / name).read_text(
+                          encoding="utf-8"
+                      )
+                  )
+              except (OSError, ValueError):
+                  return default
+
+          def write(name, value):
+              path = ROOT / name
+              temp = path.with_suffix(".tmp")
+              temp.write_text(
+                  json.dumps(
+                      value,
+                      indent=2,
+                      ensure_ascii=False
+                  ),
+                  encoding="utf-8"
+              )
+              temp.replace(path)
+
+          def clean(value):
+              return " ".join(
+                  str(value or "").split()
+              )
+
+          def valid_https(url):
+              try:
+                  p = urlparse(url)
+                  return (
+                      p.scheme == "https"
+                      and bool(p.hostname)
+                      and "." in p.hostname
+                      and not p.username
+                      and not p.password
+                      and p.port in (None, 443)
+                  )
+              except ValueError:
+                  return False
+
+          def fetch(url):
+              if not valid_https(url):
+                  return None, "invalid_url"
+
+              try:
+                  response = SESSION.get(
+                      url,
+                      timeout=(6, 14),
+                      allow_redirects=False,
+                      stream=True
+                  )
+
+                  code = response.status_code
+
+                  if code != 200:
+                      response.close()
+                      return None, "http_" + str(code)
+
+                  length = int(
+                      response.headers.get(
+                          "Content-Length", "0"
+                      ) or 0
+                  )
+
+                  if length > MAX_BYTES:
+                      response.close()
+                      return None, "too_large"
+
+                  chunks = []
+                  total = 0
+
+                  for chunk in response.iter_content(
+                      chunk_size=32768
+                  ):
+                      total += len(chunk)
+                      if total > MAX_BYTES:
+                          response.close()
+                          return None, "too_large"
+                      chunks.append(chunk)
+
+                  encoding = response.encoding or "utf-8"
+                  content = b"".join(chunks).decode(
+                      encoding, errors="replace"
+                  )
+                  response.close()
+
+                  return content, "http_200"
+
+              except requests.RequestException as exc:
+                  return None, (
+                      "network_" + type(exc).__name__
+                  )
+
+          def same_host(a, b):
+              try:
+                  return (
+                      urlparse(a).hostname.lower()
+                      == urlparse(b).hostname.lower()
+                  )
+              except (ValueError, AttributeError):
+                  return False
+
+          def check_chains():
+              results = []
+
+              for chain, url in CHAINS.items():
+                  body, status = fetch(url)
+
+                  results.append({
+                      "retailer": chain,
+                      "url": url,
+                      "access_result": status,
+                      "public_page_accessible":
+                          body is not None,
+                      "inventory_verified": False,
+                      "reason":
+                          "Homepage access is not "
+                          "product/store inventory evidence",
+                      "checked_at": STAMP
+                  })
+
+                  print(
+                      "RETAILER",
+                      chain,
+                      status,
+                      flush=True
+                  )
+                  time.sleep(0.3)
+
+              return results
+
+          def choose_variant(product, offer):
+              variants = product.get(
+                  "variants", []
+              )
+
+              if not isinstance(variants, list):
+                  return None
+
+              sku = clean(offer.get("sku"))
+              title = clean(offer.get("variant"))
+
+              if sku:
+                  matches = [
+                      v for v in variants
+                      if clean(v.get("sku")) == sku
+                  ]
+                  if len(matches) == 1:
+                      return matches[0]
+
+              if title and title.lower() != "product listing":
+                  matches = [
+                      v for v in variants
+                      if clean(v.get("title")) == title
+                  ]
+                  if len(matches) == 1:
+                      return matches[0]
+
+              if len(variants) == 1:
+                  return variants[0]
+
+              return None
+
+          def get_pickup_locations(html):
+              soup = BeautifulSoup(
+                  html, "html.parser"
+              )
+
+              locations = []
+              items = soup.select(
+                  ".pickup-availability-list__item"
+              )
+
+              for item in items:
+                  heading = item.find(
+                      ["h2", "h3", "h4", "strong"]
+                  )
+
+                  if not heading:
+                      continue
+
+                  name = clean(
+                      heading.get_text(
+                          " ", strip=True
+                      )
+                  )
+
+                  if not name:
+                      continue
+
+                  positive = bool(
+                      item.select_one(
+                          ".icon-in-stock,"
+                          ".icon-checkmark,"
+                          ".icon-check"
+                      )
+                  )
+
+                  negative = bool(
+                      item.select_one(
+                          ".icon-out-of-stock,"
+                          ".icon-close,"
+                          ".icon-error"
+                      )
+                  )
+
+                  if positive == negative:
+                      continue
+
+                  locations.append({
+                      "store_name": name,
+                      "availability":
+                          "Pickup available"
+                          if positive else
+                          "Pickup unavailable"
+                  })
+
+              return locations
+
+          def check_shopify(offer):
+              url = clean(
+                  offer.get("product_url")
+              )
+
+              if not valid_https(url):
+                  return [], "invalid_url"
+
+              parsed = urlparse(url)
+
+              match = re.match(
+                  r"^/products/([A-Za-z0-9_-]+)",
+                  parsed.path
+              )
+
+              if not match:
+                  return [], "not_shopify_product"
+
+              base = (
+                  "https://" + parsed.hostname
+              )
+
+              handle = match.group(1)
+              product_url = (
+                  base + "/products/" + handle
+              )
+
+              js_url = product_url + ".js"
+
+              body, status = fetch(js_url)
+
+              if body is None:
+                  return [], "product_" + status
+
+              try:
+                  product = json.loads(body)
+              except ValueError:
+                  return [], "invalid_product_json"
+
+              variant = choose_variant(
+                  product, offer
+              )
+
+              if variant is None:
+                  return [], "ambiguous_variant"
+
+              variant_id = variant.get("id")
+
+              if not isinstance(variant_id, int):
+                  return [], "missing_variant_id"
+
+              encoded_id = quote(
+                  str(variant_id), safe=""
+              )
+
+              paths = [
+                  (
+                      product_url
+                      + "?variant="
+                      + encoded_id
+                      + "&section_id=pickup-availability"
+                  ),
+                  (
+                      base
+                      + "/variants/"
+                      + encoded_id
+                      + "?section_id=pickup-availability"
+                  ),
+              ]
+
+              observations = []
+              outcomes = []
+
+              for evidence_url in paths:
+                  html, result = fetch(evidence_url)
+                  outcomes.append(result)
+
+                  if html is None:
+                      continue
+
+                  for location in get_pickup_locations(
+                      html
+                  ):
+                      observations.append({
+                          "retailer":
+                              offer.get("retailer"),
+                          "product_name":
+                              offer.get("product_name"),
+                          "game":
+                              offer.get("game"),
+                          "product_url":
+                              product_url,
+                          "sku":
+                              offer.get("sku"),
+                          "variant_id":
+                              variant_id,
+                          "store_name":
+                              location["store_name"],
+                          "availability":
+                              location["availability"],
+                          "inventory_scope":
+                              "store_pickup",
+                          "evidence_type":
+                              "public_shopify_pickup",
+                          "evidence_url":
+                              evidence_url,
+                          "checked_at": STAMP,
+                          "shelf_quantity":
+                              None,
+                          "shelf_stock_verified":
+                              False
+                      })
+
+                  if observations:
+                      break
+
+              unique = {}
+
+              for row in observations:
+                  key = (
+                      row["product_url"],
+                      row["variant_id"],
+                      row["store_name"]
+                  )
+                  unique[key] = row
+
+              return list(unique.values()), (
+                  "pickup_observations_found"
+                  if unique else
+                  "no_explicit_pickup_evidence:"
+                  + ",".join(outcomes)
+              )
+
+          def main():
+              offers = read(
+                  "v27_inventory.json", []
+              )
+
+              if not isinstance(offers, list):
+                  offers = []
+
+              if not offers:
+                  offers = read(
+                      "online_offers.json", []
+                  )
+
+              if not isinstance(offers, list):
+                  offers = []
+
+              # Every game from the existing inventory
+              # is eligible. No Pokémon-only restriction.
+              candidates = [
+                  o for o in offers
+                  if isinstance(o, dict)
+                  and o.get("inventory_scope")
+                      == "online"
+                  and valid_https(
+                      clean(o.get("product_url"))
+                  )
+              ]
+
+              # Avoid duplicate checks of identical
+              # products and variants.
+              unique = {}
+
+              for offer in candidates:
+                  key = (
+                      offer.get("product_url"),
+                      offer.get("sku"),
+                      offer.get("variant")
+                  )
+                  unique[key] = offer
+
+              candidates = sorted(
+                  unique.values(),
+                  key=lambda o: (
+                      clean(o.get("retailer")),
+                      clean(o.get("game")),
+                      clean(o.get("product_name"))
+                  )
+              )
+
+              state = read(
+                  "v29_state.json", {}
+              )
+
+              cursor = int(
+                  state.get("cursor", 0)
+              )
+
+              total = len(candidates)
+              selected = []
+
+              if total:
+                  cursor %= total
+                  count = min(
+                      MAX_CHECKS, total
+                  )
+
+                  selected = [
+                      candidates[
+                          (cursor + i) % total
+                      ]
+                      for i in range(count)
+                  ]
+
+              chain_results = check_chains()
+              observations = []
+              check_results = []
+              outcomes = Counter()
+
+              for index, offer in enumerate(
+                  selected, 1
+              ):
+                  try:
+                      rows, result = check_shopify(
+                          offer
+                      )
+                  except Exception as exc:
+                      rows = []
+                      result = (
+                          "error_"
+                          + type(exc).__name__
+                      )
+
+                  observations.extend(rows)
+                  outcomes[result] += 1
+
+                  check_results.append({
+                      "retailer":
+                          offer.get("retailer"),
+                      "game":
+                          offer.get("game"),
+                      "product":
+                          offer.get("product_name"),
+                      "result": result,
+                      "observations": len(rows)
+                  })
+
+                  print(
+                      f"{index}/{len(selected)}",
+                      clean(offer.get("retailer")),
+                      result,
+                      flush=True
+                  )
+
+                  time.sleep(0.3)
+
+              # Preserve no stale observations:
+              # every published pickup observation
+              # must come from this execution.
+              deduped = {}
+
+              for row in observations:
+                  key = (
+                      row["product_url"],
+                      row["variant_id"],
+                      row["store_name"]
+                  )
+                  deduped[key] = row
+
+              verified = list(
+                  deduped.values()
+              )
+
+              # Compatible with the existing
+              # PokéStock pickup display.
+              write(
+                  "v23_pickup_observations.json",
+                  verified
+              )
+
+              write(
+                  "v23_pickup_report.json",
+                  {
+                      "version": "29.0",
+                      "checked_at": STAMP,
+                      "verified_observations":
+                          len(verified),
+                      "source":
+                          "public_shopify_pickup"
+                  }
+              )
+
+              write(
+                  "v29_store_inventory.json",
+                  verified
+              )
+
+              report = {
+                  "version": "29.0",
+                  "checked_at": STAMP,
+                  "api_keys_required": False,
+                  "games": sorted({
+                      clean(o.get("game"))
+                      for o in candidates
+                      if o.get("game")
+                  }),
+                  "online_candidates":
+                      total,
+                  "products_checked":
+                      len(selected),
+                  "verified_pickup_observations":
+                      len(verified),
+                  "pickup_available":
+                      sum(
+                          x["availability"]
+                          == "Pickup available"
+                          for x in verified
+                      ),
+                  "pickup_unavailable":
+                      sum(
+                          x["availability"]
+                          == "Pickup unavailable"
+                          for x in verified
+                      ),
+                  "verified_shelf_quantities":
+                      0,
+                  "chain_diagnostics":
+                      chain_results,
+                  "check_outcomes":
+                      dict(outcomes),
+                  "checks":
+                      check_results,
+                  "limitations": [
+                      "Retailer homepage access does "
+                      "not establish store stock",
+                      "Major chains need product and "
+                      "store-specific public evidence",
+                      "No response is Unknown, "
+                      "not Out of stock",
+                      "Pickup does not prove "
+                      "physical shelf quantity",
+                      "Only explicit Shopify "
+                      "pickup evidence is published"
+                  ]
+              }
+
+              write(
+                  "v29_report.json",
+                  report
+              )
+
+              next_cursor = (
+                  (cursor + len(selected))
+                  % total
+                  if total else 0
+              )
+
+              write(
+                  "v29_state.json",
+                  {
+                      "cursor": next_cursor,
+                      "last_run": STAMP
+                  }
+              )
+
+              print(
+                  json.dumps({
+                      "products_checked":
+                          len(selected),
+                      "pickup_observations":
+                          len(verified),
+                      "pickup_available":
+                          report["pickup_available"],
+                      "games_covered":
+                          len(report["games"]),
+                      "next_cursor":
+                          next_cursor
+                  }, indent=2),
+                  flush=True
+              )
+
+          if __name__ == "__main__":
+              main()
+          PY
+
+          python /tmp/pokestock_v29.py
+
+      - name: Validate generated results
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          names = [
+              "v29_report.json",
+              "v29_state.json",
+              "v29_store_inventory.json",
+              "v23_pickup_observations.json",
+              "v23_pickup_report.json"
+          ]
+
+          for name in names:
+              path = Path("data") / name
+              assert path.exists(), name
+              json.loads(
+                  path.read_text(encoding="utf-8")
+              )
+
+          rows = json.loads(
+              Path(
+                  "data/v29_store_inventory.json"
+              ).read_text(encoding="utf-8")
+          )
+
+          for row in rows:
+              assert row["inventory_scope"] == \
+                  "store_pickup"
+              assert row["evidence_type"] == \
+                  "public_shopify_pickup"
+              assert row["store_name"]
+              assert row["variant_id"]
+              assert row["evidence_url"].startswith(
+                  "https://"
+              )
+              assert row["availability"] in (
+                  "Pickup available",
+                  "Pickup unavailable"
+              )
+
+          print(
+              "V29 validation passed:",
+              len(rows),
+              "pickup observations"
+          )
+          PY
+
+      - name: Commit and publish results
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "pokestock-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          git add \
+            data/v29_report.json \
+            data/v29_state.json \
+            data/v29_store_inventory.json \
+            data/v23_pickup_observations.json \
+            data/v23_pickup_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+
+          git commit -m \
+            "V29 update public store availability"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "V29 results published"
+              exit 0
+            fi
+
+            sleep 5
+          done
+
+          echo "Could not publish results"
+          exit 1
