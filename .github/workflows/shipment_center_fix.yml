@@ -1,0 +1,823 @@
+name: Pokestock Script 27 Shipment Center Fix
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-script-27
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install permanent chart and multi-store selector
+        shell: bash
+        run: |
+          mkdir -p assets
+
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          # Remove the older chart script, but retain
+          # its social-media functionality elsewhere.
+          html = re.sub(
+              r'<script\s+defer\s+src="assets/script26.js">'
+              r'</script>\s*',
+              '',
+              html
+          )
+
+          # Insert the chart as actual HTML, not as
+          # a JavaScript-created element.
+          marker = '<section id="shipments" class="panel">'
+
+          block = '''
+          <!-- POKESTOCK SCRIPT 27 START -->
+          <div id="ps27">
+            <style>
+              #ps27 {
+                margin:16px 0 24px;
+                padding:16px;
+                border:1px solid #455977;
+                border-radius:16px;
+                background:#152139;
+                color:#edf4ff;
+              }
+              #ps27 * {box-sizing:border-box}
+              #ps27 h2 {margin:0 0 10px}
+              #ps27 .ps27-note {
+                font-size:13px;
+                color:#c0cee4;
+                line-height:1.5;
+              }
+              #ps27 .ps27-controls {
+                display:grid;
+                grid-template-columns:
+                  repeat(auto-fit,minmax(170px,1fr));
+                gap:12px;
+                margin:16px 0;
+              }
+              #ps27 label {
+                display:block;
+                font-size:13px;
+                margin-bottom:5px;
+              }
+              #ps27 select,
+              #ps27 input[type="search"] {
+                width:100%;
+                padding:11px;
+                border:1px solid #607392;
+                border-radius:9px;
+                background:#0e192c;
+                color:#fff;
+              }
+              #ps27 .ps27-storebox {
+                border:1px solid #455977;
+                border-radius:12px;
+                padding:12px;
+                margin:14px 0;
+                background:#1c2b45;
+              }
+              #ps27 .ps27-list {
+                max-height:230px;
+                overflow-y:auto;
+                display:grid;
+                gap:5px;
+                margin-top:10px;
+              }
+              #ps27 .ps27-store {
+                display:flex;
+                gap:9px;
+                align-items:flex-start;
+                padding:7px;
+                border-radius:7px;
+                font-size:13px;
+                cursor:pointer;
+              }
+              #ps27 .ps27-store:hover {
+                background:#293c59;
+              }
+              #ps27 .ps27-store input {
+                flex:none;
+                margin-top:3px;
+                width:17px;
+                height:17px;
+              }
+              #ps27 .ps27-actions {
+                display:flex;
+                gap:8px;
+                flex-wrap:wrap;
+                margin:10px 0;
+              }
+              #ps27 button {
+                border:1px solid #6682a6;
+                border-radius:8px;
+                padding:9px 12px;
+                background:#263b59;
+                color:#fff;
+                cursor:pointer;
+              }
+              #ps27 .ps27-bars {
+                display:grid;
+                grid-template-columns:
+                  repeat(7,minmax(0,1fr));
+                gap:5px;
+                margin-top:18px;
+              }
+              #ps27 .ps27-column {
+                min-width:0;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                gap:8px;
+              }
+              #ps27 .ps27-track {
+                width:100%;
+                height:160px;
+                background:#263753;
+                border-radius:7px;
+                display:flex;
+                align-items:flex-end;
+                overflow:hidden;
+              }
+              #ps27 .ps27-fill {
+                width:100%;
+                height:0;
+                background:linear-gradient(
+                  #59d5f4,#587bf2
+                );
+                border-radius:7px 7px 0 0;
+              }
+              #ps27 .ps27-value {
+                font-size:12px;
+                font-weight:700;
+              }
+              #ps27 .ps27-day {
+                font-size:12px;
+              }
+              #ps27 .ps27-status {
+                background:#243650;
+                border-radius:9px;
+                padding:12px;
+                margin:14px 0;
+                font-size:13px;
+              }
+              #ps27 .ps27-retail-grid {
+                display:grid;
+                grid-template-columns:
+                  repeat(auto-fit,minmax(180px,1fr));
+                gap:10px;
+              }
+              #ps27 .ps27-retail {
+                border:1px solid #455977;
+                border-radius:10px;
+                padding:12px;
+              }
+              #ps27 a {color:#9edfff}
+              #psWeekdayForecast,
+              #ps26 {
+                display:none!important;
+              }
+              @media(max-width:550px) {
+                #ps27 {padding:11px}
+                #ps27 .ps27-bars {gap:3px}
+                #ps27 .ps27-day,
+                #ps27 .ps27-value {
+                  font-size:10px;
+                }
+              }
+            </style>
+
+            <h2>📊 Weekly Restock Likelihood</h2>
+            <p class="ps27-note">
+              Select multiple stores to compare
+              historical restock reports across
+              Monday through Sunday.
+            </p>
+
+            <div class="ps27-controls">
+              <div>
+                <label for="ps27Game">
+                  Trading card game
+                </label>
+                <select id="ps27Game">
+                  <option value="">All TCGs</option>
+                </select>
+              </div>
+              <div>
+                <label for="ps27State">State</label>
+                <select id="ps27State">
+                  <option value="">All states</option>
+                </select>
+              </div>
+              <div>
+                <label for="ps27Type">
+                  Evidence type
+                </label>
+                <select id="ps27Type">
+                  <option value="restocks">
+                    Restock sightings
+                  </option>
+                  <option value="shipments">
+                    Confirmed shipments
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="ps27-storebox">
+              <h3>Select stores</h3>
+              <p class="ps27-note">
+                Check as many individual branches
+                as you want. Leave none selected
+                to include all stores.
+              </p>
+
+              <input type="search"
+                id="ps27Search"
+                placeholder="Search store, city, address...">
+
+              <div class="ps27-actions">
+                <button type="button"
+                  id="ps27SelectVisible">
+                  Select visible
+                </button>
+                <button type="button"
+                  id="ps27Clear">
+                  Clear selection
+                </button>
+              </div>
+
+              <p id="ps27Selected"
+                class="ps27-note">
+                All stores selected
+              </p>
+
+              <div id="ps27Stores"
+                class="ps27-list">
+                Loading store locations...
+              </div>
+            </div>
+
+            <div id="ps27Status"
+              class="ps27-status">
+              Loading restock evidence...
+            </div>
+
+            <div id="ps27Bars"
+              class="ps27-bars">
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Mon</span>
+              </div>
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Tue</span>
+              </div>
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Wed</span>
+              </div>
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Thu</span>
+              </div>
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Fri</span>
+              </div>
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Sat</span>
+              </div>
+              <div class="ps27-column">
+                <span class="ps27-value">N/A</span>
+                <div class="ps27-track"></div>
+                <span class="ps27-day">Sun</span>
+              </div>
+            </div>
+
+            <p class="ps27-note">
+              Percentages appear only after enough
+              reliable dated observations exist.
+              Historical restock-day frequencies
+              are not guaranteed delivery probabilities.
+            </p>
+
+            <h2 style="margin-top:26px">
+              🏪 Pharmacy & Dollar Store Coverage
+            </h2>
+            <div id="ps27Retail"
+              class="ps27-retail-grid">
+              Loading retailer information...
+            </div>
+          </div>
+          <!-- POKESTOCK SCRIPT 27 END -->
+          '''
+
+          if '<!-- POKESTOCK SCRIPT 27 START -->' in html:
+              html = re.sub(
+                  r'<!-- POKESTOCK SCRIPT 27 START -->'
+                  r'.*?'
+                  r'<!-- POKESTOCK SCRIPT 27 END -->',
+                  lambda _: block,
+                  html,
+                  flags=re.S
+              )
+          else:
+              assert marker in html
+              html = html.replace(
+                  marker,
+                  marker + block,
+                  1
+              )
+
+          tag = (
+              '<script defer '
+              'src="assets/script27.js"></script>'
+          )
+
+          if tag not in html:
+              html = html.replace(
+                  "</body>",
+                  tag + "\n</body>",
+                  1
+              )
+
+          path.write_text(html, encoding="utf-8")
+          PY
+
+          cat > assets/script27.js <<'JS'
+          (() => {
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+            const root = $("ps27");
+            if (!root) return;
+
+            const days = [
+              "Mon","Tue","Wed","Thu",
+              "Fri","Sat","Sun"
+            ];
+
+            let stores = [];
+            let events = [];
+            let retailers = [];
+            const selected = new Set();
+
+            const norm = value =>
+              String(value ?? "").trim().toLowerCase();
+
+            const escapeHTML = value =>
+              String(value ?? "").replace(
+                /[&<>"']/g,
+                c => ({
+                  "&":"&amp;",
+                  "<":"&lt;",
+                  ">":"&gt;",
+                  '"':"&quot;",
+                  "'":"&#39;"
+                }[c])
+              );
+
+            async function load(path) {
+              const r = await fetch(
+                path + "?t=" + Date.now(),
+                {cache:"no-store"}
+              );
+              if (!r.ok) throw Error(path);
+              return r.json();
+            }
+
+            function addOptions(id, values) {
+              const el = $(id);
+              const existing = el.value;
+
+              el.querySelectorAll(
+                "option:not(:first-child)"
+              ).forEach(o => o.remove());
+
+              [...new Set(values)]
+                .filter(Boolean)
+                .sort((a,b) => a.localeCompare(b))
+                .forEach(value => {
+                  const o = document.createElement("option");
+                  o.value = value;
+                  o.textContent = value;
+                  el.appendChild(o);
+                });
+
+              if ([...el.options].some(
+                o => o.value === existing
+              )) el.value = existing;
+            }
+
+            function storeId(store) {
+              return String(store.source_id || "");
+            }
+
+            function storeLabel(store) {
+              return [
+                store.name || store.chain,
+                store.address,
+                store.city,
+                store.state
+              ].filter(Boolean).join(" · ");
+            }
+
+            function visibleStores() {
+              const q = norm($("ps27Search").value);
+              const state = $("ps27State").value;
+
+              return stores.filter(store => {
+                if (
+                  state &&
+                  store.state !== state
+                ) return false;
+
+                return !q ||
+                  norm(storeLabel(store)).includes(q);
+              });
+            }
+
+            function renderStores() {
+              const visible = visibleStores();
+              const box = $("ps27Stores");
+
+              box.replaceChildren();
+
+              if (!visible.length) {
+                box.textContent =
+                  "No stores match this search.";
+              }
+
+              // Render at most 200 visible checkboxes
+              // to keep mobile scrolling responsive.
+              for (const store of visible.slice(0,200)) {
+                const id = storeId(store);
+                if (!id) continue;
+
+                const label =
+                  document.createElement("label");
+                label.className = "ps27-store";
+
+                const check =
+                  document.createElement("input");
+                check.type = "checkbox";
+                check.checked = selected.has(id);
+
+                check.addEventListener(
+                  "change", () => {
+                    if (check.checked) selected.add(id);
+                    else selected.delete(id);
+                    renderChart();
+                  }
+                );
+
+                const span =
+                  document.createElement("span");
+                span.textContent = storeLabel(store);
+
+                label.append(check,span);
+                box.appendChild(label);
+              }
+
+              if (visible.length > 200) {
+                const note =
+                  document.createElement("p");
+                note.className = "ps27-note";
+                note.textContent =
+                  "Showing first 200 matches. " +
+                  "Narrow your search to find " +
+                  "more individual stores.";
+                box.appendChild(note);
+              }
+
+              $("ps27Selected").textContent =
+                selected.size
+                  ? selected.size + " stores selected"
+                  : "No individual filter: all stores included";
+            }
+
+            function renderEmpty() {
+              $("ps27Bars").innerHTML = days.map(day => `
+                <div class="ps27-column">
+                  <span class="ps27-value">N/A</span>
+                  <div class="ps27-track">
+                    <div class="ps27-fill"
+                      style="height:0%"></div>
+                  </div>
+                  <span class="ps27-day">${day}</span>
+                </div>
+              `).join("");
+            }
+
+            function renderChart() {
+              const state = $("ps27State").value;
+              const game = $("ps27Game").value;
+              const type = $("ps27Type").value;
+
+              const matching = events.filter(e => {
+                if (game && e.game !== game) return false;
+
+                if (
+                  type === "shipments" &&
+                  e.shipment_confirmed !== true
+                ) return false;
+
+                if (
+                  selected.size === 0 &&
+                  state
+                ) {
+                  // Existing weekday events may not
+                  // include state; match via known
+                  // store city and retailer.
+                  const found = stores.some(s =>
+                    s.state === state &&
+                    norm(s.city) === norm(e.city) &&
+                    (
+                      norm(s.chain) === norm(e.retailer) ||
+                      norm(s.name) === norm(e.retailer)
+                    )
+                  );
+                  if (!found) return false;
+                }
+
+                if (selected.size > 0) {
+                  const found = stores.some(s =>
+                    selected.has(storeId(s)) &&
+                    norm(s.city) === norm(e.city) &&
+                    (
+                      norm(s.chain) === norm(e.retailer) ||
+                      norm(s.name) === norm(e.retailer)
+                    )
+                  );
+
+                  if (!found) return false;
+                }
+
+                return true;
+              });
+
+              const counts = Array(7).fill(0);
+              let verified = 0;
+              let effective = 0;
+
+              for (const e of matching) {
+                const day = Number(e.weekday);
+                if (
+                  !Number.isInteger(day) ||
+                  day < 0 || day > 6
+                ) continue;
+
+                const weight =
+                  Math.max(0,Number(e.weight) || 0);
+
+                counts[day] += weight;
+                effective += weight;
+
+                if (e.verified) verified++;
+              }
+
+              const sufficient =
+                matching.length >= 5 &&
+                verified >= 2 &&
+                effective >= 3;
+
+              if (!sufficient) {
+                $("ps27Status").textContent =
+                  matching.length +
+                  " dated observations; " +
+                  verified +
+                  " verified. Insufficient evidence " +
+                  "for meaningful weekday percentages.";
+
+                renderEmpty();
+                return;
+              }
+
+              const total = effective + 7;
+              const percentages = counts.map(
+                count => 100*(count+1)/total
+              );
+              const max = Math.max(...percentages);
+
+              $("ps27Status").textContent =
+                matching.length +
+                " dated observations; " +
+                verified +
+                " verified. Historical weekday " +
+                "distribution shown.";
+
+              $("ps27Bars").innerHTML =
+                days.map((day,i) => `
+                  <div class="ps27-column">
+                    <span class="ps27-value">
+                      ${percentages[i].toFixed(1)}%
+                    </span>
+                    <div class="ps27-track">
+                      <div class="ps27-fill"
+                        style="height:${
+                          100*percentages[i]/max
+                        }%"></div>
+                    </div>
+                    <span class="ps27-day">
+                      ${day}
+                    </span>
+                  </div>
+                `).join("");
+            }
+
+            function renderRetailers() {
+              const box = $("ps27Retail");
+              box.replaceChildren();
+
+              for (const r of retailers) {
+                const card =
+                  document.createElement("div");
+                card.className = "ps27-retail";
+
+                const heading =
+                  document.createElement("strong");
+                heading.textContent = r.name;
+
+                const p = document.createElement("p");
+                p.className = "ps27-note";
+
+                const branches = stores.filter(s =>
+                  norm(s.chain) === norm(r.name) ||
+                  norm(s.name) === norm(r.name) ||
+                  (
+                    r.name === "CVS Pharmacy" &&
+                    norm(s.chain) === "cvs"
+                  )
+                ).length;
+
+                p.textContent =
+                  branches + " candidate branches in " +
+                  "the store database. Local stock unknown.";
+
+                const a = document.createElement("a");
+                a.href = r.website;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.textContent = "Open retailer";
+
+                card.append(heading,p,a);
+                box.appendChild(card);
+              }
+            }
+
+            $("ps27Search").addEventListener(
+              "input", renderStores
+            );
+
+            $("ps27State").addEventListener(
+              "change", () => {
+                renderStores();
+                renderChart();
+              }
+            );
+
+            $("ps27Game").addEventListener(
+              "change", renderChart
+            );
+
+            $("ps27Type").addEventListener(
+              "change", renderChart
+            );
+
+            $("ps27SelectVisible").onclick = () => {
+              for (
+                const store of visibleStores().slice(0,200)
+              ) {
+                const id = storeId(store);
+                if (id) selected.add(id);
+              }
+              renderStores();
+              renderChart();
+            };
+
+            $("ps27Clear").onclick = () => {
+              selected.clear();
+              renderStores();
+              renderChart();
+            };
+
+            renderEmpty();
+
+            Promise.allSettled([
+              load("data/physical_inventory_sources.json"),
+              load("data/weekday_chart_26.json"),
+              load("data/retail_expansion_26.json")
+            ]).then(results => {
+              if (results[0].status === "fulfilled") {
+                const value = results[0].value;
+                stores = Array.isArray(value) ? value : [];
+              }
+
+              if (results[1].status === "fulfilled") {
+                const value = results[1].value;
+                events = Array.isArray(value.events)
+                  ? value.events : [];
+              }
+
+              if (results[2].status === "fulfilled") {
+                const value = results[2].value;
+                retailers = Array.isArray(value.retailers)
+                  ? value.retailers : [];
+              }
+
+              addOptions(
+                "ps27State",
+                stores.map(s => s.state)
+              );
+
+              addOptions(
+                "ps27Game",
+                [
+                  ...events.map(e => e.game),
+                  ...(
+                    results[2].status === "fulfilled"
+                      ? results[2].value.games_monitored || []
+                      : []
+                  )
+                ]
+              );
+
+              renderStores();
+              renderChart();
+              renderRetailers();
+            });
+          })();
+          JS
+
+      - name: Validate installation
+        shell: bash
+        run: |
+          node --check assets/script27.js
+
+          python - <<'PY'
+          from pathlib import Path
+
+          html = Path("index.html").read_text()
+          js = Path("assets/script27.js").read_text()
+
+          assert html.count('id="ps27"') == 1
+          assert 'id="ps27Bars"' in html
+          assert 'id="ps27Stores"' in html
+          assert 'id="ps27Search"' in html
+          assert 'assets/script27.js' in html
+          assert 'assets/script26.js' not in html
+          assert "selected.add(id)" in js
+
+          for day in [
+              "Mon","Tue","Wed","Thu",
+              "Fri","Sat","Sun"
+          ]:
+              assert day in html
+
+          print("Permanent chart installed")
+          print("Multi-store selector installed")
+          print("Seven weekday columns verified")
+          PY
+
+      - name: Commit and publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html assets/script27.js
+
+          if ! git diff --cached --quiet; then
+            git commit -m \
+              "Script 27 permanent chart and multi-store filters"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "Already up to date"
+          fi
