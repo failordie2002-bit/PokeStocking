@@ -1,0 +1,173 @@
+name: Pokestock Social Observation Collector
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '13 */4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-social-collector
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect public reports and preserve evidence
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: |
+          cat > /tmp/collect.py <<'PY'
+          import hashlib, json, re, time, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+          from collections import Counter, defaultdict
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+          from email.utils import parsedate_to_datetime
+
+          ROOT=Path('data'); ROOT.mkdir(exist_ok=True)
+          NOW=datetime.now(timezone.utc)
+          def load(name,default):
+              try: return json.loads((ROOT/name).read_text(encoding='utf-8'))
+              except (OSError,ValueError): return default
+          def save(name,obj): (ROOT/name).write_text(json.dumps(obj,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          def norm(x): return re.sub(r'[^a-z0-9]+',' ',str(x or '').lower()).strip()
+          def iso(x):
+              try:
+                  d=datetime.fromisoformat(str(x).replace('Z','+00:00'))
+                  return (d if d.tzinfo else d.replace(tzinfo=timezone.utc)).astimezone(timezone.utc)
+              except (ValueError,TypeError): return None
+          def digest(x): return hashlib.sha256(x.encode('utf-8')).hexdigest()[:24]
+          def get(url):
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'PokeStockEvidenceMonitor/1.0 (+public RSS research; contact via project GitHub)','Accept':'application/rss+xml, application/atom+xml, application/xml, text/xml'})
+                  with urllib.request.urlopen(req,timeout=13) as resp: return resp.read(500000)
+              except Exception as e:
+                  print('Feed unavailable:',url.split('?')[0],type(e).__name__)
+                  return b''
+          def rss(url,platform):
+              raw=get(url)
+              if not raw: return []
+              try: tree=ET.fromstring(raw)
+              except ET.ParseError: return []
+              items=[]
+              for e in tree.findall('.//item')[:45]:
+                  def val(tag): return ''.join(e.findtext(tag,'').splitlines()).strip()
+                  title=val('title'); link=val('link'); desc=val('description'); pub=val('pubDate')
+                  try: published=parsedate_to_datetime(pub).astimezone(timezone.utc)
+                  except (ValueError,TypeError,OverflowError): published=None
+                  if title and link: items.append(dict(title=title,description=re.sub('<[^>]+>',' ',desc)[:650],url=link,published_at=published.isoformat() if published else None,platform=platform))
+              return items
+
+          stores=load('physical_inventory_sources.json',[])
+          existing=load('restock_observations.json',[])
+          previous=load('social_restock_leads.json',{})
+          reports=load('v34_public_sightings.json',[])
+          if not isinstance(stores,list): stores=[]
+          if not isinstance(existing,list): existing=[]
+          if not isinstance(reports,list): reports=[]
+          if not isinstance(previous,dict): previous={}
+          prior=previous.get('leads',[])
+          if not isinstance(prior,list): prior=[]
+          by_id={s.get('source_id'):s for s in stores if isinstance(s,dict) and s.get('source_id')}
+          cities=defaultdict(list)
+          for s in stores:
+              if not isinstance(s,dict): continue
+              cities[(norm(s.get('chain')),norm(s.get('city')),norm(s.get('state')))].append(s)
+
+          # Preserve first-seen event time. Re-fetching a report must NEVER
+          # create an additional historical restock observation.
+          archive={}
+          for r in existing:
+              if not isinstance(r,dict): continue
+              identity=r.get('event_id') or digest(str(r.get('source_url'))+'|'+str(r.get('store_id'))+'|'+str(r.get('observed_at')))
+              archive[identity]=r
+          newly_archived=0
+          for r in reports:
+              if not isinstance(r,dict) or r.get('report_status') not in ('reported_in_stock','verified_in_stock','confirmed_delivery'): continue
+              event_id=str(r.get('event_id') or '')
+              if not event_id: continue # Without a stable identifier, a moving relative timestamp creates fake events.
+              identity='public:'+event_id
+              if identity in archive: continue
+              sid=r.get('store_id')
+              if sid not in by_id: continue
+              # Only explicitly store-identified reports are eligible; matching a city alone is not enough.
+              published=iso(r.get('reported_at_approx'))
+              if not published or not NOW-timedelta(days=21)<=published<=NOW+timedelta(minutes=10): continue
+              archive[identity]={
+                  'event_id':identity,'store_id':sid,'game':r.get('game') or 'Unknown',
+                  'product_name':r.get('product_name') or '', 'retailer':r.get('retailer'),
+                  'city':r.get('city'),'state':r.get('state'),
+                  'observed_at':published.isoformat(),'first_collected_at':NOW.isoformat(),
+                  'source_url':r.get('source_url') or '', 'report_status':('reported_in_stock' if bool(r.get('store_match_verified')) and r.get('time_precision') not in ('relative_age_approximate','unknown') else 'unverified_community_report'),
+                  'evidence_level':'unverified_community_report',
+                  'store_match_verified':bool(r.get('store_match_verified')),
+                  'time_precision':r.get('time_precision') or 'approximate',
+                  'forecast_eligible':bool(r.get('store_match_verified')) and r.get('time_precision') not in ('relative_age_approximate','unknown')
+              }
+              newly_archived+=1
+
+          # Social RSS and indexed public social references are discovery leads ONLY.
+          # No social post is promoted to a stock event without separate verification.
+          searches=[
+              ('reddit','https://www.reddit.com/r/PKMNTCGDeals/new/.rss'),
+              ('reddit','https://www.reddit.com/r/PokemonTCG/new/.rss'),
+              ('reddit','https://www.reddit.com/r/UnionArenaTCG/new/.rss'),
+          ]
+          queries=[
+              'Pokemon TCG Walmart Target Best Buy restock in store',
+              'Pokemon cards restock site:facebook.com',
+              'Pokemon cards restock site:instagram.com',
+              'Union Arena TCG restock in store',
+              'Pokemon TCG Virginia store restock',
+          ]
+          for q in queries:
+              url='https://news.google.com/rss/search?q='+urllib.parse.quote(q)+'&hl=en-US&gl=US&ceid=US:en'
+              searches.append(('indexed_social' if 'site:' in q else 'public_news',url))
+          leads={str(x.get('lead_id')):x for x in prior if isinstance(x,dict) and x.get('lead_id')}
+          added=0
+          terms=('pokemon','pokémon','union arena','tcg','booster','elite trainer','trading card')
+          action=('restock','stock','shelf','shipment','found','available','release','drop','inventory','packs','boxes')
+          for platform,url in searches:
+              for item in rss(url,platform):
+                  content=norm(item['title']+' '+item['description'])
+                  if not any(t in content for t in terms) or not any(t in content for t in action): continue
+                  published=iso(item.get('published_at'))
+                  if published and published < NOW-timedelta(days=14): continue
+                  lead_id=digest(item['url']+'|'+item['title'])
+                  if lead_id in leads: continue
+                  mentions=[]
+                  for chain in ('Walmart','Target','Best Buy','GameStop','Barnes & Noble','Costco','Sam\'s Club','Walgreens','CVS'):
+                      if norm(chain) in content: mentions.append(chain)
+                  leads[lead_id]={
+                      'lead_id':lead_id,'platform':platform,'title':item['title'][:240],
+                      'source_url':item['url'],'published_at':item.get('published_at'),
+                      'first_seen_at':NOW.isoformat(),'retailer_mentions':mentions,
+                      'status':'research_lead_unverified','store_id':None,
+                      'forecast_eligible':False,
+                      'note':'Public/indexed mention; not evidence of stock at a specific store'
+                  }
+                  added+=1
+              time.sleep(0.4)
+          # Retain all observation history; cap only research leads to avoid repository bloat.
+          saved_leads=sorted(leads.values(),key=lambda x:x.get('first_seen_at',''),reverse=True)[:2500]
+          save('restock_observations.json',sorted(archive.values(),key=lambda x:x.get('first_collected_at','')))
+          save('social_restock_leads.json',{'checked_at':NOW.isoformat(),'lead_count':len(saved_leads),'new_leads':added,'leads':saved_leads})
+          save('social_collector_status.json',{'checked_at':NOW.isoformat(),'public_sightings_archived':newly_archived,'new_social_leads':added,'total_archived_observations':len(archive),'total_social_leads':len(saved_leads),'forecast_eligible_observations':sum(bool(x.get('forecast_eligible')) for x in archive.values()),'note':'Social mentions are unverified leads. Restricted Facebook/Instagram posts are not accessible.'})
+          print('New archived observations:',newly_archived,'New social leads:',added,'Total leads:',len(saved_leads))
+          PY
+          python /tmp/collect.py
+      - name: Commit collected history
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/restock_observations.json data/social_restock_leads.json data/social_collector_status.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Collect public TCG observations and social leads'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
