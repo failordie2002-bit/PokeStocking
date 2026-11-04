@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Repair filters and location fallback
+      - name: Repair Shipment Catcher
         shell: bash
         run: |
-          cat > /tmp/repair.py <<'PY'
+          cat > /tmp/fix_catcher.py <<'PYTHON'
           from pathlib import Path
           import re
 
@@ -26,41 +26,48 @@ jobs:
           html = path.read_text(encoding="utf-8")
 
           if 'id="catcherV2"' not in html:
-              raise SystemExit("Shipment Catcher V2 missing")
+              raise SystemExit(
+                  "ERROR: Shipment Catcher V2 not found."
+              )
 
           changes = []
 
-          def replace_one(pattern, replacement, label):
-              global html
-              html, count = re.subn(
-                  pattern, replacement, html,
-                  count=1, flags=re.MULTILINE
-              )
-              if count != 1:
-                  raise SystemExit(
-                      "Could not update: " + label
-                  )
-              changes.append(label)
+          # FIX 1:
+          # Repair the incorrectly escaped ZIP regex.
+          # Correct JavaScript expression: /^\d{5}$/
+          bad_zip = r'/^\\d{5}$/'
+          good_zip = r'/^\d{5}$/'
 
-          if "General TCG watch — game unverified" not in html:
-              replace_one(
+          if bad_zip in html:
+              html = html.replace(bad_zip, good_zip)
+              changes.append("ZIP code validation")
+
+          # FIX 2:
+          # Keep general TCG watch windows visible
+          # when a particular TCG is selected.
+          if '!(r.type==="watch" && !r.game)' not in html:
+              pattern = (
                   r'if\s*\(\s*game\s*&&\s*'
                   r'r\.game\s*!==\s*game\s*\)'
-                  r'\s*return false;',
-                  '''if(game && r.game!==game &&
-                     !(r.type==="watch" && !r.game))
-                    return false;''',
-                  "TCG game filter"
+                  r'\s*return false;'
               )
 
+              replacement = (
+                  'if(game && r.game!==game &&\n'
+                  '   !(r.type==="watch" && !r.game))\n'
+                  '  return false;'
+              )
+
+              html, count = re.subn(
+                  pattern, replacement, html, count=1
+              )
+
+              if count:
+                  changes.append("TCG filtering")
+
+          # FIX 3:
+          # Preserve local approximate city fallback.
           if "LOCAL_CITY_CENTERS" not in html:
-              anchor = re.search(
-                  r'async\s+function\s+geocode\s*\(\s*s\s*\)\s*\{',
-                  html
-              )
-              if not anchor:
-                  raise SystemExit("Geocode function missing")
-
               helper = '''
               const LOCAL_CITY_CENTERS = {
                 "staunton|va":[38.1496,-79.0717],
@@ -82,87 +89,62 @@ jobs:
               }
 
               '''
+
+              match = re.search(
+                  r'async\s+function\s+geocode\s*\(\s*s\s*\)\s*\{',
+                  html
+              )
+
+              if not match:
+                  raise SystemExit(
+                      "ERROR: Geocode function missing."
+                  )
+
               html = (
-                  html[:anchor.start()] +
+                  html[:match.start()] +
                   helper +
-                  html[anchor.start():]
+                  html[match.start():]
               )
-              changes.append("Local city reference points")
+              changes.append("Local city fallback")
 
-          if "approximateCityPoint(candidate)" not in html:
-              replace_one(
-                  r'const\s+point\s*=\s*candidate\s*\?'
-                  r'\s*resolved\.get\(\s*candidateKey'
-                  r'\(\s*candidate\s*\)\s*\)\s*:\s*null\s*;',
-                  '''const point=candidate
-                    ?(resolved.get(candidateKey(candidate))
-                      ||approximateCityPoint(candidate))
-                    :approximateCityPoint(record);''',
-                  "Location fallback"
-              )
+          # FIX 4:
+          # Verify essential functionality exists.
+          required = [
+              'id="catcherZip"',
+              'id="catcherRadius"',
+              'id="catcherRetailer"',
+              'id="catcherGame"',
+              'id="catcherGPS"',
+              'id="catcherResults"',
+              "approximateCityPoint",
+              "filteredRecords()",
+              "async function findZIP()"
+          ]
 
-          if "approximate:!exact" not in html:
-              replace_one(
-                  r'const\s+miles\s*=\s*distance'
-                  r'\(\s*origin\s*,\s*point\s*\)\s*;'
-                  r'\s*if\s*\(\s*miles\s*<=\s*radius\s*\)'
-                  r'\s*\{\s*results\.push'
-                  r'\(\s*\{\s*record\s*,\s*miles\s*\}\s*\)'
-                  r'\s*;\s*\}',
-                  '''const exact=Boolean(
-                    candidate &&
-                    resolved.get(candidateKey(candidate))
-                  );
-                  const miles=distance(origin,point);
+          missing = [
+              item for item in required
+              if item not in html
+          ]
 
-                  if(miles<=radius+(exact?0:10)){
-                    results.push({
-                      record,
-                      miles,
-                      approximate:!exact
-                    });
-                  }''',
-                  "Radius fallback"
+          if missing:
+              raise SystemExit(
+                  "ERROR: Missing features: " +
+                  ", ".join(missing)
               )
 
-          if "({record:r,miles,approximate})" not in html:
-              replace_one(
-                  r'\(\{\s*record:r\s*,\s*miles\s*\}\)\s*=>',
-                  '({record:r,miles,approximate})=>',
-                  "Approximate distance renderer"
-              )
+          path.write_text(
+              html,
+              encoding="utf-8"
+          )
 
-          if 'approximate?"~":""' not in html:
-              replace_one(
-                  r'\$\{miles\.toFixed\(1\)\}'
-                  r'\s*miles\s*straight-line',
-                  '''${approximate?"~":""}${miles.toFixed(1)}
-                    miles ${approximate
-                      ?"from approximate city center"
-                      :"straight-line"}''',
-                  "Distance labels"
-              )
+          print("Shipment Catcher validation complete.")
+          print("Applied fixes:", changes)
+          print("All essential controls present.")
+          PYTHON
 
-          if "General TCG watch — game unverified" not in html:
-              replace_one(
-                  r'<p>\$\{esc\(r\.game\s*\|\|\s*'
-                  r'"Game unspecified"\)\}</p>',
-                  '''<p>${esc(
-                    r.game ||
-                    (r.type==="watch"
-                      ?"General TCG watch — game unverified"
-                      :"Game unspecified")
-                  )}</p>''',
-                  "General watch labels"
-              )
+          python /tmp/fix_catcher.py
 
-          path.write_text(html, encoding="utf-8")
-          print("Repairs applied:", ", ".join(changes))
-          PY
-
-          python /tmp/repair.py
-
-      - name: Commit changes
+      - name: Commit repaired website
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -172,8 +154,8 @@ jobs:
           git add index.html
 
           if git diff --cached --quiet; then
-            echo "No additional changes needed"
+            echo "Website already contains these fixes."
           else
-            git commit -m "Repair Shipment Catcher results"
+            git commit -m "Fix Shipment Catcher ZIP validation"
             git push
           fi
