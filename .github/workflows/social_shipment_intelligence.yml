@@ -1,0 +1,1068 @@
+
+name: Pokestock Social Shipment Intelligence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 */4 * * *'
+  workflow_run:
+    workflows:
+      - Pokestock Social Media Tab
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-social-shipment-intelligence
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Build all-TCG social and shipment intelligence
+        shell: bash
+        run: |
+          mkdir -p data assets
+
+          cat > /tmp/social_shipments.py <<'PY'
+          import json
+          import re
+          import html
+          import math
+          import hashlib
+          import urllib.parse
+          import urllib.request
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from datetime import datetime, timezone, timedelta
+          from email.utils import parsedate_to_datetime
+          from collections import Counter
+
+          NOW = datetime.now(timezone.utc)
+          ROOT = Path("data")
+
+          def read(name, default):
+              try:
+                  return json.loads((ROOT/name).read_text(encoding="utf-8"))
+              except (OSError, ValueError):
+                  return default
+
+          def write(name, obj):
+              (ROOT/name).write_text(
+                  json.dumps(obj, indent=2, ensure_ascii=False) + "\n",
+                  encoding="utf-8"
+              )
+
+          def clean(value):
+              value = re.sub(r"<[^>]*>", " ", str(value or ""))
+              return re.sub(r"\s+", " ", html.unescape(value)).strip()
+
+          def lower(value):
+              return clean(value).casefold()
+
+          def parse_date(value):
+              if not value:
+                  return None
+              try:
+                  dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+              except ValueError:
+                  try:
+                      dt = parsedate_to_datetime(str(value))
+                  except (ValueError, TypeError):
+                      return None
+              if dt.tzinfo is None:
+                  dt = dt.replace(tzinfo=timezone.utc)
+              return dt.astimezone(timezone.utc)
+
+          def get(url):
+              try:
+                  req = urllib.request.Request(
+                      url,
+                      headers={
+                          "User-Agent": "Mozilla/5.0 PokeStockPublicIndexer/3.0",
+                          "Accept": "application/rss+xml,application/xml,text/xml"
+                      }
+                  )
+                  with urllib.request.urlopen(req, timeout=7) as response:
+                      return response.read(400000)
+              except Exception:
+                  return b""
+
+          def rss(url):
+              raw = get(url)
+              if not raw:
+                  return []
+              try:
+                  root = ET.fromstring(raw)
+              except ET.ParseError:
+                  return []
+              entries = []
+              for item in root.findall(".//item")[:20]:
+                  entries.append({
+                      "title": clean(item.findtext("title")),
+                      "description": clean(item.findtext("description")),
+                      "url": clean(item.findtext("link")),
+                      "published_at": item.findtext("pubDate")
+                  })
+              ns = {"a": "http://www.w3.org/2005/Atom"}
+              for item in root.findall("a:entry", ns)[:20]:
+                  links = [
+                      a.get("href") for a in item.findall("a:link", ns)
+                      if a.get("href") and
+                      a.get("rel", "alternate") == "alternate"
+                  ]
+                  entries.append({
+                      "title": clean(item.findtext("a:title", "", ns)),
+                      "description": clean(
+                          item.findtext("a:summary", "", ns)
+                      ),
+                      "url": links[0] if links else "",
+                      "published_at": item.findtext("a:published", "", ns)
+                  })
+              return [x for x in entries if x["title"] and x["url"]]
+
+          catalog = read("v31_product_catalogue.json", [])
+          if isinstance(catalog, dict):
+              catalog = catalog.get("products", [])
+
+          games = {
+              "Pokemon", "Union Arena", "One Piece", "Gundam",
+              "Dragon Ball Super", "Digimon", "Magic: The Gathering",
+              "Yu-Gi-Oh!", "Riftbound", "Disney Lorcana",
+              "Star Wars Unlimited", "Flesh and Blood"
+          }
+
+          for item in catalog:
+              if isinstance(item, dict) and item.get("game"):
+                  games.add(str(item["game"]).strip())
+
+          games = sorted(games)
+
+          aliases = {
+              "Pokemon": ["pokemon", "pokémon"],
+              "Union Arena": [
+                  "union arena", "unionarena",
+                  "union arena attack on titan",
+                  "union arena nikke",
+                  "union arena re zero",
+                  "union arena demon slayer",
+                  "union arena chainsaw man"
+              ],
+              "One Piece": ["one piece tcg", "one piece card game"],
+              "Gundam": ["gundam card game"],
+              "Magic: The Gathering": ["magic the gathering", "mtg cards"],
+              "Yu-Gi-Oh!": ["yu-gi-oh", "yugioh"],
+              "Disney Lorcana": ["lorcana"],
+              "Star Wars Unlimited": ["star wars unlimited"],
+              "Dragon Ball Super": ["dragon ball super card game"],
+              "Flesh and Blood": ["flesh and blood tcg"]
+          }
+
+          for game in games:
+              aliases.setdefault(game, [lower(game)])
+
+          retailers = [
+              "Walmart", "Target", "Best Buy", "GameStop",
+              "Costco", "Sam's Club", "Walgreens", "CVS",
+              "Five Below", "Barnes & Noble", "Meijer",
+              "Fred Meyer", "Dollar General"
+          ]
+
+          restock_terms = [
+              "restocked", "just stocked", "restock today",
+              "found packs", "found boxes", "on the shelves",
+              "on shelves", "stocked today", "shipment arrived",
+              "vendor stocked", "just found", "in stock",
+              "restock", "stocking cards"
+          ]
+
+          negative_terms = [
+              "card show", "convention", "vendor booth",
+              "giveaway", "raffle", "sweepstakes",
+              "affiliate", "subscribe", "buy my cards",
+              "selling my cards", "download our app"
+          ]
+
+          locations = {
+              "Staunton, VA": (38.1496, -79.0717),
+              "Waynesboro, VA": (38.0685, -78.8895),
+              "Harrisonburg, VA": (38.4496, -78.8689),
+              "Charlottesville, VA": (38.0293, -78.4767),
+              "Fishersville, VA": (38.099, -78.9692),
+              "Verona, VA": (38.2021, -79.0081),
+              "Richmond, VA": (37.5407, -77.436),
+              "Roanoke, VA": (37.271, -79.9414),
+              "Winchester, VA": (39.1857, -78.1633),
+              "Fredericksburg, VA": (38.3032, -77.4605),
+              "Alexandria, VA": (38.8048, -77.0469),
+              "Fairfax, VA": (38.8462, -77.3064),
+              "Lynchburg, VA": (37.4138, -79.1422),
+              "Virginia Beach, VA": (36.8529, -75.978),
+              "Norfolk, VA": (36.8508, -76.2859)
+          }
+
+          def detect_game(content):
+              matches = []
+              for game, terms in aliases.items():
+                  if any(term in content for term in terms):
+                      matches.append(game)
+              return matches
+
+          def detect_location(content):
+              matches = []
+              for name, coords in locations.items():
+                  city = name.split(",")[0].casefold()
+                  if re.search(
+                      r"(?<!\w)" + re.escape(city) + r"(?!\w)",
+                      content
+                  ):
+                      matches.append((name, coords))
+              if len(matches) != 1:
+                  return None
+              name, coords = matches[0]
+              return {
+                  "city": name.split(",")[0],
+                  "state": "VA",
+                  "lat": coords[0],
+                  "lon": coords[1],
+                  "precision": "city_center",
+                  "verified": False
+              }
+
+          def original_url(url):
+              try:
+                  u = urllib.parse.urlparse(url)
+                  host = u.hostname or ""
+                  if host in (
+                      "facebook.com", "www.facebook.com",
+                      "m.facebook.com", "instagram.com",
+                      "www.instagram.com", "reddit.com",
+                      "www.reddit.com", "old.reddit.com"
+                  ):
+                      return url
+              except ValueError:
+                  pass
+              return None
+
+          def platform(url, fallback):
+              u = original_url(url)
+              if not u:
+                  return fallback
+              host = urllib.parse.urlparse(u).hostname or ""
+              if "facebook.com" in host:
+                  return "facebook"
+              if "instagram.com" in host:
+                  return "instagram"
+              if "reddit.com" in host:
+                  return "reddit"
+              return fallback
+
+          def enrich(post):
+              title = clean(post.get("title"))
+              description = clean(post.get("description"))
+              content = lower(title + " " + description)
+              matched_games = detect_game(content)
+
+              if not matched_games:
+                  existing = post.get("game")
+                  if existing:
+                      matched_games = [existing]
+
+              if not matched_games:
+                  return None
+
+              matched_retailers = [
+                  r for r in retailers if lower(r) in content
+              ]
+
+              signals = [
+                  s for s in restock_terms if s in content
+              ]
+
+              negative = any(t in content for t in negative_terms)
+              question = (
+                  "?" in content and
+                  bool(re.search(
+                      r"\b(when|anyone know|how often|what day)\b",
+                      content
+                  ))
+              )
+
+              sighting = bool(
+                  signals and matched_retailers
+                  and not negative and not question
+              )
+
+              post["title"] = title
+              post["description"] = description[:2000]
+              post["games"] = matched_games
+              post["game"] = matched_games[0]
+              post["retailer_mentions"] = matched_retailers
+              post["restock_signals"] = signals
+              post["report_type"] = (
+                  "retail_sighting_lead" if sighting
+                  else "general_discussion"
+              )
+              post["location"] = (
+                  detect_location(content) or post.get("location")
+              )
+              post["original_post_url"] = original_url(
+                  post.get("url", "")
+              )
+              post["platform"] = platform(
+                  post.get("url", ""),
+                  post.get("platform", "indexed_web")
+              )
+              post["status"] = "unverified_public_lead"
+              return post
+
+          existing = read("social_media_feed.json", {})
+          old_posts = existing.get("posts", []) if isinstance(existing, dict) else []
+          posts = {}
+
+          for p in old_posts:
+              if not isinstance(p, dict):
+                  continue
+              p = enrich(p)
+              if p and p.get("url"):
+                  key = hashlib.sha256(
+                      p["url"].encode()
+                  ).hexdigest()[:24]
+                  posts[key] = p
+
+          # Rotate across the complete game catalog over time.
+          # The searches below include indexed public Facebook groups.
+          slot = int(NOW.timestamp() // 14400)
+          rotation = [
+              games[(slot * 10 + i) % len(games)]
+              for i in range(min(10, len(games)))
+          ]
+
+          searches = []
+          for game in rotation:
+              term = aliases[game][0]
+              searches.extend([
+                  ("facebook_group_index",
+                   'site:facebook.com/groups/ "' + term + '" "restock"'),
+                  ("facebook_public_index",
+                   'site:facebook.com "' + term + '" "restocked"'),
+                  ("instagram_index",
+                   'site:instagram.com "' + term + '" "restock"'),
+                  ("indexed_web",
+                   '"' + term + '" "walmart" "restock"'),
+                  ("indexed_web",
+                   '"' + term + '" "target" "in stock"')
+              ])
+
+          for game in ["Pokemon", "Union Arena", "One Piece"]:
+              for place in [
+                  "Staunton", "Waynesboro", "Harrisonburg",
+                  "Charlottesville", "Richmond"
+              ]:
+                  searches.append((
+                      "facebook_group_index",
+                      'site:facebook.com/groups/ "' +
+                      aliases[game][0] + '" "' + place + '"'
+                  ))
+
+          found = 0
+
+          for source, query in searches[:80]:
+              url = (
+                  "https://news.google.com/rss/search?q=" +
+                  urllib.parse.quote(query) +
+                  "&hl=en-US&gl=US&ceid=US:en"
+              )
+              for item in rss(url):
+                  dt = parse_date(item["published_at"])
+                  if dt and dt < NOW - timedelta(days=45):
+                      continue
+
+                  key = hashlib.sha256(
+                      item["url"].encode()
+                  ).hexdigest()[:24]
+
+                  if key in posts:
+                      continue
+
+                  item["platform"] = source
+                  item["first_seen_at"] = NOW.isoformat()
+                  item["published_at"] = (
+                      dt.isoformat() if dt else None
+                  )
+
+                  enriched = enrich(item)
+                  if enriched:
+                      enriched["id"] = key
+                      posts[key] = enriched
+                      found += 1
+
+          # Public Reddit feeds.
+          for game in rotation[:8]:
+              query = aliases[game][0] + " restock"
+              url = (
+                  "https://www.reddit.com/search.rss?q=" +
+                  urllib.parse.quote(query) +
+                  "&sort=new&t=month"
+              )
+              for item in rss(url):
+                  key = hashlib.sha256(
+                      item["url"].encode()
+                  ).hexdigest()[:24]
+                  if key in posts:
+                      continue
+                  dt = parse_date(item["published_at"])
+                  item["published_at"] = (
+                      dt.isoformat() if dt else None
+                  )
+                  item["first_seen_at"] = NOW.isoformat()
+                  item["platform"] = "reddit"
+                  enriched = enrich(item)
+                  if enriched:
+                      enriched["id"] = key
+                      posts[key] = enriched
+                      found += 1
+
+          final_posts = sorted(
+              posts.values(),
+              key=lambda p: (
+                  p.get("published_at")
+                  or p.get("first_seen_at")
+                  or ""
+              ),
+              reverse=True
+          )[:3000]
+
+          write("social_media_feed.json", {
+              "updated_at": NOW.isoformat(),
+              "games_monitored": games,
+              "queries_attempted": min(80, len(searches)) + min(8, len(rotation)),
+              "new_posts": found,
+              "total_posts": len(final_posts),
+              "posts": final_posts,
+              "disclaimer": "All social leads are unverified."
+          })
+
+          # Build evidence, not fictional delivery events.
+          observations = read("restock_observations.json", [])
+          if not isinstance(observations, list):
+              observations = []
+
+          evidence = []
+          seen = set()
+
+          def add_evidence(event):
+              key = event.get("source_url", "") + "|" + event.get("date", "")
+              if key in seen:
+                  return
+              seen.add(key)
+              evidence.append(event)
+
+          for p in final_posts:
+              if p.get("report_type") != "retail_sighting_lead":
+                  continue
+
+              location = p.get("location")
+              if not isinstance(location, dict):
+                  continue
+
+              dt = parse_date(p.get("published_at"))
+              if not dt:
+                  continue
+
+              # Publication date is NOT necessarily the restock date.
+              # Do not use it as a weekday observation.
+              add_evidence({
+                  "source": "social_media",
+                  "source_url": p.get("original_post_url") or p.get("url"),
+                  "game": p.get("game"),
+                  "retailer": (
+                      p.get("retailer_mentions") or ["Unknown"]
+                  )[0],
+                  "location": location,
+                  "published_at": dt.isoformat(),
+                  "date": None,
+                  "date_precision": "unknown",
+                  "weight": 0,
+                  "status": "unverified_public_lead"
+              })
+
+          for obs in observations:
+              if not isinstance(obs, dict):
+                  continue
+              if not obs.get("forecast_eligible"):
+                  continue
+              if not obs.get("store_match_verified"):
+                  continue
+
+              dt = parse_date(obs.get("observed_at"))
+              if not dt:
+                  continue
+
+              if obs.get("time_precision") not in (
+                  "exact", "calendar_day"
+              ):
+                  continue
+
+              add_evidence({
+                  "source": "verified_observation",
+                  "source_url": obs.get("source_url"),
+                  "game": obs.get("game"),
+                  "retailer": obs.get("retailer"),
+                  "location": {
+                      "city": obs.get("city"),
+                      "state": obs.get("state")
+                  },
+                  "published_at": dt.isoformat(),
+                  "date": dt.date().isoformat(),
+                  "date_precision": "calendar_day",
+                  "weight": 1,
+                  "status": "eligible_observation"
+              })
+
+          write("social_shipment_evidence.json", {
+              "updated_at": NOW.isoformat(),
+              "events": evidence,
+              "note": (
+                  "Unverified social sightings are stored as leads. "
+                  "Only precisely dated, eligible observations enter "
+                  "the weekday distribution."
+              )
+          })
+
+          # Aggregate observations by retailer/game/city.
+          groups = {}
+
+          for event in evidence:
+              if event["weight"] <= 0 or not event["date"]:
+                  continue
+
+              loc = event.get("location") or {}
+              key = (
+                  event.get("retailer") or "All",
+                  event.get("game") or "All",
+                  loc.get("city") or "Unknown",
+                  loc.get("state") or ""
+              )
+
+              groups.setdefault(key, []).append(event)
+
+          predictions = []
+
+          for key, events in groups.items():
+              # Deduplicate multiple reports of the same retailer,
+              # game, city and date to avoid double counting.
+              dates = sorted(set(e["date"] for e in events))
+              counts = [0] * 7
+
+              for day in dates:
+                  weekday = datetime.fromisoformat(day).weekday()
+                  counts[weekday] += 1
+
+              n = sum(counts)
+
+              # Small samples do not support meaningful estimates.
+              if n < 5:
+                  percentages = None
+                  status = "insufficient_evidence"
+              else:
+                  # Laplace smoothing avoids unjustified zero odds.
+                  total = n + 7
+                  percentages = [
+                      round(100 * (c + 1) / total, 2)
+                      for c in counts
+                  ]
+                  status = "historical_weekday_distribution"
+
+              predictions.append({
+                  "retailer": key[0],
+                  "game": key[1],
+                  "city": key[2],
+                  "state": key[3],
+                  "sample_size": n,
+                  "counts": counts,
+                  "percentages": percentages,
+                  "status": status
+              })
+
+          write("social_shipment_predictions.json", {
+              "updated_at": NOW.isoformat(),
+              "weekday_labels": [
+                  "Monday", "Tuesday", "Wednesday",
+                  "Thursday", "Friday", "Saturday", "Sunday"
+              ],
+              "minimum_observations": 5,
+              "predictions": predictions,
+              "method": (
+                  "Observed restock weekday frequency with "
+                  "Laplace smoothing. Not a measured delivery "
+                  "probability. Unverified social posts excluded."
+              )
+          })
+
+          print("Games monitored:", len(games))
+          print("Social posts:", len(final_posts))
+          print("New leads:", found)
+          print("Shipment evidence records:", len(evidence))
+          print("Weekday prediction groups:", len(predictions))
+          PY
+
+          python /tmp/social_shipments.py
+
+      - name: Install shipment chart and media support
+        shell: bash
+        run: |
+          cat > assets/social-shipment-upgrade.js <<'JS'
+          (() => {
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+            const esc = v => String(v ?? "").replace(
+              /[&<>"']/g,
+              c => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+              }[c])
+            );
+
+            const days = [
+              "Monday", "Tuesday", "Wednesday", "Thursday",
+              "Friday", "Saturday", "Sunday"
+            ];
+
+            const safe = value => {
+              try {
+                const u = new URL(value);
+                return u.protocol === "https:" ? u : null;
+              } catch {
+                return null;
+              }
+            };
+
+            function mediaHTML(post) {
+              const u = safe(
+                post.original_post_url || post.url
+              );
+              if (!u) return "";
+
+              const host = u.hostname.toLowerCase();
+              const path = u.pathname;
+
+              // Facebook's official public-post iframe endpoint.
+              if (
+                host.endsWith("facebook.com") &&
+                (
+                  path.includes("/posts/") ||
+                  path.includes("/permalink/") ||
+                  path.includes("/videos/") ||
+                  path.includes("/groups/")
+                )
+              ) {
+                const src =
+                  "https://www.facebook.com/plugins/post.php?href=" +
+                  encodeURIComponent(u.href) +
+                  "&show_text=true&width=500";
+
+                return `
+                  <iframe
+                    title="Public Facebook post"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    style="width:100%;height:470px;border:0"
+                    src="${esc(src)}">
+                  </iframe>`;
+              }
+
+              // Instagram's public embed endpoint.
+              if (
+                host.endsWith("instagram.com") &&
+                /^\/(p|reel|tv)\/[^/]+/.test(path)
+              ) {
+                const parts = path.split("/").filter(Boolean);
+                const src =
+                  "https://www.instagram.com/" +
+                  parts[0] + "/" + parts[1] + "/embed/";
+
+                return `
+                  <iframe
+                    title="Public Instagram post"
+                    loading="lazy"
+                    style="width:100%;height:530px;border:0"
+                    src="${esc(src)}">
+                  </iframe>`;
+              }
+
+              // Reddit public comment-post embeds.
+              if (
+                host.endsWith("reddit.com") &&
+                path.includes("/comments/")
+              ) {
+                const src =
+                  "https://www.redditmedia.com" +
+                  path.replace(/\/$/, "") +
+                  "?ref_source=embed&ref=share";
+
+                return `
+                  <iframe
+                    title="Reddit post"
+                    loading="lazy"
+                    style="width:100%;height:420px;border:0"
+                    src="${esc(src)}">
+                  </iframe>`;
+              }
+
+              return "";
+            }
+
+            // Augment the existing social cards with real embeds.
+            // Do not substitute unrelated product photographs.
+            function addMediaToSocial() {
+              if (!$("smLocal") || !$("smOther")) return;
+
+              const cards = [
+                ...document.querySelectorAll(
+                  "#smLocal .sm-card, #smOther .sm-card"
+                )
+              ];
+
+              const posts = window.psSocialMediaPosts || [];
+              if (!Array.isArray(posts) || !posts.length) return;
+
+              for (const card of cards) {
+                if (card.querySelector(".ps-media-embed")) continue;
+
+                const anchor = card.querySelector(
+                  'a[href^="https://"]'
+                );
+                if (!anchor) continue;
+
+                const p = posts.find(x =>
+                  x.url === anchor.href ||
+                  x.original_post_url === anchor.href
+                );
+                if (!p) continue;
+
+                const media = mediaHTML(p);
+                if (!media) continue;
+
+                const details = document.createElement("details");
+                details.className = "ps-media-embed";
+                details.innerHTML =
+                  "<summary>View original post and media</summary>" +
+                  media;
+                card.appendChild(details);
+              }
+            }
+
+            // Expose media helper for integration with the
+            // existing social-media renderer.
+            window.PokeStockMedia = {
+              embed: mediaHTML,
+              refresh: addMediaToSocial
+            };
+
+            const section = $("shipments");
+            if (!section) return;
+
+            const wrap = document.createElement("div");
+            wrap.id = "psWeekdayForecast";
+
+            wrap.innerHTML = `
+              <style>
+                #psWeekdayForecast {
+                  margin:22px 0;
+                  padding:18px;
+                  border:1px solid #435574;
+                  border-radius:18px;
+                  background:#152139;
+                  color:#eef3fc;
+                }
+                #psWeekdayForecast .ps-filters {
+                  display:flex;
+                  flex-wrap:wrap;
+                  gap:10px;
+                  margin:14px 0;
+                }
+                #psWeekdayForecast select {
+                  min-width:150px;
+                  max-width:100%;
+                  padding:10px;
+                  border-radius:9px;
+                  background:#202e49;
+                  color:white;
+                  border:1px solid #536581;
+                }
+                #psWeekdayForecast .ps-bars {
+                  display:grid;
+                  grid-template-columns:repeat(7,minmax(0,1fr));
+                  align-items:end;
+                  gap:8px;
+                  min-height:220px;
+                  margin-top:20px;
+                }
+                #psWeekdayForecast .ps-col {
+                  display:flex;
+                  flex-direction:column;
+                  justify-content:flex-end;
+                  align-items:center;
+                  gap:7px;
+                  text-align:center;
+                  min-width:0;
+                }
+                #psWeekdayForecast .ps-bar-track {
+                  width:100%;
+                  height:145px;
+                  display:flex;
+                  align-items:flex-end;
+                  background:#24334e;
+                  border-radius:8px;
+                  overflow:hidden;
+                }
+                #psWeekdayForecast .ps-bar {
+                  width:100%;
+                  background:linear-gradient(
+                    180deg,#53d5f5,#5379f3
+                  );
+                  border-radius:8px 8px 0 0;
+                }
+                #psWeekdayForecast .ps-day {
+                  font-size:11px;
+                }
+                #psWeekdayForecast .ps-pct {
+                  font-size:12px;
+                  font-weight:800;
+                }
+                #psWeekdayForecast .ps-note {
+                  color:#b9c8e0;
+                  font-size:12px;
+                  line-height:1.6;
+                }
+                @media(max-width:600px) {
+                  #psWeekdayForecast {
+                    padding:12px;
+                  }
+                  #psWeekdayForecast .ps-bars {
+                    gap:4px;
+                  }
+                  #psWeekdayForecast .ps-day {
+                    font-size:10px;
+                  }
+                  #psWeekdayForecast .ps-pct {
+                    font-size:10px;
+                  }
+                }
+              </style>
+
+              <h2>📊 Weekly Restock Likelihood</h2>
+              <p class="ps-note">
+                Monday–Sunday historical restock patterns.
+                These percentages describe observed restock
+                weekdays, not confirmed delivery schedules.
+              </p>
+
+              <div class="ps-filters">
+                <select id="psChartRetailer">
+                  <option value="">All retailers</option>
+                </select>
+                <select id="psChartGame">
+                  <option value="">All TCGs</option>
+                </select>
+                <select id="psChartCity">
+                  <option value="">All locations</option>
+                </select>
+              </div>
+
+              <div id="psChartStatus" class="ps-note">
+                Loading shipment intelligence...
+              </div>
+
+              <div id="psChartBars" class="ps-bars"></div>
+
+              <p class="ps-note">
+                Social posts can contribute potential restock
+                evidence. Unverified posts and posts without
+                an actual observation date do not influence
+                percentages.
+              </p>
+            `;
+
+            section.insertBefore(wrap, section.firstChild);
+
+            let predictions = [];
+
+            function options(id, values) {
+              const sel = $(id);
+              for (const value of [...new Set(values)]
+                .filter(Boolean).sort()) {
+                const opt = document.createElement("option");
+                opt.value = value;
+                opt.textContent = value;
+                sel.appendChild(opt);
+              }
+            }
+
+            function draw() {
+              const retailer = $("psChartRetailer").value;
+              const game = $("psChartGame").value;
+              const city = $("psChartCity").value;
+
+              const selected = predictions.filter(p =>
+                (!retailer || p.retailer === retailer) &&
+                (!game || p.game === game) &&
+                (!city || p.city === city)
+              );
+
+              const counts = Array(7).fill(0);
+              let sample = 0;
+
+              for (const p of selected) {
+                if (!Array.isArray(p.counts)) continue;
+                for (let i = 0; i < 7; i++) {
+                  counts[i] += Number(p.counts[i] || 0);
+                }
+                sample += Number(p.sample_size || 0);
+              }
+
+              if (sample < 5) {
+                $("psChartStatus").textContent =
+                  "Insufficient verified, precisely dated " +
+                  "observations (" + sample +
+                  "). No defensible weekday percentages yet.";
+                $("psChartBars").innerHTML = "";
+                return;
+              }
+
+              const total = sample + 7;
+              const pct = counts.map(c =>
+                100 * (c + 1) / total
+              );
+
+              const maximum = Math.max(...pct);
+
+              $("psChartStatus").textContent =
+                sample + " dated restock observations. " +
+                "Percentages are smoothed historical frequencies.";
+
+              $("psChartBars").innerHTML = days.map((day, i) => {
+                const height = Math.max(
+                  4, pct[i] / maximum * 145
+                );
+                return `
+                  <div class="ps-col">
+                    <span class="ps-pct">
+                      ${pct[i].toFixed(1)}%
+                    </span>
+                    <div class="ps-bar-track">
+                      <div class="ps-bar"
+                        style="height:${height}px">
+                      </div>
+                    </div>
+                    <span class="ps-day">
+                      ${esc(day.slice(0,3))}
+                    </span>
+                  </div>`;
+              }).join("");
+            }
+
+            fetch(
+              "data/social_shipment_predictions.json?t=" +
+              Date.now(),
+              {cache:"no-store"}
+            )
+              .then(r => {
+                if (!r.ok) throw Error("Data unavailable");
+                return r.json();
+              })
+              .then(d => {
+                predictions = Array.isArray(d.predictions)
+                  ? d.predictions : [];
+
+                options(
+                  "psChartRetailer",
+                  predictions.map(x => x.retailer)
+                );
+                options(
+                  "psChartGame",
+                  predictions.map(x => x.game)
+                );
+                options(
+                  "psChartCity",
+                  predictions.map(x => x.city)
+                );
+
+                [
+                  "psChartRetailer",
+                  "psChartGame",
+                  "psChartCity"
+                ].forEach(id => $(id).onchange = draw);
+
+                draw();
+              })
+              .catch(e => {
+                $("psChartStatus").textContent =
+                  "Unable to load predictions: " + e.message;
+              });
+          })();
+          JS
+
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+          script = '<script defer src="assets/social-shipment-upgrade.js"></script>'
+          if script not in html:
+              html = html.replace("</body>", script + "\n</body>", 1)
+          path.write_text(html, encoding="utf-8")
+          PY
+
+      - name: Validate generated files
+        shell: bash
+        run: |
+          python -m json.tool data/social_media_feed.json > /dev/null
+          python -m json.tool data/social_shipment_evidence.json > /dev/null
+          python -m json.tool data/social_shipment_predictions.json > /dev/null
+          node --check assets/social-shipment-upgrade.js
+          python - <<'PY'
+          from pathlib import Path
+          h = Path("index.html").read_text()
+          assert 'id="shipments"' in h
+          assert 'id="social"' in h
+          assert 'assets/social-shipment-upgrade.js' in h
+          print("Validation passed")
+          PY
+
+      - name: Commit and publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            index.html \
+            assets/social-shipment-upgrade.js \
+            data/social_media_feed.json \
+            data/social_shipment_evidence.json \
+            data/social_shipment_predictions.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m \
+              "Add all-TCG social discovery and weekday restock chart"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "No changes to commit"
+          fi
