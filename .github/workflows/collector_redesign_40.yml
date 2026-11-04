@@ -1,0 +1,449 @@
+name: Pokestock Script 40 Collector Redesign and Store Outlook
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Pokestock Script 39 Unified Online Stock
+      - Pokestock V34 Public Shelf Sightings
+      - Pokestock Social Shipment Intelligence
+    types: [completed]
+  schedule:
+    - cron: '11 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokestock-monitor
+  cancel-in-progress: false
+
+jobs:
+  redesign:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install store evidence engine and redesigned interface
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p scripts assets data
+          cat > scripts/store_outlook_40.py <<'PY40'
+          #!/usr/bin/env python3
+          """Store research, regional chatter, and verified history remain separate."""
+          import json
+          from collections import Counter, defaultdict
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          DATA = Path('data')
+          NOW = datetime.now(timezone.utc)
+
+          def read(name, default):
+              try:
+                  v = json.loads((DATA/name).read_text(encoding='utf-8'))
+                  return v if isinstance(v, type(default)) else default
+              except (OSError, ValueError):
+                  return default
+
+          def clean(value, limit=180):
+              return ' '.join(str(value or '').split())[:limit]
+
+          def stamp(value):
+              try:
+                  d = datetime.fromisoformat(str(value).replace('Z','+00:00'))
+                  return d.astimezone(timezone.utc) if d.tzinfo else None
+              except (TypeError, ValueError, OverflowError):
+                  return None
+
+          def key(value):
+              return ''.join(x for x in clean(value).casefold() if x.isalnum())
+
+          def chain_of(row):
+              value = clean(row.get('retailer_chain') or row.get('chain') or row.get('retailer'), 90)
+              if value: return value
+              name = clean(row.get('name') or row.get('store_name'), 150).casefold()
+              for n in ('Walmart','Target','Best Buy','GameStop','Dollar General',
+                        'Five Below','Barnes & Noble','CVS','Walgreens','Costco',
+                        "Sam's Club",'Dollar Tree','Ross'):
+                  if n.casefold() in name: return n
+              return 'Independent / other'
+
+          def store_row(raw):
+              sid = clean(raw.get('id') or raw.get('store_id'), 100)
+              if not sid: return None
+              name = clean(raw.get('name') or raw.get('store_name'), 180)
+              city = clean(raw.get('city'), 100)
+              state = clean(raw.get('state'), 30)
+              if not name: name = chain_of(raw) + (' — ' + city if city else '')
+              zip_code = clean(raw.get('zip') or raw.get('zipcode') or raw.get('postal_code'), 16)
+              return {'store_id':sid,'store_name':name,'chain':chain_of(raw),
+                      'city':city,'state':state,'zip':zip_code,
+                      'verified_store_sightings':0,'provisional_reports':[],
+                      'city_area_reports':[],'research_watch':False,
+                      'research_basis':'','research_source':'',
+                      'outlook':'No store-specific evidence',
+                      'confidence':'Insufficient evidence','watch_weekday':None,
+                      'last_reported_at':None}
+
+          def main():
+              originals = read('stores.json', [])
+              legacy = read('v30_restock_forecasts.json', [])
+              shipments = read('shipments.json', {})
+              sightings = read('v34_public_sightings.json', [])
+              exact_events = read('restock_observations.json', [])
+              releases = read('v30_release_watch.json', [])
+              by_id = {}
+              for raw in originals:
+                  if isinstance(raw, dict):
+                      s = store_row(raw)
+                      if s: by_id[s['store_id']] = s
+              for raw in legacy:
+                  if not isinstance(raw, dict): continue
+                  s = store_row(raw)
+                  if s and s['store_id'] not in by_id: by_id[s['store_id']] = s
+
+              research = {}
+              for item in shipments.get('forecasts', []) if isinstance(shipments, dict) else []:
+                  if not isinstance(item, dict): continue
+                  sid = clean(item.get('store_id'),100)
+                  # Generic retailer guidance is NOT a store delivery prediction.
+                  if sid and item.get('delivery_confirmed') is False and item.get('confidence') == 'Research only':
+                      research[sid] = item
+
+              reports = {}
+              for r in sightings:
+                  if not isinstance(r, dict): continue
+                  t = stamp(r.get('reported_at_approx'))
+                  if not t or t > NOW+timedelta(hours=1) or NOW-t > timedelta(days=60): continue
+                  report_id = clean(r.get('event_id'), 100)
+                  if not report_id: continue
+                  reports[report_id] = {
+                      'id': report_id, 'store_id':clean(r.get('store_id'),100),
+                      'retailer':clean(r.get('retailer'),90),'city':clean(r.get('city'),100),
+                      'state':clean(r.get('state'),30),'product':clean(r.get('product_name'),220),
+                      'game':clean(r.get('game'),90),'reported_at':t.isoformat(),
+                      'source_url':clean(r.get('source_url'),500),
+                      'store_match_verified':r.get('store_match_verified') is True,
+                      'stock_verified':r.get('current_stock_verified') is True,
+                      'time_precision':clean(r.get('time_precision'),80)
+                  }
+              # Join additional records by exact store ID, never by city alone.
+              for r in exact_events:
+                  if not isinstance(r, dict): continue
+                  sid = clean(r.get('store_id'),100)
+                  if sid not in by_id: continue
+                  report_id = clean(r.get('event_id'),100)
+                  if report_id in reports: continue
+                  t = stamp(r.get('observed_at'))
+                  if not t or t > NOW+timedelta(hours=1) or NOW-t > timedelta(days=60): continue
+                  reports[report_id] = {
+                      'id':report_id,'store_id':sid,'retailer':clean(r.get('retailer'),90),
+                      'city':clean(r.get('city'),100),'state':clean(r.get('state'),30),
+                      'product':clean(r.get('product_name'),220),'game':clean(r.get('game'),90),
+                      'reported_at':t.isoformat(),'source_url':clean(r.get('source_url'),500),
+                      'store_match_verified':r.get('store_match_verified') is True,
+                      'stock_verified':False,'time_precision':clean(r.get('time_precision'),80)
+                  }
+
+              by_city = defaultdict(list)
+              verified_by_store = defaultdict(list)
+              for report in reports.values():
+                  by_city[(key(report['retailer']),key(report['city']),key(report['state']))].append(report)
+                  if report['store_id'] in by_id and report['store_match_verified']:
+                      verified_by_store[report['store_id']].append(report)
+
+              for s in by_id.values():
+                  sid = s['store_id']
+                  if sid in research:
+                      s['research_watch'] = True
+                      s['research_basis'] = clean(research[sid].get('basis'),250)
+                      s['research_source'] = clean(research[sid].get('source_url'),500)
+                  city_events = sorted(by_city.get((key(s['chain']),key(s['city']),key(s['state'])),[]),
+                                       key=lambda x:x['reported_at'],reverse=True)
+                  s['city_area_reports'] = [{k:r[k] for k in ('id','product','game','reported_at','source_url','time_precision')}
+                                            for r in city_events[:3]]
+                  provisional = [r for r in city_events if r['store_id']==sid and not r['store_match_verified']]
+                  s['provisional_reports'] = [{k:r[k] for k in ('id','product','game','reported_at','source_url','time_precision')}
+                                              for r in provisional[:3]]
+                  good = verified_by_store.get(sid,[])
+                  dates = sorted({r['reported_at'][:10] for r in good})
+                  s['verified_store_sightings'] = len(dates)
+                  if city_events: s['last_reported_at'] = city_events[0]['reported_at']
+                  if len(dates) >= 5 and (datetime.fromisoformat(dates[-1])-datetime.fromisoformat(dates[0])).days >= 21:
+                      weekday_counts = Counter(datetime.fromisoformat(d).strftime('%A') for d in dates)
+                      day, number = weekday_counts.most_common(1)[0]
+                      if number >= 3:
+                          s['watch_weekday'] = day
+                          s['confidence'] = 'Limited store history'
+                          s['outlook'] = 'Historical weekday pattern — not a delivery prediction'
+                  if s['outlook'] == 'No store-specific evidence':
+                      if provisional:
+                          s['outlook'] = 'Provisional community sighting — stock unknown'
+                      elif city_events:
+                          s['outlook'] = 'City-level community reports — not this store'
+                      elif s['research_watch']:
+                          s['outlook'] = 'Retailer research lead — no store-specific date'
+
+              ordered = sorted(by_id.values(), key=lambda s:(s['state'],s['city'],s['chain'],s['store_name']))
+              valid_releases = []
+              for r in releases:
+                  if not isinstance(r,dict): continue
+                  ds = clean(r.get('date'),15)
+                  try: d = datetime.strptime(ds,'%Y-%m-%d').date()
+                  except ValueError: continue
+                  if d < NOW.date() or d > (NOW+timedelta(days=120)).date(): continue
+                  valid_releases.append({'name':clean(r.get('name'),220),'game':clean(r.get('game'),80),
+                                         'date':ds,'source_url':clean(r.get('source_url'),500),
+                                         'label':'Official release date — not a store stock confirmation'})
+              valid_releases.sort(key=lambda x:x['date'])
+              summary = {
+                  'version':'40.0','generated_at':NOW.isoformat(),
+                  'store_candidates':len(ordered),'public_unverified_sightings':len(reports),
+                  'stores_with_city_reports':sum(bool(s['city_area_reports']) for s in ordered),
+                  'stores_with_provisional_reports':sum(bool(s['provisional_reports']) for s in ordered),
+                  'stores_with_retailer_research_leads':sum(s['research_watch'] for s in ordered),
+                  'stores_with_historical_watch_weekday':sum(bool(s['watch_weekday']) for s in ordered),
+                  'verified_live_store_inventory':0,
+                  'meaning':'Research signals and sightings are not guaranteed current stock, truck deliveries, or forecasts.',
+                  'coverage_note':'Store candidates may not sell TCG products. Some community reports are city-level only.',
+                  'stores':ordered,'upcoming_official_releases':valid_releases[:16]
+              }
+              file = DATA/'store_outlook_40.json'
+              encoded = json.dumps(summary,ensure_ascii=False,separators=(',',':'))+'\n'
+              if not file.exists() or file.read_text(encoding='utf-8') != encoded:
+                  file.write_text(encoded, encoding='utf-8')
+              print(json.dumps({k:v for k,v in summary.items() if k not in ('stores','upcoming_official_releases')},indent=2))
+          if __name__ == '__main__': main()
+          PY40
+
+          cat > assets/collector40.css <<'CSS40'
+          :root{--ps40-bg:#0c101b;--ps40-card:#171e30;--ps40-stroke:#323d53;--ps40-gold:#eac67e;--ps40-blue:#7aa7ff;--ps40-ink:#f7f4ef;--ps40-soft:#a7b3c7}
+          body{background:radial-gradient(ellipse at 90% -10%,#263452 0,transparent 40%),#0c101b;color:var(--ps40-ink);font-family:Outfit,system-ui,sans-serif}
+          body>header{background:#0b101ceF;border-bottom:1px solid #323d535e;padding:13px clamp(16px,4vw,46px);gap:18px}
+          body>header .brand-icon{background:linear-gradient(135deg,#f3d295,#8c7dba);border-radius:12px;color:#141527;box-shadow:0 5px 25px #d4ac7050}
+          body>header .brand strong{font-size:25px;letter-spacing:-1px}
+          body>header .brand strong span{color:#efcb86}
+          body>header .brand small{letter-spacing:1px;font-size:9px;color:#9aa9c2}
+          body>header>nav{display:none!important}
+          .ps40-nav{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-left:auto}
+          .ps40-nav button,.ps40-nav select{font:600 13px Outfit,system-ui;cursor:pointer;border:1px solid transparent;border-radius:12px;padding:11px 13px;background:transparent;color:#bcc9dd}
+          .ps40-nav button:hover,.ps40-nav select:hover{background:#222c40;color:#fff}
+          .ps40-nav button[aria-current="page"]{background:#e5c182;color:#201b1d;box-shadow:0 4px 18px #eac67e26}
+          .ps40-nav select{border:1px solid #46536a;background:#202838;max-width:120px}
+          main{max-width:1380px;padding:20px clamp(14px,3vw,35px) 60px}
+          main>.hero,main>.stats,main>#gameCards,main>h2,main>p.muted{display:none!important}
+          .tabs>section.panel{background:transparent;border:0;padding:0;margin:0}
+          .tabs>section.panel:not(#ps40Home):not(#ps40Forecast){padding:22px;background:#131b2a;border:1px solid #35425a;border-radius:20px}
+          .ps40-head{display:flex;gap:20px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;margin:12px 0 22px}
+          .ps40-kicker{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--ps40-gold);text-transform:uppercase}
+          .ps40-title{font-size:clamp(32px,5vw,54px);font-weight:850;line-height:1.08;letter-spacing:-1.8px;margin:9px 0 11px}
+          .ps40-lede{font-size:15px;line-height:1.7;color:var(--ps40-soft);max-width:650px;margin:0}
+          .ps40-hero{padding:clamp(22px,4vw,42px);border:1px solid #56617d;border-radius:24px;background:radial-gradient(circle at 91% 10%,#7773a660,transparent 35%),linear-gradient(120deg,#252c44,#101f34 65%,#13252b);position:relative;overflow:hidden}
+          .ps40-hero:after{content:'✦';position:absolute;font-size:clamp(100px,20vw,270px);color:#efd29a0a;right:1%;top:-25%;pointer-events:none}
+          .ps40-searchbar{position:relative;max-width:790px;margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;z-index:1}
+          .ps40-searchbar input{flex:1;min-width:180px;background:#0b1324ec;border:1px solid #62738d;border-radius:13px;padding:15px 16px;font-size:15px;color:#fff}
+          .ps40-gold-btn{background:#edc989!important;color:#251e1b!important;border:1px solid #f3d7a2!important;border-radius:12px!important;padding:13px 20px!important;font-weight:850!important}
+          .ps40-chips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px;position:relative;z-index:1}
+          .ps40-chips button{background:#27374d99;color:#eef2f7;border:1px solid #50627b;border-radius:25px;padding:7px 12px;font-size:12px}
+          .ps40-chips button[aria-pressed="true"]{background:#f1cf91;color:#192234;border-color:#f1cf91}
+          .ps40-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:17px 0 29px}
+          .ps40-metric{background:#171f30;border:1px solid #354157;border-radius:15px;padding:17px 18px}
+          .ps40-metric strong{display:block;font-size:27px;letter-spacing:-.7px;color:#fff}
+          .ps40-metric span{color:#a9b5c8;font-size:12px}
+          .ps40-split{display:flex;gap:15px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:25px 0 13px}
+          .ps40-split h2{font-size:22px;letter-spacing:-.5px;margin:0}
+          .ps40-secondary{font-size:12px;color:#abb9ce}
+          .ps40-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:13px}
+          .ps40-card{background:#171f30;border:1px solid #36445d;border-radius:17px;padding:17px;min-width:0;transition:transform .15s,border-color .15s}
+          .ps40-card:hover{border-color:#7893b7;transform:translateY(-2px)}
+          .ps40-card h3{font-size:16px;line-height:1.38;margin:11px 0;overflow-wrap:anywhere}
+          .ps40-card p{color:#aebbd0;line-height:1.5;font-size:13px;margin:9px 0}
+          .ps40-tag{display:inline-block;background:#243449;border:1px solid #49617b;border-radius:50px;padding:5px 9px;font-size:11px;font-weight:800;color:#cce3fc}
+          .ps40-tag.amber{background:#453621;color:#f1ce94;border-color:#755938}
+          .ps40-tag.teal{background:#1b3836;color:#8ee8d2;border-color:#37655d}
+          .ps40-price{font-size:18px;font-weight:800;color:#f6dba6}
+          .ps40-link{color:#b8d6ff;font-weight:700;font-size:13px;text-decoration:none}
+          .ps40-link:hover{text-decoration:underline}
+          .ps40-card details{margin-top:12px;border-top:1px solid #3c4a61;padding-top:10px;color:#b4d5ff;font-size:12px}
+          .ps40-card details summary{cursor:pointer;font-weight:750}
+          .ps40-callout{background:#151e2e;border:1px solid #344661;border-radius:15px;padding:18px 20px;margin:16px 0;color:#bfcad9;line-height:1.6}
+          .ps40-callout strong{color:#f1d095}
+          .ps40-controls{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+          .ps40-controls input,.ps40-controls select{background:#192438;color:#fff;border:1px solid #4b5d77;padding:12px 13px;border-radius:12px;min-width:140px;flex:1}
+          .ps40-controls input{flex:2;min-width:200px}
+          .ps40-bars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:16px 0 21px}
+          .ps40-bar{background:#151f30;border:1px solid #354158;border-radius:14px;padding:15px}
+          .ps40-bar b{font-size:23px;display:block;color:#f6d695}
+          .ps40-bar span{font-size:11px;color:#adbcd0;display:block;margin:4px 0 12px}
+          .ps40-track{height:6px;background:#2d3950;border-radius:100px;overflow:hidden}
+          .ps40-fill{height:100%;background:linear-gradient(90deg,#9b8bc8,#f2d29b);border-radius:100px}
+          .ps40-foot{font-size:12px;color:#9eb1ca;line-height:1.55}
+          .ps40-empty{background:#172137;border:1px dashed #526482;color:#c1cde0;padding:24px;border-radius:15px;line-height:1.6}
+          .ps40-more{display:block;margin:20px auto;background:#263653;color:#f3f5ff;border:1px solid #52658a;border-radius:12px;padding:12px 22px;font-weight:750}
+          @media(max-width:760px){body>header{position:sticky;align-items:flex-start} .ps40-nav{width:100%;overflow:auto;flex-wrap:nowrap;margin:0;padding-bottom:3px} .ps40-nav button,.ps40-nav select{white-space:nowrap;font-size:12px;padding:9px 11px}main{padding:13px 12px 45px}.ps40-metrics,.ps40-bars{grid-template-columns:1fr 1fr}.ps40-hero{border-radius:18px;padding:23px 16px}.ps40-searchbar button{width:100%}.ps40-title{font-size:33px}.tabs>section.panel:not(#ps40Home):not(#ps40Forecast){padding:12px}}
+          @media(max-width:400px){.ps40-metrics,.ps40-bars{grid-template-columns:1fr}.ps40-card{padding:14px}}
+          CSS40
+
+          cat > assets/collector40.js <<'JS40'
+          (()=>{
+          'use strict';
+          if(document.getElementById('ps40Home'))return;
+          const tabs=document.querySelector('main .tabs');
+          const header=document.querySelector('body>header');
+          if(!tabs||!header)return;
+          const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+          const safe=u=>{try{const v=new URL(u);return v.protocol==='https:'?v.href:'';}catch{return '';}};
+          const elem=id=>document.getElementById(id);
+          const date=s=>{let v=new Date(s);return Number.isNaN(+v)?'Unknown':v.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});};
+          const hours=s=>(Date.now()-Date.parse(s))/3600000;
+          const fetchJSON=async(path,otherwise)=>{try{let x=await fetch(path+'?t='+Date.now(),{cache:'no-store'});return x.ok?await x.json():otherwise;}catch{return otherwise;}};
+          const nav=document.createElement('div');nav.className='ps40-nav';nav.setAttribute('aria-label','Primary navigation');
+          nav.innerHTML=`<button data-ps40-go="ps40Home" aria-current="page">Discover</button><button data-ps40-go="online">Online Stock</button><button data-ps40-go="stores">Stores Near Me</button><button data-ps40-go="ps40Forecast">Restock Outlook</button><select id="ps40More" aria-label="More PokéStock features"><option value="">More ▾</option><option value="pickup">Store Pickup</option><option value="products">All Products</option><option value="releases">New Releases</option><option value="social">Community</option><option value="shipments">Legacy Shipments</option><option value="sources">Data Sources</option></select>`;
+          header.append(nav);
+          const home=document.createElement('section');home.className='panel active';home.id='ps40Home';
+          home.innerHTML=`<div class="ps40-hero"><div class="ps40-kicker">The collector's radar</div><h1 class="ps40-title">Find the cards.<br>Skip the guesswork.</h1><p class="ps40-lede">Track sealed TCG products, compare observed online listings, and explore local retailer signals—all from one place.</p><div class="ps40-searchbar"><input id="ps40Find" type="search" placeholder="Search sets, booster boxes, Pokémon, Union Arena…" aria-label="Search products"><button class="ps40-gold-btn" id="ps40SearchGo" type="button">Find products</button></div><div class="ps40-chips" id="ps40Chips"><button type="button" data-ps40-game="" aria-pressed="true">All TCGs</button><button type="button" data-ps40-game="Pokémon">Pokémon</button><button type="button" data-ps40-game="Union Arena">Union Arena</button><button type="button" data-ps40-game="One Piece">One Piece</button><button type="button" data-ps40-game="Gundam">Gundam</button></div></div><div class="ps40-metrics" id="ps40Metrics"><div class="ps40-metric">Loading merchant listings…</div></div><div class="ps40-split"><h2>Recently observed online</h2><span class="ps40-secondary" id="ps40Freshness">Checking last observations…</span></div><div id="ps40Offers" class="ps40-grid"></div><div class="ps40-split"><h2>Collector intelligence</h2></div><div class="ps40-callout" id="ps40Insight">Loading store and community evidence…</div><p class="ps40-foot">Listings and community reports show what sources said at recorded times. They do not guarantee checkout, store pickup, or shelf stock. Source details are available inside PokéStock.</p>`;
+          const forecast=document.createElement('section');forecast.className='panel';forecast.id='ps40Forecast';
+          forecast.innerHTML=`<div class="ps40-head"><div><div class="ps40-kicker">Location-based intelligence</div><h1 class="ps40-title">Restock Outlook</h1><p class="ps40-lede">Check individual stores, dated sightings, and research leads without confusing retailer-wide speculation with verified deliveries.</p></div></div><div id="ps40OutlookStatus" class="ps40-callout">Loading independently collected evidence…</div><div id="ps40EvidenceBars" class="ps40-bars"></div><div class="ps40-controls"><input id="ps40StoreQuery" type="search" placeholder="Search retailer, city, store or ZIP" aria-label="Search store outlook"><select id="ps40State" aria-label="State"><option value="">All states</option></select><select id="ps40Evidence" aria-label="Evidence level"><option value="">All evidence</option><option value="reports">Community sightings</option><option value="research">Retailer research leads</option><option value="history">Historical weekday patterns</option><option value="unknown">No evidence yet</option></select></div><p id="ps40OutlookCount" class="ps40-foot">Loading stores…</p><div id="ps40StoreGrid" class="ps40-grid"></div><button id="ps40MoreStores" class="ps40-more" type="button" hidden>Show more stores</button><div class="ps40-split"><h2>Upcoming official TCG releases</h2><span class="ps40-secondary">Release dates are not store stock confirmations</span></div><div id="ps40Releases" class="ps40-grid"></div>`;
+          tabs.prepend(forecast);tabs.prepend(home);
+          tabs.querySelectorAll(':scope>section').forEach(x=>x.classList.toggle('active',x===home));
+          let offers=[], outlook={stores:[],upcoming_official_releases:[]}, game='',viewCount=36;
+          const storeOldTab=id=>document.querySelector('body>header nav button[data-tab="'+id+'"]');
+          function go(id){
+            if(!['ps40Home','ps40Forecast'].includes(id)){
+              const original=storeOldTab(id);
+              if(!original)return;
+              original.click();
+            }else{
+              tabs.querySelectorAll(':scope>section').forEach(x=>x.classList.toggle('active',x.id===id));
+            }
+            nav.querySelectorAll('[data-ps40-go]').forEach(b=>{if(b.dataset.ps40Go===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+            if(['ps40Home','ps40Forecast','online','stores'].includes(id))elem('ps40More').value='';
+            window.scrollTo({top:0,behavior:'smooth'});
+          }
+          nav.querySelectorAll('[data-ps40-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.ps40Go)));
+          elem('ps40More').addEventListener('change',e=>{if(e.target.value)go(e.target.value);});
+          const gameMatch=(o,g)=>!g||String(o.game||'').toLowerCase().includes(g.toLowerCase().replace('é','e'))||String(o.game||'').toLowerCase().includes(g.toLowerCase());
+          const available=o=>o.availability==='In stock'&&o.inventory_scope==='online';
+          const fresh=o=>Number.isFinite(hours(o.checked_at))&&hours(o.checked_at)>=0&&hours(o.checked_at)<=8;
+          const price=o=>{if(!o.price)return 'Price not reported';const currency=String(o.currency||'');return currency==='USD'?'$'+esc(o.price):currency&&currency!=='Unverified'?esc(o.price)+' '+esc(currency):esc(o.price)+' (currency unverified)';};
+          function renderHome(){
+            const q=elem('ps40Find').value.trim().toLowerCase();
+            const eligible=offers.filter(o=>available(o)&&fresh(o));
+            const filtered=eligible.filter(o=>gameMatch(o,game)&&(!q||[o.product_name,o.retailer,o.game,o.variant].join(' ').toLowerCase().includes(q)));
+            const retailers=new Set(eligible.map(o=>o.retailer));
+            elem('ps40Metrics').innerHTML=`<div class="ps40-metric"><strong>${eligible.length.toLocaleString()}</strong><span>Recently observed available listings</span></div><div class="ps40-metric"><strong>${retailers.size}</strong><span>Retailers with recent listings</span></div><div class="ps40-metric"><strong>${Number(outlook.store_candidates||0).toLocaleString()}</strong><span>Mapped store candidates nationwide</span></div>`;
+            elem('ps40Freshness').textContent=filtered.length+' matching listings · Observations within 8 hours';
+            elem('ps40Offers').innerHTML=filtered.slice(0,12).map(o=>{const url=safe(o.product_url),evidence=safe(o.evidence_url);return `<article class="ps40-card"><span class="ps40-tag teal">Storefront observed available</span><h3>${esc(o.product_name)}</h3><p><b>${esc(o.retailer)}</b> · ${esc(o.game||'Trading cards')}</p><p class="ps40-price">${price(o)}</p><p>Last checked: ${esc(date(o.checked_at))}</p><details><summary>Evidence & optional purchase link</summary><p>${esc(o.evidence_type||'Retailer website observation')} · Online listing only</p>${url?`<p><a class="ps40-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Retailer product page</a></p>`:''}${evidence?`<p><a class="ps40-link" href="${esc(evidence)}" target="_blank" rel="noopener noreferrer">Original evidence</a></p>`:''}</details></article>`;}).join('')||'<div class="ps40-empty">No recently checked, available online listings match that search. This does not mean products are sold out. Try another game or the full Online Stock tab.</div>';
+            elem('ps40Insight').innerHTML=`<strong>${Number(outlook.public_unverified_sightings||0)} public sighting reports</strong> have been collected for research. ${Number(outlook.stores_with_provisional_reports||0)} candidate stores have provisional branch-level matches. <strong>${Number(outlook.stores_with_historical_watch_weekday||0)} stores</strong> currently meet the minimum history requirement for a weekday watch pattern. Browse Restock Outlook to see what is known for each location.`;
+          }
+          function renderOutlook(){
+            const all=Array.isArray(outlook.stores)?outlook.stores:[];
+            const state=elem('ps40State').value;
+            const filter=elem('ps40Evidence').value;
+            const q=elem('ps40StoreQuery').value.trim().toLowerCase();
+            const matched=all.filter(s=>(!state||s.state===state)&&(!q||[s.store_name,s.chain,s.city,s.state,s.zip].join(' ').toLowerCase().includes(q))&&(!filter||(filter==='reports'&&(s.city_area_reports||[]).length>0)||(filter==='research'&&s.research_watch)||(filter==='history'&&s.watch_weekday)||(filter==='unknown'&&!(s.city_area_reports||[]).length&&!s.research_watch&&!s.watch_weekday)));
+            elem('ps40OutlookCount').textContent=`${matched.length.toLocaleString()} store candidates matching filters. Store listings do not themselves prove TCG availability.`;
+            elem('ps40MoreStores').hidden=matched.length<=viewCount;
+            elem('ps40StoreGrid').innerHTML=matched.slice(0,viewCount).map(s=>{
+              const sight=(s.provisional_reports||[])[0];const area=(s.city_area_reports||[])[0];
+              const source=safe(sight?.source_url||area?.source_url||s.research_source);
+              return `<article class="ps40-card"><span class="ps40-tag ${s.watch_weekday?'teal':s.provisional_reports?.length?'amber':''}">${esc(s.watch_weekday?'Historical watch weekday':s.provisional_reports?.length?'Unverified branch match':area?'City-level reports':s.research_watch?'Research only':'Evidence pending')}</span><h3>${esc(s.store_name)}</h3><p>${esc([s.city,s.state].filter(Boolean).join(', '))} ${s.zip?'· '+esc(s.zip):''}</p><p><b>${esc(s.chain)}</b></p><p>${esc(s.outlook)}</p>${s.watch_weekday?`<p>Historical watch weekday: <b>${esc(s.watch_weekday)}</b> (not guaranteed)</p>`:''}${sight?`<p>Provisional report: ${esc(sight.product)} · ${esc(date(sight.reported_at))}</p>`:area?`<p>City report (not linked to this branch): ${esc(area.product)} · ${esc(date(area.reported_at))}</p>`:s.research_watch?'<p>Retailer-wide guidance exists, but no branch-specific delivery evidence.</p>':'<p>No dated store observations yet. Current stock: unknown.</p>'}<details><summary>Evidence quality and source</summary><p>Exact-store verified sighting days: ${Number(s.verified_store_sightings)||0}. Community reports may be approximate. A research lead never confirms a shipment.</p>${source?`<a class="ps40-link" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Original supporting source</a>`:''}</details></article>`;
+            }).join('')||'<div class="ps40-empty">No stores match these filters. Try another city, chain, or evidence level.</div>';
+          }
+          function renderEvidence(){
+            const all=Array.isArray(outlook.stores)?outlook.stores:[];
+            const metrics=[['Store candidates',all.length],['Stores with city reports',outlook.stores_with_city_reports||0],['Research watch leads',outlook.stores_with_retailer_research_leads||0]];
+            elem('ps40EvidenceBars').innerHTML=metrics.map(([n,v])=>`<div class="ps40-bar"><b>${Number(v).toLocaleString()}</b><span>${esc(n)}</span><div class="ps40-track"><div class="ps40-fill" style="width:${all.length?Math.max(0,Math.min(100,100*Number(v)/all.length)):0}%"></div></div></div>`).join('');
+            elem('ps40OutlookStatus').innerHTML=`<strong>What the evidence supports:</strong> ${Number(outlook.public_unverified_sightings||0)} recently collected community reports; ${Number(outlook.stores_with_provisional_reports||0)} store candidates with provisional report matches; ${Number(outlook.stores_with_historical_watch_weekday||0)} with enough repeated verified store history for a limited weekday watch. <b>No generic freight schedule is treated as an actual card shipment.</b> Last compiled: ${esc(date(outlook.generated_at))}.`;
+            elem('ps40Releases').innerHTML=(outlook.upcoming_official_releases||[]).slice(0,8).map(x=>{const url=safe(x.source_url);return `<article class="ps40-card"><span class="ps40-tag teal">Official release · ${esc(x.date)}</span><h3>${esc(x.name)}</h3><p>${esc(x.game||'TCG')} · No local stock confirmation</p>${url?`<details><summary>Source</summary><a class="ps40-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Official announcement</a></details>`:''}</article>`;}).join('')||'<div class="ps40-empty">No upcoming official dates in the connected release feed.</div>';
+            const states=[...new Set(all.map(x=>x.state).filter(Boolean))].sort();
+            elem('ps40State').innerHTML='<option value="">All states</option>'+states.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+          }
+          elem('ps40Find').addEventListener('input',renderHome);
+          elem('ps40SearchGo').addEventListener('click',()=>{const value=elem('ps40Find').value.trim();const search=elem('onlineSearch');if(search){search.value=value;search.dispatchEvent(new Event('input',{bubbles:true}));}go('online');});
+          elem('ps40Find').addEventListener('keydown',e=>{if(e.key==='Enter')elem('ps40SearchGo').click();});
+          elem('ps40Chips').querySelectorAll('[data-ps40-game]').forEach(b=>b.addEventListener('click',()=>{game=b.dataset.ps40Game;elem('ps40Chips').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderHome();}));
+          ['ps40StoreQuery','ps40State','ps40Evidence'].forEach(id=>elem(id).addEventListener('input',()=>{viewCount=36;renderOutlook();}));
+          elem('ps40MoreStores').addEventListener('click',()=>{viewCount+=36;renderOutlook();});
+          (async()=>{
+            const [a,b]=await Promise.all([fetchJSON('data/unified_online_39.json',null),fetchJSON('data/store_outlook_40.json',null)]);
+            if(Array.isArray(a))offers=a;
+            if(b&&Array.isArray(b.stores))outlook=b;
+            renderEvidence();renderHome();renderOutlook();
+          })();
+          })();
+          JS40
+
+          python3 -m py_compile scripts/store_outlook_40.py
+          node --check assets/collector40.js
+
+      - name: Build evidence-aware store outlook
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/store_outlook_40.py
+
+      - name: Attach clean interface without deleting legacy features
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY40_SITE'
+          from pathlib import Path
+          p=Path('index.html')
+          html=p.read_text(encoding='utf-8')
+          assert '<div class="tabs">' in html and 'id="online"' in html and 'id="stores"' in html
+          css='<link rel="stylesheet" href="assets/collector40.css">'
+          js='<script defer src="assets/collector40.js"></script>'
+          if css not in html: html=html.replace('</head>',css+'\n</head>',1)
+          if js not in html: html=html.replace('</body>',js+'\n</body>',1)
+          assert html.count(css)==1 and html.count(js)==1
+          p.write_text(html,encoding='utf-8')
+          PY40_SITE
+
+      - name: Verify evidence and website integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY40_VERIFY'
+          import json
+          from pathlib import Path
+          j=json.loads(Path('data/store_outlook_40.json').read_text(encoding='utf-8'))
+          assert j['version']=='40.0' and isinstance(j['stores'],list)
+          assert len(j['stores'])==j['store_candidates']
+          assert all('store_id' in s and 'outlook' in s for s in j['stores'])
+          assert all(not s['watch_weekday'] or s['verified_store_sightings']>=5 for s in j['stores'])
+          html=Path('index.html').read_text(encoding='utf-8')
+          for file in ('assets/collector40.js','assets/collector40.css','assets/independent38.js','assets/alerts37.js'):
+              assert file in html,file
+          print('SCRIPT 40 PASSED:',j['store_candidates'],'store candidates')
+          PY40_VERIFY
+          node --check assets/collector40.js
+
+      - name: Publish without overwriting older features
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html scripts/store_outlook_40.py assets/collector40.js assets/collector40.css data/store_outlook_40.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m 'Pokestock 40 streamlined collector UI and evidence-aware store outlook'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo 'Conflict: no existing site data overwritten'
+              exit 1
+            fi
+            if git push origin HEAD:main; then echo 'SCRIPT 40 PUBLISHED'; exit 0; fi
+            sleep 5
+          done
+          exit 1
