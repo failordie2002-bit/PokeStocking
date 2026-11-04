@@ -1,0 +1,181 @@
+name: Pokestock V34 Public Shelf Sightings
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 12,22 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: pokestock-v34
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Collect public store sightings
+        shell: bash
+        run: |
+          mkdir -p data
+          cat > /tmp/v34.py <<'PY'
+          import json, re, time, hashlib
+          from pathlib import Path
+          from datetime import datetime, timedelta, timezone
+          from collections import Counter, defaultdict
+          import requests
+          from bs4 import BeautifulSoup
+
+          ROOT = Path('data')
+          NOW = datetime.now(timezone.utc)
+          GAMES = ['Pokemon','Gundam','Union Arena','One Piece','Magic The Gathering','Yu-Gi-Oh','Lorcana','Digimon','Dragon Ball','Star Wars Unlimited','Riftbound','Flesh and Blood','Weiss Schwarz','Cardfight Vanguard']
+          URLS = {
+              'Walmart': 'https://restockd.app/pokemon-in-store?retailer=walmart',
+              'Target': 'https://restockd.app/pokemon-in-store?retailer=target',
+              'Best Buy': 'https://restockd.app/pokemon-in-store?retailer=best-buy',
+          }
+          def read(name, fallback):
+              try: return json.loads((ROOT/name).read_text(encoding='utf-8'))
+              except (OSError,ValueError): return fallback
+          def write(name, value):
+              p=ROOT/name; tmp=ROOT/(name+'.tmp')
+              tmp.write_text(json.dumps(value,indent=2,ensure_ascii=False),encoding='utf-8'); tmp.replace(p)
+          def norm(x): return re.sub(r'[^a-z0-9]+',' ',str(x or '').lower()).strip()
+          def relative_age(text):
+              m=re.search(r'\b(\d+)\s*(min(?:ute)?s?|h(?:ours?)?|d(?:ays?)?|w(?:eeks?)?)\s+ago\b',text,re.I)
+              if not m:return None
+              n=int(m.group(1)); unit=m.group(2).lower()[0]
+              delta={'m':timedelta(minutes=n),'h':timedelta(hours=n),'d':timedelta(days=n),'w':timedelta(weeks=n)}[unit]
+              return (NOW-delta).isoformat()
+          def store_parts(text, retailer):
+              # Public rows use 'Target Charlottesville · Charlottesville, VA'.
+              s=re.sub(r'\s+',' ',text).strip()
+              m=re.search(r'([^·|]+?)\s*[·|]\s*([^,·|]+),\s*([A-Z]{2})\b',s)
+              if not m:return None
+              branch=m.group(1).strip(); city=m.group(2).strip(); state=m.group(3)
+              branch=re.sub(r'^'+re.escape(retailer)+r'\s*','',branch,flags=re.I).strip()
+              return branch,city,state
+          def parse_rows(html, retailer, url):
+              soup=BeautifulSoup(html,'html.parser')
+              out=[]; diagnostics={'table_rows':0,'parsed':0,'unparsed':0}
+              # Use semantic table rows, never regex over script tags.
+              for tr in soup.select('table tr')[:700]:
+                  cells=tr.find_all(['td'],recursive=False)
+                  if len(cells)<3:continue
+                  diagnostics['table_rows']+=1
+                  columns=[c.get_text(' ',strip=True) for c in cells]
+                  product=columns[0]
+                  store_text=columns[1]
+                  status=columns[2]
+                  age=' '.join(columns[3:]) if len(columns)>3 else ' '.join(columns)
+                  parsed=store_parts(store_text,retailer)
+                  observed=relative_age(age)
+                  if not parsed or not observed or not product:
+                      diagnostics['unparsed']+=1;continue
+                  branch,city,state=parsed
+                  is_positive=bool(re.search(r'\bin stock\b',status,re.I))
+                  is_closed=bool(re.search(r'\b(closed|sold out)\b',status,re.I))
+                  if not is_positive and not is_closed:
+                      diagnostics['unparsed']+=1;continue
+                  key='|'.join([retailer,branch,city,state,product,observed[:13],status])
+                  out.append({
+                      'event_id':hashlib.sha256(key.encode()).hexdigest()[:24],
+                      'game':'Pokemon','retailer':retailer,'branch':branch,
+                      'city':city,'state':state,'product_name':product,
+                      'reported_at_approx':observed,'reported_age_text':age,
+                      'report_status':'reported_in_stock' if is_positive else 'closed_or_sold_out',
+                      'source_url':url,'evidence_level':'public_community_report',
+                      'inventory_scope':'physical_store','current_stock_verified':False,
+                      'time_precision':'relative_age_approximate'
+                  })
+                  diagnostics['parsed']+=1
+              return out,diagnostics
+          stores=read('physical_inventory_sources.json',[])
+          if not isinstance(stores,list):stores=[]
+          def match_store(e):
+              # Only unique branch+city+state+chain matches. City-only is not enough.
+              matches=[]
+              for s in stores:
+                  if not isinstance(s,dict):continue
+                  if norm(s.get('state'))!=norm(e['state']) or norm(s.get('city'))!=norm(e['city']):continue
+                  chain=norm(s.get('chain') or s.get('name'))
+                  if norm(e['retailer']) not in chain and chain not in norm(e['retailer']):continue
+                  branch=norm(e['branch']); candidate=norm(s.get('name'))
+                  if branch and branch in candidate and branch!=norm(e['retailer']):matches.append(s)
+              return matches[0].get('source_id') if len(matches)==1 else None
+          old=read('v34_public_sightings.json',[])
+          history={e['event_id']:e for e in old if isinstance(e,dict) and e.get('event_id')}
+          diagnostics={}; new_count=0
+          session=requests.Session()
+          session.headers.update({'User-Agent':'Mozilla/5.0 (compatible; PokeStockPublicResearch/1.0)','Accept':'text/html'})
+          for retailer,url in URLS.items():
+              try:
+                  response=session.get(url,timeout=(7,15))
+                  info={'http_status':response.status_code,'bytes':len(response.content)}
+                  if response.status_code!=200 or len(response.content)>1500000:
+                      info['error']='Unavailable or exceeds size limit'
+                  else:
+                      events,detail=parse_rows(response.text,retailer,url);info.update(detail)
+                      for e in events:
+                          e['store_id']=match_store(e)
+                          if e['event_id'] not in history:new_count+=1
+                          history[e['event_id']]=e
+                  diagnostics[retailer]=info
+              except requests.RequestException as exc:
+                  diagnostics[retailer]={'error':str(exc)[:160]}
+          # Preserve observations for 90 days, but do not claim they remain in stock.
+          cutoff=(NOW-timedelta(days=90)).isoformat()
+          history={k:v for k,v in history.items() if v.get('reported_at_approx','')>=cutoff}
+          events=sorted(history.values(),key=lambda e:e['reported_at_approx'],reverse=True)
+          write('v34_public_sightings.json',events)
+          matched=[e for e in events if e.get('store_id')]
+          # Game-level evidence, exact matched store only.
+          groups=defaultdict(list)
+          for e in matched:
+              if e['report_status']=='reported_in_stock':groups[(e['store_id'],e['game'])].append(e)
+          by_game=[]
+          for (sid,game),group in sorted(groups.items()):
+              dates=sorted(set(e['reported_at_approx'][:10] for e in group))
+              by_game.append({'store_id':sid,'game':game,'reported_sighting_days':len(dates),
+                              'last_reported_sighting':max(e['reported_at_approx'] for e in group),
+                              'source_url':group[0]['source_url'],'predicted_restock_date':None,
+                              'confidence':'Insufficient verified restock history',
+                              'inventory_status':'Unknown'})
+          write('v34_store_game_evidence.json',by_game)
+          write('v34_report.json',{'version':'34','checked_at':NOW.isoformat(),
+              'source_results':diagnostics,'new_reports':new_count,
+              'total_reports_retained':len(events),'matched_store_reports':len(matched),
+              'unmatched_reports':len(events)-len(matched),
+              'store_game_pairs_with_evidence':len(by_game),
+              'notes':['Community shelf sightings are not shipment confirmations.',
+                       'Relative timestamps are approximate; do not treat as precise shipment dates.',
+                       'No game-level predictions until multiple independent restock days are established.',
+                       'No Gundam or Union Arena source is connected yet.']})
+          print(json.dumps(read('v34_report.json',{}),indent=2))
+          PY
+          python -u /tmp/v34.py
+      - name: Validate and publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for name in ['v34_public_sightings.json','v34_store_game_evidence.json','v34_report.json']:
+              json.loads((Path('data')/name).read_text())
+          print('V34 output valid')
+          PY
+          git config user.name 'pokestock-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add data/v34_*.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Collect public TCG shelf sightings V34'
+          git pull --rebase origin main
+          git push origin HEAD:main
