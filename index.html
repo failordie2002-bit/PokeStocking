@@ -2116,7 +2116,7 @@ init().catch(error=>{
 
   async function findZIP(){
     const zip=$("catcherZip").value.trim();
-    if(!/^\\d{5}$/.test(zip)){
+    if(!/^\d{5}$/.test(zip)){
       status("Enter a valid five-digit ZIP code.");
       return;
     }
