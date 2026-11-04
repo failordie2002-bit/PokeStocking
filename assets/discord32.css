@@ -1,0 +1,48 @@
+#ps32 {
+  background:#14213a;
+  color:#edf5ff;
+  padding:16px;
+  margin:14px 0 24px;
+  border:1px solid #506480;
+  border-radius:15px;
+}
+#ps32 * {
+  box-sizing:border-box;
+}
+#ps32 h2 {
+  margin:0 0 12px;
+}
+.ps32-controls {
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(145px,1fr));
+  gap:10px;
+  margin:12px 0;
+}
+.ps32-controls input,
+.ps32-controls select {
+  width:100%;
+  min-width:0;
+  padding:11px;
+  border:1px solid #587195;
+  border-radius:9px;
+  background:#0b182d;
+  color:white;
+  font:inherit;
+}
+.ps32-card {
+  margin:10px 0;
+  padding:13px;
+  background:#20314d;
+  border:1px solid #435b7c;
+  border-radius:11px;
+  overflow-wrap:anywhere;
+}
+.ps32-note {
+  font-size:13px;
+  color:#b9c9e0;
+  line-height:1.5;
+}
+.ps32-card a {
+  color:#a9e2ff;
+}

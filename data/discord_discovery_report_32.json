@@ -1,0 +1,58 @@
+{
+  "updated_at": "2026-11-04T04:23:16.457060+00:00",
+  "sources_checked": [
+    {
+      "url": "https://www.guildregister.com/c/tcg",
+      "status": "ok"
+    },
+    {
+      "url": "https://discord.me/servers/tag/tcg",
+      "status": "ok"
+    },
+    {
+      "url": "https://discord.me/servers/tag/pokemon",
+      "status": "ok"
+    },
+    {
+      "url": "https://discordhome.com/servers/tag/pokemontcg",
+      "status": "ok"
+    },
+    {
+      "url": "https://disboard.org/servers/tag/tcg",
+      "status": "403"
+    },
+    {
+      "url": "https://disboard.org/servers/tag/pokemon",
+      "status": "403"
+    },
+    {
+      "url": "https://discord.com/servers?query=pokemon%20tcg",
+      "status": "ok"
+    }
+  ],
+  "total_communities": 100,
+  "new_communities": 96,
+  "rejected_candidates": 78,
+  "location_tagged": 0,
+  "game_counts": {
+    "Pokemon": 69,
+    "Union Arena": 2,
+    "One Piece": 6,
+    "Gundam": 0,
+    "Magic": 8,
+    "Lorcana": 3,
+    "Riftbound": 2,
+    "Yu-Gi-Oh": 11,
+    "Digimon": 1,
+    "Dragon Ball": 0,
+    "Flesh and Blood": 1,
+    "Other TCG": 39
+  },
+  "limitations": [
+    "Directory listings are not live message feeds.",
+    "Links may expire or become inaccessible.",
+    "Location is inferred from listing descriptions.",
+    "No Discord messages are collected.",
+    "No stock or shipment verification is implied."
+  ]
+}
