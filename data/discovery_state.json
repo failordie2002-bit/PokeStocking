@@ -43,18 +43,19 @@
   "v822_completed_count": 0,
   "v822_inventory_claims_created": 0,
   "v83_bulk_status": "success",
-  "v83_bulk_last_state": "VA",
-  "v83_bulk_last_attempt": "2026-11-03T21:11:40.395715+00:00",
+  "v83_bulk_last_state": "WV",
+  "v83_bulk_last_attempt": "2026-11-04T02:57:50.359896+00:00",
   "v83_bulk_last_error": null,
   "v83_bulk_completed_states": [
-    "VA"
+    "VA",
+    "WV"
   ],
-  "v83_bulk_completed_count": 1,
+  "v83_bulk_completed_count": 2,
   "v83_bulk_total_states": 51,
-  "v83_bulk_last_candidates": 2673,
-  "v83_bulk_last_new_stores": 2583,
-  "v83_bulk_total_stores": 2729,
-  "v83_bulk_last_success": "2026-11-03T21:24:22.365973+00:00",
+  "v83_bulk_last_candidates": 741,
+  "v83_bulk_last_new_stores": 740,
+  "v83_bulk_total_stores": 3469,
+  "v83_bulk_last_success": "2026-11-04T03:02:27.789891+00:00",
   "v83_bulk_inventory_claims_created": 0,
   "v84_retail_status": "success",
   "v84_tracked_games": [
@@ -63,16 +64,17 @@
     "Gundam",
     "One Piece"
   ],
-  "v84_retail_last_state": "VA",
-  "v84_retail_last_new_stores": 2583,
-  "v84_retail_last_candidates": 2673,
-  "v84_retail_chain_candidates": 2512,
-  "v84_retail_independent_candidates": 161,
+  "v84_retail_last_state": "WV",
+  "v84_retail_last_new_stores": 740,
+  "v84_retail_last_candidates": 741,
+  "v84_retail_chain_candidates": 714,
+  "v84_retail_independent_candidates": 27,
   "v84_retail_completed_states": [
-    "VA"
+    "VA",
+    "WV"
   ],
-  "v84_retail_completed_count": 1,
+  "v84_retail_completed_count": 2,
   "v84_retail_total_states": 51,
-  "v84_retail_last_success": "2026-11-03T21:24:22.365994+00:00",
+  "v84_retail_last_success": "2026-11-04T03:02:27.789919+00:00",
   "v84_retail_last_error": null
 }
