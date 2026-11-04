@@ -1,5 +1,5 @@
 
-name: Pokestock Script 35 Target Proof and Diagnostics
+name: Pokestock Script 35 Target Proof - Ubuntu 24.04 Fix
 
 on:
   workflow_dispatch:
@@ -8,13 +8,14 @@ permissions:
   contents: write
 
 concurrency:
-  group: pokestock-monitor
+  group: pokestock-target-proof-35
   cancel-in-progress: false
 
 jobs:
   probe:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
+
     steps:
       - name: Checkout repository
         id: checkout
@@ -23,270 +24,45 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Initialize diagnostic files
+      - name: Initialize diagnostics
         id: initialize
-        if: always() && steps.checkout.outcome == 'success'
         shell: bash
         run: |
-          mkdir -p data scripts target35_screenshots
-          printf '{"result":"NOT_PROVEN","reason":"Scanner did not finish","observations":[],"products":[]}\n' > data/target_store_probe_35.json
-          : > data/target35_browser.log
+          mkdir -p data target35_screenshots
+          printf '{"result":"NOT_PROVEN","reason":"Test not completed","observations":[],"products":[]}\n' > data/target_store_probe_35.json
           : > data/target35_install.log
+          : > data/target35_browser.log
 
-      - name: Configure Python
+      - name: Set up Python 3.12
         id: python
-        if: always() && steps.initialize.outcome == 'success'
         continue-on-error: true
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install Chromium and Playwright
+      - name: Install Playwright and Chromium on Ubuntu 24.04
         id: browser
         if: always() && steps.initialize.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
+          cat /etc/os-release | tee -a data/target35_install.log
           python3 -m pip install 'playwright==1.56.0' 2>&1 | tee -a data/target35_install.log
           python3 -m playwright install --with-deps chromium 2>&1 | tee -a data/target35_install.log
+          python3 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); b=p.chromium.launch(headless=True); print("Chromium launched successfully"); b.close(); p.stop()' 2>&1 | tee -a data/target35_install.log
 
-      - name: Install complete Target scanner
+      - name: Validate existing Target scanner
         id: scanner
         if: always() && steps.initialize.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: |
-          cat > scripts/target_store_probe_35.py <<'PY'
-          import asyncio
-          import json
-          import re
-          from datetime import datetime, timezone
-          from pathlib import Path
-          from urllib.parse import urlparse
-          from playwright.async_api import async_playwright
-
-          OUTPUT = Path('data/target_store_probe_35.json')
-          SHOTS = Path('target35_screenshots')
-          SHOTS.mkdir(exist_ok=True)
-          STORE = {'store_id':'2294','name':'Waynesboro',
-                   'address':'811 Town Center Dr', 'zip':'22980'}
-          PRODUCTS = [
-              ('1013166578','Delta Reign Booster Bundle'),
-              ('94884496','Phantasmal Flames Booster Bundle'),
-              ('1011407490','30th Celebration Booster Bundle')
-          ]
-          BLOCK = re.compile(
-              r'captcha|access denied|attention required|verify you are human|'
-              r'cloudflare|unusual traffic|automated requests', re.I)
-          ST_STATUS = re.compile(
-              r'\b(in stock|out of stock|limited stock|available for pickup|'
-              r'pickup available|unavailable for pickup|not available|sold out)\b', re.I)
-          PRODUCT_WORDS = re.compile(r'pok[eé]mon|trading card game', re.I)
-
-          def timestamp():
-              return datetime.now(timezone.utc).isoformat()
-
-          def save(data):
-              OUTPUT.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
-
-          def target_match(text):
-              text=' '.join(text.split())
-              if len(text) > 380 or len(text) < 20:
-                  return None
-              if not re.search(r'\bWaynesboro\b',text,re.I):
-                  return None
-              if not (re.search(r'811\s+Town\s+Center',text,re.I)
-                      or re.search(r'\b2294\b',text)
-                      or re.search(r'\b22980\b',text)):
-                  return None
-              label=ST_STATUS.search(text)
-              return {'label':label.group(1),'excerpt':text[:380]} if label else None
-
-          async def store_cards(page):
-              # Never treat generic page stock as store-specific stock.
-              rows=await page.locator(
-                  'li, article, [role="row"], [role="option"], '
-                  '[data-test*="store"], [data-testid*="store"]'
-              ).all()
-              for node in rows[:140]:
-                  try:
-                      if not await node.is_visible(timeout=500):
-                          continue
-                      found=target_match(await node.inner_text(timeout=1200))
-                      if found:
-                          return found
-                  except Exception:
-                      continue
-              return None
-
-          def network_evidence(tree):
-              # Require exact store ID and explicit pickup status.
-              stack=[tree]
-              examined=0
-              while stack and examined<25000:
-                  item=stack.pop()
-                  examined+=1
-                  if isinstance(item,list):
-                      stack.extend(item[:150])
-                      continue
-                  if not isinstance(item,dict):
-                      continue
-                  identifiers=[]
-                  for key in ('location_id','store_id','locationId','storeId'):
-                      if item.get(key) is not None:
-                          identifiers.append(str(item[key]))
-                  if '2294' in identifiers:
-                      pickup=item.get('order_pickup') or item.get('pickup')
-                      if isinstance(pickup,dict):
-                          raw=pickup.get('availability_status') or pickup.get('availability')
-                          status=str(raw or '').upper()
-                          if status in ('IN_STOCK','LIMITED_STOCK','OUT_OF_STOCK',
-                                        'NOT_AVAILABLE','UNAVAILABLE','NOT_SOLD_IN_STORE'):
-                              return {'label':status,'excerpt':'Store 2294 pickup status '+status}
-                  stack.extend(x for x in item.values() if isinstance(x,(dict,list)))
-              return None
-
-          async def run_product(browser,tcin,name):
-              row={'tcin':tcin,'product':name,'store':STORE,
-                   'status':'unknown','reason':'not_checked',
-                   'http_status':None,'proof':None,'steps':[],
-                   'network':[],'checked_at':timestamp()}
-              page=await browser.new_page(locale='en-US',
-                                          timezone_id='America/New_York',
-                                          viewport={'width':1280,'height':900})
-              response_tasks=[]
-              evidence=[]
-
-              async def watch(resp):
-                  try:
-                      u=urlparse(resp.url)
-                      if not (u.hostname or '').endswith('target.com'):
-                          return
-                      if len(row['network'])<25 and ('redsky' in u.hostname or 'fulfillment' in u.path):
-                          row['network'].append({'path':u.path[:130],'status':resp.status})
-                      if resp.status!=200 or 'json' not in resp.headers.get('content-type','').lower():
-                          return
-                      if tcin not in resp.url:
-                          return
-                      if not any(x in resp.url.lower() for x in ('fulfillment','availability')):
-                          return
-                      payload=await resp.json()
-                      proof=network_evidence(payload)
-                      if proof:
-                          proof['kind']='store_pickup_network'
-                          evidence.append(proof)
-                  except Exception:
-                      pass
-
-              page.on('response',lambda r: response_tasks.append(asyncio.create_task(watch(r))))
-              try:
-                  url='https://www.target.com/p/-/A-'+tcin
-                  resp=await page.goto(url,wait_until='domcontentloaded',timeout=35000)
-                  row['http_status']=resp.status if resp else None
-                  await page.wait_for_timeout(3500)
-                  await page.screenshot(path=str(SHOTS/(tcin+'_initial.png')),timeout=8000)
-                  title=await page.title()
-                  body=(await page.locator('body').inner_text(timeout=8000))[:1600]
-                  row['title']=title[:160]
-                  row['page_excerpt']=' '.join(body.split())[:420]
-                  if row['http_status'] in (401,403,429) or BLOCK.search(title) or BLOCK.search(body[:600]):
-                      row['status']='blocked'
-                      row['reason']='Target blocked or challenged browser access'
-                      return row
-                  if not PRODUCT_WORDS.search(title+' '+body):
-                      row['reason']='Expected Target Pokemon product page not found'
-                      return row
-                  local=await store_cards(page)
-                  if local:
-                      local['kind']='store_picker_ui'
-                      evidence.append(local)
-                  if not evidence:
-                      for label in ('Check other stores','Edit store','Change store','Select store','Find in store'):
-                          try:
-                              control=page.get_by_role('button',name=re.compile(label,re.I)).first
-                              if await control.is_visible(timeout=1000):
-                                  await control.click(timeout=4500)
-                                  row['steps'].append('Opened '+label)
-                                  await page.wait_for_timeout(1200)
-                                  break
-                          except Exception:
-                              continue
-                      if not evidence:
-                          inputs=page.locator('input[type="search"], input[placeholder*="zip" i], input[placeholder*="city" i], input[placeholder*="store" i]')
-                          for i in range(min(await inputs.count(),5)):
-                              try:
-                                  inp=inputs.nth(i)
-                                  if await inp.is_visible(timeout=500):
-                                      await inp.fill('22980',timeout=4000)
-                                      await inp.press('Enter',timeout=4000)
-                                      row['steps'].append('Searched ZIP 22980')
-                                      await page.wait_for_timeout(2400)
-                                      break
-                              except Exception:
-                                  continue
-                          local=await store_cards(page)
-                          if local:
-                              local['kind']='store_picker_ui'
-                              evidence.append(local)
-                  if response_tasks:
-                      await asyncio.gather(*response_tasks,return_exceptions=True)
-                  if evidence:
-                      row['status']='store_specific_observation'
-                      row['reason']='Exact store and explicit pickup status observed'
-                      row['proof']=evidence[0]
-                  else:
-                      row['reason']='No unambiguous Waynesboro store pickup status found'
-                  await page.screenshot(path=str(SHOTS/(tcin+'_final.png')),timeout=8000)
-              except Exception as exc:
-                  row['status']='error'
-                  row['reason']=type(exc).__name__+': '+str(exc)[:250]
-                  try:
-                      await page.screenshot(path=str(SHOTS/(tcin+'_error.png')),timeout=6000)
-                  except Exception:
-                      pass
-              finally:
-                  await page.close()
-              return row
-
-          async def main():
-              report={'version':'35.1','result':'NOT_PROVEN',
-                      'store':STORE,'checked_at':timestamp(),
-                      'products':[],'observations':[],
-                      'note':'Pickup availability is not physical shelf proof.'}
-              save(report)
-              try:
-                  async with async_playwright() as pw:
-                      browser=await pw.chromium.launch(headless=True,args=['--no-sandbox'])
-                      try:
-                          for tcin,name in PRODUCTS:
-                              row=await run_product(browser,tcin,name)
-                              report['products'].append(row)
-                              if row['status']=='store_specific_observation':
-                                  report['observations'].append(row)
-                              save(report)
-                              print(tcin,row['status'],row['reason'],flush=True)
-                              if row['status']=='blocked':
-                                  break
-                      finally:
-                          await browser.close()
-                  if report['observations']:
-                      report['result']='PROVEN_STORE_PICKUP'
-                  else:
-                      report['reason']='No store-specific observation confirmed'
-              except Exception as exc:
-                  report['reason']=type(exc).__name__+': '+str(exc)[:350]
-              finally:
-                  report['finished_at']=timestamp()
-                  save(report)
-              print('RESULT:',report['result'],flush=True)
-
-          if __name__=='__main__':
-              asyncio.run(main())
-          PY
+          set -euo pipefail
+          test -s scripts/target_store_probe_35.py
           python3 -m py_compile scripts/target_store_probe_35.py
 
-      - name: Run Target store test
+      - name: Test exact-store Target availability
         id: test
         if: always() && steps.browser.outcome == 'success' && steps.scanner.outcome == 'success'
         continue-on-error: true
@@ -295,105 +71,173 @@ jobs:
           set -euo pipefail
           python3 scripts/target_store_probe_35.py 2>&1 | tee data/target35_browser.log
 
-      - name: Finalize diagnostics regardless of failure
+      - name: Finalize diagnostics even on failure
         id: finalize
         if: always() && steps.initialize.outcome == 'success'
         shell: bash
         env:
-          PYTHON_STEP: ${{ steps.python.outcome }}
-          BROWSER_STEP: ${{ steps.browser.outcome }}
-          SCANNER_STEP: ${{ steps.scanner.outcome }}
-          TEST_STEP: ${{ steps.test.outcome }}
+          PYTHON_STAGE: ${{ steps.python.outcome }}
+          BROWSER_STAGE: ${{ steps.browser.outcome }}
+          SCANNER_STAGE: ${{ steps.scanner.outcome }}
+          TEST_STAGE: ${{ steps.test.outcome }}
         run: |
           python3 - <<'PY'
           import json, os
-          from pathlib import Path
           from datetime import datetime, timezone
-          p=Path('data/target_store_probe_35.json')
+          from pathlib import Path
+
+          path = Path('data/target_store_probe_35.json')
+
           try:
-              data=json.loads(p.read_text())
-          except Exception:
-              data={'result':'NOT_PROVEN','reason':'Scanner never published valid JSON','products':[],'observations':[]}
-          stages={k:os.environ.get(k,'unknown') for k in ('PYTHON_STEP','BROWSER_STEP','SCANNER_STEP','TEST_STEP')}
-          data['workflow_stages']=stages
-          data['diagnostic_saved_at']=datetime.now(timezone.utc).isoformat()
-          if stages['BROWSER_STEP']!='success':
-              data['result']='NOT_PROVEN'
-              data['reason']='Playwright/Chromium installation failed or was skipped'
-          elif stages['SCANNER_STEP']!='success':
-              data['result']='NOT_PROVEN'
-              data['reason']='Generated scanner failed to compile or was skipped'
-          elif stages['TEST_STEP']!='success':
-              data['result']='NOT_PROVEN'
-              data['reason']='Target scan crashed or was skipped'
-          for filename,key in [('data/target35_install.log','install_log_tail'),('data/target35_browser.log','scan_log_tail')]:
-              f=Path(filename)
-              if f.exists():
-                  data[key]=f.read_text(encoding='utf-8',errors='replace')[-4000:]
-          p.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
-          print('RESULT:',data['result'])
-          print('STAGES:',stages)
-          print('REASON:',data.get('reason','none'))
+              report = json.loads(
+                  path.read_text(encoding='utf-8')
+              )
+              if not isinstance(report, dict):
+                  raise ValueError('Invalid report')
+          except Exception as error:
+              report = {
+                  'result': 'NOT_PROVEN',
+                  'reason': 'Invalid scanner report: '+str(error),
+                  'products': [],
+                  'observations': []
+              }
+
+          stages = {
+              'python': os.getenv('PYTHON_STAGE', 'unknown'),
+              'browser': os.getenv('BROWSER_STAGE', 'unknown'),
+              'scanner': os.getenv('SCANNER_STAGE', 'unknown'),
+              'test': os.getenv('TEST_STAGE', 'unknown')
+          }
+
+          report['workflow_stages'] = stages
+          report['runner'] = 'ubuntu-24.04'
+          report['diagnostic_saved_at'] = (
+              datetime.now(timezone.utc).isoformat()
+          )
+
+          if stages['browser'] != 'success':
+              report['result'] = 'NOT_PROVEN'
+              report['reason'] = 'Browser installation or launch failed'
+          elif stages['scanner'] != 'success':
+              report['result'] = 'NOT_PROVEN'
+              report['reason'] = 'Existing scanner missing or invalid'
+          elif stages['test'] != 'success':
+              report['result'] = 'NOT_PROVEN'
+              report['reason'] = 'Target scanner crashed'
+
+          for filename, key in [
+              ('data/target35_install.log', 'install_log_tail'),
+              ('data/target35_browser.log', 'scan_log_tail')
+          ]:
+              file = Path(filename)
+              if file.exists():
+                  report[key] = file.read_text(
+                      encoding='utf-8',
+                      errors='replace'
+                  )[-4500:]
+
+          path.write_text(
+              json.dumps(report, indent=2) + '\n',
+              encoding='utf-8'
+          )
+
+          print('RESULT:', report.get('result'))
+          print('STAGES:', stages)
+          print('REASON:', report.get('reason', 'None'))
           PY
 
-      - name: Upload full report and screenshots
+      - name: Upload diagnostics and browser screenshots
         if: always() && steps.initialize.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: target35-diagnostics
+          name: target35-debug-ubuntu24
           path: |
             data/target_store_probe_35.json
             data/target35_install.log
             data/target35_browser.log
             target35_screenshots/
-          if-no-files-found: warn
           retention-days: 14
+          if-no-files-found: warn
 
-      - name: Commit diagnostic report to repository
+      - name: Commit diagnostic report
         id: publish
         if: always() && steps.finalize.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
           git add data/target_store_probe_35.json
-          if test -f scripts/target_store_probe_35.py; then
-            git add scripts/target_store_probe_35.py
-          fi
+
           if ! git diff --cached --quiet; then
-            git commit -m 'Record Target 35.1 store-specific proof diagnostics'
+            git commit -m 'Script 35 record Target store proof diagnostics'
           fi
+
           for attempt in 1 2 3; do
             git fetch origin main
+
             if ! git rebase origin/main; then
               git rebase --abort || true
               exit 1
             fi
-            if git push origin HEAD:main; then exit 0; fi
-            sleep 4
+
+            if git push origin HEAD:main; then
+              echo 'Diagnostic report published'
+              exit 0
+            fi
+
+            sleep 5
           done
+
           exit 1
 
-      - name: Verdict with truthful failure reason
+      - name: Final verdict
         if: always()
         shell: bash
         env:
-          PUBLISH_STEP: ${{ steps.publish.outcome }}
+          PUBLISH_STAGE: ${{ steps.publish.outcome }}
         run: |
           python3 - <<'PY'
-          import json,os
+          import json, os
           from pathlib import Path
-          p=Path('data/target_store_probe_35.json')
-          if not p.exists():
-              raise SystemExit('No diagnostics available: checkout or initial setup failed')
-          d=json.loads(p.read_text())
-          print('DIAGNOSTICS:',d.get('workflow_stages'))
-          print('REASON:',d.get('reason','not specified'))
-          if os.environ.get('PUBLISH_STEP')!='success':
-              raise SystemExit('Report publication failed; inspect uploaded artifact')
-          if d.get('result')!='PROVEN_STORE_PICKUP':
-              raise SystemExit('NOT PROVEN: see data/target_store_probe_35.json')
-          print('PROVEN: exact-store pickup status observed; NOT shelf stock')
+
+          path = Path('data/target_store_probe_35.json')
+
+          if not path.exists():
+              raise SystemExit(
+                  'Setup failed before diagnostics were created'
+              )
+
+          report = json.loads(
+              path.read_text(encoding='utf-8')
+          )
+
+          print('STAGES:', report.get('workflow_stages', {}))
+          print('REASON:', report.get('reason', 'None'))
+          print(
+              'OBSERVATIONS:',
+              len(report.get('observations', []))
+          )
+
+          if os.getenv('PUBLISH_STAGE') != 'success':
+              raise SystemExit(
+                  'Could not publish report; inspect uploaded artifact'
+              )
+
+          if report.get('result') != 'PROVEN_STORE_PICKUP':
+              raise SystemExit(
+                  'Store pickup not proven; review diagnostic JSON'
+              )
+
+          if not report.get('observations'):
+              raise SystemExit(
+                  'Report indicates success without observations'
+              )
+
+          print(
+              'PASS: Explicit store-specific pickup evidence recorded'
+          )
           PY
