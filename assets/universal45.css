@@ -1,0 +1,135 @@
+/* Script 45: all TCGs and separated rumor evidence */
+
+#ps2root #ps2Games {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+}
+
+#ps2root #ps45Games {
+  min-width:140px;
+  max-width:210px;
+  background:#21304a;
+  color:#e9eafc;
+  border:1px solid #526486;
+  border-radius:28px;
+  padding:10px 12px;
+  font-weight:750;
+  font-size:12px;
+}
+
+#ps2root .ps45panel {
+  background:#1b273d;
+  border:1px solid #455876;
+  border-radius:16px;
+  padding:16px;
+  margin:16px 0;
+}
+
+#ps2root .ps45panel h3 {
+  font-size:17px;
+  margin:0 0 8px;
+  color:#f4d398;
+}
+
+#ps2root .ps45panel p {
+  font-size:12px;
+  color:#b9cae2;
+  line-height:1.55;
+}
+
+#ps2root .ps45panel a {
+  font-size:11px;
+  color:#b9deff;
+}
+
+#ps2root .ps45rumor {
+  border-top:1px solid #3e4d68;
+  padding:11px 0;
+}
+
+#ps2root .ps45rumor strong {
+  font-size:13px;
+  color:#fcf0d2;
+}
+
+#ps2root .ps45rumor small {
+  font-size:10px;
+  color:#9fb3cb;
+}
+
+#ps2root .ps45level {
+  display:inline-block;
+  background:#4b3929;
+  color:#ffcf8a;
+  font-weight:800;
+  font-size:10px;
+  padding:4px 8px;
+  border-radius:30px;
+  margin-left:8px;
+}
+
+#ps2root .ps45warning {
+  border-left:3px solid #f3bd74;
+  padding-left:10px;
+}
+
+#ps2root .ps45disclaimer {
+  font-style:italic;
+}
+
+#ps2root .ps45strip {
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:4px;
+  margin:14px 0;
+}
+
+#ps2root .ps45strip div {
+  padding:8px 2px;
+  text-align:center;
+  background:#243147;
+  border:1px solid #3a4a65;
+  border-radius:9px;
+  min-width:0;
+}
+
+#ps2root .ps45strip div.watch {
+  background:#5d472c;
+  border-color:#c99e60;
+}
+
+#ps2root .ps45strip b {
+  display:block;
+  font-size:10px;
+}
+
+#ps2root .ps45strip span {
+  display:block;
+  font-size:9px;
+  margin-top:5px;
+  color:#ebcfaa;
+}
+
+#ps2root .ps45link {
+  font-size:11px;
+  color:#d2deed;
+  border-bottom:1px solid #374764;
+  padding:8px 0;
+}
+
+#ps2root .ps45extras {
+  margin-top:13px;
+  font-size:12px;
+}
+
+@media(max-width:480px) {
+  #ps2root .ps45panel {
+    padding:12px;
+  }
+
+  #ps2root #ps45Games {
+    max-width:150px;
+  }
+}

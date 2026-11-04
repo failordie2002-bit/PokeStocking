@@ -1,0 +1,40 @@
+{
+  "version": "45",
+  "checked_at": "2026-11-04T21:32:06.590803+00:00",
+  "reports": [
+    {
+      "id": "collector-20261104-walmart-staunton-thu",
+      "retailer": "Walmart",
+      "city": "Staunton",
+      "state": "VA",
+      "game": "Pokémon",
+      "weekday": "Thursday",
+      "period": "early morning",
+      "scope": "city_retailer",
+      "source_kind": "local_collector_hearsay",
+      "source_url": "",
+      "reported_at": "2026-11-04",
+      "title": "Rumor: Staunton Walmart Pokémon restocks Thursday early morning",
+      "note": "A local collector heard this pattern. Branch, vendor schedule and stock have not been verified. One hearsay report, not weekly observations.",
+      "evidence_count": 1,
+      "confidence": "Low",
+      "shelf_stock_verified": false
+    }
+  ],
+  "sources": {
+    "Reddit PokemonRestocks": "robots_unavailable_or_disallow",
+    "Reddit PokemonTCG": "robots_unavailable_or_disallow",
+    "Google News local": "robots_unavailable_or_disallow",
+    "Google News general": "robots_unavailable_or_disallow",
+    "Google News Altered": "robots_unavailable_or_disallow",
+    "Google News Battle Spirits Saga": "robots_unavailable_or_disallow",
+    "Google News Cardfight!! Vanguard": "robots_unavailable_or_disallow",
+    "Google News Digimon": "robots_unavailable_or_disallow"
+  },
+  "rules": [
+    "A source URL contributes one dated claim.",
+    "General retailer rumors never verify a branch.",
+    "Hearsay always retains low confidence.",
+    "No private retailer data or vendor tracking."
+  ]
+}
