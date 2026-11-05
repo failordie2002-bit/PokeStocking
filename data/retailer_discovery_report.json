@@ -1,110 +1,18 @@
 {
   "version": "11.2",
-  "checked_at": "2026-11-04T18:52:07.365992+00:00",
-  "total_store_records": 3469,
-  "candidate_retailer_websites": 60,
+  "checked_at": "2026-11-05T00:54:50.568961+00:00",
+  "total_store_records": 4838,
+  "candidate_retailer_websites": 79,
   "checked_this_run": 30,
   "new_retailers_registered": 1,
-  "total_registered_retailers": 10,
-  "next_cursor": 56,
+  "total_registered_retailers": 11,
+  "next_cursor": 7,
   "checks": [
     {
-      "name": "Bitfrost",
-      "host": "www.bifrostgamesnyc.com",
+      "name": "Laughing Coffin - Hobby Shop & Social Club",
+      "host": "www.lcgpc.com",
       "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.bifrostgamesnyc.com/products.json?limit=250"
-    },
-    {
-      "name": "The Carcosa Club",
-      "host": "www.carcosaclub.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.carcosaclub.com/products.json?limit=250"
-    },
-    {
-      "name": "Carytown Dolls & Bears",
-      "host": "www.carytowndollsandbears.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.carytowndollsandbears.com/products.json?limit=250"
-    },
-    {
-      "name": "Chess Forum",
-      "host": "www.chessforum.com",
-      "status": "not_eligible",
-      "supported": false,
-      "feed_products": 102,
-      "matching_products": 0,
-      "examples": []
-    },
-    {
-      "name": "Curio Cavern",
-      "status": "already_registered"
-    },
-    {
-      "name": "Egg-cellent",
-      "host": "www.eggcellentmtoys.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.eggcellentmtoys.com/products.json?limit=250"
-    },
-    {
-      "name": "Game Knights",
-      "host": "www.gameknightsshepherdstown.com",
-      "status": "error",
-      "reason": "HTTPError: 400 Client Error: Bad Request for url: https://www.gameknightsshepherdstown.com/products.json?limit=250"
-    },
-    {
-      "name": "Gaming Giant",
-      "host": "www.gaminggiant.com",
-      "status": "registered",
-      "supported": true,
-      "feed_products": 250,
-      "matching_products": 4,
-      "examples": [
-        "Kanata Hondo [BD01-10] [Starter Deck: Rubeusdramon]",
-        "Reptilimon [BD01-05] [Starter Deck: Rubeusdramon]",
-        "Liskmon [BD01-03] [Starter Deck: Rubeusdramon]"
-      ]
-    },
-    {
-      "name": "Little Dickens",
-      "host": "www.givensbooks.com",
-      "status": "not_eligible",
-      "supported": false,
-      "feed_products": 250,
-      "matching_products": 0,
-      "examples": []
-    },
-    {
-      "name": "Go Bananas",
-      "host": "www.gobananastoys.com",
-      "status": "not_eligible",
-      "supported": false,
-      "feed_products": 250,
-      "matching_products": 0,
-      "examples": []
-    },
-    {
-      "name": "Hex & Co",
-      "host": "www.hexnyc.com",
-      "status": "error",
-      "reason": "HTTPError: 403 Client Error: Forbidden for url: https://www.hexnyc.com/products.json?limit=250"
-    },
-    {
-      "name": "Huzzah Hobbies",
-      "host": "www.huzzahhobbies.com",
-      "status": "error",
-      "reason": "ValueError: Redirect not followed"
-    },
-    {
-      "name": "Jersey's Cards & Comics LLC",
-      "host": "www.jerseyscc.com",
-      "status": "error",
-      "reason": "HTTPError: 401 Client Error: Unauthorized for url: https://www.jerseyscc.com/products.json?limit=250"
-    },
-    {
-      "name": "Kinder Haus Toys",
-      "host": "www.kinderhaus.com",
-      "status": "error",
-      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.kinderhaus.com/products.json?limit=250"
+      "reason": "ValueError: Not a public DNS destination"
     },
     {
       "name": "Lego",
@@ -117,6 +25,18 @@
       "host": "www.midtowncomics.com",
       "status": "error",
       "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.midtowncomics.com/products.json?limit=250"
+    },
+    {
+      "name": "Player 1 Services",
+      "host": "www.playeroneservices.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.playeroneservices.com/products.json?limit=250"
+    },
+    {
+      "name": "Play More Games",
+      "host": "www.playmoregamestore.com",
+      "status": "error",
+      "reason": "HTTPError: 410 Client Error: Gone for url: https://www.playmoregamestore.com/products.json?limit=250"
     },
     {
       "name": "Pufferbellies",
@@ -204,6 +124,72 @@
       "feed_products": 58,
       "matching_products": 0,
       "examples": []
+    },
+    {
+      "name": "Villains Comics",
+      "host": "www.villainscomicshop.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.villainscomicshop.com/products.json?limit=250"
+    },
+    {
+      "name": "Warhammer",
+      "host": "www.warhammer.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.warhammer.com/products.json?limit=250"
+    },
+    {
+      "name": "Waterloo Games",
+      "status": "already_registered"
+    },
+    {
+      "name": "Whistle Stop Toy & Hobby",
+      "host": "www.whistlestophobbies.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.whistlestophobbies.com/products.json?limit=250"
+    },
+    {
+      "name": "Alpha Comics & Games",
+      "host": "alphacomics.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://alphacomics.com/products.json?limit=250"
+    },
+    {
+      "name": "Atlantis Games & Comics",
+      "status": "already_registered"
+    },
+    {
+      "name": "Bleecker Trading",
+      "status": "already_registered"
+    },
+    {
+      "name": "Brooklyn Game Lab",
+      "host": "brooklyngamelab.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://brooklyngamelab.com/products.json?limit=250"
+    },
+    {
+      "name": "Better World Imaginarium",
+      "host": "bwitoys.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://bwitoys.com/products.json?limit=250"
+    },
+    {
+      "name": "CAMP",
+      "host": "camp.com",
+      "status": "error",
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://camp.com/products.json?limit=250"
+    },
+    {
+      "name": "Cardrade",
+      "host": "cardrade.com",
+      "status": "registered",
+      "supported": true,
+      "feed_products": 250,
+      "matching_products": 2,
+      "examples": [
+        "Yu-Gi-Oh! - Blazing Dominion (1st Edition) - Booster Display",
+        "Gundam Card Game - GD02 Dual Impact - Booster Display (24 packs)"
+      ]
     }
   ],
   "inventory_scope": "online_only",
