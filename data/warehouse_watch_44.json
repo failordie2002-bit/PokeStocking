@@ -1,21 +1,21 @@
 {
   "version": "44.0",
-  "checked_at": "2026-11-04T20:47:03.082115+00:00",
+  "checked_at": "2026-11-05T01:21:03.338795+00:00",
   "products": [
     {
       "retailer": "Costco",
       "url": "https://www.costco.com/p/-/pokmon-5-pack-mini-tins-galar-pals-plus-4-promo-cards/4000092043",
-      "title": "",
-      "shipping_status": "access_unavailable",
-      "price": null,
-      "currency": null,
-      "checked_at": "2026-11-04T20:47:03.082115+00:00",
-      "last_accessible_at": null,
-      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
+      "title": "Pokémon 5 Pack Mini Tins, Galar Pals plus 4 Promo Cards",
+      "shipping_status": "shipping_unavailable_observed",
+      "price": "39.99",
+      "currency": "USD",
+      "checked_at": "2026-11-05T01:21:03.338795+00:00",
+      "last_accessible_at": "2026-11-05T01:21:03.338795+00:00",
+      "evidence": "Product structured data explicitly reported OutOfStock",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "access_restricted_429"
+      "access_result": "ok"
     },
     {
       "retailer": "Costco",
@@ -24,8 +24,8 @@
       "shipping_status": "shipping_unavailable_observed",
       "price": "29.97",
       "currency": "USD",
-      "checked_at": "2026-11-04T20:47:03.082115+00:00",
-      "last_accessible_at": "2026-11-04T20:47:03.082115+00:00",
+      "checked_at": "2026-11-05T01:21:03.338795+00:00",
+      "last_accessible_at": "2026-11-05T01:21:03.338795+00:00",
       "evidence": "Product structured data explicitly reported OutOfStock",
       "member_club_required": true,
       "local_pickup_verified": false,
@@ -39,7 +39,7 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-04T20:47:03.082115+00:00",
+      "checked_at": "2026-11-05T01:21:03.338795+00:00",
       "last_accessible_at": null,
       "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
@@ -54,13 +54,13 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-04T20:47:03.082115+00:00",
+      "checked_at": "2026-11-05T01:21:03.338795+00:00",
       "last_accessible_at": null,
-      "evidence": "No trustworthy TCG product title in the page",
+      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "ok"
+      "access_result": "not_found"
     },
     {
       "retailer": "Sam's Club",
@@ -69,13 +69,13 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-04T20:47:03.082115+00:00",
+      "checked_at": "2026-11-05T01:21:03.338795+00:00",
       "last_accessible_at": null,
-      "evidence": "No trustworthy TCG product title in the page",
+      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "ok"
+      "access_result": "not_found"
     }
   ],
   "allocations": [
@@ -3862,7 +3862,7 @@
   ],
   "allocation_reported_as_of": "2026-11-04",
   "summary": {
-    "checked_at": "2026-11-04T20:47:03.082115+00:00",
+    "checked_at": "2026-11-05T01:21:03.338795+00:00",
     "sources": {
       "https://www.samsclub.com/s/pokemon%20trading%20cards": "ok",
       "https://www.samsclub.com/s/pokemon%20elite%20trainer": "ok",
@@ -3880,9 +3880,9 @@
     },
     "notes": [],
     "explicit_shipping_available": 0,
-    "explicit_shipping_unavailable": 1,
+    "explicit_shipping_unavailable": 2,
     "status_unknown": 0,
-    "access_restricted": 4,
+    "access_restricted": 3,
     "official_products_checked": 5,
     "third_party_allocation_rows": 270
   },
