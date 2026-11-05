@@ -3,16 +3,17 @@
   "source": "Pokestock direct merchant observations",
   "sources": {
     "v34_inventory.json": 1623,
-    "online_offers.json": 656
+    "online_offers.json": 831
   },
-  "merged_offers": 2221,
-  "in_stock_at_last_observation": 1195,
+  "merged_offers": 2396,
+  "in_stock_at_last_observation": 1280,
   "retailers": {
     "Atlantis Games & Comics": 94,
-    "Big Pack Hobby Shop": 117,
-    "Bleecker Trading": 252,
-    "Cardrade": 2,
+    "Big Pack Hobby Shop": 155,
+    "Bleecker Trading": 246,
+    "Cardrade": 6,
     "Charm City Collectibles": 174,
+    "Child’s Play Toys and Books": 3,
     "Columbia Sports Cards": 37,
     "Curio Cavern": 34,
     "Gaming Giant": 27,
@@ -24,12 +25,12 @@
     "PixelThat TCG": 21,
     "TCG Supply": 373,
     "The Compleat Strategist": 19,
-    "The Eternal Forge": 432,
-    "Twenty Sided Store": 60,
+    "The Eternal Forge": 554,
+    "Twenty Sided Store": 74,
     "VGMX": 32,
     "Waterloo Games": 72
   },
-  "newest_observation": "2026-11-05T05:29:36.061371+00:00",
+  "newest_observation": "2026-11-05T07:49:18.424767+00:00",
   "confirmed_shelf_stock": 0,
   "confirmed_checkout_success": 0,
   "note": "Availability is historical storefront evidence, not guaranteed live inventory."
