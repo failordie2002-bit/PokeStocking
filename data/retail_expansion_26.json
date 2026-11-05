@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T09:22:55.508028+00:00",
+  "updated_at": "2026-11-05T13:38:02.274457+00:00",
   "retailers": [
     {
       "name": "CVS Pharmacy",
@@ -40,6 +40,12 @@
         {
           "game": "Final Fantasy TCG",
           "search_url": "https://www.cvs.com/search/?searchTerm=Final%20Fantasy%20TCG%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
+          "game": "Flesh and Blood",
+          "search_url": "https://www.cvs.com/search/?searchTerm=Flesh%20and%20Blood%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -160,6 +166,12 @@
           "stock_verified": false
         },
         {
+          "game": "Flesh and Blood",
+          "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Flesh%20and%20Blood%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Gundam",
           "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Gundam%20trading%20cards",
           "availability": "unknown",
@@ -272,6 +284,12 @@
         {
           "game": "Final Fantasy TCG",
           "search_url": "https://www.dollargeneral.com/search?keywords=Final%20Fantasy%20TCG%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
+          "game": "Flesh and Blood",
+          "search_url": "https://www.dollargeneral.com/search?keywords=Flesh%20and%20Blood%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -392,6 +410,12 @@
           "stock_verified": false
         },
         {
+          "game": "Flesh and Blood",
+          "search_url": "https://www.dollartree.com/searchresults?Ntt=Flesh%20and%20Blood%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Gundam",
           "search_url": "https://www.dollartree.com/searchresults?Ntt=Gundam%20trading%20cards",
           "availability": "unknown",
@@ -504,6 +528,12 @@
         {
           "game": "Final Fantasy TCG",
           "search_url": "https://www.familydollar.com/search?query=Final%20Fantasy%20TCG%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
+          "game": "Flesh and Blood",
+          "search_url": "https://www.familydollar.com/search?query=Flesh%20and%20Blood%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -624,6 +654,12 @@
           "stock_verified": false
         },
         {
+          "game": "Flesh and Blood",
+          "search_url": "https://www.fivebelow.com/search?q=Flesh%20and%20Blood%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Gundam",
           "search_url": "https://www.fivebelow.com/search?q=Gundam%20trading%20cards",
           "availability": "unknown",
@@ -705,6 +741,7 @@
     "Disney Lorcana",
     "Dragon Ball Super",
     "Final Fantasy TCG",
+    "Flesh and Blood",
     "Gundam",
     "Gundam Card Game",
     "Kayou",
