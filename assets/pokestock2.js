@@ -13,7 +13,6 @@ const coords=o=>o&&o.lat!=null&&(o.lon!=null||o.long!=null)&&Number.isFinite(Num
 let location=null;try{const x=JSON.parse(localStorage.getItem('ps2location'));if(coords(x)&&typeof x.label==='string')location=x;}catch{}
 let radius=Number(localStorage.getItem('ps2radius'))||50;if(![10,25,50,100,250].includes(radius))radius=50;
 let stores=[],offers=[],social=[],sightings=[],outlook=new Map(),releases=[],news=[],map=null,pins=null,routeLayer=null,gpsLayer=null,selected=null,selectedForecast=null,navWatch=null,findGame='',postFilter='local',postsLimit=18;
-let forecast43Records=[];
 const root=document.createElement('div');root.id='ps2root';root.innerHTML=`
 <header class="ps2top"><div class="ps2brand">✦ Poké<em>Stock</em></div><button id="ps2Place" class="ps2place" type="button">⌾ Set your location</button></header>
 <nav class="ps2tabs" aria-label="Main navigation"><button class="ps2tab active" data-ps2-tab="discover">⌂ Discover</button><button class="ps2tab" data-ps2-tab="near">◎ Near Me</button><button class="ps2tab" data-ps2-tab="social">▣ Social</button><button class="ps2tab" data-ps2-tab="forecast">▥ Forecast</button></nav>
@@ -73,7 +72,6 @@ function renderNear(){
  }).join(''):'<div class="ps2empty">No mapped candidates found within this radius. This does not mean there are no TCG retailers nearby.</div>';
 }
 function findStore(id){return stores.find(s=>String(s.id)===String(id));}
-window.ps44RouteTo=(id)=>{const s=findStore(id);if(s)routeTo(s);};
 $('ps2StoreCards').addEventListener('click',e=>{const fb=e.target.closest('[data-store-forecast]'), rb=e.target.closest('[data-store-route]');if(fb){selectedForecast=findStore(fb.dataset.storeForecast);view('forecast');}if(rb){selected=findStore(rb.dataset.storeRoute);routeTo(selected);}});
 let routeBusy=false;async function routeTo(store){
  if(routeBusy||!store||!coords(store))return;routeBusy=true;selected=store;view('near');$('ps2Route').hidden=false;$('ps2RouteTitle').textContent='Route to '+labelStore(store);$('ps2RouteInfo').textContent='Getting GPS and road directions…';$('ps2Steps').replaceChildren();
@@ -116,274 +114,14 @@ function renderSocial(){let list=[];const loc=location;if(postFilter==='releases
 $('ps2MorePosts').onclick=()=>{postsLimit+=18;renderSocial();};
 $('ps2Feed').addEventListener('click',e=>{const b=e.target.closest('[data-embed]');if(!b)return;const src=safe(b.dataset.embed);if(!src)return;const box=b.closest('.ps2embedbox');if(!box)return;const iframe=document.createElement('iframe');iframe.src=src;iframe.title='Original social media embed';iframe.loading='lazy';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';iframe.setAttribute('allowfullscreen','');box.replaceChildren(iframe);});
 function matchingArea(store){const c=chain(store).toLowerCase();const city=String(store.city||'').toLowerCase(),state=String(store.state||'').toLowerCase();if(!city||!state)return[];const simple=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');return sightings.filter(x=>simple(x.city)===simple(city)&&simple(x.state)===simple(state)&&simple(x.retailer)===simple(c));}
-/* Script 43: honest, location-aware forecast. */
-/* Script 43: honest, location-aware forecast. */
-/* Script 43: honest, location-aware forecast. */
-/* Script 43: honest, location-aware forecast. */
-/* Script 43: honest, location-aware forecast. */
-function renderForecast(){
- const select=$('ps2ForecastStore');
- const candidates=nearby().filter(s=>String(s.city||s.address||'').trim());
- const used=new Set();
- const list=candidates.filter(s=>{
-   const k=[
-     String(s.name||'').toLowerCase(),
-     String(s.address||'').toLowerCase(),
-     Number(s.lat).toFixed(4),
-     Number(s.lon??s.long).toFixed(4)
-   ].join('|');
-   if(used.has(k))return false;
-   used.add(k);
-   return true;
- });
-
- const prev=selectedForecast?.id||select.value;
- const shown=list.slice(0,250);
-
- if(prev&&!shown.some(s=>String(s.id)===String(prev))){
-   const x=list.find(s=>String(s.id)===String(prev));
-   if(x)shown.unshift(x);
- }
-
- select.replaceChildren(
-   new Option('Select a nearby branch',''),
-   ...shown.map(s=>new Option(
-     [
-       labelStore(s),
-       s.address||s.city||'Nearby location',
-       s._miles.toFixed(1)+' mi'
-     ].filter(Boolean).join(' · '),
-     String(s.id)
-   ))
- );
-
- const wanted=shown.find(
-   s=>String(s.id)===String(prev)
- )||shown[0];
-
- if(wanted)select.value=String(wanted.id);
- selectedForecast=wanted||null;
-
- const output=$('ps2ForecastBody');
-
- if(!wanted){
-   output.innerHTML='<div class="ps2empty">Use GPS or enter a ZIP in Near Me to see identifiable stores and their local evidence. No nationwide store is substituted.</div>';
-   return;
- }
-
- const store=wanted;
- const evidence=storeEvidence(store);
- const id=String(store.id);
- const normal=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
- const retailer=normal(chain(store));
- const cutoff=Date.now()-45*86400000;
-
- const geo=forecast43Records.filter(x=>
-   Number.isFinite(+x.lat)&&
-   Number.isFinite(+x.lon)&&
-   Number.isFinite(Date.parse(x.reported_at))&&
-   Date.parse(x.reported_at)>=cutoff&&
-   distance(
-     location.lat,location.lon,
-     +x.lat,+x.lon
-   )<=radius
- ).sort(
-   (a,b)=>Date.parse(b.reported_at)-Date.parse(a.reported_at)
- );
-
- const exact=[],city=[],area=[],posts=[];
-
- for(const x of geo){
-   if(x.kind==='social_research_lead'){
-     posts.push(x);
-     continue;
-   }
-   if(String(x.store_id)===id&&x.store_match_verified===true){
-     exact.push(x);
-     continue;
-   }
-   if(
-     retailer===normal(x.retailer)&&
-     normal(store.city)&&
-     normal(store.city)===normal(x.city)&&
-     normal(store.state)===normal(x.state)
-   ){
-     city.push(x);
-     continue;
-   }
-   area.push(x);
- }
-
- const bins=Array.from(
-   {length:7},
-   (_,i)=>({
-     day:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i],
-     exact:0,city:0,area:0,social:0
-   })
- );
-
- for(const [bucket,records] of [
-   ['exact',exact],
-   ['city',city],
-   ['area',area],
-   ['social',posts]
- ]){
-   for(const event of records){
-     const d=new Date(event.reported_at);
-     const index=(d.getDay()+6)%7;
-     bins[index][bucket]++;
-   }
- }
-
- const peak=Math.max(
-   5,
-   ...bins.map(x=>x.exact+x.city+x.area+x.social)
- );
-
- const any=geo.length>0;
-
- const chart=any?`
-   <div class="ps43chart">
-     <div class="ps43chartgrid">
-       ${bins.map(x=>{
-         const num=x.exact+x.city+x.area+x.social;
-         return `
-         <div class="ps43day">
-           <span class="ps43num">${num||'·'}</span>
-           <div class="ps43track" title="${esc(x.day)}: ${num} public research signals">
-             <div class="ps43fill social" style="height:${Math.round(x.social/peak*132)}px"></div>
-             <div class="ps43fill area" style="height:${Math.round(x.area/peak*132)}px"></div>
-             <div class="ps43fill city" style="height:${Math.round(x.city/peak*132)}px"></div>
-             <div class="ps43fill exact" style="height:${Math.round(x.exact/peak*132)}px"></div>
-           </div>
-           <span>${x.day}</span>
-         </div>`;
-       }).join('')}
-     </div>
-     <p class="ps43small">Counts of collected public reports by weekday, not delivery probabilities. Location and time are approximate for many sources.</p>
-   </div>`:
-   '<div class="ps43none"><strong>No nearby dated reports in the connected feeds.</strong><p>We cannot infer a restock day from missing observations. Try a larger radius or another branch; future source reports will appear when collected.</p></div>';
-
- const link=x=>{
-   const u=safe(x.source_url);
-   return u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">View original evidence</a>`:'';
- };
-
- const recent=geo.slice(0,12).map(x=>`
-   <article class="ps43event">
-     <div>
-       <b>${esc(x.title||'Public collector report')}</b>
-       <p>
-         ${esc(x.city||'Area')}
-         ${x.state?', '+esc(x.state):''}
-         · ${esc(when(x.reported_at))}
-         · ${esc(
-           x.kind==='social_research_lead'?
-           'Geotagged social lead':
-           exact.includes(x)?
-           'Branch-matched report':
-           city.includes(x)?
-           'Retailer/city report':
-           'Nearby community sighting'
-         )}
-       </p>
-     </div>
-     <div>${link(x)}</div>
-   </article>
- `).join('');
-
- const research=evidence.research_watch?`
-   <div class="ps43research">
-     <strong>Retailer-wide research exists</strong>
-     <p>${esc(evidence.research_basis||'General vendor or retailer guidance')}</p>
-     <p>It does not establish a shipment date for this particular branch.</p>
-     ${evidence.research_source&&safe(evidence.research_source)?
-       `<a href="${esc(safe(evidence.research_source))}" target="_blank" rel="noopener noreferrer">Research source</a>`:''}
-   </div>`:'';
-
- const upcoming=releases.filter(r=>{
-   const time=Date.parse(r.date);
-   return Number.isFinite(time)&&
-     time>=Date.now()-86400000&&
-     time<=Date.now()+30*86400000;
- }).slice(0,4);
-
- const releaseItems=upcoming.map(r=>`
-   <div class="ps43event">
-     <div>
-       <b>${esc(r.name||'TCG release')}</b>
-       <p>Official release ${esc(day(r.date))}; not branch inventory</p>
-     </div>
-     ${safe(r.source_url)?
-       `<a href="${esc(safe(r.source_url))}" target="_blank" rel="noopener noreferrer">Official source</a>`:''}
-   </div>
- `).join('');
-
- output.innerHTML=`
-   <div class="ps2card ps43branch">
-     <span class="ps2badge purple">${esc(chain(store))}</span>
-     <h2>${esc(labelStore(store))}</h2>
-     <p>${esc([store.address,store.city,store.state].filter(Boolean).join(', '))} · ${store._miles.toFixed(1)} miles from your selected location</p>
-     <p><strong>In-store stock: Unknown.</strong> We have no verified live shelf quantities here.</p>
-   </div>
-
-   <div class="ps43stats">
-     <div class="ps43stat">
-       <strong>${exact.length}</strong>
-       <span>Verified branch-matched reports</span>
-     </div>
-     <div class="ps43stat">
-       <strong>${city.length}</strong>
-       <span>Same retailer &amp; city reports</span>
-     </div>
-     <div class="ps43stat">
-       <strong>${area.length+posts.length}</strong>
-       <span>Other nearby research signals</span>
-     </div>
-   </div>
-
-   <div class="ps2card ps43panel">
-     <div class="ps43heading">
-       <h2>Nearby activity by weekday</h2>
-       <span class="ps2badge ${any?'warn':'purple'}">
-         ${any?geo.length+' reports · 45 days':'Not enough local evidence'}
-       </span>
-     </div>
-     <p>Only sources inside your ${radius}-mile radius. Same-city and nearby activity are not proof for ${esc(labelStore(store))}.</p>
-     ${chart}
-     <div class="ps43legend">
-       <span><i class="exact"></i>Verified branch match</span>
-       <span><i class="city"></i>Same retailer/city</span>
-       <span><i class="area"></i>Other local sightings</span>
-       <span><i class="social"></i>Social research</span>
-     </div>
-   </div>
-
-   <div class="ps43research">
-     <strong>${evidence.watch_weekday?
-       'Limited historical weekday pattern: '+esc(evidence.watch_weekday):
-       'Store-level forecast: insufficient history'}</strong>
-     <p>${evidence.watch_weekday?
-       'Repeated exact-store reports support a limited watch pattern, not guaranteed delivery.':
-       'No defensible next delivery date exists for this branch. A retailer-wide schedule or another store’s report cannot be treated as confirmation.'}</p>
-     <p>Verified historical report dates in store database: ${Number(evidence.verified_store_sightings)||0}. Current inventory: unknown.</p>
-   </div>
-
-   ${research}
-
-   <div class="ps2card ps43panel">
-     <h2>Evidence timeline</h2>
-     <p>Latest available local source reports. Each is labeled as unverified research unless independently confirmed.</p>
-     ${recent||'<div class="ps43none">No geographically supported public reports within this radius yet.</div>'}
-   </div>
-
-   ${releaseItems?`
-     <div class="ps2card ps43panel">
-       <h2>Upcoming official releases</h2>
-       <p>National launch information for planning, not proof of local shipments.</p>
-       ${releaseItems}
-     </div>`:''}
- `;
+function renderForecast(){const list=nearby(),pick=$('ps2ForecastStore'),old=selectedForecast?.id||pick.value;pick.replaceChildren(new Option('Choose a nearby store',''),...list.slice(0,250).map(s=>new Option(labelStore(s)+' · '+s._miles.toFixed(1)+' mi',String(s.id))));if(old&&list.some(s=>String(s.id)===String(old)))pick.value=String(old);else if(list.length){pick.value=String(list[0].id);selectedForecast=list[0];}else selectedForecast=null;
+ const store=findStore(pick.value);if(!store){$('ps2ForecastBody').innerHTML='<div class="ps2empty">Choose GPS or ZIP in Near Me to see professional charts for stores within your radius.</div>';return;}selectedForecast=store;
+ const e=storeEvidence(store),area=matchingArea(store),exact=area.filter(x=>x.store_id===String(store.id)&&x.store_match_verified===true),weekDays=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];const count=events=>{const out=Array(7).fill(0),dates=new Set();for(const x of events){const raw=x.reported_at_approx||x.observed_at;const d=new Date(raw);if(!Number.isFinite(+d))continue;const id=(x.event_id||x.id||raw);if(dates.has(id))continue;dates.add(id);out[d.getDay()]++;}return out;};const areaDays=count(area.filter(x=>!exact.includes(x))),exactDays=count(exact),counts=[1,2,3,4,5,6,0].map(i=>({label:weekDays[i],near:areaDays[i],confirmed:exactDays[i]})),max=Math.max(1,...counts.map(x=>x.near+x.confirmed));const hasArea=area.length>0;const watch=e.watch_weekday||null;
+ const bars=counts.map(x=>{const h=Math.round(140*x.near/max),c=Math.round(140*x.confirmed/max);return `<div class="ps2chartslot" title="${esc(x.label)}: ${x.near} city reports; ${x.confirmed} verified branch reports"><div class="ps2chartsegment confirm" style="--ht:${c}px"></div><div class="ps2chartsegment" style="--ht:${h}px"></div></div>`;}).join('');const sources=area.slice(0,15).map(x=>safe(x.source_url)?`<a href="${esc(safe(x.source_url))}" target="_blank" rel="noopener noreferrer">${esc(x.product_name||'Reported sighting')} · ${esc(when(x.reported_at_approx))}</a>`:'').join('');
+ $('ps2ForecastBody').innerHTML=`<div class="ps2card"><span class="ps2badge purple">${esc(chain(store))}</span><h2 style="margin:9px 0">${esc(labelStore(store))}</h2><p>${esc([store.address,store.city,store.state].filter(Boolean).join(', '))}</p></div><div class="ps2metrics" style="margin-top:13px"><div class="ps2metric"><b>${watch?esc(watch):'—'}</b><small>Watch weekday (only with enough history)</small></div><div class="ps2metric"><b>${Number(e.verified_store_sightings)||0}</b><small>Verified branch report dates</small></div><div class="ps2metric"><b>${watch?'Limited':'Low'}</b><small>Forecast confidence</small></div></div>
+ <div class="ps2chart"><div class="ps2section" style="margin:0"><h2>Activity by weekday</h2><span class="ps2badge ${hasArea?'warn':'purple'}">${hasArea?'Observed reports':'Insufficient history'}</span></div><p>Actual reports from ${esc([store.city,store.state].filter(Boolean).join(', '))}, not probabilities or confirmed deliveries.</p><div class="ps2chartbars">${bars}</div><div class="ps2daylabels">${counts.map(x=>'<span>'+x.label+'</span>').join('')}</div><div class="ps2legend"><span><i></i>Unverified city-area sightings</span><span><i class="confirm"></i>Verified exact-branch sightings</span></div><p>${hasArea?area.length+' reports tagged to the same retailer and city. They may refer to other branches.':'No dated reports for this retailer in this city. Empty bars accurately represent missing evidence.'}</p></div>
+ <div class="ps2note"><b>${watch?'Limited historical watch pattern':'No defensible delivery-date forecast yet.'}</b> ${watch?'Historical activity favors '+esc(watch)+', but that does not guarantee a delivery or stock.':'There is insufficient repeated exact-store evidence to estimate a reliable next restock day.'} ${e.research_watch?'General retailer research exists but is not proof of this branch receiving cards.':''}</div>
+ <div class="ps2card"><h3>Evidence trail</h3><p>All location matches are approximate unless the original report verifies an exact branch. No reported shipment is considered confirmed without supporting evidence.</p><div class="ps2sources">${sources||'<p>No dated local reports currently available.</p>'}</div></div>`;
 }
 $('ps2ForecastStore').onchange=e=>{selectedForecast=findStore(e.target.value);renderForecast();};
 (async()=>{
@@ -392,7 +130,7 @@ $('ps2ForecastStore').onchange=e=>{selectedForecast=findStore(e.target.value);re
  stores=Array.isArray(a)?a.filter(coords):[];offers=Array.isArray(b)?b:[];social=Array.isArray(c.posts)?c.posts:[];sightings=Array.isArray(d)?d:[];outlook=new Map(Array.isArray(f.stores)?f.stores.map(x=>[String(x.store_id),x]):[]);
  releases=(Array.isArray(g)?g:[]).filter(x=>x.status==='Official release date'&&/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')).map(x=>({...x,official:true})).filter(x=>new Date(x.date+'T23:59:59Z').getTime()>=Date.now()-86400000).sort((a,b)=>a.date.localeCompare(b.date));
  news=(Array.isArray(h.announcements)?h.announcements:[]).filter(x=>x.source_type==='news_index').map(x=>({...x,name:x.title,official:false,date:x.release_date||null,source_url:x.url})).slice(0,25);
- renderHome();renderNear();renderSocial();renderForecast();get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});
+ renderHome();renderNear();renderSocial();renderForecast();
  }catch(e){console.error('Pokestock 2.0 load:',e);$('ps2Products').innerHTML='<div class="ps2empty">Inventory currently unavailable. Existing tools are still available under Advanced & legacy tools.</div>';}
 })();
 })();
