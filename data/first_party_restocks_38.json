@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "merchant-9733b262dfcd0c0507d4d2eac7",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "30th Celebration Booster Bundle",
+    "game": "Pokémon",
+    "retailer": "Big Pack Hobby Shop",
+    "price_reported": "74.99",
+    "currency": "Unverified",
+    "variant": "Sealed",
+    "checked_at": "2026-11-05T05:29:36.061371+00:00",
+    "reported_at": "2026-11-05T05:29:36.061371+00:00",
+    "retailer_url": "https://www.shopbigpack.com/products/big-pack-547d940f96736330e6e6d74f",
+    "source_url": "https://www.shopbigpack.com/products/big-pack-547d940f96736330e6e6d74f",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  }
+]
