@@ -1,33 +1,33 @@
 {
   "version": "34",
-  "checked_at": "2026-11-04T23:04:31.859694+00:00",
+  "checked_at": "2026-11-05T13:37:46.211577+00:00",
   "source_results": {
     "Walmart": {
       "http_status": 200,
-      "bytes": 426371,
+      "bytes": 431042,
       "table_rows": 25,
       "parsed": 25,
       "unparsed": 0
     },
     "Target": {
       "http_status": 200,
-      "bytes": 427280,
+      "bytes": 432886,
       "table_rows": 25,
       "parsed": 25,
       "unparsed": 0
     },
     "Best Buy": {
       "http_status": 200,
-      "bytes": 402257,
+      "bytes": 405687,
       "table_rows": 20,
       "parsed": 20,
       "unparsed": 0
     }
   },
-  "new_reports": 22,
-  "total_reports_retained": 96,
+  "new_reports": 10,
+  "total_reports_retained": 106,
   "matched_store_reports": 4,
-  "unmatched_reports": 92,
+  "unmatched_reports": 102,
   "provisional_store_matches": 4,
   "verified_store_matches": 0,
   "store_game_pairs_with_evidence": 1,
