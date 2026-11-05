@@ -1,6 +1,6 @@
 {
   "version": "44.0",
-  "checked_at": "2026-11-05T01:21:03.338795+00:00",
+  "checked_at": "2026-11-05T07:30:58.863119+00:00",
   "products": [
     {
       "retailer": "Costco",
@@ -9,8 +9,8 @@
       "shipping_status": "shipping_unavailable_observed",
       "price": "39.99",
       "currency": "USD",
-      "checked_at": "2026-11-05T01:21:03.338795+00:00",
-      "last_accessible_at": "2026-11-05T01:21:03.338795+00:00",
+      "checked_at": "2026-11-05T07:30:58.863119+00:00",
+      "last_accessible_at": "2026-11-05T07:30:58.863119+00:00",
       "evidence": "Product structured data explicitly reported OutOfStock",
       "member_club_required": true,
       "local_pickup_verified": false,
@@ -24,8 +24,8 @@
       "shipping_status": "shipping_unavailable_observed",
       "price": "29.97",
       "currency": "USD",
-      "checked_at": "2026-11-05T01:21:03.338795+00:00",
-      "last_accessible_at": "2026-11-05T01:21:03.338795+00:00",
+      "checked_at": "2026-11-05T07:30:58.863119+00:00",
+      "last_accessible_at": "2026-11-05T07:30:58.863119+00:00",
       "evidence": "Product structured data explicitly reported OutOfStock",
       "member_club_required": true,
       "local_pickup_verified": false,
@@ -35,17 +35,17 @@
     {
       "retailer": "Costco",
       "url": "https://www.costco.com/p/-/pokmon-collectors-chest--great-ball--ultra-ball--3-eevee-promo-cards/100791463",
-      "title": "",
-      "shipping_status": "access_unavailable",
-      "price": null,
-      "currency": null,
-      "checked_at": "2026-11-05T01:21:03.338795+00:00",
-      "last_accessible_at": null,
-      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
+      "title": "Pokémon Collector's Chest + Great Ball + Ultra Ball + 3 Eevee Promo Cards",
+      "shipping_status": "shipping_unavailable_observed",
+      "price": "38.99",
+      "currency": "USD",
+      "checked_at": "2026-11-05T07:30:58.863119+00:00",
+      "last_accessible_at": "2026-11-05T07:30:58.863119+00:00",
+      "evidence": "Product structured data explicitly reported OutOfStock",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "access_restricted_429"
+      "access_result": "ok"
     },
     {
       "retailer": "Sam's Club",
@@ -54,13 +54,13 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-05T01:21:03.338795+00:00",
+      "checked_at": "2026-11-05T07:30:58.863119+00:00",
       "last_accessible_at": null,
-      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
+      "evidence": "No trustworthy TCG product title in the page",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "not_found"
+      "access_result": "ok"
     },
     {
       "retailer": "Sam's Club",
@@ -69,13 +69,13 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-05T01:21:03.338795+00:00",
+      "checked_at": "2026-11-05T07:30:58.863119+00:00",
       "last_accessible_at": null,
-      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
+      "evidence": "No trustworthy TCG product title in the page",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "not_found"
+      "access_result": "ok"
     }
   ],
   "allocations": [
@@ -3862,7 +3862,7 @@
   ],
   "allocation_reported_as_of": "2026-11-04",
   "summary": {
-    "checked_at": "2026-11-05T01:21:03.338795+00:00",
+    "checked_at": "2026-11-05T07:30:58.863119+00:00",
     "sources": {
       "https://www.samsclub.com/s/pokemon%20trading%20cards": "ok",
       "https://www.samsclub.com/s/pokemon%20elite%20trainer": "ok",
@@ -3880,9 +3880,9 @@
     },
     "notes": [],
     "explicit_shipping_available": 0,
-    "explicit_shipping_unavailable": 2,
+    "explicit_shipping_unavailable": 3,
     "status_unknown": 0,
-    "access_restricted": 3,
+    "access_restricted": 2,
     "official_products_checked": 5,
     "third_party_allocation_rows": 270
   },
