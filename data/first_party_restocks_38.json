@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-dedf29b3a14d07ed397df1477f",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Destined Rivals Booster Bundle",
+    "game": "Pokémon",
+    "retailer": "Big Pack Hobby Shop",
+    "price_reported": "64.99",
+    "currency": "Unverified",
+    "variant": "Sealed",
+    "checked_at": "2026-11-06T09:26:41.335120+00:00",
+    "reported_at": "2026-11-06T09:26:41.335120+00:00",
+    "retailer_url": "https://www.shopbigpack.com/products/big-pack-98e0594a497f68ff57a24b63",
+    "source_url": "https://www.shopbigpack.com/products/big-pack-98e0594a497f68ff57a24b63",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-65b492d8a4fd6ca6048aa7ac42",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
