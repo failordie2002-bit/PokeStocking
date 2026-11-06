@@ -1,16 +1,16 @@
 {
   "version": "37.0",
-  "updated_at": "2026-11-06T13:52:19.150736+00:00",
+  "updated_at": "2026-11-06T14:55:40.407979+00:00",
   "inventory_scope": "online_restock_signal",
   "lookback_days": 90,
   "weekday_timezone": "America/New_York",
-  "source_count": 98,
+  "source_count": 119,
   "retailer_patterns": [
     {
       "retailer": "Amazon",
-      "signal_count": 40,
-      "distinct_observation_dates": 9,
-      "date_span_days": 8,
+      "signal_count": 47,
+      "distinct_observation_dates": 10,
+      "date_span_days": 9,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -32,7 +32,7 @@
         },
         {
           "day": "Friday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Saturday",
@@ -247,10 +247,50 @@
       "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
     },
     {
+      "retailer": "Sam's Club",
+      "signal_count": 6,
+      "distinct_observation_dates": 1,
+      "date_span_days": 0,
+      "confidence": "Insufficient evidence",
+      "forecast_status": "insufficient_history",
+      "weekday_counts": [
+        {
+          "day": "Monday",
+          "count": 0
+        },
+        {
+          "day": "Tuesday",
+          "count": 0
+        },
+        {
+          "day": "Wednesday",
+          "count": 0
+        },
+        {
+          "day": "Thursday",
+          "count": 1
+        },
+        {
+          "day": "Friday",
+          "count": 0
+        },
+        {
+          "day": "Saturday",
+          "count": 0
+        },
+        {
+          "day": "Sunday",
+          "count": 0
+        }
+      ],
+      "watch_windows": [],
+      "interpretation": "Weekday distribution of dated ONLINE restock alerts, not stock likelihood or a delivery promise."
+    },
+    {
       "retailer": "Target",
-      "signal_count": 18,
-      "distinct_observation_dates": 3,
-      "date_span_days": 5,
+      "signal_count": 25,
+      "distinct_observation_dates": 4,
+      "date_span_days": 7,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -272,7 +312,7 @@
         },
         {
           "day": "Friday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Saturday",
@@ -288,9 +328,9 @@
     },
     {
       "retailer": "Walmart",
-      "signal_count": 31,
-      "distinct_observation_dates": 8,
-      "date_span_days": 7,
+      "signal_count": 32,
+      "distinct_observation_dates": 9,
+      "date_span_days": 8,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -308,7 +348,7 @@
         },
         {
           "day": "Thursday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Friday",
