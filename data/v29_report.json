@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-05T21:23:22.550584+00:00",
+  "checked_at": "2026-11-06T01:49:17.237526+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,574 +144,573 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-05T21:23:22.550584+00:00"
+      "checked_at": "2026-11-06T01:49:17.237526+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 37,
-    "product_http_429": 10,
-    "no_explicit_pickup_evidence:http_429,http_404": 3,
-    "no_explicit_pickup_evidence:http_200,http_200": 30
+    "no_explicit_pickup_evidence:http_200,http_200": 8,
+    "no_explicit_pickup_evidence:http_404,http_404": 15,
+    "product_http_301": 57
   },
   "checks": [
     {
-      "retailer": "The Eternal Forge",
+      "retailer": "Waterloo Games",
+      "game": "Sorcery: Contested Realm",
+      "product": "Sorcery Contested Realms - Starter/Boosters",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Sorcery: Contested Realm",
+      "product": "Sorcery Contested Realms - Starter/Boosters",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Union Arena",
+      "product": "Union Arena One - Evangelion: New Theatrical Edition Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Union Arena",
+      "product": "Union Arena One - Fullmetal Alchemist Starters/Boosters",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Union Arena",
+      "product": "Union Arena One - Fullmetal Alchemist Starters/Boosters",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Union Arena",
+      "product": "Union Arena One - Punch Man Starters/Boosters",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Union Arena",
+      "product": "Union Arena One - Punch Man Starters/Boosters",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
       "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG: Legend Of Blue Eyes 25th Anniversary - Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG: Metal Raiders - Booster Box (25th Anniversary Edition)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG: Rarity Collection 5 Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Dominaria United (DMU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Innistrad Crimson Vow (VOW)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Kamigawa Neon Dynasty (NEO)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Unfinity (UNF)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (4ct) Double Masters 2022 (2X2)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (24ct) Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (24ct) Double Masters 2022 (2X2)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (24ct) Innistrad Double Feature (DBL)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Dominaria United (DMU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Innistrad Crimson Vow (VOW)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Kamigawa Neon Dynasty (NEO)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Unfinity (UNF)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Jumpstart (18ct) Dominaria United (DMU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Set (18ct) Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Set (30ct) Dominaria United (DMU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Set (30ct) Innistrad Crimson Vow (VOW)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Set (30ct) Kamigawa Neon Dynasty (NEO)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Set (30ct) Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Draft Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Draft Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Dominaria United (DMU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Double Masters 2022 (2X2)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Innistrad Crimson Vow (VOW)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Kamigawa Neon Dynasty (NEO)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Dominaria United (DMU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Double Masters 2022 (2X2)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Innistrad Crimson Vow (VOW)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Innistrad: Double Feature (DBL)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Kamigawa Neon Dynasty (NEO)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Jumpstart : Dominaria United (DMU)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Set : Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Set : Dominaria United (DMU)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Set : Innistrad Crimson Vow (VOW)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Set : Kamigawa Neon Dynasty (NEO)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Set : Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Commander Legends : Battle for Baldur's Gate (CLB)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Dominaria United (DMU)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Innistrad Crimson Vow (VOW)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Kamigawa Neon Dynasty (NEO)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Streets of New Capenna (SNC)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle Gift Edition : Innistrad Crimson Vow (VOW)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Assassin's Creed - Boosters",
+      "product": "Yu-Gi-Oh! - 25th Anniversary Rarity Collection II Booster Pack",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - Aerith Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - Clive Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - G'raha Tia Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - Lightning Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - Squall Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - Tifa Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Final Fantasy: One-Touch Edge - Yuna (Wedding Dress Special Edition) Card Case w/ Display Stand",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Gundam",
-      "product": "Gundam Card Game - Eternal Nexus Booster",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Gundam TCG: ST11 Aquatic Assault - Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Gundam",
-      "product": "Gundam Card Game - Eternal Nexus Booster",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Gundam TCG: ST12 Raging Onslaught - Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Gundam",
-      "product": "Gundam Card Game - Phantom Aria Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Gundam TCG: ST13 Silent Barrage - Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
       "game": "Gundam",
-      "product": "Gundam Card Game - Phantom Aria Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Gundam TCG: ST14 Heavy Dominion - Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Atlantis Games & Comics",
+      "game": "Kayou",
+      "product": "KAYOU: My Little Pony TCG Booster Pack 03 (BP03) - Nightmare Night 5-Pack Collector Box Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "game": "Kayou",
+      "product": "KAYOU: My Little Pony TCG Booster Pack 03 (BP03) - Nightmare Night Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "game": "Kayou",
+      "product": "KAYOU: My Little Pony TCG Booster Pack 03 (BP03) - Nightmare Night Booster Pack",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "game": "Union Arena",
+      "product": "Union Arena TCG: Starter Deck 24 - Re:Zero",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Magic: The Gathering",
+      "product": "FINAL FANTASY - Bundle",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Magic: The Gathering",
+      "product": "FINAL FANTASY - Gift Bundle",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Magic: The Gathering",
+      "product": "FINAL FANTASY - Play Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Magic: The Gathering",
+      "product": "FINAL FANTASY - Sleeved Play Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "500 Years in the Future - Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "A Fist of Divine Speed Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "Carrying On His Will Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "One Piece Tin Pack Set Vol. 1 -Gol.D.Roger-",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "One Piece Tin Pack Set Vol. 1 -Monkey.D.Luffy-",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "Premium Booster - Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "Two Legends - Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "One Piece",
+      "product": "Wings of the Captain - Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Battle Decks",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "151 Booster Bundle",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Battle Decks",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "151 Mini Tin [Magneton & Ekans]",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Battle Decks",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "2 Pack Blister [Snorlax, Morpeko & Applin Cards]",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
+      "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Battle Decks",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "2-Pack Blister [Zarude] (3-Tab)",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Riftbound",
-      "product": "Riftbound: League of Legends - Radiance Boosters (10/23 Release)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "30th Celebration Mini Tin Display",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Riftbound",
-      "product": "Riftbound: League of Legends - Radiance Boosters (10/23 Release)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "30th Celebration Mini Tin [Lapras]",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Riftbound",
-      "product": "Riftbound: League of Legends - Radiance Boosters (10/23 Release)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "30th Celebration Mini Tin [Zapdos]",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Riftbound",
-      "product": "Riftbound: League of Legends - Radiance Boosters (10/23 Release)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "30th Celebration ex Tin [Sylveon ex] (Retail Version)",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Black Bolt Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Brilliant Stars Sleeved Booster Pack",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Burning Shadows Elite Trainer Box",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Chaos Rising Booster Pack",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Chaos Rising Pokemon Center Elite Trainer Box",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Chaos Rising Sleeved Booster Pack",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Chilling Reign Sleeved Booster Pack",
+      "result": "product_http_301",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "product_http_429",
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Cosmic Eclipse Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Crown Zenith Mini Tin [Leon & Charizard]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Darkness Ablaze Sleeved Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Destined Rivals Booster Bundle",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Evolving Skies Elite Trainer Box [Flareon/Jolteon/Umbreon/Leafeon]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Evolving Skies Sleeved Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Greninja EX & Kingdra EX Special Collection Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Hidden Fates Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Journey Together 3 Pack Blister [Yanmega]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Journey Together Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Journey Together Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Lost Origin Sleeved Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Moonlit Tin [Mega Clefable ex]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Paldea Evolved Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Perfect Order 3 Pack Blister [Chikorita]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Perfect Order Booster Bundle",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Perfect Order Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Phantasmal Flames Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pitch Black Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pitch Black Booster Box Case",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pitch Black Booster Bundle",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pitch Black Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pitch Black Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pitch Black Single Pack Blister [Slowpoke]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pokemon Card 151 Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pokemon GO Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pokemon GO Pokemon Center Elite Trainer Box Plus (Exclusive)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Pokemon GO Tin [Pikachu]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Prismatic Evolutions Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "product_http_301",
       "observations": 0
     }
   ],
