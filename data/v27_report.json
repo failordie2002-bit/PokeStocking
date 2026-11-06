@@ -1,32 +1,163 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-05T21:14:23.277532+00:00",
-  "source_online_candidates": 560,
+  "checked_at": "2026-11-06T03:06:41.393473+00:00",
+  "source_online_candidates": 852,
   "checked_this_run": 60,
-  "verified_this_run": 60,
-  "fresh_online_observations": 555,
-  "online_in_stock": 193,
-  "online_out_of_stock": 362,
+  "verified_this_run": 59,
+  "fresh_online_observations": 874,
+  "online_in_stock": 238,
+  "online_out_of_stock": 636,
   "verified_store_observations": 0,
   "store_in_stock": 0,
-  "next_cursor": 277,
+  "next_cursor": 337,
   "check_outcomes": {
-    "verified": 60
+    "verified": 59,
+    "ambiguous_variant": 1
   },
   "checks": [
     {
-      "retailer": "Games and Stuff",
-      "product": "GUNDAM TCG STARDUST TRAILS BOOSTER BOX",
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle Gift Edition : Adventures in the Forgotten Realms (AFR)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle Gift Edition : Innistrad Crimson Vow (VOW)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Innistrad Crimson Vow (VOW)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Innistrad Midnight Hunt (MID)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Kaldheim (KHM)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Kamigawa Neon Dynasty (NEO)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Modern Horizons 2 (MH2)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Strixhaven School of Mages (STX)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Battle Spirits Saga - Dawn of History Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Battle Spirits Saga - False Gods Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Cardfight!! Vanguard: Knights of Rebirth Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Cardfight!! Vanguard: Dimensional Transcendence Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Cardfight!! Vanguard: Fated Clash Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Lorcana: Floodborn Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Magic the Gathering: March of the Machines Epilogue Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Magic the Gathering: Murders at Karlov Manor Play Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "ONE PIECE TCG Starter Deck",
+      "result": "ambiguous_variant"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "PRE-ORDER: Magic: The Gathering - Star Trek Play Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Sorcery: Contested Realm Beta Starter Decks",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
       "result": "verified"
     },
     {
       "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY TCG: DISCORD!!!!! BOOSTER BOX",
+      "product": "DISNEY LORCANA HYPERIA CITY BOOSTER BOX",
       "result": "verified"
     },
     {
       "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY TCG: DISCORD !!!!! BOOSTER PACK",
+      "product": "DISNEY LORCANA HYPERIA CITY BOOSTER PACK",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "FOUNDATIONS JUMPSTART 2 PACK BLISTER",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING REALITY FRACTURE SLEEVED BOOSTER PACK",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING STAR TREK BUNDLE PREORDER",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING STAR TREK COLLECTOR BOOSTER BOX PREORDER",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING STAR TREK PLAY BOOSTER BOX PREORDER",
       "result": "verified"
     },
     {
@@ -41,22 +172,17 @@
     },
     {
       "retailer": "Games and Stuff",
-      "product": "ONE PIECE HEROINES EDITION VOL. 2 BOOSTER BOX *LIMIT 2 PER PERSON*",
+      "product": "POKEMON 30TH ANNIVERSARY BOOSTER BUNDLE *LIMIT TWO PER CUSTOMER*",
       "result": "verified"
     },
     {
       "retailer": "Games and Stuff",
-      "product": "ONE PIECE MINI CASE",
+      "product": "POKEMON 30TH ANNIVERSARY MINI TIN *LIMIT TWO PER CUSTOMER*",
       "result": "verified"
     },
     {
       "retailer": "Games and Stuff",
-      "product": "POKEMON 30TH CELEBRATION BATTLE DECKS *LIMIT 1 PER CUSTOMER*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON 30TH CELEBRATION BATTLE DECKS *LIMIT 1 PER CUSTOMER*",
+      "product": "RIFTBOUND RADIANCE BOOSTER BOX PREORDER *LIMIT 2 PER CUSTOMER*",
       "result": "verified"
     },
     {
@@ -65,28 +191,23 @@
       "result": "verified"
     },
     {
-      "retailer": "Gaming Giant",
-      "product": "Auspicious Aquarium [Mystery Booster Playtest Cards]",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITED HOMEWORLDS BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Gaming Giant",
-      "product": "Auspicious Aquarium [Mystery Booster Playtest Cards]",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITED HOMEWORLDS BOOSTER PACK",
       "result": "verified"
     },
     {
-      "retailer": "Gaming Giant",
-      "product": "Auspicious Aquarium [Mystery Booster Playtest Cards]",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITED HOMEWORLDS CARBONITE BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Gaming Giant",
-      "product": "Auspicious Aquarium [Mystery Booster Playtest Cards]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Auspicious Aquarium [Mystery Booster Playtest Cards]",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITED HOMEWORLDS CARBONITE BOOSTER PACK",
       "result": "verified"
     },
     {
@@ -96,7 +217,37 @@
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Boa Hancock (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "BanG Dream! 10th Anniversary! - Premium Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "Black Maria (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "Black Maria (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "Black Maria (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "Black Maria (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "Black Maria (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "Blue Archive The Animation - Booster Box",
       "result": "verified"
     },
     {
@@ -126,192 +277,42 @@
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Boa Hancock (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Boa Hancock (SP) [Extra Booster: One Piece Heroines Edition Vol. 2]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Boa Hancock (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Boa Hancock (SP) [Extra Booster: One Piece Heroines Edition Vol. 2]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Boa Hancock (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Boa Hancock (SP) [Extra Booster: One Piece Heroines Edition Vol. 2]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Boa Hancock (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Boa Hancock (SP) [Extra Booster: One Piece Heroines Edition Vol. 2]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Jewelry Bonney (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Boa Hancock (SP) [Extra Booster: One Piece Heroines Edition Vol. 2]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Jewelry Bonney (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Carnivorous Cultivator (Bundle) [Reality Fracture Promos]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Jewelry Bonney (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Carnivorous Cultivator (Bundle) [Reality Fracture Promos]",
       "result": "verified"
     },
     {
       "retailer": "Gaming Giant",
-      "product": "Jewelry Bonney (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Jewelry Bonney (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Makeine: Too Many Losing Heroines! Trial Deck+ - Makeine: Too Many Losing Heroines! (MKI/)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nami (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nami (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nami (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nami (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nami (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nefeltari Vivi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nefeltari Vivi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nefeltari Vivi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nefeltari Vivi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nefeltari Vivi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nico Robin (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nico Robin (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nico Robin (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nico Robin (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Nico Robin (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Perona (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Perona (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Perona (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Perona (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Perona (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Rebecca (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Rebecca (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Rebecca (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Rebecca (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Rebecca (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Shirahoshi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Shirahoshi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Gaming Giant",
-      "product": "Shirahoshi (Alternate Art) [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "product": "Carnivorous Cultivator (Bundle) [Reality Fracture Promos]",
       "result": "verified"
     }
   ],
