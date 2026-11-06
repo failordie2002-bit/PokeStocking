@@ -1,13 +1,12 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-06T01:49:17.237526+00:00",
+  "checked_at": "2026-11-06T05:34:27.331790+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
     "Cardfight!! Vanguard",
     "Digimon",
     "Disney Lorcana",
-    "Dragon Ball Super",
     "Final Fantasy TCG",
     "Flesh and Blood",
     "Gundam",
@@ -16,13 +15,14 @@
     "One Piece",
     "Pokémon",
     "Riftbound",
+    "Shadowverse: Evolve",
     "Sorcery: Contested Realm",
     "Star Wars: Unlimited",
     "Union Arena",
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 555,
+  "online_candidates": 874,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,418 +144,26 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T01:49:17.237526+00:00"
+      "checked_at": "2026-11-06T05:34:27.331790+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_200,http_200": 8,
-    "no_explicit_pickup_evidence:http_404,http_404": 15,
-    "product_http_301": 57
+    "product_http_301": 69,
+    "product_http_429": 9,
+    "no_explicit_pickup_evidence:http_404,http_404": 2
   },
   "checks": [
     {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery Contested Realms - Starter/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Union Arena",
-      "product": "Union Arena One - Evangelion: New Theatrical Edition Starter Deck",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Union Arena",
-      "product": "Union Arena One - Fullmetal Alchemist Starters/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Union Arena",
-      "product": "Union Arena One - Fullmetal Alchemist Starters/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Union Arena",
-      "product": "Union Arena One - Punch Man Starters/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Union Arena",
-      "product": "Union Arena One - Punch Man Starters/Boosters",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Waterloo Games",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! - 25th Anniversary Rarity Collection II Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - Aerith Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - Clive Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - G'raha Tia Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - Lightning Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - Squall Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - Tifa Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy: One-Touch Edge - Yuna (Wedding Dress Special Edition) Card Case w/ Display Stand",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Gundam",
-      "product": "Gundam TCG: ST11 Aquatic Assault - Starter Deck",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Gundam",
-      "product": "Gundam TCG: ST12 Raging Onslaught - Starter Deck",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Gundam",
-      "product": "Gundam TCG: ST13 Silent Barrage - Starter Deck",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Gundam",
-      "product": "Gundam TCG: ST14 Heavy Dominion - Starter Deck",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Kayou",
-      "product": "KAYOU: My Little Pony TCG Booster Pack 03 (BP03) - Nightmare Night 5-Pack Collector Box Bundle",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Kayou",
-      "product": "KAYOU: My Little Pony TCG Booster Pack 03 (BP03) - Nightmare Night Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Kayou",
-      "product": "KAYOU: My Little Pony TCG Booster Pack 03 (BP03) - Nightmare Night Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Atlantis Games & Comics",
-      "game": "Union Arena",
-      "product": "Union Arena TCG: Starter Deck 24 - Re:Zero",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
       "retailer": "Big Pack Hobby Shop",
-      "game": "Magic: The Gathering",
-      "product": "FINAL FANTASY - Bundle",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Magic: The Gathering",
-      "product": "FINAL FANTASY - Gift Bundle",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Magic: The Gathering",
-      "product": "FINAL FANTASY - Play Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Magic: The Gathering",
-      "product": "FINAL FANTASY - Sleeved Play Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "500 Years in the Future - Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "A Fist of Divine Speed Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "Carrying On His Will Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "One Piece Tin Pack Set Vol. 1 -Gol.D.Roger-",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "One Piece Tin Pack Set Vol. 1 -Monkey.D.Luffy-",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "Premium Booster - Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "Two Legends - Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "One Piece",
-      "product": "Wings of the Captain - Booster Box",
+      "game": "Pokémon",
+      "product": "Inferno X Booster Box",
       "result": "product_http_301",
       "observations": 0
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "151 Booster Bundle",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "151 Mini Tin [Magneton & Ekans]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "2 Pack Blister [Snorlax, Morpeko & Applin Cards]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "2-Pack Blister [Zarude] (3-Tab)",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "30th Celebration Mini Tin Display",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "30th Celebration Mini Tin [Lapras]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "30th Celebration Mini Tin [Zapdos]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "30th Celebration ex Tin [Sylveon ex] (Retail Version)",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Black Bolt Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Brilliant Stars Sleeved Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Burning Shadows Elite Trainer Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Chaos Rising Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Chaos Rising Pokemon Center Elite Trainer Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Chaos Rising Sleeved Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Chilling Reign Sleeved Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Cosmic Eclipse Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Crown Zenith Mini Tin [Leon & Charizard]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Darkness Ablaze Sleeved Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Destined Rivals Booster Bundle",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Evolving Skies Elite Trainer Box [Flareon/Jolteon/Umbreon/Leafeon]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Evolving Skies Sleeved Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Greninja EX & Kingdra EX Special Collection Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Hidden Fates Elite Trainer Box",
+      "product": "Inferno X Booster Pack",
       "result": "product_http_301",
       "observations": 0
     },
@@ -569,7 +177,21 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
+      "product": "Journey Together Booster Bundle",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
       "product": "Journey Together Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Journey Together Elite Trainer Box",
       "result": "product_http_301",
       "observations": 0
     },
@@ -583,6 +205,27 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
+      "product": "League Battle Deck [Mega Lucario ex]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "League Battle Decks [Reshiram & Charizard GX]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Lost Origin Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
       "product": "Lost Origin Sleeved Booster Pack",
       "result": "product_http_301",
       "observations": 0
@@ -590,7 +233,133 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Mega Moonlit Tin [Mega Clefable ex]",
+      "product": "Lumiose City Mini Tin [Salamence & Litleo]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Battle Deck (Mega Diancie ex)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Battle Deck (Mega Gengar ex)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Brave Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Brave Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Charizard Tin (Mega Charizard Y)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Dream ex Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Dream ex Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Evolution Elite Trainer Box [Mega Gardevoir]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Evolution Elite Trainer Box [Mega Lucario]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Moonlit Tin [Mega Gengar ex]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Symphonia Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Mega Symphonia Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Meowth - 013 (EX Series Collector's Tin)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Night Wanderer Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Night Wanderer Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Obsidian Flames Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Obsidian Flames Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Paldea Evolved Booster Box",
       "result": "product_http_301",
       "observations": 0
     },
@@ -598,6 +367,27 @@
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
       "product": "Paldea Evolved Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Paldea Partners Tin [Quaquaval ex]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Paldean Fates Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Paradise Dragona Booster Box",
       "result": "product_http_301",
       "observations": 0
     },
@@ -618,28 +408,21 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Perfect Order Elite Trainer Box",
+      "product": "Perfect Order Single Pack Blister [Makuhita]",
       "result": "product_http_301",
       "observations": 0
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Phantasmal Flames Booster Pack",
+      "product": "Phantasmal Flames Booster Box",
       "result": "product_http_301",
       "observations": 0
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Pitch Black Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Pitch Black Booster Box Case",
+      "product": "Pikachu with Grey Felt Hat (SEALED)",
       "result": "product_http_301",
       "observations": 0
     },
@@ -653,35 +436,21 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Pitch Black Booster Pack",
+      "product": "Pitch Black Sleeved Booster Pack",
       "result": "product_http_301",
       "observations": 0
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Pitch Black Pokemon Center Elite Trainer Box (Exclusive)",
+      "product": "Pokemon Card 151 Booster Box",
       "result": "product_http_301",
       "observations": 0
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Pitch Black Single Pack Blister [Slowpoke]",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Pokemon Card 151 Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "game": "Pokémon",
-      "product": "Pokemon GO Booster Pack",
+      "product": "Pokemon GO Elite Trainer Box",
       "result": "product_http_301",
       "observations": 0
     },
@@ -695,14 +464,21 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Pokemon GO Tin [Pikachu]",
+      "product": "Pokemon Stacking Tin: Psychic",
       "result": "product_http_301",
       "observations": 0
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "game": "Pokémon",
-      "product": "Prismatic Evolutions Booster Pack",
+      "product": "Prismatic Evolutions Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Prismatic Evolutions Mini Tin [Jolteon]",
       "result": "product_http_301",
       "observations": 0
     },
@@ -711,6 +487,230 @@
       "game": "Pokémon",
       "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
       "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Rival Battle Deck [Marnie]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Rival Battle Deck [Steven]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Shining Fates Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Shrouded Fable 3 Pack Blister [Pecharunt]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Silver Tempest Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Silver Tempest Sleeved Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Slashing Legends Tin [Koraidon ex]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Slashing Legends Tin [Zacian ex]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Stellar Crown Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Sun & Moon Elite Trainer Box [Solgaleo]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Super Electric Breaker Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Super Electric Breaker Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Surging Sparks Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Surging Sparks Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Team Rocket Booster Pack [Unlimited Edition]",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Terastal Fest ex Booster Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Torchic - 017 (EX Deck Tin)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Twilight Masquerade Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Twilight Masquerade Sleeved Booster Pack",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "V Heroes Tin [Umbreon V] (International Version)",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Vivid Voltage Booster Box",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "Vivid Voltage Elite Trainer Box",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "White Flare Booster Box",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "White Flare Booster Bundle",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "White Flare Booster Pack",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "White Flare Elite Trainer Box",
+      "result": "product_http_301",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "White Flare Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "XY - BREAKpoint Sleeved Booster Pack",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "XY - Fates Collide Sleeved Booster Pack [Delphox BREAK]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "game": "Pokémon",
+      "product": "XY Steam Siege Sleeved Booster Pack",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "game": "Digimon",
+      "product": "Digimon: Hackers' Slumber Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Reign of Jafar Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     }
   ],
