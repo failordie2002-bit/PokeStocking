@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-918f9187918ba98869fe3c1c71",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokémon TCG: 151 Gather - Booster Pack",
+    "game": "Pokémon",
+    "retailer": "The Eternal Forge",
+    "price_reported": "5.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-06T17:22:01.315213+00:00",
+    "reported_at": "2026-11-06T17:22:01.315213+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/pokemon-tcg-151-gather-vol-4",
+    "source_url": "https://www.theeternalforge.com/products/pokemon-tcg-151-gather-vol-4",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-7506c5a3e0a5451e343f7feaa7",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
