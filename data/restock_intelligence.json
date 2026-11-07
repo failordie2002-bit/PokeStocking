@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-11-06T11:58:29.491418+00:00",
+  "generated_at": "2026-11-07T11:47:47.620546+00:00",
   "forecasts": [
+    {
+      "store_id": "store-1483",
+      "retailer": "Best Buy",
+      "city": "Woodbridge",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-06",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=best-buy"
+      ]
+    },
+    {
+      "store_id": "store-1463",
+      "retailer": "Walmart",
+      "city": "Christiansburg",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-06",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
     {
       "store_id": "store-1820",
       "retailer": "Best Buy",
