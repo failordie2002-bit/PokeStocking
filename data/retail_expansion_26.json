@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T09:10:12.611345+00:00",
+  "updated_at": "2026-11-07T13:17:05.107319+00:00",
   "retailers": [
     {
       "name": "CVS Pharmacy",
@@ -7,6 +7,12 @@
       "method": "retailer_search",
       "inventory_status": "not_verified",
       "games": [
+        {
+          "game": "Altered",
+          "search_url": "https://www.cvs.com/search/?searchTerm=Altered%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
         {
           "game": "Battle Spirits Saga",
           "search_url": "https://www.cvs.com/search/?searchTerm=Battle%20Spirits%20Saga%20trading%20cards",
@@ -46,12 +52,6 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.cvs.com/search/?searchTerm=Flesh%20and%20Blood%20trading%20cards",
-          "availability": "unknown",
-          "stock_verified": false
-        },
-        {
-          "game": "Grand Archive",
-          "search_url": "https://www.cvs.com/search/?searchTerm=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -136,6 +136,12 @@
       "inventory_status": "not_verified",
       "games": [
         {
+          "game": "Altered",
+          "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Altered%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Battle Spirits Saga",
           "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Battle%20Spirits%20Saga%20trading%20cards",
           "availability": "unknown",
@@ -174,12 +180,6 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Flesh%20and%20Blood%20trading%20cards",
-          "availability": "unknown",
-          "stock_verified": false
-        },
-        {
-          "game": "Grand Archive",
-          "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -264,6 +264,12 @@
       "inventory_status": "not_verified",
       "games": [
         {
+          "game": "Altered",
+          "search_url": "https://www.dollargeneral.com/search?keywords=Altered%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Battle Spirits Saga",
           "search_url": "https://www.dollargeneral.com/search?keywords=Battle%20Spirits%20Saga%20trading%20cards",
           "availability": "unknown",
@@ -302,12 +308,6 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.dollargeneral.com/search?keywords=Flesh%20and%20Blood%20trading%20cards",
-          "availability": "unknown",
-          "stock_verified": false
-        },
-        {
-          "game": "Grand Archive",
-          "search_url": "https://www.dollargeneral.com/search?keywords=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -392,6 +392,12 @@
       "inventory_status": "not_verified",
       "games": [
         {
+          "game": "Altered",
+          "search_url": "https://www.dollartree.com/searchresults?Ntt=Altered%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Battle Spirits Saga",
           "search_url": "https://www.dollartree.com/searchresults?Ntt=Battle%20Spirits%20Saga%20trading%20cards",
           "availability": "unknown",
@@ -430,12 +436,6 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.dollartree.com/searchresults?Ntt=Flesh%20and%20Blood%20trading%20cards",
-          "availability": "unknown",
-          "stock_verified": false
-        },
-        {
-          "game": "Grand Archive",
-          "search_url": "https://www.dollartree.com/searchresults?Ntt=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -520,6 +520,12 @@
       "inventory_status": "not_verified",
       "games": [
         {
+          "game": "Altered",
+          "search_url": "https://www.familydollar.com/search?query=Altered%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Battle Spirits Saga",
           "search_url": "https://www.familydollar.com/search?query=Battle%20Spirits%20Saga%20trading%20cards",
           "availability": "unknown",
@@ -558,12 +564,6 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.familydollar.com/search?query=Flesh%20and%20Blood%20trading%20cards",
-          "availability": "unknown",
-          "stock_verified": false
-        },
-        {
-          "game": "Grand Archive",
-          "search_url": "https://www.familydollar.com/search?query=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -648,6 +648,12 @@
       "inventory_status": "not_verified",
       "games": [
         {
+          "game": "Altered",
+          "search_url": "https://www.fivebelow.com/search?q=Altered%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Battle Spirits Saga",
           "search_url": "https://www.fivebelow.com/search?q=Battle%20Spirits%20Saga%20trading%20cards",
           "availability": "unknown",
@@ -686,12 +692,6 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.fivebelow.com/search?q=Flesh%20and%20Blood%20trading%20cards",
-          "availability": "unknown",
-          "stock_verified": false
-        },
-        {
-          "game": "Grand Archive",
-          "search_url": "https://www.fivebelow.com/search?q=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -771,6 +771,7 @@
     }
   ],
   "games_monitored": [
+    "Altered",
     "Battle Spirits Saga",
     "Cardfight!! Vanguard",
     "Digimon",
@@ -778,7 +779,6 @@
     "Dragon Ball Super",
     "Final Fantasy TCG",
     "Flesh and Blood",
-    "Grand Archive",
     "Gundam",
     "Gundam Card Game",
     "Kayou",
