@@ -1,16 +1,16 @@
 {
   "version": "37.0",
-  "updated_at": "2026-11-07T13:56:26.472199+00:00",
+  "updated_at": "2026-11-07T14:43:37.090008+00:00",
   "inventory_scope": "online_restock_signal",
   "lookback_days": 90,
   "weekday_timezone": "America/New_York",
-  "source_count": 129,
+  "source_count": 143,
   "retailer_patterns": [
     {
       "retailer": "Amazon",
-      "signal_count": 49,
-      "distinct_observation_dates": 10,
-      "date_span_days": 9,
+      "signal_count": 53,
+      "distinct_observation_dates": 11,
+      "date_span_days": 10,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -36,7 +36,7 @@
         },
         {
           "day": "Saturday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Sunday",
@@ -88,9 +88,9 @@
     },
     {
       "retailer": "Crunchyroll Store",
-      "signal_count": 9,
-      "distinct_observation_dates": 2,
-      "date_span_days": 7,
+      "signal_count": 17,
+      "distinct_observation_dates": 3,
+      "date_span_days": 8,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -116,7 +116,7 @@
         },
         {
           "day": "Saturday",
-          "count": 0
+          "count": 1
         },
         {
           "day": "Sunday",
@@ -168,9 +168,9 @@
     },
     {
       "retailer": "Macy's",
-      "signal_count": 3,
-      "distinct_observation_dates": 2,
-      "date_span_days": 3,
+      "signal_count": 5,
+      "distinct_observation_dates": 4,
+      "date_span_days": 8,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -192,11 +192,11 @@
         },
         {
           "day": "Friday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Saturday",
-          "count": 0
+          "count": 1
         },
         {
           "day": "Sunday",
