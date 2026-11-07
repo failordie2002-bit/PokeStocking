@@ -1,10 +1,10 @@
 {
   "version": "37.0",
-  "updated_at": "2026-11-07T08:52:53.884401+00:00",
+  "updated_at": "2026-11-07T09:48:00.684913+00:00",
   "inventory_scope": "online_restock_signal",
   "lookback_days": 90,
   "weekday_timezone": "America/New_York",
-  "source_count": 121,
+  "source_count": 129,
   "retailer_patterns": [
     {
       "retailer": "Amazon",
@@ -88,9 +88,9 @@
     },
     {
       "retailer": "Crunchyroll Store",
-      "signal_count": 1,
-      "distinct_observation_dates": 1,
-      "date_span_days": 0,
+      "signal_count": 9,
+      "distinct_observation_dates": 2,
+      "date_span_days": 7,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -112,7 +112,7 @@
         },
         {
           "day": "Friday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Saturday",
