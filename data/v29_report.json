@@ -1,8 +1,9 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-07T09:24:43.250410+00:00",
+  "checked_at": "2026-11-07T13:30:39.007356+00:00",
   "api_keys_required": false,
   "games": [
+    "Altered",
     "Battle Spirits Saga",
     "Cardfight!! Vanguard",
     "Digimon",
@@ -23,7 +24,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 1019,
+  "online_candidates": 1524,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -37,7 +38,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Target",
@@ -46,7 +47,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -55,7 +56,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -64,7 +65,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Kohls",
@@ -73,7 +74,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Lowes",
@@ -82,7 +83,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "GameStop",
@@ -91,7 +92,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Ross",
@@ -100,7 +101,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Burlington",
@@ -109,7 +110,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Five Below",
@@ -118,7 +119,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -127,7 +128,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "CVS",
@@ -136,7 +137,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -145,571 +146,572 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-07T09:24:43.250410+00:00"
+      "checked_at": "2026-11-07T13:30:39.007356+00:00"
     }
   ],
   "check_outcomes": {
     "no_explicit_pickup_evidence:http_404,http_404": 30,
-    "product_http_429": 50
+    "no_explicit_pickup_evidence:http_429,http_404": 2,
+    "product_http_429": 48
   },
   "checks": [
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Bartolomeo [Starter Deck: 3D2Y]",
+      "product": "Silvers Rayleigh [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Bartolomeo [Starter Deck: 3D2Y]",
+      "product": "Silvers Rayleigh [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Bartolomeo [Starter Deck: 3D2Y]",
+      "product": "Smoker [Starter Deck: BLUE Kuzan]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Basil Hawkins [Starter Deck: 3D2Y]",
+      "product": "Smoker [Starter Deck: BLUE Kuzan]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Basil Hawkins [Starter Deck: 3D2Y]",
+      "product": "Smoker [Starter Deck: BLUE Kuzan]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Basil Hawkins [Starter Deck: 3D2Y]",
+      "product": "Smoker [Starter Deck: BLUE Kuzan]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Basil Hawkins [Starter Deck: 3D2Y]",
+      "product": "Smoker [Starter Deck: BLUE Kuzan]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Basil Hawkins [Starter Deck: 3D2Y]",
+      "product": "Tashigi [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Brook [Starter Deck: RED Monkey.D.Luffy]",
+      "product": "Tashigi [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Brook [Starter Deck: RED Monkey.D.Luffy]",
+      "product": "Tashigi [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Brook [Starter Deck: RED Monkey.D.Luffy]",
+      "product": "Tashigi [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Brook [Starter Deck: RED Monkey.D.Luffy]",
+      "product": "Tashigi [Starter Deck: GREEN Roronoa Zoro]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Brook [Starter Deck: RED Monkey.D.Luffy]",
+      "product": "Thousand Sunny [Starter Deck: RED Monkey.D.Luffy]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Charlotte Brulee [Starter Deck: PURPLE Charlotte Katakuri]",
+      "product": "Thousand Sunny [Starter Deck: RED Monkey.D.Luffy]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Charlotte Brulee [Starter Deck: PURPLE Charlotte Katakuri]",
+      "product": "Thousand Sunny [Starter Deck: RED Monkey.D.Luffy]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Charlotte Brulee [Starter Deck: PURPLE Charlotte Katakuri]",
+      "product": "Thousand Sunny [Starter Deck: RED Monkey.D.Luffy]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
       "game": "One Piece",
-      "product": "Charlotte Brulee [Starter Deck: PURPLE Charlotte Katakuri]",
+      "product": "Thousand Sunny [Starter Deck: RED Monkey.D.Luffy]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Brulee [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30SSP) ([DD] Hangry Blaster (40+) This attack does 40 more damage for each damage counter on this Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30SSP) ([DD] Hangry Blaster (40+) This attack does 40 more damage for each damage counter on this Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30SSP) ([DD] Hangry Blaster (40+) This attack does 40 more damage for each damage counter on this Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30SSP) ([DD] Hangry Blaster (40+) This attack does 40 more damage for each damage counter on this Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30SSP) ([DD] Hangry Blaster (40+) This attack does 40 more damage for each damage counter on this Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Beautiful Dolls\" Doloris (BD/WE49-E27SSP) ([DDD] Abyss Eye If your opponent's Active Pokemon is affected by a Special Condition, it is Knocked Out.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Beautiful Dolls\" Doloris (BD/WE49-E27SSP) ([DDD] Abyss Eye If your opponent's Active Pokemon is affected by a Special Condition, it is Knocked Out.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Beautiful Dolls\" Doloris (BD/WE49-E27SSP) ([DDD] Abyss Eye If your opponent's Active Pokemon is affected by a Special Condition, it is Knocked Out.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Beautiful Dolls\" Doloris (BD/WE49-E27SSP) ([DDD] Abyss Eye If your opponent's Active Pokemon is affected by a Special Condition, it is Knocked Out.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Beautiful Dolls\" Doloris (BD/WE49-E27SSP) ([DDD] Abyss Eye If your opponent's Active Pokemon is affected by a Special Condition, it is Knocked Out.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Katakuri [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Good Moooorning\" Kasumi Toyama (BD/WE49-E32SSP) ([MMM] Maximum Drilling (200+) If this Pokemon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Linlin [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Good Moooorning\" Kasumi Toyama (BD/WE49-E32SSP) ([MMM] Maximum Drilling (200+) If this Pokemon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Linlin [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Good Moooorning\" Kasumi Toyama (BD/WE49-E32SSP) ([MMM] Maximum Drilling (200+) If this Pokemon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Linlin [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"Good Moooorning\" Kasumi Toyama (BD/WE49-E32SSP) ([MMM] Maximum Drilling (200+) If this Pokemon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage.) [BanG Dream! 10th Anniversary! Premium Booster]",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Pokémon",
+      "product": "\"Good Moooorning\" Kasumi Toyama (BD/WE49-E32SSP) ([MMM] Maximum Drilling (200+) If this Pokemon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Linlin [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"The Parking Lot's Cat\" Rana Kaname (BD/WE49-E51SP) ([LLL] Sonic Edge (110) This attack's damage isn't affected by any effects on your opponent's Active Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Linlin [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"The Parking Lot's Cat\" Rana Kaname (BD/WE49-E51SP) ([LLL] Sonic Edge (110) This attack's damage isn't affected by any effects on your opponent's Active Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Perospero [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"The Parking Lot's Cat\" Rana Kaname (BD/WE49-E51SP) ([LLL] Sonic Edge (110) This attack's damage isn't affected by any effects on your opponent's Active Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Perospero [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"The Parking Lot's Cat\" Rana Kaname (BD/WE49-E51SP) ([LLL] Sonic Edge (110) This attack's damage isn't affected by any effects on your opponent's Active Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Perospero [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"The Parking Lot's Cat\" Rana Kaname (BD/WE49-E51SP) ([LLL] Sonic Edge (110) This attack's damage isn't affected by any effects on your opponent's Active Pokemon.) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Perospero [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"You, Slipping Away From Us\" PAREO (BD/WE49-E58SP) ([GC] Leaf Guard (140) During your opponent's next turn, this Pokemon takes 50 less damage from attacks (after applying Weakness and Resistance).) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Perospero [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"You, Slipping Away From Us\" PAREO (BD/WE49-E58SP) ([GC] Leaf Guard (140) During your opponent's next turn, this Pokemon takes 50 less damage from attacks (after applying Weakness and Resistance).) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Pudding [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"You, Slipping Away From Us\" PAREO (BD/WE49-E58SP) ([GC] Leaf Guard (140) During your opponent's next turn, this Pokemon takes 50 less damage from attacks (after applying Weakness and Resistance).) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Pudding [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"You, Slipping Away From Us\" PAREO (BD/WE49-E58SP) ([GC] Leaf Guard (140) During your opponent's next turn, this Pokemon takes 50 less damage from attacks (after applying Weakness and Resistance).) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Pudding [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "\"You, Slipping Away From Us\" PAREO (BD/WE49-E58SP) ([GC] Leaf Guard (140) During your opponent's next turn, this Pokemon takes 50 less damage from attacks (after applying Weakness and Resistance).) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Pudding [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Pokémon",
+      "product": "League Battle Deck (Mega Lucario ex)",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Charlotte Pudding [Starter Deck: PURPLE Charlotte Katakuri]",
+      "game": "Star Wars: Unlimited",
+      "product": "Ashes of the Empire - Carbonite Booster Display",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Dracule Mihawk [Starter Deck: GREEN Roronoa Zoro]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Dracule Mihawk [Starter Deck: GREEN Roronoa Zoro]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Dracule Mihawk [Starter Deck: GREEN Roronoa Zoro]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Dracule Mihawk [Starter Deck: GREEN Roronoa Zoro]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Dracule Mihawk [Starter Deck: GREEN Roronoa Zoro]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37SP) [BanG Dream! 10th Anniversary! Premium Booster]",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "\"A Different Classroom\" Rimi Ushigome (BD/WE49-E37SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"A Story We Paint Together\" Aya Maruyama (BD/WE49-E30) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Eustass\"Captain\"Kid [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Ice Time [Starter Deck: BLUE Kuzan]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Ice Time [Starter Deck: BLUE Kuzan]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Ice Time [Starter Deck: BLUE Kuzan]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Ice Time [Starter Deck: BLUE Kuzan]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Ice Time [Starter Deck: BLUE Kuzan]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Jewelry Bonney [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Jewelry Bonney [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Jewelry Bonney [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Jewelry Bonney [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36BDR) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Jewelry Bonney [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Killer [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Killer [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Killer [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Killer [Starter Deck: 3D2Y]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Amoris (BD/WE49-E36SP) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Killer [Starter Deck: 3D2Y]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Kin'emon [Starter Deck: GREEN Roronoa Zoro]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Kin'emon [Starter Deck: GREEN Roronoa Zoro]",
+      "game": "Weiß Schwarz",
+      "product": "\"Beautiful Dolls\" Doloris (BD/WE49-E27) [BanG Dream! 10th Anniversary! Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     }
