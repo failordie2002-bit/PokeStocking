@@ -1,30 +1,32 @@
 {
-  "updated_at": "2026-11-07T01:07:35.888440+00:00",
-  "queries_attempted": 76,
-  "new_posts": 23,
-  "total_posts": 915,
-  "located_posts": 10,
-  "retail_sighting_leads": 61,
-  "facebook_group_indexed": 398,
+  "updated_at": "2026-11-07T01:42:15.232203+00:00",
+  "games_monitored": [
+    "Battle Spirits Saga",
+    "Cardfight!! Vanguard",
+    "Digimon",
+    "Disney Lorcana",
+    "Dragon Ball Super",
+    "Final Fantasy TCG",
+    "Flesh and Blood",
+    "Grand Archive",
+    "Gundam",
+    "Kayou",
+    "Magic: The Gathering",
+    "One Piece",
+    "Pokemon",
+    "Pokémon",
+    "Riftbound",
+    "Sorcery: Contested Realm",
+    "Star Wars Unlimited",
+    "Star Wars: Unlimited",
+    "Union Arena",
+    "Weiß Schwarz",
+    "Yu-Gi-Oh!"
+  ],
+  "queries_attempted": 73,
+  "new_posts": 49,
+  "total_posts": 962,
   "posts": [
-    {
-      "id": "c9d834a7750c521c6c004c9f",
-      "title": "People really setting up a tent city at Best Buy for the new Pokemon set coming out tomorrow. There's like 5 police vehicles here too. - Facebook",
-      "description": "People really setting up a tent city at Best Buy for the new Pokemon set coming out tomorrow. There's like 5 police vehicles here too. Facebook",
-      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBBdWx4NlVnY2hkWGFVakRrc0V6UHNMbkx5MEVSZGdQbWFzcHJ6Rm9qb2IxX1J5eHlpRy1ZeUVMNWhhamR0Nm5BVEJKZkM5Zi1WZGtaN3ExRWlfaXlyOVUyUFUxN1RhM1ZScGVhRDFWTzljLUFGTFhrdV9Yb0J6QQ?oc=5",
-      "platform": "facebook_public_index",
-      "published_at": "2026-11-07T00:42:09+00:00",
-      "first_seen_at": "2026-11-07T01:07:35.888440+00:00",
-      "game": "Pokemon",
-      "retailer_mentions": [
-        "Best Buy"
-      ],
-      "location": null,
-      "location_ambiguous": false,
-      "report_type": "general_discussion",
-      "restock_signals": [],
-      "status": "unverified_public_lead"
-    },
     {
       "id": "070521b741426fa76e621a16",
       "title": "A South Carolina man was arrested after police say he left his 6-year-old daughter sleeping outside of Target to hold his spot in line for the release of a new Pokémon trading card set. FULL STORY⬇️ - Facebook",
@@ -41,7 +43,12 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "eaa1403daaada29839196e22",
@@ -61,7 +68,11 @@
       "restock_signals": [
         "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": "https://www.reddit.com/r/PokemonRestocks/comments/1xprqke/got_to_target_ten_months_ago_waited_in_line_for/"
     },
     {
       "id": "35c0da77148686b5b7979105",
@@ -76,10 +87,32 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
+      "restock_signals": [],
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
       ],
-      "status": "unverified_public_lead"
+      "original_post_url": null
+    },
+    {
+      "title": "🏪 Fresh Convenience Store Run Haul from Japan! 🇯🇵⚡ Just completed our morning sourcing route across Tokyo convenience stores: 📦 [Fresh Sealed Inventory Ready to Ship]: 1️⃣ Pokemon Card Game \"30th CELEBRATION 7-Card Special Sets\" ・Includes - Facebook",
+      "description": "🏪 Fresh Convenience Store Run Haul from Japan! 🇯🇵⚡ Just completed our morning sourcing route across Tokyo convenience stores: 📦 [Fresh Sealed Inventory Ready to Ship]: 1️⃣ Pokemon Card Game \"30th CELEBRATION 7-Card Special Sets\" ・Includes Facebook",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5odUdZcE5xU0VCT3JtMEt3R2V6eXpfUVRoYXNjRWFyZHl1Sm5xLWtJOHVsbkVUMEdxSFI1TjFPMGFGWlRGSGEzV3JRMnVDRlo2ZzlZUGNFWVBIak1pU0lBSHptSXlsUzA4ZzVlbV8zandULWRRRW5GS0o4RQ?oc=5",
+      "published_at": "2026-11-06T23:30:52+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Pokemon"
+      ],
+      "game": "Pokemon",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "96cf1802ab8138c2f3d23dc9"
     },
     {
       "id": "50fb6b5236a4797857e35a46",
@@ -97,7 +130,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "b6c6b3a50bede412ae7900bf",
@@ -113,11 +150,35 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "in stock",
-        "etbs",
-        "elite trainer box"
+        "in stock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
+    },
+    {
+      "title": "Stop buying Pokemon from local scalpers. You’re getting scammed guys. If it’s priced like Gamestop on FB marketplace, just go there. - Facebook",
+      "description": "Stop buying Pokemon from local scalpers. You’re getting scammed guys. If it’s priced like Gamestop on FB marketplace, just go there. Facebook",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQa01OVUc2ckwzSVBDNlg4dkE3dUpqeUs4MzM0T2ZvcFZmaWo4UTNaay1HUmVjMUNzYm9KQ2xMRFdmTTVwTkRiRmdwOWJLRURKalhmenpBdUh5akRuMUZlOGhtdFJpaDJ2NXcxU1VRc01sUVo2MzZCZFA3VllVZjViVjQtaw?oc=5",
+      "published_at": "2026-11-06T22:31:28+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Pokemon"
+      ],
+      "game": "Pokemon",
+      "retailer_mentions": [
+        "GameStop"
+      ],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "ef30dc15030c1de14b8e059d"
     },
     {
       "id": "692828aedb571b56206573a7",
@@ -133,10 +194,14 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": "https://www.reddit.com/r/MaleFashionMarket/comments/1xpq2ji/wtb_2015_teeturtle_charmander_hoodie/"
     },
     {
       "id": "488e81c819a1848fa60d6d82",
@@ -152,7 +217,12 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "70e75d10e8e147ba115e21a1",
@@ -168,10 +238,33 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": "https://www.reddit.com/r/Pokemon_Restockd/comments/1xporwu/pokemon_tcg_30th_celebration_figure_collection/"
+    },
+    {
+      "title": "Join us TOMORROW between 11-3 for our second annual GamesCon! We'll have Mario Kart, Pokemon Go, Legos, a chess tournament, and much more! Plus, you could be walking away with one of these games from our prize raffle! Register online: https://poq - Facebook",
+      "description": "Join us TOMORROW between 11-3 for our second annual GamesCon! We'll have Mario Kart, Pokemon Go, Legos, a chess tournament, and much more! Plus, you could be walking away with one of these games from our prize raffle! Register online: https://poq Facebook",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1QTWVnWnExeWVXQUlZVkVVcEI0SENBdVlGa3ZKMnZITjBWRVZXMHVqVFJUS1FrVHZlSTNEX1g1SWZjVlFBdWxOaUVlSTI5ekdOdUZ1VlZUQ1RrMDNwNlN1aGo3cGV0cS1OUURudnV2WUR0aEYzSHJ5UE1URQ?oc=5",
+      "published_at": "2026-11-06T21:13:22+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Pokemon"
+      ],
+      "game": "Pokemon",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "f406b5046bc6e57089184c6e"
     },
     {
       "id": "f8739a68005866f89032df4c",
@@ -187,8 +280,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "booster packs"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -216,6 +308,25 @@
       "status": "unverified_public_lead",
       "id": "0f894117db1fb2d983d88406",
       "location_ambiguous": false
+    },
+    {
+      "title": "A “cool, but not good” review of Sorcery: Contested Realm",
+      "description": "",
+      "url": "https://www.reddit.com/r/SorceryTCG/comments/1xpmams/a_cool_but_not_good_review_of_sorcery_contested/",
+      "published_at": "2026-11-06T19:49:00+00:00",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "platform": "reddit",
+      "games": [
+        "Sorcery: Contested Realm"
+      ],
+      "game": "Sorcery: Contested Realm",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": "https://www.reddit.com/r/SorceryTCG/comments/1xpmams/a_cool_but_not_good_review_of_sorcery_contested/",
+      "status": "unverified_public_lead",
+      "id": "c07edc2af2d72b4ece08cd92"
     },
     {
       "id": "9460227cb9596e5b4b9d612b",
@@ -277,10 +388,15 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
     },
     {
       "title": "Happy Delta Day 😏 #deltareign #pokemon #pokemontcg #pokemoncards #pokemontiktok - Facebook",
@@ -301,6 +417,25 @@
       "status": "unverified_public_lead",
       "id": "ca1d5f36d9473104b72da7f0",
       "location_ambiguous": false
+    },
+    {
+      "title": "Remember when TCGs told stories? | Sorcery: Contested Realm",
+      "description": "",
+      "url": "https://www.reddit.com/r/TCG/comments/1xpllpf/remember_when_tcgs_told_stories_sorcery_contested/",
+      "published_at": "2026-11-06T19:20:52+00:00",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "platform": "reddit",
+      "games": [
+        "Sorcery: Contested Realm"
+      ],
+      "game": "Sorcery: Contested Realm",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": "https://www.reddit.com/r/TCG/comments/1xpllpf/remember_when_tcgs_told_stories_sorcery_contested/",
+      "status": "unverified_public_lead",
+      "id": "2989d6b24ba1d17358589cda"
     },
     {
       "title": "🚨 ANYONE ELSE COLLECTING THESE?! 🚨 Walmart has the Pokémon Lumiose City Mini Tin Display listed for $142.99! 10 mini tins in one display, and I have to say, this might be one of my favorite mini tin designs in a while. 👀🔥 👉 https://walmrt.us/4sLL4Yu # - Facebook",
@@ -360,9 +495,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -444,7 +577,14 @@
       "first_seen_at": "2026-11-06T20:53:49.963991+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -468,7 +608,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "c8a556630e5d7a880d2b38bc",
@@ -524,8 +668,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -547,7 +691,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "6dceb5aff790cd0452800536",
@@ -632,6 +780,25 @@
       "original_post_url": null
     },
     {
+      "title": "Frost Mage vs. Lavamancer gameplay by TC - Remember when TCGs told stories? | Sorcery: Contested Realm",
+      "description": "",
+      "url": "https://www.reddit.com/r/SorceryTCG/comments/1xph7fk/frost_mage_vs_lavamancer_gameplay_by_tc_remember/",
+      "published_at": "2026-11-06T16:31:23+00:00",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "platform": "reddit",
+      "games": [
+        "Sorcery: Contested Realm"
+      ],
+      "game": "Sorcery: Contested Realm",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": "https://www.reddit.com/r/SorceryTCG/comments/1xph7fk/frost_mage_vs_lavamancer_gameplay_by_tc_remember/",
+      "status": "unverified_public_lead",
+      "id": "23e07f38505fd647e51bdb02"
+    },
+    {
       "id": "16ccb571943f62b5501ea558",
       "title": "Pokemon TCG: 30th Celebration Figure Collection restocked at Amazon — $53.99",
       "description": "Pokemon TCG: 30th Celebration Figure Collection Retailer: Amazon Price: $53.99 Automated Pokemon restock alert from Restockd . Availability can change quickly. #AD Disclosure: Restockd may earn a commission from qualifying purchases. Download Restockd for faster alerts. submitted by /u/restockd-alerts to r/Pokemon_Restockd [link] [comments]",
@@ -645,8 +812,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -687,10 +854,13 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
+      "restock_signals": [],
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
       ],
-      "status": "unverified_public_lead"
+      "original_post_url": null
     },
     {
       "title": "Pokémon Delta Reign and 30th Anniversary drops today 🔥 TODAY IS THE DAY, TRAINERS! 🔥 Pokémon Mega Evolution: Delta Reign is officially HERE — and the 30th Anniversary celebration is going BIG! We're talking Delta Reign ETBs, Booster Boxes and - Facebook",
@@ -705,10 +875,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster boxes",
-        "etbs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -729,9 +896,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -755,7 +920,11 @@
       "restock_signals": [
         "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "title": "👻 Canyon Lake, this is your sign to go on a little side quest. Swing by Spooky Lake Comics & Collectibles for Pokémon cards, modern comics, collectibles, board games, and the kind of random finds you immediately text your friends about. 💚💜 We restock ever - Facebook",
@@ -816,7 +985,12 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "2c811b2bb8b64e1b46728f33",
@@ -832,8 +1006,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -901,7 +1075,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "cfc63e3b824aa7ec3db7ee56",
@@ -1025,9 +1203,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -1072,7 +1248,7 @@
         "lat": 37.271,
         "lon": -79.9414,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "location_ambiguous": false,
       "report_type": "general_discussion",
@@ -1081,28 +1257,6 @@
       "games": [
         "Pokemon",
         "Pokémon"
-      ],
-      "original_post_url": null
-    },
-    {
-      "id": "274f163137f24d60dee78700",
-      "title": "NEW ARRIVALS ✈️ 🚨 POKEMON RESTOCK 🚨 We have had a massive Pokemon restock, including Delta Reign, 30th, Ascended heroes and much more! From boxes tins and blisters to boosters and vintage 🤩 We have also just dropped a massive selection - Fa",
-      "description": "",
-      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxOYi1GS0VnZm8wMzR5dDB4amh3SmhsMlppTGt1aERVZ292OXRGbkpnVlVUSTRLV0xiOUd6N3RmQjk4UDRVd2h4ajF5aUg0NkpqOXJfYTFVM2dBcWtLb1IwYnVxc0lMcm8zYmpjR0ZyOFVnMWNJMWhTUk1SNUpaREw1YnprUWI3a0FXZlVxbmVTOEdOekx6cXNIVS1vNTBmWUFyVWZVWWxJckpnZkNwMThuQzRieFBBemhSM2poX1Zhd0Jpc01aTUtJekgtMEFYTm4xN2NmSjlTeE5DNzg0eDFpTFdrcGh1dGMt?oc=5",
-      "platform": "indexed_social",
-      "published_at": "2026-11-06T12:59:38+00:00",
-      "first_seen_at": "2026-11-06T13:14:14.749689+00:00",
-      "game": "Pokemon",
-      "retailer_mentions": [],
-      "location": null,
-      "location_ambiguous": false,
-      "report_type": "general_discussion",
-      "restock_signals": [
-        "restock"
-      ],
-      "status": "unverified_public_lead",
-      "games": [
-        "Pokemon"
       ],
       "original_post_url": null
     },
@@ -1122,7 +1276,11 @@
       "restock_signals": [
         "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "title": "People really setting up a tent city at Best Buy for the new Pokemon set coming out tomorrow. There's like 5 police vehicles here too. - Facebook",
@@ -1270,8 +1428,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1293,8 +1451,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1339,8 +1497,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1364,8 +1522,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1387,8 +1545,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1412,8 +1569,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1437,8 +1594,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1462,9 +1619,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
         "restocked",
-        "elite trainer box"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1486,8 +1642,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "in stock",
-        "booster packs"
+        "in stock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1554,9 +1709,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
         "restocked",
-        "elite trainer box"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1601,7 +1755,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "7b53f00c158455a784e00f7f",
@@ -1639,8 +1797,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1664,8 +1822,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1710,8 +1868,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1820,7 +1978,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "title": "POKÉMON MANIA HAS OFFICIALLY HIT YUBA CITY! 😂🔥 Out here camping at Target for the Pokémon 30th Anniversary Celebrations UPC AND the new Delta Reign set release! But shoutout to the real MVP of the night… THE STREET DOG LADY! 🌭🤣 She s - Facebook",
@@ -1859,8 +2021,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1882,8 +2044,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -1995,8 +2157,7 @@
         "Target"
       ],
       "restock_signals": [
-        "restock",
-        "etbs"
+        "restock"
       ],
       "report_type": "retail_sighting_lead",
       "location": null,
@@ -2040,10 +2201,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -2059,7 +2218,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-11-06T04:35:10+00:00",
       "first_seen_at": "2026-11-06T13:14:14.749689+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -2111,9 +2270,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -2175,9 +2332,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -2259,8 +2414,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -2302,8 +2457,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -2325,8 +2480,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -2432,8 +2587,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -2477,7 +2632,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "f0990cd221aedf79232a0cd3",
@@ -2517,8 +2676,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -2540,9 +2699,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
         "restocked",
-        "etbs"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -2648,10 +2806,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster packs",
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -2713,7 +2868,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -2757,9 +2912,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -2821,9 +2974,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -2869,7 +3020,12 @@
       "restock_signals": [
         "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
     },
     {
       "title": "For anyone willing to cross the water (or already loving on this side), we're doing a card show in Bremerton on Saturday Nov 21, Cards & Cocktails, at Kitsap Golf & Country Club (10 to 6). Pokémon, Magic, One Piece, sports cards and more, plus free prize dra - Facebook",
@@ -2885,7 +3041,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [],
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -2952,10 +3108,13 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
+      "restock_signals": [],
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
       ],
-      "status": "unverified_public_lead"
+      "original_post_url": null
     },
     {
       "id": "03bfd0e5441dbd6d28efb55c",
@@ -3012,10 +3171,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -3122,8 +3279,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3144,9 +3301,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -3279,8 +3434,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3301,9 +3456,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -3388,8 +3541,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3411,8 +3564,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3476,9 +3629,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -3565,8 +3716,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3587,9 +3738,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -3696,8 +3845,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "in stock",
-        "booster boxes"
+        "in stock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3740,8 +3888,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -3867,8 +4015,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "in stock",
-        "booster boxes"
+        "in stock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -3967,7 +4114,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-11-05T07:21:47+00:00",
       "first_seen_at": "2026-11-05T09:09:18.038078+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -4017,9 +4164,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -4040,11 +4185,10 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
         "in stock",
-        "booster boxes"
+        "restock"
       ],
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -4109,8 +4253,7 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "etbs"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -4133,10 +4276,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -4163,6 +4304,26 @@
         "Pokemon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "🔥 Pokémon & One Piece Cards for Sale or Trade! 🔥 I'm looking to sell or trade my entire card collection, which includes both Pokémon and One Piece cards. 💰 Total Market Value: Approximately $400 ❤️ Looking to sell everything together or trade the entire c - Facebook",
+      "description": "🔥 Pokémon & One Piece Cards for Sale or Trade! 🔥 I'm looking to sell or trade my entire card collection, which includes both Pokémon and One Piece cards. 💰 Total Market Value: Approximately $400 ❤️ Looking to sell everything together or trade the entire c Facebook",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE05QV9sNnJDT253aVpQZkw5cU1reEZqMkVaSDI5RVZLaktOZ014MDA1WV9SQjZ6ZVBXTHc1OVpERlUyZFgzX3kwUGg5NlZvRlVKbHN0RnZHUm5XQS13T0g0M3NXb1NXT3ZXcFpaZFkzaWhfTG5abmkyUVNDaw?oc=5",
+      "published_at": "2026-11-05T03:56:30+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "game": "Pokemon",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "ce421f2e3bac08456093a687"
     },
     {
       "title": "🔥 JAPANESE POKÉMON & ONE PIECE CARDS FROM JAPAN 🇯🇵 📦 BULK ORDERS WELCOME — 1,000+ BOXES AVAILABLE! ⚡ FAST SHIPPING — AS SOON AS SAME DAY ✅ 100% AUTHENTIC / GENUINE PRODUCTS ONLY 🌎 WORLDWIDE SHIPPIN - Facebook",
@@ -4241,8 +4402,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -4264,7 +4425,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "title": "⚡𝗣𝗢𝗞𝗘́𝗠𝗢𝗡 𝟯𝟬𝗧𝗛 𝗔𝗡𝗡𝗜𝗩𝗘𝗥𝗦𝗔𝗥𝗬 𝗥𝗘𝗦𝗧𝗢𝗖𝗞 𝗔𝗧 𝗗𝗢𝗡𝗞𝗜 ORCHARD CENTRAL!⚡ Calling all Pokémon fans and collectors! 👀✨ The highly sought-after Pokémon TCG 30th Celebration items are making a return in HIGHLY LIMITED QUANTITIES! 🎊 🎁 A - Instagram",
@@ -4363,9 +4528,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -4596,8 +4759,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "booster boxes"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -4622,8 +4784,7 @@
         "Barnes & Noble"
       ],
       "restock_signals": [
-        "restock",
-        "etbs"
+        "restock"
       ],
       "report_type": "retail_sighting_lead",
       "location": null,
@@ -4642,7 +4803,14 @@
       "first_seen_at": "2026-11-05T20:56:54.872986+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
@@ -4944,9 +5112,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -5079,8 +5245,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5127,14 +5293,33 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
       ],
       "original_post_url": "https://www.reddit.com/r/Pokemon_Restockd/comments/1xnvenv/pokemon_tcg_hops_zacian_ex_box_restocked_at/"
+    },
+    {
+      "title": "Who needs a Star Wars Unlimited booster pack when the new Ayuda's Volunteers deck is here!? This month's edition is both limited AND triple platinum, so you can be sure we've got some rare cards, including: 🤝The Ambassador, aka Dalila Puga-Sosa. In her - Facebook",
+      "description": "Who needs a Star Wars Unlimited booster pack when the new Ayuda's Volunteers deck is here!? This month's edition is both limited AND triple platinum, so you can be sure we've got some rare cards, including: 🤝The Ambassador, aka Dalila Puga-Sosa. In her Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQdXFNa1cwUzlEelgyS0dDZFRudlFWX2dGRUtNOVRYc0tZeWhtUmtHMTdNNkZLMDM1WmZBQ3J1OW5nQ2g0bWQtbXZOTFltbUphRnFPanRHeFpBTHUyS0RsMVM0YVVEblpXNWkyT1J3bGlwOHBFb1BENkltSFJIYm01WmNCZkxlSl9wTktqdVlVVkppZ2RJLUk3UG5GMXl3SUs2Ym9aWUZ1YmxQb1YwRFRQZjg3dDFoaGRnVG1zMDZwam9ySzRYWEh2U09yYjA2NnJNSWxtSHBoRFdmUE1IZEo5RnJpa1RHMjg?oc=5",
+      "published_at": "2026-11-04T18:00:27+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Star Wars Unlimited"
+      ],
+      "game": "Star Wars Unlimited",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "ff4a39380242fc353046813f"
     },
     {
       "id": "30443f8ce59ddfa867c384ac",
@@ -5150,10 +5335,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
         "restocked",
-        "etbs",
-        "elite trainer box"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5361,10 +5544,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "etbs"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -5386,10 +5567,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "etbs"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -5518,7 +5697,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [
         "restock"
       ],
@@ -5541,9 +5720,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -5563,7 +5740,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -5648,8 +5825,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5673,8 +5850,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5698,8 +5875,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5743,8 +5920,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5766,8 +5943,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5792,8 +5969,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5817,8 +5994,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -5842,8 +6019,8 @@
       "location_ambiguous": false,
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -6095,9 +6272,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -6202,8 +6377,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -6225,8 +6400,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -6269,9 +6444,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -6405,8 +6578,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -6511,9 +6684,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -6576,9 +6747,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -6687,7 +6856,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -6773,7 +6942,14 @@
       "first_seen_at": "2026-11-04T17:02:05.147862+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Alexandria",
+        "state": "VA",
+        "lat": 38.8048,
+        "lon": -77.0469,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -6782,6 +6958,27 @@
         "Pokemon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "Lorcana Starter Decks in stock. #amazingcomicsandcards #localcomicbookstore #lorcana #lorcanastarterdeck #disneycards - Instagram",
+      "description": "Lorcana Starter Decks in stock. #amazingcomicsandcards #localcomicbookstore #lorcana #lorcanastarterdeck #disneycards Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1ZaU50LV9sNGV6bU4xNmNjazJ6Q3dkTUEyMEZhakdvTDR4ejg3LXJST0laM2g3TWVsUFZOYWlZY0Rma1U4ck8wX1VMSWFaTDhoUHc?oc=5",
+      "published_at": "2026-11-03T21:29:50+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "in stock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "63b59620311198ab50b9a5e9"
     },
     {
       "id": "e311915c64ddbe42ddcbef37",
@@ -6797,8 +6994,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -6900,9 +7097,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -6971,8 +7166,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7014,9 +7209,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -7260,6 +7453,25 @@
       "original_post_url": null
     },
     {
+      "title": "Save up to 15% on select non-MTG sealed products, including Flesh and Blood, Disney Lorcana, and more! 👀 Find a deal, while supplies last! 🔻 Link in bio! - Instagram",
+      "description": "Save up to 15% on select non-MTG sealed products, including Flesh and Blood, Disney Lorcana, and more! 👀 Find a deal, while supplies last! 🔻 Link in bio! Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBqdGtIendQZTlubUVrM0hwLUJlalh2QkVJRnRROV9XY3czcXdYbUVtN1JCTVI3TWZYQzN5U3ZteWVUeVQ4M2lWeU9jVTYtSXJwTGc?oc=5",
+      "published_at": "2026-11-03T16:57:11+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "3cf9a3232269de8f9d380008"
+    },
+    {
       "id": "2bd00c1e908fb4f25f475928",
       "title": "Pokemon TCG: 30th Celebration Poster Collection restocked at Amazon — $41.47",
       "description": "Pokemon TCG: 30th Celebration Poster Collection Retailer: Amazon Price: $41.47 Automated Pokemon restock alert from Restockd . Availability can change quickly. #AD Disclosure: Restockd may earn a commission from qualifying purchases. Download Restockd for faster alerts. submitted by /u/restockd-alerts to r/Pokemon_Restockd [link] [comments]",
@@ -7273,8 +7485,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7296,8 +7508,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7363,8 +7575,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7407,15 +7618,32 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
       "id": "2d819c2e460eba1d4389e68d",
       "location_ambiguous": false
+    },
+    {
+      "title": "One Piece TCG Dracule Mihawk PSA Magazine promo graded PSA 10 Price firm. Meetup in Augusta. Cash, venmo or cash app accepted - Facebook",
+      "description": "One Piece TCG Dracule Mihawk PSA Magazine promo graded PSA 10 Price firm. Meetup in Augusta. Cash, venmo or cash app accepted Facebook",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBHQXF1cWpUSEp0SzN1SjVrdHdxZGZ1VlZETnc3QXpMeFNBeFY1azVjQ0EtR1AyTUg3U3BPbnN3M3dDUmdleDRzM25LejhFLV9rX3EtREdGXzdPTVRfN1RsYkNBSk9hRVVzUm9LZTBjWVQyS0E2YUN0Q2dVeTQ?oc=5",
+      "published_at": "2026-11-03T13:49:18+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "One Piece"
+      ],
+      "game": "One Piece",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "34cb028198ddc39dc87d11d0"
     },
     {
       "id": "c55fffd1a00320188a398159",
@@ -7431,8 +7659,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7495,9 +7723,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -7538,9 +7764,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -7561,9 +7785,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -7738,8 +7960,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7845,14 +8067,35 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
       ],
       "original_post_url": "https://www.reddit.com/r/Pokemon_Restockd/comments/1xmm50a/pokemon_tcg_30th_celebration_figure_collection/"
+    },
+    {
+      "title": "Restock for One Piece Card Game Extra Booster EB05 Heroines Edition Vol.2 Single Cards Kindly drop us a PM or Place your order at link below 👇👇👇 shopee.com.my/apexbladers ————————————————————————— [Tournament Schedul - Instagram",
+      "description": "Restock for One Piece Card Game Extra Booster EB05 Heroines Edition Vol.2 Single Cards Kindly drop us a PM or Place your order at link below 👇👇👇 shopee.com.my/apexbladers ————————————————————————— [Tournament Schedul Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFA4bzJxODlIVFpjYlBfUG12MmRrY1B2VTVKQlA0blJKTmZCQ2Z3Um9wQ2g3dE40VV9kb29TRG8xOEZwcXQ4MFVCVG9tY1VSVHdQdmc?oc=5",
+      "published_at": "2026-11-03T06:18:25+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "One Piece"
+      ],
+      "game": "One Piece",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "859de5b7509f635ba7ba5dfd"
     },
     {
       "id": "92ba33467b80eee8452f6bd3",
@@ -7868,8 +8111,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -7931,8 +8174,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -8041,7 +8284,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-11-03T03:51:45+00:00",
       "first_seen_at": "2026-11-04T05:06:08.542813+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -8115,9 +8358,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "booster packs",
-        "elite trainer box"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8345,8 +8586,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8656,8 +8897,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8699,8 +8940,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8722,8 +8963,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8745,8 +8986,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8768,8 +9009,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8861,8 +9102,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -8884,9 +9125,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon"
       ],
@@ -8904,7 +9143,7 @@
         "Gundam",
         "Pokémon"
       ],
-      "game": "Gundam",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [],
       "report_type": "general_discussion",
@@ -8951,10 +9190,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -9028,6 +9265,25 @@
       "location_ambiguous": false
     },
     {
+      "title": "Authentic Bandai Namco One Piece Card Game collection. 4 starter decks (ST-31 and ST-34) 30$/ per 4 booster packs OP-17 15$/ per 10 OP-17 mini tins 25$/ per All sealed and in mint conditions IG: rare_vault_ - Facebook",
+      "description": "Authentic Bandai Namco One Piece Card Game collection. 4 starter decks (ST-31 and ST-34) 30$/ per 4 booster packs OP-17 15$/ per 10 OP-17 mini tins 25$/ per All sealed and in mint conditions IG: rare_vault_ Facebook",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9DVkk4OGRZck92SFBSb18tdzBsN1dtOXI2cU1RZVd2OXp1R2xWYnhRc2R6ZFVKUmRqck1xb2d4T3hBV1h5Qk9jSkdQdmZjSkowM0xCUWxyNEVkWHAzUmJYVkgtYXZHa2xUR1p1TTVHaVpiUHYxR2JMQVRUNVo?oc=5",
+      "published_at": "2026-11-02T16:14:27+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "One Piece"
+      ],
+      "game": "One Piece",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "2c433dccfe60fb1b88c0f96c"
+    },
+    {
       "title": "Trust Starts Before Shipping. A buyer had been patiently waiting for their order. When the products finally arrived, I sent them a photo before shipping. Their reaction made my day! For me, selling Pokémon and ONE PIECE cards isn’t just about prices. It’s about - Facebook",
       "description": "Trust Starts Before Shipping. A buyer had been patiently waiting for their order. When the products finally arrived, I sent them a photo before shipping. Their reaction made my day! For me, selling Pokémon and ONE PIECE cards isn’t just about prices. It’s about Facebook",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE40RWdaWmtiX2Y1bjYxLXV0Q0dKaVE5MDNuN3NMUHZTcTNyanM2TUo4WWVLamlpMnk0NTdIdGxBbG1Yd1pEbmdYZ1RWQUpoMkhlMzZxQkVNalZfVlhEREstVVZ5SmFwZjhDRURaQ0t3ZEpDXzRrZ1Z1dWI0SQ?oc=5",
@@ -9083,7 +9339,7 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -9108,7 +9364,7 @@
         "Target"
       ],
       "restock_signals": [],
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -9159,6 +9415,25 @@
       "location_ambiguous": false
     },
     {
+      "title": "New in store Star Wars Unlimited Battle Decks. 4 different styles to collect Available now 😎 - Facebook",
+      "description": "New in store Star Wars Unlimited Battle Decks. 4 different styles to collect Available now 😎 Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQeEdUNV9iMkpzY1RDT3BxRHNsNlpudkJZZWhreGk0UFZVYkpkWjl2RXR5T2VzRnAxWFY4UXpYZGdab3VmcXpMNDBha3ZudUZxODZRa18yU3NQQk45RE9JWUFmbEVHQk9IZDhjTGY5cVpwem1KeEpaWjV3dE9WMUEwUXUwMURRYXpQSzdGZmpNMU01Y0pEa29qdTh5Q3N2TFRkRHZwbHhRaGpCMDIzWXVjeEdmNVFwdW4yMnpSNUpSeFNSZldQd2FqZnp4VDlQMC1VS1ZiRzhJR3VseXpjSUE?oc=5",
+      "published_at": "2026-11-02T13:53:43+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Star Wars Unlimited"
+      ],
+      "game": "Star Wars Unlimited",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "a00e876ff7cb84ccb173f224"
+    },
+    {
       "id": "5cff8764f3bb26ec17a8cd08",
       "title": "Taylor's Variety Spot restocking Pokémon and Magic: The Gathering cards in Chesapeake, VA - Facebook",
       "description": "Taylor's Variety Spot restocking Pokémon and Magic: The Gathering cards in Chesapeake, VA Facebook",
@@ -9201,8 +9476,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -9224,9 +9499,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -9247,9 +9520,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -9291,11 +9562,37 @@
       "retailer_mentions": [],
       "restock_signals": [],
       "report_type": "general_discussion",
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "original_post_url": null,
       "status": "unverified_public_lead",
       "id": "8bce4a441fb00cb0e5011f8e",
       "location_ambiguous": false
+    },
+    {
+      "title": "Collecting a series in consecutive numbers takes your collection to a more prestigious and valuable level. The Japanese-text version of the One Piece Card Game English 2nd Anniversary set is getting harder to find outside Japan. And in consecutive numbers - Facebook",
+      "description": "Collecting a series in consecutive numbers takes your collection to a more prestigious and valuable level. The Japanese-text version of the One Piece Card Game English 2nd Anniversary set is getting harder to find outside Japan. And in consecutive numbers Facebook",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1lYnhUWnJmZmRLMi1idWJUb0pyOTlUcDNSN0QzV2N5eHJFeWZweGN1TWV4WnVMb3B5U1k0Q04tTUhhcFdSalE2TWhzaHNVSDNnUW1sU0h0ck8xMjJPb1doLTFwWHVaNGVOWTZuRUY2QmpydmZpcC1BOWpkYw?oc=5",
+      "published_at": "2026-11-02T13:20:26+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "One Piece"
+      ],
+      "game": "One Piece",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "356c2bf285882777ee84d01c"
     },
     {
       "title": "Richmond Auctions is having their Inaugural Sports Card & TCG Auction THIS WEEK! There is a fantastic selection of Pokemon Cards that will be selling no reserve! This is just the tip of the iceberg! Check out the entire catalog and register to bid today on The - Facebook",
@@ -9311,7 +9608,14 @@
       "retailer_mentions": [],
       "restock_signals": [],
       "report_type": "general_discussion",
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "original_post_url": null,
       "status": "unverified_public_lead",
       "id": "bf4bf841c37de6d57c0079ba",
@@ -9372,8 +9676,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -9464,9 +9768,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -9488,10 +9790,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -9593,9 +9893,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -9633,7 +9931,14 @@
       "first_seen_at": "2026-11-04T01:45:13.759201+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Staunton",
+        "state": "VA",
+        "lat": 38.1496,
+        "lon": -79.0717,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -9657,7 +9962,14 @@
       "retailer_mentions": [],
       "restock_signals": [],
       "report_type": "general_discussion",
-      "location": null,
+      "location": {
+        "city": "Staunton",
+        "state": "VA",
+        "lat": 38.1496,
+        "lon": -79.0717,
+        "precision": "city_center",
+        "verified": false
+      },
       "original_post_url": null,
       "status": "unverified_public_lead",
       "id": "b3a022c199f80c4fab8c775f",
@@ -9697,9 +10009,7 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -9721,8 +10031,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -9781,7 +10091,14 @@
       "first_seen_at": "2026-11-04T13:13:37.407619+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Norfolk",
+        "state": "VA",
+        "lat": 36.8508,
+        "lon": -76.2859,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -9971,8 +10288,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -10075,9 +10392,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -10140,7 +10455,11 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "b462fd09660790d417622471",
@@ -10152,7 +10471,14 @@
       "first_seen_at": "2026-11-04T05:06:08.542813+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Winchester",
+        "state": "VA",
+        "lat": 39.1857,
+        "lon": -78.1633,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -10177,8 +10503,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -10202,8 +10528,8 @@
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "games": [
         "Pokemon"
@@ -10343,7 +10669,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-10-31T13:38:38+00:00",
       "first_seen_at": "2026-11-06T05:05:22.019978+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -10403,6 +10729,27 @@
       "original_post_url": null
     },
     {
+      "title": "RESTOCK ‼️RESTOCK ‼️ RESTOCK ‼️ Singles and Box/Case 🆕 are back!! ✅Use code \"RESPECTYGO\" at checkout for 5% OFF #yugiohOCG #immortalPhoenix #harpielady - Facebook",
+      "description": "RESTOCK ‼️RESTOCK ‼️ RESTOCK ‼️ Singles and Box/Case 🆕 are back!! ✅Use code \"RESPECTYGO\" at checkout for 5% OFF #yugiohOCG #immortalPhoenix #harpielady Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxNYi1aSmhyZTcyZ0w5YXUzcDlIdmplS2NLLWtVZVB4b1FGeTBSX0owZ0psbURMcHVJOGQwWHN5YUJJN3VoQlBoSnE0SjhkaHRqV2JhTXVBTzJiRVZsbDUybGZzcWUxQmlsSlZ4LW55VW8tc3BodU5YcWRHV2w2VDQwRUFHcWNCanU1WkFHWEFGWVZETVE4eVltRFpEWWpFLWZVbjN5WGV4OVdleTU2Q3dHVkNZalZtRVMzY3E2SXBBMjl6TWlINGQzWU51dnMxWGd0Rk0zVXM3R20xMm1SWjlkTmlaUGE3WFRVMTRwZTltSEc5TWV4NERr?oc=5",
+      "published_at": "2026-10-31T10:58:55+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "bbb8b68010bf15bee9a5790f"
+    },
+    {
       "title": "Disponibili carte olografiche Pokemon e Digimon Account: anna11071990 - Facebook",
       "description": "Disponibili carte olografiche Pokemon e Digimon Account: anna11071990 Facebook",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE53MHVCNHlOS3RIcUhybTF4M0NoYzFXdldtUWJLZm4zUHVUZDl4VWNQWHpudWF3ck43bkFhLUxUSk9JVzRQbFhkWUcwSUV0dG1tY0EtSGtBVXFxOUNlcHk5RGhjLWhraVBSdlB2UV83Yzh5Q3hlUEZwQy12Zw?oc=5",
@@ -10437,8 +10784,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -10446,6 +10793,50 @@
       "status": "unverified_public_lead",
       "id": "c26bce64754b323341b5f4fd",
       "location_ambiguous": false
+    },
+    {
+      "title": "Yu-Gi-Oh! Immortal Phoenix Restocked! 🔥 The Immortal Phoenix structure deck and singles are back in stock at TCG Corner! Grab yours now before they sell out again. #YuGiOh #ImmortalPhoenix #YuGiOhTCG #TCGCorner #Restocked #DuelMonsters #YG - Facebook",
+      "description": "Yu-Gi-Oh! Immortal Phoenix Restocked! 🔥 The Immortal Phoenix structure deck and singles are back in stock at TCG Corner! Grab yours now before they sell out again. #YuGiOh #ImmortalPhoenix #YuGiOhTCG #TCGCorner #Restocked #DuelMonsters #YG Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQM2p5Xy1GUEJxOUkxcFAxNFc3VWlRd0hNZm4xT21WVUJqRzlyZXFGbERBLUVVZWt3NE94bUUtdDF1bG1HbTY3TTNiQS0tMEpuTXlhU21jamtZbGVhRllhcWNpbVBtYk5WeHdEWHRMdkJZa1pqdTd4UDI2aDVMcEFQY2ItRUs5MDRIRk9pdFQzTjZwVENid3Z4R1d2RDU3akhWaFE1NnVtRDRleVl2MFBkY3VCeEhXaUVLTklLX1F2d2s3ZVgwX3duQTBNQUpmYWdpdm1YWWZiRWZQYi1BNVdERQ?oc=5",
+      "published_at": "2026-10-31T07:52:55+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "in stock",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "a5a775ee34b36d1c10933fab"
+    },
+    {
+      "title": "Something wicked is coming... 🦇 Mark your calendar for three big releases at Wulf Gaming: 🎃 Friday, November 6: Pokémon TCG Delta Reign 🎃 Friday, November 20: Magic: The Gathering Star Trek 🎃 Friday, November 20: One Piece Card Game The Domina - Facebook",
+      "description": "Something wicked is coming... 🦇 Mark your calendar for three big releases at Wulf Gaming: 🎃 Friday, November 6: Pokémon TCG Delta Reign 🎃 Friday, November 20: Magic: The Gathering Star Trek 🎃 Friday, November 20: One Piece Card Game The Domina Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPNVlVTy05a3lRVzQ3R0kxRFpsc2hLeUw0TVdsOUUwNU9rRXNib0dvZGszS0thbGU0ci1faTJtdExsZ2FJeGozZGNIQnpoNmdMQl84WXVKT1FiNFFrdVBFS1FGQTRiUTVESC0yYklXQTlEb0h6d3ZWUUdNUmQzd3hLMWhCbWJsU3Y0M1d4ckZTMkpteVJ5a2JIWEt4UGNZVWNhYnJaUlVlS0E4TW42NUMxNGpZRWhOc1ZaMmpSMkNTWnNMY3A3MmN2OWdyVUdmMzVGZnI5SHFXU0RyUQ?oc=5",
+      "published_at": "2026-10-31T05:18:27+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Pokemon",
+        "One Piece",
+        "Pokémon"
+      ],
+      "game": "Pokemon",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "c45000117b6a5734cead9a38"
     },
     {
       "id": "f8056b17cb1487a48b293773",
@@ -10593,9 +10984,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -10656,7 +11045,7 @@
         "Union Arena",
         "Pokémon"
       ],
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
         "restock"
@@ -10681,9 +11070,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -10726,8 +11113,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -10770,8 +11157,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -10793,9 +11180,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -10822,6 +11207,27 @@
         "Pokemon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "Restock!! #yugioh #yugiohcards #yugiohtcg #yugiohcommunity #anime - Instagram",
+      "description": "Restock!! #yugioh #yugiohcards #yugiohtcg #yugiohcommunity #anime Instagram",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE51d0kwVWxKMFBzWUtEeldwcXNreHdyRnV4YnljTVZRdTlEeVVYZDhEWmU4MGNuOEt2MnhoUEhsSTVGNFdOeGsyTXd1S0dRbm50NWY2MEVjQkJfMmNFekJoZnFQZkVkdUczcDV1TWdadw?oc=5",
+      "published_at": "2026-10-30T17:59:53+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "855ad9b3b2435ae2ab2b88e6"
     },
     {
       "id": "758ca077111556832b802210",
@@ -11055,6 +11461,25 @@
       "original_post_url": null
     },
     {
+      "title": "In at the Galleon today… Gundam Assemble Starter Set plus expansion packs 1 & 2. Arkham Horror Traces to Nowhere Scenario Pack. Marvel Legends Magic the Gathering figure and card series. UNO K-Pop Demon Hunters and Masters of the Universe editi - Facebook",
+      "description": "In at the Galleon today… Gundam Assemble Starter Set plus expansion packs 1 & 2. Arkham Horror Traces to Nowhere Scenario Pack. Marvel Legends Magic the Gathering figure and card series. UNO K-Pop Demon Hunters and Masters of the Universe editi Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOdkMwXy1vOFpTSnMxLS1JUXE2VmdXSVZZaU54WUlzc09YbmZyQXBYOUNwbzhMMXNmbXJtX1R6dVBjaENHcTBpY0k0RkN0alFSSzJUcHV3RHNIdHNPTnZmYW90c2xKa0x6ZXBqSWhPeTRpWFJNU1dib2M1OTFFT0xXRWZZNnYycmh3WjQwcG1ISEZiVENCTW9NbTg2UVNPSlNWMDBOaUc4MGtrelJhS1NxY3VLWjR0Yml5Zk5yeFVoM1IzdkV0WUlTMGI1OU9iWnNhNjZMRGRFdzVGclZIQ1NBNUhBQQ?oc=5",
+      "published_at": "2026-10-30T08:03:11+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Magic: The Gathering"
+      ],
+      "game": "Magic: The Gathering",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "cc1b0343d3e16c6d8dd8ca73"
+    },
+    {
       "id": "a8902720360d52ec4a9a322d",
       "title": "Follow + Comment “WALMART” for stock checkers!! 🤗 30th Celebrations TIN & EX Box Displays are being seen at Walmart locations right now! 🚨 Who’s checking their stores?🤔 #pokemon #pokemontcg #pokemoncards #pokemoncommunity - Instagram",
       "description": "",
@@ -11220,7 +11645,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -11240,7 +11665,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -11301,7 +11726,14 @@
       "retailer_mentions": [
         "Costco"
       ],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -11345,8 +11777,7 @@
       "game": "Union Arena",
       "retailer_mentions": [],
       "restock_signals": [
-        "in stock",
-        "booster boxes"
+        "in stock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -11425,6 +11856,25 @@
       "original_post_url": null
     },
     {
+      "title": "Here are the prices for our new releases in Gundam, One Piece, Upper Deck Hockey Cards and Weiss Schwarz as of Friday October 29, 2026. Please note that we are open on Wednesday from 12PM-8PM, Thursday from 4PM-8PM, and Friday-Sunday from 1 - Facebook",
+      "description": "Here are the prices for our new releases in Gundam, One Piece, Upper Deck Hockey Cards and Weiss Schwarz as of Friday October 29, 2026. Please note that we are open on Wednesday from 12PM-8PM, Thursday from 4PM-8PM, and Friday-Sunday from 1 Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQYlc5ZUtsM1pVZjB6cWlsV2FjeTFBRDlfR2E4OC15ZjBJU3ZoNEQyNXFqYTF3Z293LUdIeU80Nm1QQTBjd3FGZ2k0ZFQ3dlZrX2VGdVZuQUU2MzBxUm5wRTQ0cmZEUlRUaklaNmsyOVowTG5ZZTc3VGF3djVEdlN0akRsVFhyVmlVaDh1TzZkbkNMZEJYcUJwUU5yMzdYSXJ5NjQtSWtHRTNOS2xwM0pOQXM1Mk9raW9DbnN0ZV9oc1cyaHZBU2pBV1lmUUJ1TDZON3pLQVJoVV96RHhabGc?oc=5",
+      "published_at": "2026-10-29T20:39:59+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Weiß Schwarz"
+      ],
+      "game": "Weiß Schwarz",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "ef6ac00bcdbbcde8eeb509bd"
+    },
+    {
       "title": "🐉 New treasure at the Vault! Just landed on the shelves today: ✨ Pokémon TCG: 30th Celebration ex boxes ⚡ Pokémon TCG: 30th Celebration ETBs 🐉 Pokémon TCG: Mega Greninja ex Premium Collections 🌑 Pokémon TCG: Mega Evolution – Pitch Black ET - Facebook",
       "description": "🐉 New treasure at the Vault! Just landed on the shelves today: ✨ Pokémon TCG: 30th Celebration ex boxes ⚡ Pokémon TCG: 30th Celebration ETBs 🐉 Pokémon TCG: Mega Greninja ex Premium Collections 🌑 Pokémon TCG: Mega Evolution – Pitch Black ET Facebook",
       "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOWUpOTWp6U2NoSXFmbmY1dzNKV0kxNkpXZFB0a0l2VVp3NExQTmNscmQ1MjFOcjVmbnVybFlUVjJuenZPOGMwV3JmYkVxWHJpX0twVk9DdEU2cHg2ZDFqR0xMVDZtUmMwUEN3TXRxM2JMdldVblkzRXUwQTZRRW9Wam9COXVHQQ?oc=5",
@@ -11438,7 +11888,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "etbs"
+        "on the shelves"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -11487,6 +11937,27 @@
         "Pokémon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "It's a good day to contest the realm 😎🧙‍♀️🧙🧙‍♂️ Restocks and new items in store for Sorcery: Contested Realm! #sorcery #sorcerytcg #sorceryfight #sorcerycontestedrealm #vancouverevent #vancouver #theconnectiongames #vancouverbc #learntoplay #sp - Facebook",
+      "description": "It's a good day to contest the realm 😎🧙‍♀️🧙🧙‍♂️ Restocks and new items in store for Sorcery: Contested Realm! #sorcery #sorcerytcg #sorceryfight #sorcerycontestedrealm #vancouverevent #vancouver #theconnectiongames #vancouverbc #learntoplay #sp Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxObFRDX0NPd2dfVVlfVnctQ2gxanhUUE1YbFdralZJYXFuc2tYdlcyTktaaXJ0SEZMb3I0TG1TWDZiZ0c4ZHFmeHU3dzNOMjJUbl9EaXFKeXE3WGY2Yk5yT2dYLV9FNFpDeTczQWM4OVc3QWt0SnVDTzJyaEplRVFoelZON3NrZWVpczNPQURXTkhZRHRfbHhkb3Q2WWlCWjBIYkYxYk8wc0E1c3BfT043cklHOFFGcnpPdDZVSmtkVGxHc2lwR00ycnRMZkczSW9sSVNJVl84eUhvcEZVSzl6OW56bHI3M2g2RXFKMWJLWEUydEhHWVlV?oc=5",
+      "published_at": "2026-10-29T19:28:58+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Sorcery: Contested Realm"
+      ],
+      "game": "Sorcery: Contested Realm",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "d6776d97d2b858fdeff89637"
     },
     {
       "id": "5d1097c6112046621d132a40",
@@ -11585,10 +12056,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs",
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -11609,9 +12077,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -11634,7 +12100,7 @@
         "lat": 36.8529,
         "lon": -75.978,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "location_ambiguous": false,
       "report_type": "general_discussion",
@@ -11706,10 +12172,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
         "restocked",
-        "booster boxes",
-        "etbs"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -11751,6 +12215,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
+        "restock today",
         "restock"
       ],
       "report_type": "general_discussion",
@@ -11821,6 +12286,28 @@
         "Pokemon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "Riftbound Radiance has been restocked And some strike of the illusionary shadow as well We are open until 6pm today - Facebook",
+      "description": "Riftbound Radiance has been restocked And some strike of the illusionary shadow as well We are open until 6pm today Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNUldoanRvR01VLUxmbll3eHBsS1p0YXA5YWtqbl9LLVpHLWx0RGtZalA2MkZSWjJqSWxnTnJ0dmNnT21XaUNZVG9zU25Ba3hJQ0sxY0FCczRaeTMzU2lSbGlJLWdIS0hHZlJJdjZhQUpSdU9lU2ZFRWdZcEdyVFF0aHBLUGU4dlAxX0xURXl0RW8zMFVtZVRhNlp0dHZiMGVTZVhRUkJUTktiLWNhSnR5dEVUTWh4U2hUeDNJXzE3M1V4bzhXVnVGRnpYM1B6eTlleVd6Ym13NW5PdUlnNlE?oc=5",
+      "published_at": "2026-10-28T21:03:31+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Riftbound"
+      ],
+      "game": "Riftbound",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "14fe7655e9d26d40b0f0b569"
     },
     {
       "title": "New Pokemon 30th Celebration card pack is a Chinese language edition. This collectible item has a Bulbasaur illustration on the front of the box. The packaging is silver and white with a clear window displaying the card. It is a 30th-anniversary commemorativ - Facebook",
@@ -11939,9 +12426,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -12004,10 +12489,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
         "restocked",
-        "booster boxes",
-        "elite trainer box"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -12092,8 +12575,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -12115,9 +12598,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -12138,9 +12619,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -12168,6 +12647,25 @@
         "Pokémon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "Good morning everyone and Happy Wednesday! Today at the shop we have: - Magic the Gathering Casual Play and Learn to Play all day! Bring your favorite format and deck to sit down and shuffle up at one of our tables or learn to play Magic with one of our f - Facebook",
+      "description": "Good morning everyone and Happy Wednesday! Today at the shop we have: - Magic the Gathering Casual Play and Learn to Play all day! Bring your favorite format and deck to sit down and shuffle up at one of our tables or learn to play Magic with one of our f Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPX1cyS1Y5TE56TDhNOGN5S19najVaOVM1V2Y2ZGd5ME1JUkYwazQtSk9DQVJ2eDU0dVBISFhUS0UtcXhQT0puTkd4bkhSTUpCTlZFTzhTaVlvX3REV1NvWEpIdTJhZXZNOVZ5bDlCdFZnNUpBWXJqUlZEYnZWVk9JSk9KZG9uVVV2b1Zhb2VLVl9Fdi00a0Z3NEhTa285bjFETXM1QkpyaGpwN3owby1ZVE90a1pudmVpWGNuc0J1c1ViazJVRTFnUkFyVC1GRTFmbTFuZEtvTQ?oc=5",
+      "published_at": "2026-10-28T12:58:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Magic: The Gathering"
+      ],
+      "game": "Magic: The Gathering",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "c6e42b0bcc2c3da123438886"
     },
     {
       "id": "6e634cbef3f8a45222034976",
@@ -12436,7 +12934,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -12536,7 +13034,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-10-27T20:06:36+00:00",
       "first_seen_at": "2026-11-04T01:45:13.759201+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -12754,8 +13252,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -12797,9 +13295,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -12820,9 +13316,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -12844,9 +13338,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -12866,8 +13358,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -12911,7 +13403,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -12977,10 +13469,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs",
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -13024,10 +13513,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs",
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -13044,7 +13530,14 @@
       "first_seen_at": "2026-11-04T01:45:13.759201+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -13132,7 +13625,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-10-25T23:02:30+00:00",
       "first_seen_at": "2026-11-04T01:45:13.759201+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -13534,8 +14027,7 @@
       "status": "unverified_public_lead",
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "games": [
         "Pokemon",
@@ -13556,9 +14048,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -13608,6 +14098,27 @@
       "original_post_url": null
     },
     {
+      "title": "Lorcana restock! While supplies last. 😀😀 . . #disney #lorcana #tcg #shoplocal - Instagram",
+      "description": "Lorcana restock! While supplies last. 😀😀 . . #disney #lorcana #tcg #shoplocal Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBhM25SaDBaU0hfUlZFeENoTEs5cTA1UTU0X1l5VGxVMUNjMGpKTG1UVTZwQ2dCcmJGTmRMbUVhVDB1N1ExNlRNRmdYRlQtbTlYVXc?oc=5",
+      "published_at": "2026-10-24T21:09:51+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "70628767e4f2738fb424836d"
+    },
+    {
       "id": "b04dffcad87c8b063019b3d1",
       "title": "Visiting Local Pokemon Shops (Pt. 29)! This time we visited Card Quest LGS in Richardson, TX! My wife said this was her favorite Pokemon shop she’s been dragged to in the Greater Dallas area. #pokemon #pokemoncards #pokemontcg #pokemongo #poke - Facebook",
       "description": "Visiting Local Pokemon Shops (Pt. 29)! This time we visited Card Quest LGS in Richardson, TX! My wife said this was her favorite Pokemon shop she’s been dragged to in the Greater Dallas area. #pokemon #pokemoncards #pokemontcg #pokemongo #poke Facebook",
@@ -13639,7 +14150,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -13681,9 +14192,7 @@
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -13722,7 +14231,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -13789,9 +14298,7 @@
       ],
       "game": "Union Arena",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -13816,8 +14323,7 @@
       "status": "unverified_public_lead",
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "games": [
         "Pokemon",
@@ -13890,7 +14396,7 @@
         "lat": 38.4496,
         "lon": -78.8689,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -13933,8 +14439,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -13957,8 +14463,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14041,9 +14547,7 @@
       ],
       "game": "Union Arena",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -14193,8 +14697,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14215,15 +14719,35 @@
       ],
       "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
       "id": "f57bb9005056363d70faf0bf",
       "location_ambiguous": false
+    },
+    {
+      "title": "Friday Releases! Riftbound Radiance boxes, decks, and vaults! Ultraman BP09 boxes! Beyblades and Gundam Freedom Ascension have been restocked! Hope to see ya! - Facebook",
+      "description": "Friday Releases! Riftbound Radiance boxes, decks, and vaults! Ultraman BP09 boxes! Beyblades and Gundam Freedom Ascension have been restocked! Hope to see ya! Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOam1iSkFLVjcwd1RwUkR4ZGFWOTZ2a0lORUh0WjVXVXN2RVNfUUh6ZFoyM2NTdDV4Yk94LXRVNzJieVJmRnB1WW5xaVFPN3Fqd2Y5R2VBSXM5eHdTWmZBSkZEdk9SVXRLam9tMFJvRTFaUGZZbFFYUzZnV0p0YnhJT2FPc1JIYWQwSzVEMjc0TzNmSWRLNWtEQzJRVDZpRlRzTnF1a0pwUGNkLTlrYnA3XzlRa3phcEFXZVpUMEtKMEFlRm9lOFpxenpnMk8yRDFzLXlHeQ?oc=5",
+      "published_at": "2026-10-23T14:03:58+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Riftbound"
+      ],
+      "game": "Riftbound",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "123d1a13c0f047946e55520d"
     },
     {
       "title": "Super busy and exciting weekend @ Legendary Brix! Friday: 6 PM: #onepiecetcg Weekly Tournament at the Store New Products Available! Saturday: 2 PM: #PokemonTCG Delta Reign Prerelease #1 at the Store 3 PM: Trail or Treat at Liberty Island 6 PM: #ma - Facebook",
@@ -14310,7 +14834,7 @@
         "lat": 38.4496,
         "lon": -78.8689,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -14337,7 +14861,7 @@
         "lat": 38.4496,
         "lon": -78.8689,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -14400,7 +14924,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -14421,8 +14945,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "etbs"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14484,7 +15007,7 @@
         "Union Arena",
         "Pokémon"
       ],
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [],
       "report_type": "general_discussion",
@@ -14506,7 +15029,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -14527,11 +15050,9 @@
         "Pokémon",
         "Riftbound"
       ],
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
@@ -14594,8 +15115,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14638,7 +15159,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -14660,8 +15181,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14680,7 +15201,14 @@
       "first_seen_at": "2026-11-04T01:32:15.318583+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Roanoke",
+        "state": "VA",
+        "lat": 37.271,
+        "lon": -79.9414,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
@@ -14833,8 +15361,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14876,7 +15404,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -14900,8 +15428,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -14909,6 +15437,28 @@
       "status": "unverified_public_lead",
       "id": "18987d6d3971b534c363264d",
       "location_ambiguous": false
+    },
+    {
+      "title": "JTC'S NEW ADDITION IS HERE! LORCANA HAS LANDED!! Lorcana Attack of the Vines & Wilds Unknown now available! https://jamiestradingcards.com.au/collections/lorcana Also restocked! DBZ FB11 30th Celebration [JP] https://jamiestradingcards.com.au/ - Facebook",
+      "description": "JTC'S NEW ADDITION IS HERE! LORCANA HAS LANDED!! Lorcana Attack of the Vines & Wilds Unknown now available! https://jamiestradingcards.com.au/collections/lorcana Also restocked! DBZ FB11 30th Celebration [JP] https://jamiestradingcards.com.au/ Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQanBESzRucEtLUXV2QnBYSHQ2c2oxblF3MTFaazRTdjY0d1JZalNHY092SjVPUkQ0ZDZBSTl1TjF5eWs0dHVXU3c3TG1sbXA5YUc0OXRZR01JSHhReE5rbXJoWGJQU1BPSDJnb09qR1RRMHNkaDhBY1I2ck1PdVJnV1VLTTNKLVV2eE4tZGFUSXl1NTE4MFJPQ2FXQUFNdTYxRGpISmpSb0RDSTV6VlRtTlkzd253QkMtblE0TVFEenlNN29mMVJmT0JpWDlDMk5JZDM3RmNVTEx4ZkpNdVgyV2RB?oc=5",
+      "published_at": "2026-10-22T06:17:08+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "aecfcf4910e178f1fae60b06"
     },
     {
       "title": "Pokemon restock! - Instagram",
@@ -14988,9 +15538,9 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
         "restocked",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -15013,8 +15563,8 @@
       "game": "Union Arena",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15102,8 +15652,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15125,8 +15675,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15226,7 +15776,14 @@
       "first_seen_at": "2026-11-06T13:14:14.749689+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -15236,6 +15793,65 @@
         "Pokémon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "NEW IN STORE! Star Wars: Unlimited - Homeworlds! We have the newest set in store, ready to find their new homes! We hope to see you soon! #starwars #starwarsunlimited #starwarsunlimitedhomeworlds #tcg - Facebook",
+      "description": "NEW IN STORE! Star Wars: Unlimited - Homeworlds! We have the newest set in store, ready to find their new homes! We hope to see you soon! #starwars #starwarsunlimited #starwarsunlimitedhomeworlds #tcg Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPcDdaWDFWNVdrdmV5MUotaUI1Y2VBTlNfU1BFMEdWUnpGeUJ6LU9OclRnZVBKWkRtelVIamFRX3NESGpCTXp5SGY2OTB2Y2VGMHUwMEp4aVZQZHp3NHN1Q3dIT2xlNVFYNzNMUjdDRmJmcWRxQnBhUklBMjdfYnFIb0JqRm1XNHFNN2g5cXRaTlVSUFVSaXVYN3pfdU9kWGVZNXdvcXZBQUdaNU5nVnJzQ01XU0pBOW5DMFJ0NUtuREpmRE02SGV3VjExanUxam1qMmJBXzhZMTVHdklU?oc=5",
+      "published_at": "2026-10-21T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Star Wars: Unlimited"
+      ],
+      "game": "Star Wars: Unlimited",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "923912bed0aafa0c1b83ce49"
+    },
+    {
+      "title": "A big warm welcome too..🥁🥁…💫✨Lorcana!✨💫 We’re doing all we can to ensure the assortment and offerings at TKO continue to expand. With Lorcana being the most requested, we are pleased to announce that product will now be available in-store! Further - Instagram",
+      "description": "A big warm welcome too..🥁🥁…💫✨Lorcana!✨💫 We’re doing all we can to ensure the assortment and offerings at TKO continue to expand. With Lorcana being the most requested, we are pleased to announce that product will now be available in-store! Further Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE8yY1oyNDlsX0pJcW1CSzFPVGVLdkltMnF5LVBjSUhXRy1xUmVsR0s4dF9Pd0M0aGV3OEg5MDdWMXNHRHdQMXdrZGVST2UyNmdZYWZpNHV3?oc=5",
+      "published_at": "2026-10-21T07:00:00+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "ce7effa8081379db5eb91061"
+    },
+    {
+      "title": "New deckboxes, restock on MTG packs, and Star Wars Unlimited! We're really excited to be carrying Star Wars Unlimited! - Facebook",
+      "description": "New deckboxes, restock on MTG packs, and Star Wars Unlimited! We're really excited to be carrying Star Wars Unlimited! Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQTFRzaHp2VTZvbHpNeWlGYkJNdHoyU0dybnBkc3A5aEpzUEdjX2FaMGs0RDVKVk5GdUtGN2tTRTFLR3ZhSk1QVnl2R05mcVFNMV9DdDRPMExhcTJ5alUwZEFaQjRsZHN4blc1T2FOdFNJazY2SzhHOVJqUjczbDhGS2NFWmRhczV2dThqSkRpRU45YUdIZF9ZZ0NoWWxEVXJHV1JabzUwN0k4VGd2VjBmbFRaNFdEMVVYSGpuM1pQUHpYVVpLLW1WSHpZZUJSRUVWTlZjS3M2X29RcGtzTjk4VndYd3RuZw?oc=5",
+      "published_at": "2026-10-20T22:10:06+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Star Wars Unlimited"
+      ],
+      "game": "Star Wars Unlimited",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "02e3106eb90f61de30facb1e"
     },
     {
       "id": "2ad8473e1fb14c6f4eb84e87",
@@ -15291,7 +15907,7 @@
       "location": null,
       "location_ambiguous": false,
       "status": "unverified_public_lead",
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "games": [
         "Pokemon"
@@ -15395,8 +16011,9 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "in stock"
+        "on the shelves",
+        "in stock",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15438,7 +16055,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -15458,7 +16075,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [
         "restock"
       ],
@@ -15588,8 +16205,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15612,8 +16229,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15765,8 +16382,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -15871,7 +16488,14 @@
       "retailer_mentions": [
         "Costco"
       ],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -15895,9 +16519,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -16037,7 +16659,14 @@
       "retailer_mentions": [
         "Walmart"
       ],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -16081,9 +16710,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -16107,7 +16734,7 @@
         "lat": 36.8529,
         "lon": -75.978,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "location_ambiguous": false,
       "report_type": "general_discussion",
@@ -16211,8 +16838,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16220,6 +16847,25 @@
       "status": "unverified_public_lead",
       "id": "51d3ccc6a879e35482a0666e",
       "location_ambiguous": false
+    },
+    {
+      "title": "We have a ton of troves as well! @disneylorcana - Instagram",
+      "description": "We have a ton of troves as well! @disneylorcana Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5ab0FqdnB6bEQ1X29CelhrSm04OUZTMnRUS3dJWm5fOEJBVXpoODV0STFSNVFTSG9MeDBWQ0dWb2NFbjJmd3ZielduTjhqU1Bkdmc?oc=5",
+      "published_at": "2026-10-17T07:00:00+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "6ec96c32cba763eadf657193"
     },
     {
       "id": "6c52d2e87422bca2a4c4f7f3",
@@ -16231,7 +16877,14 @@
       "first_seen_at": "2026-11-04T01:32:15.318583+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Staunton",
+        "state": "VA",
+        "lat": 38.1496,
+        "lon": -79.0717,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
@@ -16250,7 +16903,7 @@
       "platform": "facebook_group_index",
       "published_at": "2026-10-16T07:00:00+00:00",
       "first_seen_at": "2026-11-04T01:45:13.759201+00:00",
-      "game": "Union Arena",
+      "game": "Pokemon",
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
@@ -16277,13 +16930,13 @@
       "first_seen_at": "2026-11-04T05:38:45.838985+00:00",
       "games": [
         "Union Arena",
-        "Yu-Gi-Oh!"
+        "Yu-Gi-Oh!",
+        "Grand Archive"
       ],
       "game": "Union Arena",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "booster packs"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16343,7 +16996,14 @@
       "first_seen_at": "2026-11-04T20:58:43.640880+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Staunton",
+        "state": "VA",
+        "lat": 38.1496,
+        "lon": -79.0717,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -16364,11 +17024,23 @@
       "first_seen_at": "2026-11-07T01:07:35.888440+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Staunton",
+        "state": "VA",
+        "lat": 38.1496,
+        "lon": -79.0717,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "ad8234baa8aaaac002165281",
@@ -16407,8 +17079,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16457,8 +17129,7 @@
         "Target"
       ],
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "report_type": "retail_sighting_lead",
       "location": null,
@@ -16504,8 +17175,7 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "in stock",
-        "booster packs"
+        "in stock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -16593,9 +17263,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
         "restocked",
-        "booster boxes"
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -16637,8 +17306,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16646,6 +17315,27 @@
       "status": "unverified_public_lead",
       "id": "face8ebc4edc034c0a8e4700",
       "location_ambiguous": false
+    },
+    {
+      "title": "🚨 RESTOCK! 🚨 Yu-Gi-Oh! Magnificent Monsters is now back in-stock! Discover reimagined anime favourites, awesome new cards, and extremely limited serial-numbered Grand Master Rares! Shop now over on our site! #YuGiOh #YuGiOhTCG #TheCardVault - Instagram",
+      "description": "🚨 RESTOCK! 🚨 Yu-Gi-Oh! Magnificent Monsters is now back in-stock! Discover reimagined anime favourites, awesome new cards, and extremely limited serial-numbered Grand Master Rares! Shop now over on our site! #YuGiOh #YuGiOhTCG #TheCardVault Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1lNVVqbVBBcVdkcTRKaENrNWNTOTRIaXFLMjNGQjA3dkRfVy1zZk9mQjZrLWtZRU84OEFMSENFR0R4YWR0c3JzTWRmSXZuVlVlUXc?oc=5",
+      "published_at": "2026-10-15T07:00:00+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "e0a066b9b1c6628f1dd324b7"
     },
     {
       "id": "a16073ec7f1b0586f7ee549d",
@@ -16683,8 +17373,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "in stock",
-        "booster packs"
+        "on the shelves",
+        "in stock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16751,8 +17441,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16800,10 +17490,9 @@
       "location": null,
       "location_ambiguous": false,
       "status": "unverified_public_lead",
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "games": [
         "Pokemon"
@@ -16868,8 +17557,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -16915,7 +17604,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [],
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -16959,7 +17648,34 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon",
+        "Pokémon"
+      ],
+      "original_post_url": null
+    },
+    {
+      "title": "CR13-AE Restocked ‼️ It's time to get your Creation Pack 13 chase cards if you have missed it on the first restock!!! #yugiohAE #creationpack13 #restock - Facebook",
+      "description": "CR13-AE Restocked ‼️ It's time to get your Creation Pack 13 chase cards if you have missed it on the first restock!!! #yugiohAE #creationpack13 #restock Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNd1pqak9feHV2elZiR21NT3FNQjNjWWJGaUN3OE9YT05ySWF5emZKSXN6TzJsU09iSTdHSUdkMmEwemhmN0EzQ3B4STNvN0NseUgxNmVoaTJjdEplREtVMFJNck5XWGJ6V3g2TEstelB6RXRWa2lFUE5DaVAxUmlKVnIxY2ZoNC1NeVhYWm1UWWNpd2xWNnJSMGttb25vVndkQWV0MmJLZkxUSVZydzdUYXhiZEpxbGEwSTFpX0JneWc3RDl1SHVIdzZPNHhMb1ZJUHZnS2dMYW90Qy0wSmM1UjlB?oc=5",
+      "published_at": "2026-10-13T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "ab055767e18c4c025f44b4c6"
     },
     {
       "id": "a4bef5fff34f38add6bccc53",
@@ -16997,8 +17713,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -17087,8 +17803,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -17134,9 +17850,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -17197,7 +17911,14 @@
       "first_seen_at": "2026-11-06T20:53:49.963991+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Winchester",
+        "state": "VA",
+        "lat": 39.1857,
+        "lon": -78.1633,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -17355,6 +18076,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
+        "restock today",
         "restock"
       ],
       "report_type": "general_discussion",
@@ -17363,6 +18085,48 @@
       "status": "unverified_public_lead",
       "id": "a6f3b3bcbda8f8b6a26bad43",
       "location_ambiguous": false
+    },
+    {
+      "title": "Yu-Gi-Oh! and Star Wars: Unlimited just landed on Pack Dojo 🎉 Rip Yu-Gi-Oh! packs with real PSA-graded values, and open every Star Wars: Unlimited set, 5,373 cards. Free, every day. Link in bio 👆 #yugioh #starwarsunlimited #swu #packopening #tcg - Facebook",
+      "description": "Yu-Gi-Oh! and Star Wars: Unlimited just landed on Pack Dojo 🎉 Rip Yu-Gi-Oh! packs with real PSA-graded values, and open every Star Wars: Unlimited set, 5,373 cards. Free, every day. Link in bio 👆 #yugioh #starwarsunlimited #swu #packopening #tcg Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxObXFKeEZTWG9ldUsxUWMzbm9mRnc4dmtJNUNjVFRvTERpUlNzYlNGWExJNnNPblVKNTF6WmVzVmJ1T1lTYTdPWWZLaHJNN0R6aDRWZC1SejNzbDE4WExtN19pc1djRWRtdnpDV2d4SHBaWU9TTDJDUVlEWWxtNWRraU9yWXA1bFJlWGtzeUZBbEx3emt0YV9ONDg3VjN1RENmcVhjNGg5d1c4T240eTEzU0dabVZNdGlVUXFxTWp6bXBLSXBLSWpZUDBDVkxlYUU0cHZpblNfd1pveEMxNFUw?oc=5",
+      "published_at": "2026-10-09T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!",
+        "Star Wars: Unlimited"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "0e00dd8ec5c47b0dc38b14c7"
+    },
+    {
+      "title": "✨ NEW STOCK IN + RESTOCK! ✨ We’ve got some new goodies hitting the shelves at Nerd Vault Card Exchange! 🎉 •Magic The Gathering – Reality Fracture Bundles •Disney Lorcana – Stitch Collector’s Gift Set •Disney Lorcana – Illumineer’s Quest: Deep Tro - Facebook",
+      "description": "✨ NEW STOCK IN + RESTOCK! ✨ We’ve got some new goodies hitting the shelves at Nerd Vault Card Exchange! 🎉 •Magic The Gathering – Reality Fracture Bundles •Disney Lorcana – Stitch Collector’s Gift Set •Disney Lorcana – Illumineer’s Quest: Deep Tro Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPUXg5YWxQLXNyTHFUSEhqWmZPTWk1V1dRa2ZCQktMM0JtU096YTBIVkIzdF9xX0k4NEFBdXg1VkhpWXpZaTQ2OHRHak9CcW1IQnljZ2FORFFmcmNXcks4OGJqVDZpajdIbF9zblA0YkhEVXR1YV9DRHlON2ZHYWZEbXNjd3NDZ0NvM2dTUklPY1JQZFVBUVBQQi1fdlNBUjFvdng5TERET3c4WXlKZWhueUl5bjJiMG40Y1N5aHRESndQME84YmQyZ2lpdkNxWERYUkFfX3BVaUo1R0VJaldVNDhyX3dEcTA3?oc=5",
+      "published_at": "2026-10-09T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Magic: The Gathering",
+        "Disney Lorcana"
+      ],
+      "game": "Magic: The Gathering",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "317f7cbaf4021c00d3fb180c"
     },
     {
       "id": "9e3aa4b7ead695721a9c365b",
@@ -17379,10 +18143,8 @@
       "location": null,
       "location_ambiguous": false,
       "status": "unverified_public_lead",
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "etbs"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "games": [
         "Pokemon",
         "Pokémon"
@@ -17470,8 +18232,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -17561,9 +18322,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "etbs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -17584,8 +18343,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -17593,6 +18351,25 @@
       "status": "unverified_public_lead",
       "id": "3035dee53ea76c6c470e9536",
       "location_ambiguous": false
+    },
+    {
+      "title": "NEW STOCK ALERT 🚨 Star Wars Unlimited- Homeworlds play booster packs available now! In store and online 📍 10 High Street, Princes Risborough 🏷️ #localcardshop #starwarsunlimitedtcg #starwarsunlimited #starwarsunlimitedhomeworlds #tcgshop - Facebook",
+      "description": "NEW STOCK ALERT 🚨 Star Wars Unlimited- Homeworlds play booster packs available now! In store and online 📍 10 High Street, Princes Risborough 🏷️ #localcardshop #starwarsunlimitedtcg #starwarsunlimited #starwarsunlimitedhomeworlds #tcgshop Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPbFB4RHJHWVd6ZjJ2R2pESmFmZ1M3UkkteE5qU3pod1NkSlpVUUFyZmZ5YXlfWnNiOXpVcjZPQVRoVzg2VVFiNkFnNlZZcGhmUFhsRjFtMHFramU4NllLa2tEUkw5ZjB1SlJIV2Zya05wZ1VIQ3ViaGNERVFnNk5KMEFkbXpMX1VFYVd3d2dJSVVlVzJfX0p6Z1B6RU13aHB2dkVULU1aQVdlT0xSQ0N3ODlVMFJCV1NWNXRNWEV3ZkRnVDJYdl9wVGl1QURneUF6MzFNX2hkXy02NVZYZFZBUg?oc=5",
+      "published_at": "2026-10-08T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Star Wars Unlimited"
+      ],
+      "game": "Star Wars Unlimited",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "52abbb84d3e51e5f3d2f7279"
     },
     {
       "id": "8ad89178b393d8cd6262aca2",
@@ -17743,6 +18520,7 @@
       "game": "Union Arena",
       "retailer_mentions": [],
       "restock_signals": [
+        "on the shelves",
         "restock"
       ],
       "report_type": "general_discussion",
@@ -17792,6 +18570,25 @@
         "Pokémon"
       ],
       "original_post_url": null
+    },
+    {
+      "title": "https://youtu.be/oIbtrdUh_j4?si=4o6bprUfgXg4gA7W The new expansion set has arrived and it is prettier than ever... Join the growing Malaysia's Star Wars Unlimited community. - Facebook",
+      "description": "https://youtu.be/oIbtrdUh_j4?si=4o6bprUfgXg4gA7W The new expansion set has arrived and it is prettier than ever... Join the growing Malaysia's Star Wars Unlimited community. Facebook",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBBV0R1MFZ2YXhkNzdCendJemxkZW1vV3BIMWJHSnRsUWhyZW5VVVd6WEJzcG5SMUduLUhYUF8xYS1qdmJQZ0RRTkEyUXNwYjRSeVRvTHR5cVlaeGt0UmM1RTd4OFlsZzY1MGhEYWFRSQ?oc=5",
+      "published_at": "2026-10-07T07:00:00+00:00",
+      "platform": "facebook_group_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Star Wars Unlimited"
+      ],
+      "game": "Star Wars Unlimited",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "d170fcfcc115f05e3d99f627"
     },
     {
       "id": "7fc486f886faf55d23f19308",
@@ -17856,6 +18653,28 @@
       "original_post_url": null
     },
     {
+      "title": "Hot Cake Restocked 📦 [EX-13] Digimon Card Game Extra Booster -CHIVALROUS XIII- Back in Store ! --------------------------------------------------------------- Interested please PM m.me/JTGAMESTORE for more detail 😃 有兴趣的朋友们请PM我们的信箱哦 😃 Also avail - Facebook",
+      "description": "Hot Cake Restocked 📦 [EX-13] Digimon Card Game Extra Booster -CHIVALROUS XIII- Back in Store ! --------------------------------------------------------------- Interested please PM m.me/JTGAMESTORE for more detail 😃 有兴趣的朋友们请PM我们的信箱哦 😃 Also avail Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQal92TUJzVDZKU3N2U09wb1BhMzhKbi1ITm5YSjdBRmJrWS1QWm1aRkJCc1NhMWYwbXlRd2VCWGtMaTI2a1Y0bDFGVjhFOEFuNGdJbGVCc0pqRXdCMzlLR2w1SzRieC10aU85UnBVcVVtSlp2MVN1eHV5WGhYZ0Y5TTdQZ09RcjRua3Y3YzY1enJiSk5zY2EzTzBFZ1c5V2RCWEtEUU5TWnZ5a1B5dmxUQTF6WkpMbHh4dHFZUlU0NWx0Y240a1k4eHRITTI1R0VuYmdBLVdUdU8?oc=5",
+      "published_at": "2026-10-06T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Digimon"
+      ],
+      "game": "Digimon",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "bf233f62629bb6560246c267"
+    },
+    {
       "title": "THE TCG SETS YOU LOVE ARE BACK ON THE SHELVES 👀‼️ Massive Union Arena & Gundam Restock!!! Hurry in and rip packs today! 🔥 📍 200 West 41st St, New York, NY 10036 – 2nd Floor ⏰NEW HOURS Sunday 12PM-9:30PM Monday 12PM-9:30PM T - Instagram",
       "description": "THE TCG SETS YOU LOVE ARE BACK ON THE SHELVES 👀‼️ Massive Union Arena & Gundam Restock!!! Hurry in and rip packs today! 🔥 📍 200 West 41st St, New York, NY 10036 – 2nd Floor ⏰NEW HOURS Sunday 12PM-9:30PM Monday 12PM-9:30PM T Instagram",
       "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBxd01oSTRrRjM4RUUyTDNxOUtiMG82VlpjUjZYZVJoVFp4ZkRpT2NyZGFSYkduV0NjR1VKWXJqRG5XbThRaFNscHJQeHUxU3VCenpJSHdR?oc=5",
@@ -17868,6 +18687,7 @@
       "game": "Union Arena",
       "retailer_mentions": [],
       "restock_signals": [
+        "on the shelves",
         "restock"
       ],
       "report_type": "general_discussion",
@@ -17913,10 +18733,10 @@
         "lat": 36.8529,
         "lon": -75.978,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -17968,6 +18788,28 @@
       "location_ambiguous": false
     },
     {
+      "title": "🔥Manga full set is back🔥 👉Yu-Gi-Oh! ORIGINAL ARTWORK COLLECTION, Japanese version, is restocked at TCG Corner — the manga full set. These are the manga-style reprints built from Kazuki Takahashi’s original card designs: the same monsters and sp - Facebook",
+      "description": "🔥Manga full set is back🔥 👉Yu-Gi-Oh! ORIGINAL ARTWORK COLLECTION, Japanese version, is restocked at TCG Corner — the manga full set. These are the manga-style reprints built from Kazuki Takahashi’s original card designs: the same monsters and sp Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQXzJ0OFdzU0dldk9UUllVT21QZWJhcmU3Y3hUbkhYV1pKRkRXYThELUdOZmtIVWdWRV9zNGxTUE80ODlOSGRoTUFTQk5xRGFWdFNPWlRmbnc3MWtFbXJoVFpsSWprd1NpZFZYTTFNa1Z6cXhnQll2dG80VUp0eFU4cGhxNDAxelBPWmI0alpzX2VxTzhvVncxNmZkU2h5NDdFMzRiQzYyQzFMTkNfbTBfaWlfb05iYzREdjFZVXNvRzhXV0hwMGRHOVdHYnlVTmI5UUo0ekpVZHFRckZVcTJhSQ?oc=5",
+      "published_at": "2026-10-05T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "7ac9ccffab2c1c543a9e88fc"
+    },
+    {
       "title": "🎯 Target Pokémon Restock Watch: 30th Celebration & Pitch Black — Save These Product Links! Getting ready for your next Pokémon TCG hunt? Here are six Target listings to bookmark, including Elite Trainer Boxes, Booster Bundles, Mini Tins and more. 👀🔥 - Instagram",
       "description": "🎯 Target Pokémon Restock Watch: 30th Celebration & Pitch Black — Save These Product Links! Getting ready for your next Pokémon TCG hunt? Here are six Target listings to bookmark, including Elite Trainer Boxes, Booster Bundles, Mini Tins and more. 👀🔥 Instagram",
       "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1WYXlPelplMVhDRThrN2xkZUNxWnVhb29lUWFxU0FBRG9EbXJKQlRrZ0tTVWtTMC1TcUpFUWk0eTJaVUx1bzFvWU9oSFJiMl9neHc?oc=5",
@@ -17983,8 +18825,7 @@
         "Target"
       ],
       "restock_signals": [
-        "restock",
-        "elite trainer box"
+        "restock"
       ],
       "report_type": "retail_sighting_lead",
       "location": null,
@@ -18006,9 +18847,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster boxes"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -18136,7 +18975,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -18166,6 +19005,28 @@
       "original_post_url": null
     },
     {
+      "title": "🌟The original art is back on the shelf.🔥 🫶Yu-Gi-Oh! Original Artwork Collection (Japanese ver.) — case and box both restocked. Same gold-stamped look, same collector energy, ready to ship again. If you missed the first wave, this is the second chance. #YuGi - Facebook",
+      "description": "🌟The original art is back on the shelf.🔥 🫶Yu-Gi-Oh! Original Artwork Collection (Japanese ver.) — case and box both restocked. Same gold-stamped look, same collector energy, ready to ship again. If you missed the first wave, this is the second chance. #YuGi Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNdjVzVEhHa1h3ZEV5WGhSSmh2VklOUjRpQWRxNWd0SGw5YmJZVWsxTno2aW1yOEFycm9YSzl2WktEeGc4ek5ScjRnaVJsZlRadjczQUJ6RUN1emRKdVFIeTFaOTlkUTRVdnVpR0RVdVAzWElteDdSekY3Qk5acXdjZS1hazUtcmwxYnJzSDZwZnYwLW5SdHZxeTZYWl9ZdDhlSy1OTXhRR0tsb0Y3b0JSODI5d1dHNjNSQUJFV3FyeDdvZk1FcExMV3h1bGlrQ1hSRkw4SUNKQ2xuX1lsdW5MRQ?oc=5",
+      "published_at": "2026-10-02T08:21:25+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "3e53b37cde949fda71781a98"
+    },
+    {
       "id": "bc53a8f2f8710a9b53e26d95",
       "title": "Ill be here Saturday and Sunday if you are near the Richmond, VA area! #pokemon #pokemoncommunity #cardshow #vendors #tcgcommunity #pokemontcg - Facebook",
       "description": "Ill be here Saturday and Sunday if you are near the Richmond, VA area! #pokemon #pokemoncommunity #cardshow #vendors #tcgcommunity #pokemontcg Facebook",
@@ -18181,7 +19042,7 @@
         "lat": 37.5407,
         "lon": -77.436,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "location_ambiguous": false,
       "status": "unverified_public_lead",
@@ -18298,9 +19159,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
         "restocked",
-        "elite trainer box"
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -18475,7 +19335,7 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [],
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "location": null,
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -18496,8 +19356,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -18544,8 +19404,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "in stock"
+        "in stock",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -18577,6 +19437,27 @@
       "status": "unverified_public_lead",
       "id": "8fb1616e444b880bb5e84e89",
       "location_ambiguous": false
+    },
+    {
+      "title": "🚨 NOW IN STOCK! 🚨 Cardfight!! Vanguard - BanG Dream! Girls Band Party! Title Booster Premium 01 is here! Choose from eight bands, build your deck and start your Band Life! Shop now over on our site! #TheCardVault #Cardfight #CFVanguard #BanG_Dre - Instagram",
+      "description": "🚨 NOW IN STOCK! 🚨 Cardfight!! Vanguard - BanG Dream! Girls Band Party! Title Booster Premium 01 is here! Choose from eight bands, build your deck and start your Band Life! Shop now over on our site! #TheCardVault #Cardfight #CFVanguard #BanG_Dre Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5NdFBGX2ZvVXR0WktLV3VyM21RR0F0NkxoTUFNRTJLTjQ2S3ppWFpUVk5Uemh6YTlaYzJ1UlZ6Y19adEVqYzZKVDQ3NjZ3YnJTdmc?oc=5",
+      "published_at": "2026-10-02T07:00:00+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Cardfight!! Vanguard"
+      ],
+      "game": "Cardfight!! Vanguard",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "in stock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "36214ab3abfb0e37a51b0558"
     },
     {
       "title": "Pokémon's 30th Anniversary TCG Is Getting A Huge New Drop, But There's A Catch - Polygon.com",
@@ -18617,7 +19498,30 @@
       "restock_signals": [
         "restock"
       ],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
+    },
+    {
+      "title": "Disney Lorcana The Great Hunny Rescue Pack Dropped Early — Here’s Where You Can It Buy Online Right Now - Yahoo",
+      "description": "Disney Lorcana The Great Hunny Rescue Pack Dropped Early — Here’s Where You Can It Buy Online Right Now Yahoo",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQMlFPM1pRUTdwUV9Nd00tS3pYM2NPbDZsMWdpcUFtS3kxQl8yZUwwVHU2NC01cXZVTjJNa2Q3aVZ6UDFBWEF4RnpEeGJpbEg2blBnMXNzaFkxYUxzeU9CZEQ4UEg3cnZFMkJYMmhjM0tLbExIcV9fbE9VQ253NG9rRzYzUXgtZklBcmVEZnVEVVJHY1k2SGlQSmdSaw?oc=5",
+      "published_at": "2026-10-01T07:00:00+00:00",
+      "platform": "indexed_web",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "def1129eef798b4a27fa4e59"
     },
     {
       "title": "Walmart's Pokémon 30th Celebration TCG Lottery Starts Soon & Includes Mini Tins — Here's How to Win - SheKnows",
@@ -18747,6 +19651,25 @@
       "location_ambiguous": false
     },
     {
+      "title": "Today's featured card is LAYER [Take My Hand]! Cardfight!! Vanguard Title Booster Premium 01: BanG Dream! Girls Band Party! goes on sale Oct. 2! 🔗 Link in bio! #CardfightVanguard #TCG - Instagram",
+      "description": "Today's featured card is LAYER [Take My Hand]! Cardfight!! Vanguard Title Booster Premium 01: BanG Dream! Girls Band Party! goes on sale Oct. 2! 🔗 Link in bio! #CardfightVanguard #TCG Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1LeDIxRVVQSE5CYzZXV3p1dTBQRGZ3eXdheHl3TTZuLU1XdmFQeGlXNjZJQWthSEdTQ3FDanhqdFo4ZUFsR2NvaXhXR0djVXBtcUE?oc=5",
+      "published_at": "2026-09-29T07:00:00+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Cardfight!! Vanguard"
+      ],
+      "game": "Cardfight!! Vanguard",
+      "retailer_mentions": [],
+      "restock_signals": [],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "b8c8d4560110c9462683adc3"
+    },
+    {
       "id": "a4ee4d59b4a8ac3c25d244fb",
       "title": "72-Year-Old Ohio Man Allegedly Tracked Pokémon Card Delivery Driver With GPS to Monitor Restocks, Faces Up to Six Months in Jail - 玩具人 TOY PEOPLE",
       "description": "72-Year-Old Ohio Man Allegedly Tracked Pokémon Card Delivery Driver With GPS to Monitor Restocks, Faces Up to Six Months in Jail 玩具人 TOY PEOPLE",
@@ -18804,8 +19727,8 @@
       "game": "Pokemon",
       "retailer_mentions": [],
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "report_type": "general_discussion",
       "location": null,
@@ -18878,7 +19801,7 @@
         "lat": 37.5407,
         "lon": -77.436,
         "precision": "city_center",
-        "evidence": "caption_or_description"
+        "verified": false
       },
       "original_post_url": null,
       "status": "unverified_public_lead",
@@ -18962,9 +19885,13 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
     },
     {
       "id": "946074e369773c7a69bcf662",
@@ -19075,6 +20002,49 @@
       "original_post_url": null
     },
     {
+      "title": "‼️ Box and Case also RESTOCKED due to popular demand ‼️ Yu-Gi-Oh! Official Card Game Duel Monsters ORIGINAL ARTWORK COLLECTION Japanese Ver.(Asia Edition) Shop at TCG-corner 👇👇👇 - Facebook",
+      "description": "‼️ Box and Case also RESTOCKED due to popular demand ‼️ Yu-Gi-Oh! Official Card Game Duel Monsters ORIGINAL ARTWORK COLLECTION Japanese Ver.(Asia Edition) Shop at TCG-corner 👇👇👇 Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNRDJRNjhHNm5oZGV5TTNXV2FRdnhnbFJlSzlZSVlPdTBCOUZQYzlzNTRVZjRDbWlDLUtMTUJ4amZDVm9DUG9PampGZEVkSHFoMDlTMkRDUzFKYlktRGhPUHBlYjlmbGJMd2UxS0p4eDU2a1BuUzQtQllORHpDZjZkMnFIM0pnd19BUlJ2M1RNNUZTWXZJaTNwSG9QNjlidUZHLWg3Ullnajk4eFRyQXUyaDVQcU5vdFMyUlQxb0wzcWhXanR2endTamw1dVd5MWNzRVdoT1BldjhyQXd0Rk1PZ2ZsM0luZGxTNWRqSA?oc=5",
+      "published_at": "2026-09-27T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "4f80ca46278d56ed78f9c26f"
+    },
+    {
+      "title": "MASSIVE YU-GI-OH RESTOCK 🎉‼️ HURRY IN TODAY & CHECK OUT THESE SETS 🔥👀 Rip packs and join our weekly Yu-Gi-Oh Tournaments!! Nxt Legaci Gaming 📍200 West 41st St, New York, NY 10036 – 2nd Floor ⏰NEW HOURS Sunday 12PM-9:30PM - Instagram",
+      "description": "MASSIVE YU-GI-OH RESTOCK 🎉‼️ HURRY IN TODAY & CHECK OUT THESE SETS 🔥👀 Rip packs and join our weekly Yu-Gi-Oh Tournaments!! Nxt Legaci Gaming 📍200 West 41st St, New York, NY 10036 – 2nd Floor ⏰NEW HOURS Sunday 12PM-9:30PM Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9YUUxiWmVta0xia0wyX0ZnX3NvaGk2Z1RZWXAwNml3U1NURFNLaFBmMlJRdkdXLXItTVlVZnV5VjB3VEl3dzRIOXNIRGxsc0s1OE5pVlBR?oc=5",
+      "published_at": "2026-09-27T07:00:00+00:00",
+      "platform": "instagram_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "3c7fe47c944981ec0b4c33ba"
+    },
+    {
       "id": "2e8d2851fd04dd6890698f6b",
       "title": "🤖✨ NEW MODEL KITS HAVE LANDED! ✨🤖 We just got a fresh shipment of Gundam model kits in stock at EC, including the adorable Hello Kitty Gundam! And that’s not all! We also have a couple of Pokémon model kits waiting to be built! Whether you’re a Gu - Instagram",
       "description": "🤖✨ NEW MODEL KITS HAVE LANDED! ✨🤖 We just got a fresh shipment of Gundam model kits in stock at EC, including the adorable Hello Kitty Gundam! And that’s not all! We also have a couple of Pokémon model kits waiting to be built! Whether you’re a Gu Instagram",
@@ -19121,6 +20091,70 @@
       "location_ambiguous": false
     },
     {
+      "title": "'WE HEAR YOU!' 🤗✨ Yu-Gi-Oh! Original Artwork Collection Manga-Style Master Set (Colored - All Super Rare) is back in STOCK chat!!! 🔥 Get all the 30-different Manga-Style cards in one go! Available at TCG-corner and you can use our exclusive code RESP - Facebook",
+      "description": "'WE HEAR YOU!' 🤗✨ Yu-Gi-Oh! Original Artwork Collection Manga-Style Master Set (Colored - All Super Rare) is back in STOCK chat!!! 🔥 Get all the 30-different Manga-Style cards in one go! Available at TCG-corner and you can use our exclusive code RESP Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNOWhOU0JBYW01WkUyMXVkY1FSZmNCclNGdmJCLWY1RzhlOElDMC13SnhycEo2aHFFQjdBWWFUMDBWb0M2aHNQMW4wd3Jwdk9JYnllUlFXNVZacHVUZFZMZS1WSnQxSVhKZE1SSjFPOUc5NXVvRUdKTDZzMktMWXNVdEhlNndhOWxmbS1rSVNJdWhoZ3VIVEtHak9QTDdEZ0JZQkpoNzladWZ2ZFdyUU5oX09lSkVjYjlfNUpHcWRBcl9LLU5IMnlhS1pQbFBHVHRZb2ZvYl9BQQ?oc=5",
+      "published_at": "2026-09-26T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "in stock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "a4f84b44922d1300e638edd5"
+    },
+    {
+      "title": "‼️Original Artwork Collection RESTOCKED ‼️ Don't miss the latest Overframe, Grandmaster Rare, and the new MANGA-Style cards in your collection! 💥 👇👇👇👇 #yugiohtcg #mangastyle #darkmagician #blueeyeswhitedragon - Facebook",
+      "description": "‼️Original Artwork Collection RESTOCKED ‼️ Don't miss the latest Overframe, Grandmaster Rare, and the new MANGA-Style cards in your collection! 💥 👇👇👇👇 #yugiohtcg #mangastyle #darkmagician #blueeyeswhitedragon Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPa2ZtenU3QlJBSjNmY0lzLXVFMWQtVzRGVXRnRktuVzBQQmpGcWo5SWRGTjZIR2tsblBfcDFXS3drNVFVS2g1R3RuRXd3QlNHaUs3bldrZzZCZWpnRzNlWF8wczVIVWdIVHZzWkJJWG1QcjktN3VscUF0cFM1NzFIQjBzRnEzVDRTaFNOdVNtOVdsYnkyNXRJaFdYbk8tckt3d1JlQlhOUlFzamhhMzdmM2JEcmRMT1pBSnNHVFJDZXJTM0VaekpHRnYxYS0wcVRISFNUQVNDWFJtMExFbVNrLVZCSWdoaFJqRWlwZA?oc=5",
+      "published_at": "2026-09-26T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restocked",
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "514056a2fe366b5a965cb37f"
+    },
+    {
+      "title": "'ANOTHER ONE!' 🫨✨ Yu-Gi-Oh! Original Artwork Collection Manga-Style Master Set (Monochrome - All Super Rare) is back in STOCK chat!!! 🔥 Get all the 30-different Manga-Style cards in one go! Available at TCG-corner and you can use our exclusive code - Facebook",
+      "description": "'ANOTHER ONE!' 🫨✨ Yu-Gi-Oh! Original Artwork Collection Manga-Style Master Set (Monochrome - All Super Rare) is back in STOCK chat!!! 🔥 Get all the 30-different Manga-Style cards in one go! Available at TCG-corner and you can use our exclusive code Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQVWg0OVJfaFJzcnk0VEpWbmZ2R09GVkZRWFBMT0I5UnZud3Jnb3d5Y1AyTUc2TUpZZkVpNXV0QzFnS3c2Tm9zaGhtR1FKbDBucnN3U05ITWZhSk96R3B2TGVLVUtCdTRkVDVUYXV6T3lxeU42WmpQV0ZaSEhQRHpqak9ISUlRd2kwZ212QVlNU1cwbFpucURmWWNYZVFqb1hDRllWdXcteWJEUTNLTFBDUmFmZTA1TG5DNmgyU1VwSkJsN3hXWWZyMmc4cXpfRGN3OXRmeEl5Zw?oc=5",
+      "published_at": "2026-09-26T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Yu-Gi-Oh!"
+      ],
+      "game": "Yu-Gi-Oh!",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "in stock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "f06d1f3e0868bc985f06b7d9"
+    },
+    {
       "id": "c7393a552345cde96287bd16",
       "title": "Pokemon GO Plus+ Restock Sells Out Again, Flips for Up To $120 - Resell Calendar",
       "description": "Pokemon GO Plus+ Restock Sells Out Again, Flips for Up To $120 Resell Calendar",
@@ -19159,8 +20193,8 @@
       "status": "unverified_public_lead",
       "report_type": "retail_sighting_lead",
       "restock_signals": [
-        "restock",
-        "etbs"
+        "restock today",
+        "restock"
       ],
       "games": [
         "Pokemon",
@@ -19203,7 +20237,7 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
@@ -19310,9 +20344,34 @@
       "retailer_mentions": [],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "promotional_or_event",
+      "report_type": "general_discussion",
       "restock_signals": [],
-      "status": "unverified_public_lead"
+      "status": "unverified_public_lead",
+      "games": [
+        "Pokemon"
+      ],
+      "original_post_url": null
+    },
+    {
+      "title": "🚨RESTOCK!! 🚨 We've just gotten a restock of Lorcana and Dragonball products! ⏰ If you've been eyeing any products, now is the best time! 😤 - Facebook",
+      "description": "🚨RESTOCK!! 🚨 We've just gotten a restock of Lorcana and Dragonball products! ⏰ If you've been eyeing any products, now is the best time! 😤 Facebook",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxOajR4S1FZZi04QlJ5TTZfTHhrQTh3RFJpS3ctVzJlWkw3aktnQ01TVTREamMwU0pvX19Yd2V2dllkQTFCcWtsZ0pzTXpkdHJNYkN4U040TzNfZW9fSXlvaThXb0E5LTNRUGVyU1NHWUh1RlJDU1dQaURHQmhBUEtQVEhlYnRMOTN1TGRZMWFLeG9DQ2JrdlZjZHhyRUJZT2NBdXRSd1A5VkJpUm5RazIySEhWUm5SWDJJLTZSRkxSTV9vVXFQYXZPZUkwaUNmLWU1eU1SMFByTlFHbkI5TmVFa0lIQ1k?oc=5",
+      "published_at": "2026-09-25T07:00:00+00:00",
+      "platform": "facebook_public_index",
+      "first_seen_at": "2026-11-07T01:42:15.232203+00:00",
+      "games": [
+        "Disney Lorcana"
+      ],
+      "game": "Disney Lorcana",
+      "retailer_mentions": [],
+      "restock_signals": [
+        "restock"
+      ],
+      "report_type": "general_discussion",
+      "location": null,
+      "original_post_url": null,
+      "status": "unverified_public_lead",
+      "id": "dac43f19b882f50cda036e38"
     },
     {
       "title": "Target Pokémon 30th Anniversary event: How to claim custom card crafts, free goodie bags, and limited-edition drops - Mashable",
@@ -19398,8 +20457,8 @@
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "status": "unverified_public_lead",
       "games": [
@@ -19487,9 +20546,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -19558,8 +20615,8 @@
       "status": "unverified_public_lead",
       "report_type": "general_discussion",
       "restock_signals": [
-        "restock",
-        "restocked"
+        "restocked",
+        "restock"
       ],
       "games": [
         "Pokemon",
@@ -19644,6 +20701,7 @@
         "Target"
       ],
       "restock_signals": [
+        "on the shelves",
         "restock"
       ],
       "report_type": "retail_sighting_lead",
@@ -19752,7 +20810,9 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [],
+      "restock_signals": [
+        "on the shelves"
+      ],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon"
@@ -19820,7 +20880,7 @@
       "location": null,
       "location_ambiguous": false,
       "status": "unverified_public_lead",
-      "report_type": "general_discussion",
+      "report_type": "retail_sighting_lead",
       "restock_signals": [
         "restock"
       ],
@@ -19840,7 +20900,14 @@
       "first_seen_at": "2026-11-04T01:45:13.759201+00:00",
       "game": "Pokemon",
       "retailer_mentions": [],
-      "location": null,
+      "location": {
+        "city": "Richmond",
+        "state": "VA",
+        "lat": 37.5407,
+        "lon": -77.436,
+        "precision": "city_center",
+        "verified": false
+      },
       "location_ambiguous": false,
       "report_type": "general_discussion",
       "restock_signals": [],
@@ -19950,10 +21017,8 @@
       ],
       "location": null,
       "location_ambiguous": false,
-      "report_type": "retail_sighting_lead",
-      "restock_signals": [
-        "elite trainer box"
-      ],
+      "report_type": "general_discussion",
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -19998,9 +21063,7 @@
       "location": null,
       "location_ambiguous": false,
       "report_type": "general_discussion",
-      "restock_signals": [
-        "booster packs"
-      ],
+      "restock_signals": [],
       "status": "unverified_public_lead",
       "games": [
         "Pokemon",
@@ -20009,5 +21072,5 @@
       "original_post_url": null
     }
   ],
-  "disclaimer": "Public indexed reports are unverified. Private Facebook groups are not accessed."
+  "disclaimer": "All social leads are unverified."
 }
