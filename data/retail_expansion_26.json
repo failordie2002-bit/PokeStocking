@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:04:13.038240+00:00",
+  "updated_at": "2026-11-07T01:26:20.017939+00:00",
   "retailers": [
     {
       "name": "CVS Pharmacy",
@@ -46,6 +46,12 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.cvs.com/search/?searchTerm=Flesh%20and%20Blood%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
+          "game": "Grand Archive",
+          "search_url": "https://www.cvs.com/search/?searchTerm=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -172,6 +178,12 @@
           "stock_verified": false
         },
         {
+          "game": "Grand Archive",
+          "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Grand%20Archive%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Gundam",
           "search_url": "https://www.walgreens.com/search/results.jsp?Ntt=Gundam%20trading%20cards",
           "availability": "unknown",
@@ -290,6 +302,12 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.dollargeneral.com/search?keywords=Flesh%20and%20Blood%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
+          "game": "Grand Archive",
+          "search_url": "https://www.dollargeneral.com/search?keywords=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -416,6 +434,12 @@
           "stock_verified": false
         },
         {
+          "game": "Grand Archive",
+          "search_url": "https://www.dollartree.com/searchresults?Ntt=Grand%20Archive%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Gundam",
           "search_url": "https://www.dollartree.com/searchresults?Ntt=Gundam%20trading%20cards",
           "availability": "unknown",
@@ -534,6 +558,12 @@
         {
           "game": "Flesh and Blood",
           "search_url": "https://www.familydollar.com/search?query=Flesh%20and%20Blood%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
+          "game": "Grand Archive",
+          "search_url": "https://www.familydollar.com/search?query=Grand%20Archive%20trading%20cards",
           "availability": "unknown",
           "stock_verified": false
         },
@@ -660,6 +690,12 @@
           "stock_verified": false
         },
         {
+          "game": "Grand Archive",
+          "search_url": "https://www.fivebelow.com/search?q=Grand%20Archive%20trading%20cards",
+          "availability": "unknown",
+          "stock_verified": false
+        },
+        {
           "game": "Gundam",
           "search_url": "https://www.fivebelow.com/search?q=Gundam%20trading%20cards",
           "availability": "unknown",
@@ -742,6 +778,7 @@
     "Dragon Ball Super",
     "Final Fantasy TCG",
     "Flesh and Blood",
+    "Grand Archive",
     "Gundam",
     "Gundam Card Game",
     "Kayou",
