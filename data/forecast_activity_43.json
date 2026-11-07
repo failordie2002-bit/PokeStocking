@@ -1,8 +1,76 @@
 {
   "version": "43.0",
-  "public_sighting_feed_checked": "2026-11-06T13:30:00.085031+00:00",
+  "public_sighting_feed_checked": "2026-11-06T22:59:37.900138+00:00",
   "social_feed_checked": "2026-11-06T21:22:35.850902+00:00",
   "events": [
+    {
+      "id": "sighting:84c7d78ad1d6ad5a1fda96ae",
+      "kind": "community_sighting",
+      "title": "Pitch Black Sleeved Booster Pack",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Falls Church",
+      "state": "VA",
+      "lat": 38.8692533,
+      "lon": -77.1506373,
+      "reported_at": "2026-11-06T18:59:37.900138+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:d613dfe859673284215ac864",
+      "kind": "community_sighting",
+      "title": "Chaos Rising Sleeved Booster Pack",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Falls Church",
+      "state": "VA",
+      "lat": 38.8692533,
+      "lon": -77.1506373,
+      "reported_at": "2026-11-06T18:59:37.900138+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:305d52d7898b9dac980645fa",
+      "kind": "community_sighting",
+      "title": "Reported near store Pitch Black Sleeved Booster Pack Posted from the store",
+      "retailer": "Best Buy",
+      "game": "Pokemon",
+      "city": "Vienna",
+      "state": "VA",
+      "lat": 38.9035378,
+      "lon": -77.2437118,
+      "reported_at": "2026-11-06T15:59:37.900138+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=best-buy",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:700c99389a3395aca0b76eea",
+      "kind": "community_sighting",
+      "title": "Reported near store Delta Reign 3 Blister Booster Packs Posted from the store",
+      "retailer": "Best Buy",
+      "game": "Pokemon",
+      "city": "Woodbridge",
+      "state": "VA",
+      "lat": 38.649016,
+      "lon": -77.29742715,
+      "reported_at": "2026-11-06T14:59:37.900138+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=best-buy",
+      "store_id": "store-1483",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
     {
       "id": "sighting:6c7141be8d67d1620ef8e4d3",
       "kind": "community_sighting",
@@ -208,7 +276,7 @@
       "location_precision": "source_tagged_approximate"
     }
   ],
-  "community_sighting_count": 9,
+  "community_sighting_count": 13,
   "location_tagged_social_leads": 3,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
