@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-06T21:19:21.495096+00:00",
+  "checked_at": "2026-11-07T01:40:03.141818+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -23,7 +23,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 701,
+  "online_candidates": 1808,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -37,7 +37,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Target",
@@ -46,7 +46,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -55,7 +55,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -64,7 +64,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Kohls",
@@ -73,7 +73,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Lowes",
@@ -82,7 +82,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "GameStop",
@@ -91,7 +91,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Ross",
@@ -100,7 +100,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Burlington",
@@ -109,7 +109,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Five Below",
@@ -118,7 +118,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -127,7 +127,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "CVS",
@@ -136,7 +136,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -145,575 +145,572 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-06T21:19:21.495096+00:00"
+      "checked_at": "2026-11-07T01:40:03.141818+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_200,http_200": 7,
-    "no_explicit_pickup_evidence:http_404,http_404": 36,
-    "no_explicit_pickup_evidence:http_429,http_404": 8,
-    "product_http_429": 18,
-    "product_http_404": 11
+    "no_explicit_pickup_evidence:http_404,http_404": 30,
+    "product_http_429": 50
   },
   "checks": [
     {
-      "retailer": "Games and Stuff",
-      "game": "Magic: The Gathering",
-      "product": "MAGIC THE GATHERING REALITY FRACTURE BUNDLE",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "Magic: The Gathering",
-      "product": "MAGIC THE GATHERING REALITY FRACTURE COLLECTOR BOOSTER BOX",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "One Piece",
-      "product": "ONE PIECE THE WORLD'S STRONGEST WARRIORS BOOSTER BOX WAVE 2",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "Pokémon",
-      "product": "POKEMON ASCENDED HEROES MEGA EX TIN *LIMIT 1 PER CUSTOMER*",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "Pokémon",
-      "product": "POKEMON ASCENDED HEROES MEGA EX TIN *LIMIT 1 PER CUSTOMER*",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "Pokémon",
-      "product": "POKEMON ASCENDED HEROES MEGA EX TIN *LIMIT 1 PER CUSTOMER*",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "Pokémon",
-      "product": "POKEMON DESTINED RIVALS ELITE TRAINER BOX (LIMIT 1 PER PERSON)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Gabumon [ST21-10] (World Championship 26-27 Store Championships Season 2 Top 4) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "Gotenks (ST01-021) (Alternate Art) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Gabumon [ST21-10] (World Championship 26-27 Store Championships Season 2 Top 4) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "Gotenks (ST01-021) (Alternate Art) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Gabumon [ST21-10] (World Championship 26-27 Store Championships Season 2 Top 4) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "Gotenks (ST01-021) (Alternate Art) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Gabumon [ST21-10] (World Championship 26-27 Store Championships Season 2 Top 4) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "I Call This Version...Super Vegito! [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Gabumon [ST21-10] (World Championship 26-27 Store Championships Season 2 Top 4) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "I Call This Version...Super Vegito! [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Tsunomon [ST21-01] (World Championship 26-27 Store Championships Season 2 Top 16) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "I Call This Version...Super Vegito! [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Tsunomon [ST21-01] (World Championship 26-27 Store Championships Season 2 Top 16) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "I Call This Version...Super Vegito! [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Tsunomon [ST21-01] (World Championship 26-27 Store Championships Season 2 Top 16) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "I Call This Version...Super Vegito! [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Tsunomon [ST21-01] (World Championship 26-27 Store Championships Season 2 Top 16) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "Irrational Destructive Impulse (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Tsunomon [ST21-01] (World Championship 26-27 Store Championships Season 2 Top 16) [Starter Deck: Hero of Hope]",
+      "game": "Dragon Ball Super",
+      "product": "Irrational Destructive Impulse (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "Grand Archive",
-      "product": "Grand Archive TCG: .asphodel/cantabile 1st Edition Booster Box",
+      "game": "Dragon Ball Super",
+      "product": "Irrational Destructive Impulse (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Black Maria [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Irrational Destructive Impulse (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Black Maria [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Irrational Destructive Impulse (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Black Maria [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kamehameha (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Black Maria [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kamehameha (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Black Maria [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kamehameha (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kamehameha (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kamehameha (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Domino [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Mermaid Cafe Dancers [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Mermaid Cafe Dancers [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Mermaid Cafe Dancers [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Mermaid Cafe Dancers [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Mermaid Cafe Dancers [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nico Robin [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nico Robin [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai (Dragon Ball Pattern) [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nojiko [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nojiko [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai [Story Booster 01]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nojiko [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nojiko [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Nojiko [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Otohime [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Otohime [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Otohime [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Otohime [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito Kai [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Otohime [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Russian [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Russian [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Russian [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Russian [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Russian [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Shirahoshi [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Kibito [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Shirahoshi [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu (Alternate Art) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Shirahoshi [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu (Alternate Art) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Shirahoshi [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Shirahoshi [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu (Alternate Art) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Take Care of Lilith!!! [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Take Care of Lilith!!! [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu (Alternate Art) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Take Care of Lilith!!! [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu (Alternate Art) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Take Care of Lilith!!! [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) (Dragon Ball Pattern) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Take Care of Lilith!!! [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) (Dragon Ball Pattern) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Yamato [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Yamato [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) (Dragon Ball Pattern) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Yamato [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) (Dragon Ball Pattern) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Yamato [Extra Booster: One Piece Heroines Edition Vol. 2]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Gaming Giant",
-      "game": "One Piece",
-      "product": "Yamato [Extra Booster: One Piece Heroines Edition Vol. 2]",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) (Dragon Ball Pattern) [Story Booster 01]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-029) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-030) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-030) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-030) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-030) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-030) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "product_http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-031) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
-      "game": "Cardfight!! Vanguard",
-      "product": "2025 Cardfight Vanguard Festival Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-031) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
-      "game": "Cardfight!! Vanguard",
-      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-031) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
-      "game": "Digimon",
-      "product": "Digimon Advanced Starter Deck Amethyst Mandala (ST-22)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-031) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
-      "game": "Disney Lorcana",
-      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amber & Sapphire",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-031) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) (Alternate Art) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-032) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) (Dragon Ball Pattern) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) (Dragon Ball Pattern) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) (Dragon Ball Pattern) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) (Dragon Ball Pattern) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) (Dragon Ball Pattern) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) [Story Booster 01]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Majin Buu : Evil (ST01-033) [Story Booster 01]",
+      "result": "product_http_429",
       "observations": 0
     }
   ],
