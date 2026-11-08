@@ -1,16 +1,16 @@
 {
   "version": "37.0",
-  "updated_at": "2026-11-08T14:22:45.428139+00:00",
+  "updated_at": "2026-11-08T14:41:38.776228+00:00",
   "inventory_scope": "online_restock_signal",
   "lookback_days": 90,
   "weekday_timezone": "America/New_York",
-  "source_count": 143,
+  "source_count": 151,
   "retailer_patterns": [
     {
       "retailer": "Amazon",
-      "signal_count": 53,
-      "distinct_observation_dates": 11,
-      "date_span_days": 10,
+      "signal_count": 59,
+      "distinct_observation_dates": 12,
+      "date_span_days": 11,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -40,7 +40,7 @@
         },
         {
           "day": "Sunday",
-          "count": 1
+          "count": 2
         }
       ],
       "watch_windows": [],
@@ -168,7 +168,7 @@
     },
     {
       "retailer": "Macy's",
-      "signal_count": 5,
+      "signal_count": 6,
       "distinct_observation_dates": 4,
       "date_span_days": 8,
       "confidence": "Insufficient evidence",
@@ -288,9 +288,9 @@
     },
     {
       "retailer": "Target",
-      "signal_count": 25,
-      "distinct_observation_dates": 4,
-      "date_span_days": 7,
+      "signal_count": 26,
+      "distinct_observation_dates": 5,
+      "date_span_days": 9,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
@@ -320,7 +320,7 @@
         },
         {
           "day": "Sunday",
-          "count": 0
+          "count": 1
         }
       ],
       "watch_windows": [],
