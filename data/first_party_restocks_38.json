@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-d6b60464fa0c639336af50bc0a",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "MTG TCG: Reality Fracture - Play Booster Display",
+    "game": "Magic: The Gathering",
+    "retailer": "The Eternal Forge",
+    "price_reported": "124.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-08T03:21:49.094276+00:00",
+    "reported_at": "2026-11-08T03:21:49.094276+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/mtg-tcg-reality-fracture-play-booster-display",
+    "source_url": "https://www.theeternalforge.com/products/mtg-tcg-reality-fracture-play-booster-display",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-77358853b75b242c400a613a4a",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
