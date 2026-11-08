@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-08T13:29:33.309462+00:00",
+  "checked_at": "2026-11-08T17:13:50.712182+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -16,13 +16,14 @@
     "One Piece",
     "Pokémon",
     "Riftbound",
+    "Shadowverse: Evolve",
     "Sorcery: Contested Realm",
     "Star Wars: Unlimited",
     "Union Arena",
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 766,
+  "online_candidates": 1082,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -36,7 +37,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +46,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +55,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +64,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +73,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +82,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +91,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +100,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +109,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +118,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +127,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +136,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,573 +145,573 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-08T13:29:33.309462+00:00"
+      "checked_at": "2026-11-08T17:13:50.712182+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 33,
-    "product_http_429": 41,
-    "no_explicit_pickup_evidence:http_429,http_404": 6
+    "no_explicit_pickup_evidence:http_404,http_404": 37,
+    "product_http_429": 32,
+    "product_http_404": 11
   },
   "checks": [
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Checklane Blister",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dress Up, Albedo (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Checklane Blister [3-Promo]",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dress Up, Albedo (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Hero of the Nation (OVL/SE51-E60H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Pokemon Center Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Hero of the Nation (OVL/SE51-E60H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Forces Tin",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Hero of the Nation (OVL/SE51-E60H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Lucario ex League Battle Deck",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Hero of the Nation (OVL/SE51-E60H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Moonlit Tin",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Hero of the Nation (OVL/SE51-E60H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Nihil Zero Booster Box - M3",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "One and Only Purpose, Ainz (OVL/SE51-E56 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Ninja Spinner M4 - Booster Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "One and Only Purpose, Ainz (OVL/SE51-E56 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Paldean Fates Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "One and Only Purpose, Ainz (OVL/SE51-E56 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Paradox Rift Elite Trainer Box (Pokemon Center) [Roaring Moon]",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "One and Only Purpose, Ainz (OVL/SE51-E56 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Pitch Black & Chaos Rising - 2-Pack Blister [Zarude]",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "One and Only Purpose, Ainz (OVL/SE51-E56 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Prize Pack Series Four Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01 PR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Prize Pack Series One Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01 PR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Prize Pack Series Three Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01 PR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Prize Pack Series Two Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01 PR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Rival Battle Deck (Marnie)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01 PR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Ruler Of The Black Flame SV3 Booster Box JP",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01S PR) (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paldea Evolved Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01S PR) (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paldea Evolved Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01S PR) (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paldea Legends Tin",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01S PR) (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paradox Clash Tin",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Precision Shooting, CZ (OVL/SE51-PE01S PR) (Foil) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paradox Destinies Tin (Styles May Vary)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 01 - Elite Trainer Box (Styles May Vary)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 05 Temporal Forces- Elite Trainer Box (Styles May Vary)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 06 Twilight Masquerade - Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 06 Twilight Masquerade- Booster Display",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54 U) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54H HU) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54H HU) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks- Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54H HU) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks- Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54H HU) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Secret Negotiations, Ainz (OVL/SE51-E54H HU) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King Who Has Returned, Ainz (OVL/SE51-E52 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King Who Has Returned, Ainz (OVL/SE51-E52 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King Who Has Returned, Ainz (OVL/SE51-E52 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King Who Has Returned, Ainz (OVL/SE51-E52 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King Who Has Returned, Ainz (OVL/SE51-E52 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King's Pride, Ainz (OVL/SE51-E48EX SEC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King's Pride, Ainz (OVL/SE51-E48EX SEC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King's Pride, Ainz (OVL/SE51-E48EX SEC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King's Pride, Ainz (OVL/SE51-E48EX SEC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The King's Pride, Ainz (OVL/SE51-E48EX SEC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The Way of This World, Ainz (OVL/SE51-E53 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The Way of This World, Ainz (OVL/SE51-E53 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The Way of This World, Ainz (OVL/SE51-E53 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The Way of This World, Ainz (OVL/SE51-E53 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "The Way of This World, Ainz (OVL/SE51-E53 R) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59 C) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59 C) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59 C) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59 C) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59 C) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Then I Will Play With You a Bit (OVL/SE51-E59H HC) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Uncontrollable Emotions (OVL/SE51-E61SIR SIR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Uncontrollable Emotions (OVL/SE51-E61SIR SIR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Uncontrollable Emotions (OVL/SE51-E61SIR SIR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Uncontrollable Emotions (OVL/SE51-E61SIR SIR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Uncontrollable Emotions (OVL/SE51-E61SIR SIR) [Nazarick: Tomb of the Undead Vol.3 Extra Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
+      "result": "product_http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "game": "Cardfight!! Vanguard",
+      "product": "2025 Cardfight Vanguard Festival Booster Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together - Booster Pack",
+      "retailer": "Mamba Collectibles",
+      "game": "Cardfight!! Vanguard",
+      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together - Non-Enhanced Booster Display",
+      "retailer": "Mamba Collectibles",
+      "game": "Digimon",
+      "product": "Digimon Advanced Starter Deck Amethyst Mandala (ST-22)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together- Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amber & Sapphire",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10 Destined Rivals- Booster Display 36 Packs",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amethyst & Steel",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10 Destined Rivals- Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Magic: The Gathering",
+      "product": "Aetherdrift Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 - Unova Mini Tin (Styles may Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 Black Bolt- Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 White Flare- Booster Bundle Case",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates - Mini Tin (styles may vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates - Tin (styles may vary)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates- International Tin (Styles May Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates- Sealed Booster Bundle Case",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 6.5 Shrouded Fable - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 6.5 Shrouded Fable - Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 6.5 Shrouded Fable- Booster Bundle",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Paldean Fates - Retail Exclusive Pokemon Paldean Fates Mini Tins + Poke Ball Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions - Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions- Mini Tin (Styles May Vary)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet And Violet 01 - Elite Trainer Box (Pokemon Center) [Koraidon]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet And Violet 01 - Elite Trainer Box (Pokemon Center) [Miraidon]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 04 Paradox Rift - Sleeved Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 151 - Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Destined Rivals - Sleeved Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Twilight Masquerade - Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet ex SV1S - Booster Pack JP",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Shining Fates - Boltund V Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Shining Fates - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Shining Fates - Cramorant V Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Shining Fates - Eldegoss V Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Shining Fates - Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Shiny Treasure - Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Silver Tempest - Checklane Blister (Basculin)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Silver Tempest - Checklane Blister (Cranidos)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Silver Tempest Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sinnoh Stars - Mini Tin (Styles May Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Slashing Legends Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Spring 2020 Collector's Chest Tin (Zacian Zamazenta)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Stacking Tin Q1 2025 (Styles May Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Stacking Tin Spring 2024 (styles may vary)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Start Deck 100 Battle Collection JP (CASE FRESH)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Stellar Crystal CSV9C - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Stellar Miracle Booster Pack JP",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Storm Emeralda Booster Pack JP",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Storm Emeralda M6 - Booster Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sun & Moon - 3-Pack Blister [Litten]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sun & Moon - 3-Pack Blister [Togedemaru]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sun & Moon 01 - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sun & Moon Base - 3 Card Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "retailer": "Mamba Collectibles",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering Avatar The Last Airbender Jumpstart Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     }
   ],
