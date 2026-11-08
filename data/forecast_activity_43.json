@@ -1,7 +1,7 @@
 {
   "version": "43.0",
   "public_sighting_feed_checked": "2026-11-07T22:55:36.537018+00:00",
-  "social_feed_checked": "2026-11-08T05:30:43.570264+00:00",
+  "social_feed_checked": "2026-11-08T09:27:42.037213+00:00",
   "events": [
     {
       "id": "sighting:b329c0aa1e13cf94aedb6917",
@@ -325,9 +325,26 @@
       "store_match_verified": false,
       "stock_verified_now": false,
       "location_precision": "source_tagged_approximate"
+    },
+    {
+      "id": "social:d4210fb022b01db4e6fa3d75",
+      "kind": "social_research_lead",
+      "title": "Hello, wastelanders and vault dwellers! A fresh restock of Magic the Gathering Fallout Commander decks are available at the Norfolk store! Available for in-store pickup only. - Instagram",
+      "retailer": "",
+      "game": "Magic: The Gathering",
+      "city": "Norfolk",
+      "state": "VA",
+      "lat": 36.8508,
+      "lon": -76.2859,
+      "reported_at": "2026-10-09T07:00:00+00:00",
+      "source_url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBOMkkxTE5mcXg4REVpRW8yQUFhLTl1aUQtam9zbXZObzFfTjNFcXpEZWZ3b0VZUmJkVkgwS3hKR0dvdF8xVTVOUTVobDhIX3FwTFE?oc=5",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "source_tagged_approximate"
     }
   ],
   "community_sighting_count": 16,
-  "location_tagged_social_leads": 3,
+  "location_tagged_social_leads": 4,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
