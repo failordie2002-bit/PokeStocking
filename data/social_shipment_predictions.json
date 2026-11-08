@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-08T04:59:32.749586+00:00",
+  "updated_at": "2026-11-08T05:30:43.570264+00:00",
   "weekday_labels": [
     "Monday",
     "Tuesday",
@@ -9,6 +9,7 @@
     "Saturday",
     "Sunday"
   ],
+  "minimum_observations": 5,
   "predictions": [],
-  "method": "Weighted historical restock-day distribution. Community reports contribute at reduced weight. A minimum of five distinct dated observations, two verified observations and effective weight of three is required. Not a delivery-truck arrival prediction."
+  "method": "Observed restock weekday frequency with Laplace smoothing. Not a measured delivery probability. Unverified social posts excluded."
 }
