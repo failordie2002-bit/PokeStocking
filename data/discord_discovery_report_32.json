@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-09T01:05:55.803059+00:00",
+  "updated_at": "2026-11-09T07:28:02.050492+00:00",
   "sources_checked": [
     {
       "url": "https://www.guildregister.com/c/tcg",
@@ -15,7 +15,7 @@
     },
     {
       "url": "https://discordhome.com/servers/tag/pokemontcg",
-      "status": "ok"
+      "status": "ReadTimeout"
     },
     {
       "url": "https://disboard.org/servers/tag/tcg",
@@ -30,12 +30,12 @@
       "status": "ok"
     }
   ],
-  "total_communities": 100,
-  "new_communities": 96,
-  "rejected_candidates": 79,
+  "total_communities": 97,
+  "new_communities": 93,
+  "rejected_candidates": 72,
   "location_tagged": 0,
   "game_counts": {
-    "Pokemon": 69,
+    "Pokemon": 66,
     "Union Arena": 2,
     "One Piece": 6,
     "Gundam": 0,
@@ -46,7 +46,7 @@
     "Digimon": 1,
     "Dragon Ball": 0,
     "Flesh and Blood": 1,
-    "Other TCG": 40
+    "Other TCG": 39
   },
   "limitations": [
     "Directory listings are not live message feeds.",
