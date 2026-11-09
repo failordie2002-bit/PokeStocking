@@ -1,14 +1,14 @@
 {
   "version": "37.0",
-  "updated_at": "2026-11-09T11:35:10.685653+00:00",
+  "updated_at": "2026-11-09T11:58:18.562170+00:00",
   "inventory_scope": "online_restock_signal",
   "lookback_days": 90,
   "weekday_timezone": "America/New_York",
-  "source_count": 151,
+  "source_count": 152,
   "retailer_patterns": [
     {
       "retailer": "Amazon",
-      "signal_count": 59,
+      "signal_count": 60,
       "distinct_observation_dates": 12,
       "date_span_days": 11,
       "confidence": "Insufficient evidence",
