@@ -1,22 +1,22 @@
 {
   "version": "37.0",
-  "updated_at": "2026-11-09T13:57:00.055405+00:00",
+  "updated_at": "2026-11-09T14:34:16.810303+00:00",
   "inventory_scope": "online_restock_signal",
   "lookback_days": 90,
   "weekday_timezone": "America/New_York",
-  "source_count": 152,
+  "source_count": 156,
   "retailer_patterns": [
     {
       "retailer": "Amazon",
-      "signal_count": 60,
-      "distinct_observation_dates": 12,
-      "date_span_days": 11,
+      "signal_count": 64,
+      "distinct_observation_dates": 13,
+      "date_span_days": 12,
       "confidence": "Insufficient evidence",
       "forecast_status": "insufficient_history",
       "weekday_counts": [
         {
           "day": "Monday",
-          "count": 1
+          "count": 2
         },
         {
           "day": "Tuesday",
