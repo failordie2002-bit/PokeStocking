@@ -1,80 +1,20 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-08T21:01:54.313565+00:00",
-  "source_online_candidates": 1282,
+  "checked_at": "2026-11-09T01:30:37.823206+00:00",
+  "source_online_candidates": 1305,
   "checked_this_run": 60,
   "verified_this_run": 49,
-  "fresh_online_observations": 1391,
-  "online_in_stock": 210,
-  "online_out_of_stock": 1181,
+  "fresh_online_observations": 477,
+  "online_in_stock": 125,
+  "online_out_of_stock": 352,
   "verified_store_observations": 0,
   "store_in_stock": 0,
-  "next_cursor": 229,
+  "next_cursor": 289,
   "check_outcomes": {
     "verified": 49,
     "http_404": 11
   },
   "checks": [
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh: Phantom Revenge Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh: Power of the Elements Unlimited Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh: The Chronicles Spirit Charmers Structure Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG - BT08 Booster Box - New Awakening",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG -EX04 Booster Box - Alternative Being",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG - BT11 Booster Box - Dimensional Phase",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG - EX03 Booster Box - Draconic Roar",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG - Gift Box - 2023",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG - ST16 Starter Deck - Wolf of Friendship",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Flesh and Blood - Bright Lights - Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Flesh and Blood - Dusk Till Dawn - Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Yugioh - Cyberstorm Access - Booster Box",
-      "result": "verified"
-    },
     {
       "retailer": "Mamba Collectibles",
       "product": "2024 Disney Star Wars Unlimited Shadows of the Galaxy Booster Box",
@@ -192,6 +132,26 @@
     },
     {
       "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Play (DFT) Aetherdrift",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Play (DFT) Aetherdrift",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Aetherdrift Booster Collector (DFT)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Aetherdrift Booster Collector (DFT)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
       "product": "MTG Avatar: The Last Airbender (TLA) Booster Collector",
       "result": "verified"
     },
@@ -237,7 +197,12 @@
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Marvel's Spider-Man (SPM) Booster Collector",
+      "product": "MTG Booster Box Collector (12ct) Innistrad Remastered (INR)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box Collector (12ct) Tarkir Dragonstorm (TDM)",
       "result": "verified"
     },
     {
@@ -247,12 +212,7 @@
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Teenage Mutant Ninja Turtles (TMT)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Teenage Mutant Ninja Turtles (TMT)",
+      "product": "MTG Marvel's Spider-Man (SPM) Booster Collector",
       "result": "verified"
     },
     {
@@ -267,17 +227,27 @@
     },
     {
       "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Collector : Innistrad Remastered (INR)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
       "product": "MTG Booster Pack Collector Omega : Dominaria United (DMU)",
       "result": "verified"
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Lorwyn Eclipsed (ECL)",
+      "product": "MTG Booster Pack Collector Tarkir Dragonstorm (TDM)",
       "result": "verified"
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Lorwyn Eclipsed (ECL)",
+      "product": "MTG Booster Box Play (36ct) : Innistrad Remastered (INR)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Play : Innistrad Remastered (INR)",
       "result": "verified"
     },
     {
@@ -292,27 +262,57 @@
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Modern Horizons 3 (MH3) [Japanese]",
+      "product": "MTG Booster Tarkir Dragonstorm (TDM)",
       "result": "verified"
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Modern Horizons 3 (MH3) [Japanese]",
+      "product": "MTG Booster Tarkir Dragonstorm (TDM)",
       "result": "verified"
     },
     {
       "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Teenage Mutant Ninja Turtles (TMT)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Teenage Mutant Ninja Turtles (TMT)",
+      "product": "MTG Bundle Aetherdrift (DFT)",
       "result": "verified"
     },
     {
       "retailer": "Twenty Sided Store",
       "product": "MTG Bundle Edge of Eternities (EOE)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle Finish Line Aetherdrift (DFT)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle Marvel's Spider-Man (SPM)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle Marvel's Spider-Man (SPM)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle Tarkir Dragonstorm (TDM)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "SWU Secrets of Power Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "SWU Secrets of Power Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "SWU Secrets of Power Booster Carbonite",
       "result": "verified"
     }
   ],
