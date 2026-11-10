@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-11-09T12:04:17.652521+00:00",
+  "generated_at": "2026-11-10T11:56:58.773099+00:00",
   "forecasts": [
+    {
+      "store_id": "store-1651",
+      "retailer": "Target",
+      "city": "Stafford",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-09",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
     {
       "store_id": "store-1834",
       "retailer": "Target",
