@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-10T09:28:22.259168+00:00",
+  "checked_at": "2026-11-10T13:44:57.804514+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -22,7 +22,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 615,
+  "online_candidates": 578,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,573 +144,574 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T09:28:22.259168+00:00"
+      "checked_at": "2026-11-10T13:44:57.804514+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 52,
-    "no_explicit_pickup_evidence:http_200,http_200": 24,
-    "product_http_404": 4
+    "no_explicit_pickup_evidence:http_404,http_404": 31,
+    "no_explicit_pickup_evidence:http_429,http_404": 1,
+    "product_http_429": 16,
+    "no_explicit_pickup_evidence:http_200,http_200": 32
   },
   "checks": [
     {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: Twilight Masquerade (Build and Battle Case)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: Twilight Masquerade Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: Twilight Masquerade Elite Trainer Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: Ultra Prism Three Pack Blister",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: Ultra Pro Neon Kanto One Touch Edge 3-Card Display",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: Vivid Voltage Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: XY Evolutions Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Pokemon: XY Evolutions Elite Trainer Box (ETB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Pokémon",
-      "product": "Vstar Universe Japanese Pokemon Booster Box JP",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! Battles of Legend Glorious Gallery Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! Beyond the Brave Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! Chaos Origins Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! Magnificent Monsters Bundle",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh: Blazing Dominion Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh: Burst Protocol Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh: Maze of Muertos Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh: Rarity Collection V Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Digimon",
-      "product": "Digimon TCG - BT08 Booster Box - New Awakening",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Digimon",
-      "product": "Digimon TCG - BT11 Booster Box - Dimensional Phase",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Digimon",
-      "product": "Digimon TCG - EX03 Booster Box - Draconic Roar",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Digimon",
-      "product": "Digimon TCG - Gift Box - 2023",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Digimon",
-      "product": "Digimon TCG - ST16 Starter Deck - Wolf of Friendship",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Digimon",
-      "product": "Digimon TCG -EX04 Booster Box - Alternative Being",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Flesh and Blood",
-      "product": "Flesh and Blood - Bright Lights - Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Flesh and Blood",
-      "product": "Flesh and Blood - Dusk Till Dawn - Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Gundam",
-      "product": "Gundam Card Game - GD02 Dual Impact - Booster Display (24 packs)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! - Blazing Dominion (1st Edition) - Booster Display",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Cardrade",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yugioh - Cyberstorm Access - Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Child’s Play Toys and Books",
-      "game": "Magic: The Gathering",
-      "product": "MTG FRA Bundle Reality Fracture",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Child’s Play Toys and Books",
-      "game": "Magic: The Gathering",
-      "product": "MTG FRA Collector Booster",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Child’s Play Toys and Books",
-      "game": "Magic: The Gathering",
-      "product": "MTG FRA Play Booster Reality Fracture",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Battle Spirits Saga",
-      "product": "Battle Spirits Saga - Dawn of History Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Battle Spirits Saga",
-      "product": "Battle Spirits Saga - False Gods Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Cardfight!! Vanguard",
-      "product": "Cardfight!! Vanguard: Dimensional Transcendence Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Cardfight!! Vanguard",
-      "product": "Cardfight!! Vanguard: Fated Clash Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Cardfight!! Vanguard",
-      "product": "Cardfight!! Vanguard: Knights of Rebirth Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
+      "retailer": "The Eternal Forge",
       "game": "Disney Lorcana",
-      "product": "Lorcana: Floodborn Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Disney Lorcana: Azurite Sea Starter Deck (Amber & Ruby) - Azurite Sea",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Curio Cavern",
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Azurite Sea Starter Deck (Emerald & Sapphire) - Azurite Sea",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Reign of Jafar Booster Box (24 Packs)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Reign of Jafar Starter Deck (Amber & Amethyst)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Reign of Jafar Starter Deck (Ruby & Steel)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Shimmering Skies Booster Box (24 Packs)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Shimmering Skies Starter Deck (Amethyst & Ruby)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Shimmering Skies Starter Deck (Emerald & Steel)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "Magic the Gathering: March of the Machines Epilogue Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "MTG TCG: Tarkir Dragonstorm Collector's Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Curio Cavern",
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "Magic the Gathering: Murders at Karlov Manor Play Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "MTG TCG: Universes Beyond- Final Fantasy Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Curio Cavern",
-      "game": "One Piece",
-      "product": "ONE PIECE TCG Starter Deck",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Sorcery: Contested Realm",
-      "product": "Sorcery: Contested Realm Beta Starter Decks",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Curio Cavern",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "MAGIC THE GATHERING REALITY FRACTURE BUNDLE",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "MTG TCG: Universes Beyond- Final Fantasy Bundle Gift Edition",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "MAGIC THE GATHERING REALITY FRACTURE COLLECTOR BOOSTER BOX",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "MTG TCG: Universes Beyond- Final Fantasy Collector's Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
-      "game": "Magic: The Gathering",
-      "product": "MAGIC THE GATHERING THE HOBBIT GIFT BUNDLE",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "Magic: The Gathering",
-      "product": "TARKIR: DRAGONSTORM PLAY BOOSTER BOX",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
-      "game": "One Piece",
-      "product": "ONE PIECE THE WORLD'S STRONGEST WARRIORS BOOSTER BOX WAVE 2",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "POKEMON ASCENDED HEROES MEGA EX TIN *LIMIT 1 PER CUSTOMER*",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Pokémon TCG: 25th Anniversary S8A Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "POKEMON ASCENDED HEROES MEGA EX TIN *LIMIT 1 PER CUSTOMER*",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Pokémon TCG: Ancient Roar SV4 Booster Box JP",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "POKEMON ASCENDED HEROES MEGA EX TIN *LIMIT 1 PER CUSTOMER*",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Pokémon TCG: Azure Legends Tin (Kyogre)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "POKEMON DESTINED RIVALS ELITE TRAINER BOX (LIMIT 1 PER PERSON)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Pokémon TCG: Azure Legends Tin (Xerneas)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "POKEMON PITCH BLACK BOOSTER BOX (LIMIT 1 PER CUSTOMER)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "product": "Pokémon TCG: Battle Partners SV9 Booster Box JP",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Games and Stuff",
+      "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "POKEMON PITCH BLACK ELITE TRAINER BOX (LIMIT 1 PER CUSTOMER)",
+      "product": "Pokémon TCG: Crimson Haze SV5A Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Cyber Judge SV5M Booster Box JP",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Dragapult ex League Battle Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Evolution Celebration Tin [Sylveon GX]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Miraidon Ex League Battle Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Paradise Dragona SV7A Booster Box JP",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Power Partnership Tin [Mewtwo & Mew GX] - SM - Unified Minds (SM11)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Raging Surf SV3A Booster Box JP",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 01 - Booster Display Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 02 Paldea Evolved- Booster Display 36 Packs",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 03 Obsidian Flames- 3-Booster Blister (Eevee)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 03 Obsidian Flames- 3-Booster Blister (Houndstone)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 03 Obsidian Flames- Booster Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 03 Obsidian Flames- Booster Display 36 Packs",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 05 Temporal Forces - 3-Booster Blister (Cleffa)",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 05 Temporal Forces - 3-Booster Blister (Cyclizar)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Booster Bundle",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Booster Display 36 Packs",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks- Elite Trainer Box",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together- Booster Bundle",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates - Meowscarada ex Premium Collection Box",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 6.5 Shrouded Fable - Mini Tin",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet ex SV1S Booster Box JP",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Shiny Treasures SV4A Booster Box JP",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Stellar Miracle SV7 Booster Box JP",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Super Electric Breaker SV8 Booster Box JP",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield - Battle Styles Booster Display Box (36 Packs)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield 04 Vivid Voltage - Booster Display 36 Packs",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: V Forces Tin [Mew V]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: V Powers Tin [Pikachu V] (International Version)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Violet ex SV1V Booster Box JP",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "30th Celebration (JP): Booster Box",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Chiropmon [ST23-12] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "30th Celebration (JP): Booster Pack",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Chiropmon [ST23-12] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "30th Celebration: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Chiropmon [ST23-12] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Battle Partners: Booster Box (No Promo)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Chiropmon [ST23-12] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Battle Styles: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Chiropmon [ST23-12] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Black Bolt (EN): Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Liollmon [ST23-02] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Brilliant Stars: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Liollmon [ST23-02] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Burning Shadows: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Liollmon [ST23-02] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Celebrations: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Liollmon [ST23-02] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Celestial Storm Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Liollmon [ST23-02] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Chasing Glory: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Pristimon [ST23-10] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Cyber Judge: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Pristimon [ST23-10] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Darkness Ablaze: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Pristimon [ST23-10] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Destined Rivals: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Pristimon [ST23-10] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Detective Pikachu: Mewtwo GX Case File",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Pristimon [ST23-10] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Evolving Skies: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Wolvermon [ST23-11] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Evolving Skies: Single Pack Blister",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Wolvermon [ST23-11] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Evolving Skies: Single Pack Blister",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Wolvermon [ST23-11] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Fates Collide: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Wolvermon [ST23-11] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Fusion Strike: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Digimon",
-      "product": "Wolvermon [ST23-11] [Starter Deck: Beatbreak]",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Fusion Strike: Sleeved Booster Pack",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Gaming Giant",
-      "game": "Shadowverse: Evolve",
-      "product": "THE IDOLM@STER CINDERELLA GIRLS - Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Gem Pack Vol.2: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "result": "product_http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Gem Pack Vol.3: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
-      "result": "product_http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Generations: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
-      "result": "product_http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Guardians Rising: Single Pack Blister - Tsareena",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "result": "product_http_404",
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Journey Together: Sleeved Booster Pack",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "League Battle Decks [Reshiram & Charizard GX]",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Legendary Beasts Collector Pin 3 Pack Blister [Entei]",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Legendary Beasts Collector Pin 3 Pack Blister [Raikou]",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Legendary Beasts Collector Pin 3 Pack Blister [Suicune]",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Lost Thunder: Single Pack Blister",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Lost Thunder: Single Pack Blister",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     }
   ],
