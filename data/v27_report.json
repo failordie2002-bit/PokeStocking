@@ -1,71 +1,20 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-10T03:10:43.684550+00:00",
-  "source_online_candidates": 696,
+  "checked_at": "2026-11-10T05:16:19.020754+00:00",
+  "source_online_candidates": 846,
   "checked_this_run": 60,
-  "verified_this_run": 49,
-  "fresh_online_observations": 734,
-  "online_in_stock": 223,
-  "online_out_of_stock": 511,
+  "verified_this_run": 50,
+  "fresh_online_observations": 747,
+  "online_in_stock": 231,
+  "online_out_of_stock": 516,
   "verified_store_observations": 0,
   "store_in_stock": 0,
-  "next_cursor": 229,
+  "next_cursor": 289,
   "check_outcomes": {
-    "verified": 49,
     "http_404": 10,
-    "http_429": 1
+    "verified": 50
   },
   "checks": [
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Aetherdrift Play Booster Display",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Digimon Advanced Starter Deck Amethyst Mandala (ST-22)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amber & Sapphire",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amethyst & Steel",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Magic The Gathering Avatar The Last Airbender Jumpstart Booster Display",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Play Booster Display",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Starter Deck: Ace & Newgate ST-22",
-      "result": "verified"
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
-      "result": "verified"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "result": "http_404"
-    },
     {
       "retailer": "Kayou Official Store",
       "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
@@ -79,7 +28,7 @@
     {
       "retailer": "Kayou Official Store",
       "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "result": "http_429"
+      "result": "http_404"
     },
     {
       "retailer": "Kayou Official Store",
@@ -118,6 +67,11 @@
     },
     {
       "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box (24ct) Mystery Booster Convention Edition (MB1)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
       "product": "MTG Booster Box Collector (12ct) The Brothers' War (BRO)",
       "result": "verified"
     },
@@ -139,6 +93,11 @@
     {
       "retailer": "Twenty Sided Store",
       "product": "MTG Booster Box Collector (12ct) Innistrad Crimson Vow (VOW)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box Collector (12ct) Innistrad Midnight Hunt (MID)",
       "result": "verified"
     },
     {
@@ -188,6 +147,11 @@
     },
     {
       "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box Draft (36ct) Innistrad Midnight Hunt (MID)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
       "product": "MTG Booster Box Draft (36ct) Kamigawa Neon Dynasty (NEO)",
       "result": "verified"
     },
@@ -228,6 +192,11 @@
     },
     {
       "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box Set (30ct) Innistrad Midnight Hunt (MID)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
       "product": "MTG Booster Box Set (30ct) Kamigawa Neon Dynasty (NEO)",
       "result": "verified"
     },
@@ -249,6 +218,16 @@
     {
       "retailer": "Twenty Sided Store",
       "product": "MTG Booster Draft Streets of New Capenna (SNC)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Collector : Adventures in the Forgotten Realms (AFR)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Collector : Modern Horizons 2 (MH2)",
       "result": "verified"
     },
     {
@@ -279,6 +258,11 @@
     {
       "retailer": "Twenty Sided Store",
       "product": "MTG Booster Pack Collector : Innistrad Crimson Vow (VOW)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Collector : Innistrad Midnight Hunt (MID)",
       "result": "verified"
     },
     {
@@ -314,6 +298,21 @@
     {
       "retailer": "Twenty Sided Store",
       "product": "MTG Booster Pack Draft : Innistrad Crimson Vow (VOW)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Draft : Innistrad: Double Feature (DBL)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Draft : Innistrad Midnight Hunt (MID)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Draft : Kamigawa Neon Dynasty (NEO)",
       "result": "verified"
     }
   ],
