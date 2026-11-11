@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-10T21:21:19.668709+00:00",
+  "checked_at": "2026-11-11T01:43:07.602091+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,572 +144,573 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-10T21:21:19.668709+00:00"
+      "checked_at": "2026-11-11T01:43:07.602091+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 20,
-    "no_explicit_pickup_evidence:http_200,http_200": 58,
-    "no_explicit_pickup_evidence:http_429,http_200": 2
+    "no_explicit_pickup_evidence:http_200,http_200": 22,
+    "no_explicit_pickup_evidence:http_404,http_404": 37,
+    "no_explicit_pickup_evidence:http_429,http_404": 7,
+    "product_http_429": 14
   },
   "checks": [
     {
-      "retailer": "The Eternal Forge",
+      "retailer": "The Trainer Court",
       "game": "Pokémon",
-      "product": "Pokémon TCG: Temporal Forces Pokemon Center - Elite Trainer Box [Iron Leaves]",
+      "product": "Trick or Trade BOOster Bundle 2024: 078/182 Gourgeist",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 095/167 Munkidori (Cosmos Holo)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 096/167 Fezandipiti (Cosmos Holo)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 102/162 Gastly",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 103/162 Haunter",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 111/167 Okidogi (Cosmos Holo)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 130/197 Umbreon",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 131/197 Houndour",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 133/197 Houndoom",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 136/197 Darkrai (Cosmos Holo)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade BOOster Bundle 2024: 139/162 Iron Jugulis",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade: Mini BOOster Pack (2022)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade: Mini BOOster Pack (2023)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Trick or Trade: Mini BOOster Pack (2024)",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Unified Minds: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Unified Minds: Premium Checklane Blister - Umbreon",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Vivid Voltage: Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "Pokémon",
+      "product": "Wild Force: Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster - 20ss Land Pack (10ct) Foil",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: V Battle Deck Blastoise",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster - 20ss Land Pack (10ct) Full Art",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: V Battle Deck Venusaur",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster - 20ss Land Pack (5ct) Unstable Full Art",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: V Powers Tin [Eevee V] (International Version)",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box (24ct) Mystery Booster (WHI)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Vibrant Paldea Mini Tin (Styles May Vary)",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box (36ct) Conspiracy (CNS)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Breakpoint - Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box (36ct) Fate Reforged (FRF)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Evolutions - Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box (36ct) Unstable (UST)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Evolutions - Elite Trainer Box (Mega Blastoise)",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box Collector (12ct) Theros: Beyond Death (THB)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Evolutions - Elite Trainer Box (Mega Charizard)",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box Collector (12ct) Throne of Eldraine (ELD)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Fates Collide - Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box Draft (36ct) Return to Ravnica (RTR)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Primal Clash - Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box Draft (36ct) Theros: Beyond Death (THB)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Roaring Skies - Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Box Draft (36ct) Throne of Eldraine (ELD)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Steam Siege - Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Aether Revolt (AER)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Steam Siege Booster Box",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Born of the Gods (BNG)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: XY Steam Siege Sleeved Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Conspiracy (CNS)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Prismatic Evolutions 2 Pack (Surprise Box & Bundle)",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Dragon’s Maze (DGM)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Riftbound",
-      "product": "Riftbound - League of Legends TCG: Proving Grounds Starter Deck Second Edition",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Eldritch Moon (EMN)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Riftbound",
-      "product": "Riftbound - League of Legends TCG: The Reckoning - Vault Bundle",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Fate Reforged (FRF)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Riftbound",
-      "product": "Riftbound - League of Legends TCG: The Reckoning Booster Display",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Gatecrash (GTC)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG: Maze of Machines - Booster Box",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Iconic Masters (IMA)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "30th Celebration (EN): Booster Pack",
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Journey Into Nyx (JOU)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Kaladesh (KLD)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Magic 2014 (M14)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Origins (ORI)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Seeded",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Theros (THS)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack : Unstable (UST)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Collector : Theros Beyond Death (THB)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Draft : Dominaria (DOM)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Draft : Khans of Tarkir (KTK)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Draft : Return to Ravnica (RTR)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Draft : Theros Beyond Death (THB)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Draft : Throne of Eldraine (ELD)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Black",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Blue",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Green",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Red",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) White",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Black",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Blue",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Green",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Red",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) White",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Black",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Blue",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Green",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Red",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) White",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Aether Revolt (AER)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Core Set 2019 (M19)",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Dominaria (DOM)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Guilds of Ravnica (GRN)",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Ravnica Allegiance (RNA)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Rivals of Ixalan (RIX)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Theros: Beyond Death (THB)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : Throne of Eldraine (ELD)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle : War of the Spark (WAR)",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "game": "Magic: The Gathering",
+      "product": "MTG Bundle Gift Edition : Throne of Eldraine (ELD)",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "game": "Disney Lorcana",
+      "product": "Lorcana - Gift Boxes",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Dragonite - 83/116 (Cosmos Holo)/116 - Holofoil Blister Exclusives - Promo",
+      "retailer": "Waterloo Games",
+      "game": "Disney Lorcana",
+      "product": "Lorcana - Gift Boxes",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Dragonite - 83/116 (Cosmos Holo)/116 - Holofoil Blister Exclusives - Promo",
+      "retailer": "Waterloo Games",
+      "game": "Disney Lorcana",
+      "product": "Lorcana - Gift Boxes",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Dragonite - 83/116 (Cosmos Holo)/116 - Holofoil Blister Exclusives - Promo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Dragonite - 83/116 (Cosmos Holo)/116 - Holofoil Blister Exclusives - Promo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Dragonite - 83/116 (Cosmos Holo)/116 - Holofoil Blister Exclusives - Promo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Gem Pack Vol.6: Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Guardians Rising: Single Pack Blister - Tsareena",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Journey Together: Sleeved Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "League Battle Decks [Reshiram & Charizard GX]",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Lost Thunder: Single Pack Blister",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Lost Thunder: Single Pack Blister",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Obsidian Flames: Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Obsidian Flames: Elite Trainer Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Paradox Rift: 159/182 Ancient Booster Energy Capsule Reverse Holo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Paradox Rift: Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Perfect Order: Sleeved Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Scarlet & Violet Base: Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Shining Fates: Elite Trainer Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Shrouded Fable: Booster Bundle",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Surging Sparks: Booster Box",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Temporal Forces: 140/162 Ancient Booster Energy Capsule Reverse Holo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 026/196 Chandelure",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 034/198 Houndoom Holo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 064/196 Gastly",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 065/196 Haunter",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 069/185 Duskull",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 073/196 Banette",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 080/203 Marshadow",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 081/196 Spectrier",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 087/198 Shuppet",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 088/193 Mismagius",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 089/198 Drifloon",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 090/198 Drifblim",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 095/185 Lycanroc",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 097/193 Mimikyu",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 102/192 Galarian Runerigus",
-      "result": "no_explicit_pickup_evidence:http_429,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 104/198 Greavard",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 106/198 Houndstone Holo",
-      "result": "no_explicit_pickup_evidence:http_429,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2023: 131/193 Murkrow",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 012/167 Phantump",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 012/193 Sprigatito",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 012/193 Sprigatito",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 013/167 Trevenant",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 018/091 Pikachu (Cosmos Holo)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 021/167 Poltchageist",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 022/167 Sinistcha (Cosmos Holo)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 023/182 Fuecoco",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 024/167 Teal Mask Ogerpon (Cosmos Holo)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 036/167 Litwick",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 037/091 Mimikyu (Cosmos Holo)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 037/167 Lampent",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 038/167 Chandelure",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 042/091 Greavard",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 043/091 Houndstone",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 050/193 Quaxly",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 057/091 Gengar (Cosmos Holo)",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 077/162 Scream Tail",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 077/182 Pumpkaboo",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 078/162 Flutter Mane (Cosmos Holo)",
+      "retailer": "Waterloo Games",
+      "game": "Final Fantasy TCG",
+      "product": "Universes Beyond: Assassin's Creed - Boosters",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     }
