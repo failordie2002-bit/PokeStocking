@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-11T01:43:07.602091+00:00",
+  "checked_at": "2026-11-11T05:33:41.234574+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -22,7 +22,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 725,
+  "online_candidates": 990,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,574 +144,573 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T01:43:07.602091+00:00"
+      "checked_at": "2026-11-11T05:33:41.234574+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_200,http_200": 22,
-    "no_explicit_pickup_evidence:http_404,http_404": 37,
-    "no_explicit_pickup_evidence:http_429,http_404": 7,
-    "product_http_429": 14
+    "no_explicit_pickup_evidence:http_200,http_200": 40,
+    "product_http_429": 38,
+    "no_explicit_pickup_evidence:http_429,http_200": 2
   },
   "checks": [
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 078/182 Gourgeist",
+      "game": "One Piece",
+      "product": "DON!! Card (Shirahoshi) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 095/167 Munkidori (Cosmos Holo)",
+      "game": "One Piece",
+      "product": "DON!! Card (Shirahoshi) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 096/167 Fezandipiti (Cosmos Holo)",
+      "game": "One Piece",
+      "product": "DON!! Card (Smoker) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 102/162 Gastly",
+      "game": "One Piece",
+      "product": "DON!! Card (Smoker) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 103/162 Haunter",
+      "game": "One Piece",
+      "product": "DON!! Card (Sugar) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 111/167 Okidogi (Cosmos Holo)",
+      "game": "One Piece",
+      "product": "DON!! Card (Sugar) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 130/197 Umbreon",
+      "game": "One Piece",
+      "product": "DON!! Card (Teach) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 131/197 Houndour",
+      "game": "One Piece",
+      "product": "DON!! Card (Teach) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 133/197 Houndoom",
+      "game": "One Piece",
+      "product": "DON!! Card (Usopp) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 136/197 Darkrai (Cosmos Holo)",
+      "game": "One Piece",
+      "product": "DON!! Card (Usopp) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade BOOster Bundle 2024: 139/162 Iron Jugulis",
+      "game": "One Piece",
+      "product": "DON!! Card (Vegapunk) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade: Mini BOOster Pack (2022)",
+      "game": "One Piece",
+      "product": "DON!! Card (Vegapunk) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade: Mini BOOster Pack (2023)",
+      "game": "One Piece",
+      "product": "DON!! Card (Yamato) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Trick or Trade: Mini BOOster Pack (2024)",
+      "game": "One Piece",
+      "product": "DON!! Card (Yamato) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Unified Minds: Elite Trainer Box",
+      "game": "One Piece",
+      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Unified Minds: Premium Checklane Blister - Umbreon",
+      "game": "One Piece",
+      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Vivid Voltage: Elite Trainer Box",
+      "game": "One Piece",
+      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
-      "game": "Pokémon",
-      "product": "Wild Force: Booster Box",
+      "game": "One Piece",
+      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster - 20ss Land Pack (10ct) Foil",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Donquixote Doflamingo (Alternate Art) (PRB02-011) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster - 20ss Land Pack (10ct) Full Art",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Donquixote Doflamingo (Alternate Art) (PRB02-011) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster - 20ss Land Pack (5ct) Unstable Full Art",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Edward.Newgate - ST15-002 (Alternate Art) (ST15-002) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box (24ct) Mystery Booster (WHI)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Edward.Newgate - ST15-002 (Alternate Art) (ST15-002) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box (36ct) Conspiracy (CNS)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Finger Pistol (Alternate Art) (EB01-051) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box (36ct) Fate Reforged (FRF)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Finger Pistol (Alternate Art) (EB01-051) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box (36ct) Unstable (UST)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gecko Moria (Alternate Art) (PRB02-013) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Theros: Beyond Death (THB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gecko Moria (Alternate Art) (PRB02-013) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Collector (12ct) Throne of Eldraine (ELD)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gravity Blade Raging Tiger (Alternate Art) (OP06-058) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Return to Ravnica (RTR)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gravity Blade Raging Tiger (Alternate Art) (OP06-058) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Theros: Beyond Death (THB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gum-Gum Giant (Alternate Art) (OP09-078) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Box Draft (36ct) Throne of Eldraine (ELD)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gum-Gum Giant (Alternate Art) (OP09-078) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Aether Revolt (AER)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gum-Gum Jet Gatling (Alternate Art) (OP03-072) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Born of the Gods (BNG)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gum-Gum Jet Gatling (Alternate Art) (OP03-072) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Conspiracy (CNS)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gum-Gum Rain (Alternate Art) (OP02-068) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Dragon’s Maze (DGM)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Gum-Gum Rain (Alternate Art) (OP02-068) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Eldritch Moon (EMN)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Fate Reforged (FRF)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Gatecrash (GTC)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Iconic Masters (IMA)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Journey Into Nyx (JOU)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Kaladesh (KLD)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Magic 2014 (M14)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Origins (ORI)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Seeded",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Theros (THS)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack : Unstable (UST)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Collector : Theros Beyond Death (THB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Dominaria (DOM)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Khans of Tarkir (KTK)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Return to Ravnica (RTR)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Theros Beyond Death (THB)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Draft : Throne of Eldraine (ELD)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Black",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Blue",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Green",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) Red",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Core Set 2020 (M20) White",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Black",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Izo (Parallel) (ST22-002) - Starter Deck 22: Ace & Newgate Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Blue",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Izo (Parallel) (ST22-002) - Starter Deck 22: Ace & Newgate Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Green",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Jesus Burgess (Alternate Art) (OP09-086) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) Red",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Jesus Burgess (Alternate Art) (OP09-086) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Theros Beyond Death (THB) White",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Black",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Jewelry Bonney (Parallel) (ST21-004) - Starter Deck EX: Gear 5 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Blue",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Jewelry Bonney (Parallel) (ST21-004) - Starter Deck EX: Gear 5 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Green",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) Red",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Jewelry Bonney - PRB02-004 (Alternate Art) (PRB02-004) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Booster Pack Theme : Throne of Eldraine (ELD) White",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Aether Revolt (AER)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Jewelry Bonney - PRB02-004 (Alternate Art) (PRB02-004) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Core Set 2019 (M19)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Dominaria (DOM)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Koby (Alternate Art) (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Guilds of Ravnica (GRN)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Ravnica Allegiance (RNA)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Koby (Alternate Art) (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Rivals of Ixalan (RIX)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Koby (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Theros: Beyond Death (THB)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Koby (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : Throne of Eldraine (ELD)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Limejuice (Alternate Art) (OP09-014) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle : War of the Spark (WAR)",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Limejuice (Alternate Art) (OP09-014) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Twenty Sided Store",
-      "game": "Magic: The Gathering",
-      "product": "MTG Bundle Gift Edition : Throne of Eldraine (ELD)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Lucky.Roux (Alternate Art) (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Disney Lorcana",
-      "product": "Lorcana - Gift Boxes",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Lucky.Roux (Alternate Art) (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Lucky.Roux (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Lucky.Roux (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Disney Lorcana",
-      "product": "Lorcana - Gift Boxes",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Luffy & Ace (Parallel) (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Disney Lorcana",
-      "product": "Lorcana - Gift Boxes",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Luffy & Ace (Parallel) (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Waterloo Games",
-      "game": "Final Fantasy TCG",
-      "product": "Universes Beyond: Assassin's Creed - Boosters",
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Luffy & Ace (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Luffy & Ace (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Marco (Alternate Art) (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Marco (Alternate Art) (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "no_explicit_pickup_evidence:http_429,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Marco (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Marco (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Mary Geoise (Alternate Art) (OP05-097) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Mary Geoise (Alternate Art) (OP05-097) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (Parallel) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (Parallel) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (Parallel) (ST29-001) - Starter Deck 29: Egghead Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (Parallel) (ST29-001) - Starter Deck 29: Egghead Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (012) (Full Art) (ST29-012) - Starter Deck 29: Egghead Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (012) (Full Art) (ST29-012) - Starter Deck 29: Egghead Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (014) (Parallel) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (014) (Parallel) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (014) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (014) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (Parallel) (ST30-012) - Starter Deck EX: Luffy & Ace Foil",
+      "result": "no_explicit_pickup_evidence:http_429,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy (Parallel) (ST30-012) - Starter Deck EX: Luffy & Ace Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy - EB02-061 (Reprint) (EB02-061) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Monkey.D.Luffy - EB02-061 (Reprint) (EB02-061) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
       "observations": 0
     }
   ],
