@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-11T13:50:42.388842+00:00",
+  "checked_at": "2026-11-11T17:34:38.177855+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -8,6 +8,7 @@
     "Digimon",
     "Disney Lorcana",
     "Dragon Ball Super",
+    "Final Fantasy TCG",
     "Flesh and Blood",
     "Gundam",
     "Kayou",
@@ -21,7 +22,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 1237,
+  "online_candidates": 1310,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -35,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Target",
@@ -44,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -53,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -62,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Kohls",
@@ -71,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Lowes",
@@ -80,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "GameStop",
@@ -89,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Ross",
@@ -98,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Burlington",
@@ -107,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Five Below",
@@ -116,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -125,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "CVS",
@@ -134,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -143,572 +144,574 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T13:50:42.388842+00:00"
+      "checked_at": "2026-11-11T17:34:38.177855+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_200,http_200": 30,
-    "product_http_429": 50
+    "no_explicit_pickup_evidence:http_404,http_404": 47,
+    "no_explicit_pickup_evidence:http_429,http_404": 1,
+    "product_http_429": 12,
+    "product_http_404": 20
   },
   "checks": [
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Luffy) - Premium Booster -The Best-",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-12) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Luffy) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-12) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Luffy) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Magellan) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Magellan) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nami) (Gold) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nami) (Gold) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nico Robin) (Gold) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nico Robin) (Gold) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nico Robin) - Extra Booster: One Piece Heroines Edition",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nico Robin) - Extra Booster: One Piece Heroines Edition",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nico Robin) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-13) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Nico Robin) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Oden) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Oden) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Perona) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Perona) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) (Gold) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Perona) - Premium Booster -The Best-",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Perona) - Premium Booster -The Best-",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Perona) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Perona) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Queen) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (FS11-14) [Starter Deck EX: The Phase of Evolution]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Queen) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (Gold) [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rebecca) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (Gold) [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rebecca) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (Gold) [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rebecca) - Premium Booster -The Best-",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (Gold) [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rebecca) - Premium Booster -The Best-",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta (Gold) [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rebecca) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rebecca) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Reiju) (Gold) - Premium Booster -The Best- Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Reiju) (Gold) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta [Starter Deck EX: The Beat of Ki]",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Vegeta [Starter Deck EX: The Beat of Ki]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Reiju) - Premium Booster -The Best-",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl (Gold) [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Reiju) - Premium Booster -The Best-",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl (Gold) [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Reiju) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl (Gold) [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Reiju) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl (Gold) [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rob Lucci) (Gold) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl (Gold) [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rob Lucci) (Gold) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rosinante) (Gold) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rosinante) (Gold) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rosinante) - Premium Booster -The Best-",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rosinante) - Premium Booster -The Best-",
+      "retailer": "Gaming Giant",
+      "game": "Dragon Ball Super",
+      "product": "Videl [Starter Deck EX: The Phase of Evolution]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rosinante) - Premium Booster -The Best- Foil",
+      "retailer": "Gaming Giant",
+      "game": "Star Wars: Unlimited",
+      "product": "A Lawless Time - Booster Display",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Rosinante) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sabo) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sabo) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sabo) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sabo) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sabo) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sabo) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sakazuki) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sakazuki) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sakazuki) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sakazuki) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-002",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sakazuki) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition(16 Boxes)",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Sakazuki) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Trafalgar Law) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Trafalgar Law) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Trafalgar Law) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Trafalgar Law) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Trafalgar Law) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Trafalgar Law) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) (Gold) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "product_http_429",
+      "retailer": "Kayou Official Store",
+      "game": "Kayou",
+      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
+      "result": "product_http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) (Gold) - Extra Booster: One Piece Heroines Edition Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Cardfight!! Vanguard",
+      "product": "2025 Cardfight Vanguard Festival Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Cardfight!! Vanguard",
+      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Digimon",
+      "product": "Digimon Advanced Starter Deck Amethyst Mandala (ST-22)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amber & Sapphire",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amethyst & Steel",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Magic: The Gathering",
+      "product": "Aetherdrift Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Uta) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering Avatar The Last Airbender Jumpstart Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Vivi) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Vivi) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
+      "retailer": "Mamba Collectibles",
       "game": "One Piece",
-      "product": "DON!! Card (Vivi) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "product": "Starter Deck: Ace & Newgate ST-22",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Vivi) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Star Wars: Unlimited",
+      "product": "2024 Disney Star Wars Unlimited Shadows of the Galaxy Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Vivi) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "Mamba Collectibles",
+      "game": "Star Wars: Unlimited",
+      "product": "2024 Star Wars Unlimited Twilight of the Republic Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Vivi) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "PixelThat TCG",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana TCG: The First Chapter Booster Box - Japanese",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Whitebeard) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "PixelThat TCG",
+      "game": "Kayou",
+      "product": "Kayou - My Little Pony - Friendship Eternal Cards - Moon Edition 4 Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Whitebeard) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "PixelThat TCG",
+      "game": "Kayou",
+      "product": "Kayou - My Little Pony - Friendship Eternal Cards - Moon Edition Collector Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Yamato) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
+      "retailer": "PixelThat TCG",
+      "game": "Kayou",
+      "product": "Kayou - My Little Pony Friendship Eternal Cards Collector Box (5 Packs) - Moon Edition",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Yamato) (Gold) - Premium Booster -The Best- Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "DON!! Card (Yamato) - Premium Booster -The Best-",
-      "result": "product_http_429",
+      "retailer": "PixelThat TCG",
+      "game": "Kayou",
+      "product": "Kayou My Little Pony Nightmare Nights TCG Booster Box Trading Card Game",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     }
   ],
