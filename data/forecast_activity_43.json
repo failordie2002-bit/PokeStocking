@@ -1,8 +1,76 @@
 {
   "version": "43.0",
-  "public_sighting_feed_checked": "2026-11-10T13:28:46.923391+00:00",
+  "public_sighting_feed_checked": "2026-11-10T22:59:28.144110+00:00",
   "social_feed_checked": "2026-11-10T21:23:31.907332+00:00",
   "events": [
+    {
+      "id": "sighting:40293da182497279ea1fec00",
+      "kind": "community_sighting",
+      "title": "Reported near store Chaos Rising 3-Pack Blister Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Silver Spring",
+      "state": "MD",
+      "lat": 39.0408717,
+      "lon": -77.024375,
+      "reported_at": "2026-11-10T15:59:28.144110+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:d9cca6e931741bdddafb5497",
+      "kind": "community_sighting",
+      "title": "Reported near store First Partner Illustration Collection Series 3 Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Silver Spring",
+      "state": "MD",
+      "lat": 39.0408717,
+      "lon": -77.024375,
+      "reported_at": "2026-11-10T15:59:28.144110+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:d034961e9fd91b91de12ddde",
+      "kind": "community_sighting",
+      "title": "Reported near store Delta Reign Sleeved Booster Pack Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Silver Spring",
+      "state": "MD",
+      "lat": 39.0408717,
+      "lon": -77.024375,
+      "reported_at": "2026-11-10T15:59:28.144110+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:c27bdc10ddad39f5648f0fca",
+      "kind": "community_sighting",
+      "title": "Reported near store 30th Celebration Battle Deck Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Silver Spring",
+      "state": "MD",
+      "lat": 39.0408717,
+      "lon": -77.024375,
+      "reported_at": "2026-11-10T13:59:28.144110+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
     {
       "id": "sighting:a72d2ec0943cc5d78c7b1c0f",
       "kind": "community_sighting",
@@ -633,7 +701,7 @@
       "location_precision": "source_tagged_approximate"
     }
   ],
-  "community_sighting_count": 32,
+  "community_sighting_count": 36,
   "location_tagged_social_leads": 5,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
