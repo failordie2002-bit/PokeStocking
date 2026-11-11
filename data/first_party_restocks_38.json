@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-be401f8f240c0e3c568e6a38ff",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "MTG TCG: Streets of New Capenna - Set Booster Display",
+    "game": "Magic: The Gathering",
+    "retailer": "The Eternal Forge",
+    "price_reported": "184.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-11T11:25:42.117594+00:00",
+    "reported_at": "2026-11-11T11:25:42.117594+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/mtg-tcg-streets-of-new-capenna-collector-booster-display",
+    "source_url": "https://www.theeternalforge.com/products/mtg-tcg-streets-of-new-capenna-collector-booster-display",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-d7a062c138392873f484171801",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
