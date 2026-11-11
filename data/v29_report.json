@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-11T05:33:41.234574+00:00",
+  "checked_at": "2026-11-11T09:30:36.947905+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,573 +144,573 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-11T05:33:41.234574+00:00"
+      "checked_at": "2026-11-11T09:30:36.947905+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_200,http_200": 40,
-    "product_http_429": 38,
-    "no_explicit_pickup_evidence:http_429,http_200": 2
+    "no_explicit_pickup_evidence:http_200,http_200": 31,
+    "product_http_429": 46,
+    "no_explicit_pickup_evidence:http_429,http_200": 3
   },
   "checks": [
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Shirahoshi) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Monkey.D.Luffy - EB02-061 (SP) (EB02-061) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Shirahoshi) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Monkey.D.Luffy - EB02-061 (SP) (EB02-061) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Smoker) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Monkey.D.Luffy - PRB02-005 (Alternate Art) (PRB02-005) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Smoker) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Monkey.D.Luffy - PRB02-005 (Alternate Art) (PRB02-005) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Sugar) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.2.Bon.Kurei (Bentham) (Reprint) (EB01-061) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Sugar) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.2.Bon.Kurei (Bentham) (Reprint) (EB01-061) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Teach) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.3(Galdino) (Full Art) (ST30-014) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Teach) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.3(Galdino) (Full Art) (ST30-014) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Usopp) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.3(Galdino) - OP09-056 (Alternate Art) (OP09-056) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Usopp) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.3(Galdino) - OP09-056 (Alternate Art) (OP09-056) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Vegapunk) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.3(Galdino) - PRB02-009 (Alternate Art) (PRB02-009) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Vegapunk) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Mr.3(Galdino) - PRB02-009 (Alternate Art) (PRB02-009) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Yamato) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "My Era...Begins!! (Alternate Art) (OP09-096) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Yamato) (Gold) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "My Era...Begins!! (Alternate Art) (OP09-096) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2",
+      "product": "Nami (Alternate Art) (PRB02-012) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2",
+      "product": "Nami (Alternate Art) (PRB02-012) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nami (Full Art) (ST29-008) - Starter Deck 29: Egghead Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "DON!! Card (Yamato) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nami (Full Art) (ST29-008) - Starter Deck 29: Egghead Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Donquixote Doflamingo (Alternate Art) (PRB02-011) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nami (Parallel) (ST21-009) - Starter Deck EX: Gear 5 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Donquixote Doflamingo (Alternate Art) (PRB02-011) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nami (Parallel) (ST21-009) - Starter Deck EX: Gear 5 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Edward.Newgate - ST15-002 (Alternate Art) (ST15-002) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nico Robin (Full Art) (ST29-009) - Starter Deck 29: Egghead Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Edward.Newgate - ST15-002 (Alternate Art) (ST15-002) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nico Robin (Full Art) (ST29-009) - Starter Deck 29: Egghead Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Finger Pistol (Alternate Art) (EB01-051) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nico Robin (Parallel) (ST21-010) - Starter Deck EX: Gear 5 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Finger Pistol (Alternate Art) (EB01-051) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Nico Robin (Parallel) (ST21-010) - Starter Deck EX: Gear 5 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gecko Moria (Alternate Art) (PRB02-013) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Otama (Alternate Art) (PRB02-016) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gecko Moria (Alternate Art) (PRB02-013) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Otama (Alternate Art) (PRB02-016) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gravity Blade Raging Tiger (Alternate Art) (OP06-058) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Portgas.D.Ace (007) (Parallel) (ST30-007) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gravity Blade Raging Tiger (Alternate Art) (OP06-058) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Portgas.D.Ace (007) (Parallel) (ST30-007) - Starter Deck EX: Luffy & Ace Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gum-Gum Giant (Alternate Art) (OP09-078) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Portgas.D.Ace (Parallel) (ST22-010) - Starter Deck 22: Ace & Newgate Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gum-Gum Giant (Alternate Art) (OP09-078) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Portgas.D.Ace (Parallel) (ST22-010) - Starter Deck 22: Ace & Newgate Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gum-Gum Jet Gatling (Alternate Art) (OP03-072) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Portgas.D.Ace - PRB02-018 (Alternate Art) (PRB02-018) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Gum-Gum Jet Gatling (Alternate Art) (OP03-072) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Gum-Gum Rain (Alternate Art) (OP02-068) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Gum-Gum Rain (Alternate Art) (OP02-068) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Izo (Parallel) (ST22-002) - Starter Deck 22: Ace & Newgate Foil",
+      "product": "Portgas.D.Ace - PRB02-018 (Alternate Art) (PRB02-018) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Izo (Parallel) (ST22-002) - Starter Deck 22: Ace & Newgate Foil",
+      "product": "Queen (Full Art) (ST04-005) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Jesus Burgess (Alternate Art) (OP09-086) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Queen (Full Art) (ST04-005) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Jesus Burgess (Alternate Art) (OP09-086) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Rebecca (SP) (OP05-091) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Jewelry Bonney (Parallel) (ST21-004) - Starter Deck EX: Gear 5 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Jewelry Bonney (Parallel) (ST21-004) - Starter Deck EX: Gear 5 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Jewelry Bonney - PRB02-004 (Alternate Art) (PRB02-004) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Jewelry Bonney - PRB02-004 (Alternate Art) (PRB02-004) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Koby (Alternate Art) (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Koby (Alternate Art) (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Koby (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Koby (PRB02-001) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Limejuice (Alternate Art) (OP09-014) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Limejuice (Alternate Art) (OP09-014) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Lucky.Roux (Alternate Art) (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Lucky.Roux (Alternate Art) (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Lucky.Roux (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Lucky.Roux (PRB02-003) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Luffy & Ace (Parallel) (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Luffy & Ace (Parallel) (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Luffy & Ace (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Luffy & Ace (ST30-001) - Starter Deck EX: Luffy & Ace Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Marco (Alternate Art) (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
-      "result": "no_explicit_pickup_evidence:http_200,http_200",
-      "observations": 0
-    },
-    {
-      "retailer": "The Trainer Court",
-      "game": "One Piece",
-      "product": "Marco (Alternate Art) (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Rebecca (SP) (OP05-091) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "no_explicit_pickup_evidence:http_429,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Marco (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Roronoa Zoro (Full Art) (ST29-014) - Starter Deck 29: Egghead Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Marco (PRB02-008) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Roronoa Zoro (Full Art) (ST29-014) - Starter Deck 29: Egghead Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Mary Geoise (Alternate Art) (OP05-097) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Roronoa Zoro (Manga) (OP06-118) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Mary Geoise (Alternate Art) (OP05-097) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Roronoa Zoro (Manga) (OP06-118) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (Parallel) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro (Parallel) (ST21-015) - Starter Deck EX: Gear 5 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (Parallel) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro (Parallel) (ST21-015) - Starter Deck EX: Gear 5 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (Parallel) (ST29-001) - Starter Deck 29: Egghead Foil",
+      "product": "Roronoa Zoro - OP06-118 (Reprint) (OP06-118) - Premium Booster -The Best- Vol. 2",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (Parallel) (ST29-001) - Starter Deck 29: Egghead Foil",
+      "product": "Roronoa Zoro - OP06-118 (Reprint) (OP06-118) - Premium Booster -The Best- Vol. 2",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5",
+      "product": "Roronoa Zoro - OP06-118 (Reprint) (OP06-118) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5",
+      "product": "Roronoa Zoro - OP06-118 (Reprint) (OP06-118) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro - OP09-076 (Alternate Art) (OP09-076) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (001) (ST21-001) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro - OP09-076 (Alternate Art) (OP09-076) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (012) (Full Art) (ST29-012) - Starter Deck 29: Egghead Foil",
+      "product": "Roronoa Zoro - OP10-095 (Alternate Art) (OP10-095) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (012) (Full Art) (ST29-012) - Starter Deck 29: Egghead Foil",
+      "product": "Roronoa Zoro - OP10-095 (Alternate Art) (OP10-095) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (014) (Parallel) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro - PRB02-006 (Alternate Art) (PRB02-006) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (014) (Parallel) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro - PRB02-006 (Alternate Art) (PRB02-006) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (014) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro - PRB02-006 (PRB02-006) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (014) (ST21-014) - Starter Deck EX: Gear 5 Foil",
+      "product": "Roronoa Zoro - PRB02-006 (PRB02-006) - Premium Booster -The Best- Vol. 2 Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (Parallel) (ST30-012) - Starter Deck EX: Luffy & Ace Foil",
+      "product": "Ryuma (Alternate Art) (OP06-036) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Ryuma (Alternate Art) (OP06-036) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Ryuma (Full Art) (OP06-036) - Premium Booster -The Best- Foil",
       "result": "no_explicit_pickup_evidence:http_429,http_200",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy (Parallel) (ST30-012) - Starter Deck EX: Luffy & Ace Foil",
+      "product": "Ryuma (Full Art) (OP06-036) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy - EB02-061 (Reprint) (EB02-061) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Sabo (OP04-083) (Manga) (OP04-083) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Trainer Court",
       "game": "One Piece",
-      "product": "Monkey.D.Luffy - EB02-061 (Reprint) (EB02-061) - Premium Booster -The Best- Vol. 2 Foil",
+      "product": "Sabo (OP04-083) (Manga) (OP04-083) - Premium Booster -The Best- Foil",
       "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo (OP05-007) (Alternate Art) (OP05-007) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo (OP05-007) (Alternate Art) (OP05-007) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo (Sealed Battle 2023 Vol. 1) (OP04-083) - One Piece Promotion Cards Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo (Sealed Battle 2023 Vol. 1) (OP04-083) - One Piece Promotion Cards Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo - PRB02-014 (Alternate Art) (PRB02-014) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo - PRB02-014 (Alternate Art) (PRB02-014) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo - PRB02-014 (PRB02-014) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sabo - PRB02-014 (PRB02-014) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (Full Art) (ST29-004) - Starter Deck 29: Egghead Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (Full Art) (ST29-004) - Starter Deck 29: Egghead Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (OP04-104) (Alternate Art) (OP04-104) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (OP04-104) (Alternate Art) (OP04-104) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (PRB01-001) (Alternate Art) (PRB01-001) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (PRB01-001) (Alternate Art) (PRB01-001) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (Parallel) (ST21-003) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji (Parallel) (ST21-003) - Starter Deck EX: Gear 5 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji - OP06-119 (Manga) (OP06-119) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Sanji - OP06-119 (Manga) (OP06-119) - Premium Booster -The Best- Vol. 2 Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Satori (Alternate Art) (OP05-105) - Premium Booster -The Best- Foil",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Trainer Court",
+      "game": "One Piece",
+      "product": "Satori (Alternate Art) (OP05-105) - Premium Booster -The Best- Foil",
+      "result": "no_explicit_pickup_evidence:http_429,http_200",
       "observations": 0
     }
   ],
