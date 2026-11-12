@@ -1,10 +1,11 @@
 {
   "version": "10.2",
-  "checked_at": "2026-11-12T09:29:38.648593+00:00",
+  "checked_at": "2026-11-12T11:26:59.520351+00:00",
   "candidate_products": 69,
   "checked_this_run": 20,
   "retailers_integrated": [
     "Kayou Official Store",
+    "Curio Cavern",
     "Games and Stuff",
     "Gaming Giant",
     "PixelThat TCG",
@@ -18,85 +19,36 @@
     "Cardrade",
     "Child’s Play Toys and Books",
     "KnaveTCG",
-    "Mamba Collectibles",
-    "Twenty Sided Store"
+    "Mamba Collectibles"
   ],
   "retailers_checked_this_run": 15,
   "retailers_configured": 16,
-  "offers_with_explicit_evidence": 439,
-  "total_fresh_offers": 1595,
-  "next_cursor": 14,
-  "shop_cursor": 7,
+  "offers_with_explicit_evidence": 570,
+  "total_fresh_offers": 1641,
+  "next_cursor": 34,
+  "shop_cursor": 6,
   "shop_next_pages": {
     "knavetcg.com": 1,
     "www.pixelthattcg.com": 1,
-    "atlantis-comics.com": 100,
+    "atlantis-comics.com": 101,
     "www.curiocavern.com": 1,
-    "www.shopbigpack.com": 8,
-    "www.thecompleatstrategist.com": 3,
-    "www.theeternalforge.com": 3,
-    "bleeckertrading.com": 8,
+    "www.shopbigpack.com": 1,
+    "www.thecompleatstrategist.com": 1,
+    "www.theeternalforge.com": 4,
+    "bleeckertrading.com": 9,
     "twentysidedstore.com": 48,
-    "www.waterloogames.com": 1,
-    "mambacollectibles.com": 2,
-    "www.gaminggiant.com": 88,
-    "cardrade.com": 1,
-    "childsplaytoysandbooks.com": 34,
-    "www.gamesandstuffonline.com": 12,
-    "www.thetrainercourt.com": 24
+    "www.waterloogames.com": 2,
+    "mambacollectibles.com": 1,
+    "www.gaminggiant.com": 89,
+    "cardrade.com": 2,
+    "childsplaytoysandbooks.com": 35,
+    "www.gamesandstuffonline.com": 13,
+    "www.thetrainercourt.com": 25
   },
   "checks": [
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "Tokidoki-Wonder Voyage Collectible Cards-Roaming Edition-Series 1",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "error",
-      "product": "NARUTO-Smriti Collectible Cards-Chapter Jin-003-NA-Series 3",
-      "reason": "404 Client Error: Not Found for url: https://shop.kayouofficial.com/products/winx-club-fairy-diary-collectible-cards-daily-edition-001"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Chapter Jin-003-NA-Series 3",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "Demon Slayer: Kimetsu no Yaiba Infinity Castle Movie-Collectible Cards-Infinity Castle Edition-001",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "Demon Slayer: Kimetsu no Yaiba Infinity Castle Movie-Daybreak Collectible Cards-Breath Edition-001",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
       "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
       "offers": 0
     },
@@ -121,66 +73,122 @@
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
       "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Monster Jam-Unleashing Mania Collectible Cards-Running Heat Edition-001",
       "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "verified_online_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
+      "offers": 1
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "verified_online_evidence",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
       "offers": 1
     },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve",
       "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve",
       "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve",
       "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve",
       "offers": 0
     },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "product": "My Little Pony-Friendship Eternal Cards-Rainbow Edition-One Sealed Case(24 Boxes)",
       "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "My Little Pony-Trading Card Game-Discord!!!",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "My Little Pony Trading Card Game-Fantasy Wonderlands-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "My Little Pony Trading Card Game-Friendships Begin (Assorteid Set)",
+      "offers": 0
+    },
+    {
+      "retailer": "Curio Cavern",
+      "status": "ok",
+      "page": 1,
+      "feed_items": 118,
+      "matching_products": 13,
+      "offers": 15
     },
     {
       "retailer": "Games and Stuff",
       "status": "ok",
-      "page": 11,
+      "page": 12,
       "feed_items": 250,
-      "matching_products": 2,
-      "offers": 4
+      "matching_products": 3,
+      "offers": 3
     },
     {
       "retailer": "Gaming Giant",
       "status": "ok",
-      "page": 87,
+      "page": 88,
       "feed_items": 250,
-      "matching_products": 36,
-      "offers": 186
+      "matching_products": 78,
+      "offers": 400
     },
     {
       "retailer": "PixelThat TCG",
@@ -193,31 +201,31 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "status": "ok",
-      "page": 7,
-      "feed_items": 250,
-      "matching_products": 26,
-      "offers": 26
+      "page": 8,
+      "feed_items": 4,
+      "matching_products": 0,
+      "offers": 0
     },
     {
       "retailer": "The Compleat Strategist",
       "status": "ok",
-      "page": 2,
-      "feed_items": 250,
-      "matching_products": 5,
-      "offers": 5
+      "page": 3,
+      "feed_items": 36,
+      "matching_products": 0,
+      "offers": 0
     },
     {
       "retailer": "The Eternal Forge",
       "status": "ok",
-      "page": 2,
+      "page": 3,
       "feed_items": 250,
-      "matching_products": 140,
-      "offers": 140
+      "matching_products": 65,
+      "offers": 66
     },
     {
       "retailer": "The Trainer Court",
       "status": "ok",
-      "page": 23,
+      "page": 24,
       "feed_items": 250,
       "matching_products": 1,
       "offers": 1
@@ -225,23 +233,23 @@
     {
       "retailer": "Waterloo Games",
       "status": "ok",
-      "page": 4,
-      "feed_items": 129,
-      "matching_products": 0,
-      "offers": 0
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 4,
+      "offers": 9
     },
     {
       "retailer": "Atlantis Games & Comics",
       "status": "ok",
-      "page": 99,
+      "page": 100,
       "feed_items": 250,
-      "matching_products": 1,
-      "offers": 1
+      "matching_products": 5,
+      "offers": 5
     },
     {
       "retailer": "Bleecker Trading",
       "status": "ok",
-      "page": 7,
+      "page": 8,
       "feed_items": 250,
       "matching_products": 40,
       "offers": 40
@@ -249,15 +257,15 @@
     {
       "retailer": "Cardrade",
       "status": "ok",
-      "page": 5,
-      "feed_items": 216,
-      "matching_products": 5,
-      "offers": 5
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 2,
+      "offers": 2
     },
     {
       "retailer": "Child’s Play Toys and Books",
       "status": "ok",
-      "page": 33,
+      "page": 34,
       "feed_items": 250,
       "matching_products": 0,
       "offers": 0
@@ -271,18 +279,10 @@
     {
       "retailer": "Mamba Collectibles",
       "status": "ok",
-      "page": 1,
-      "feed_items": 250,
-      "matching_products": 7,
-      "offers": 7
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "status": "ok",
-      "page": 47,
-      "feed_items": 250,
-      "matching_products": 1,
-      "offers": 1
+      "page": 2,
+      "feed_items": 89,
+      "matching_products": 5,
+      "offers": 5
     }
   ],
   "physical_store_stock_claims": 0
