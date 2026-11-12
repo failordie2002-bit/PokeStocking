@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-11-11T12:02:48.300182+00:00",
+  "generated_at": "2026-11-12T12:06:32.223824+00:00",
   "forecasts": [
+    {
+      "store_id": "store-3067",
+      "retailer": "Walmart",
+      "city": "Fairmont",
+      "state": "WV",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-11",
+      "observation_count": 2,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
+    {
+      "store_id": "store-4323",
+      "retailer": "Target",
+      "city": "Cockeysville",
+      "state": "MD",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-11",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
     {
       "store_id": "store-1651",
       "retailer": "Target",
@@ -70,22 +102,6 @@
       "retailer": "Walmart",
       "city": "Ruckersville",
       "state": "VA",
-      "game": "pokemon",
-      "last_observed_date": "2026-11-07",
-      "observation_count": 1,
-      "forecast_type": "insufficient_evidence",
-      "confidence": "insufficient",
-      "earliest_date": null,
-      "latest_date": null,
-      "source_urls": [
-        "https://restockd.app/pokemon-in-store?retailer=walmart"
-      ]
-    },
-    {
-      "store_id": "store-3067",
-      "retailer": "Walmart",
-      "city": "Fairmont",
-      "state": "WV",
       "game": "pokemon",
       "last_observed_date": "2026-11-07",
       "observation_count": 1,
