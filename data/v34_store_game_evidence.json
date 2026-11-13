@@ -42,8 +42,8 @@
   {
     "store_id": "store-1834",
     "game": "Pokemon",
-    "reported_sighting_days": 1,
-    "last_reported_sighting": "2026-11-08T18:55:20.246933+00:00",
+    "reported_sighting_days": 2,
+    "last_reported_sighting": "2026-11-13T19:02:15.212877+00:00",
     "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
     "predicted_restock_date": null,
     "confidence": "Insufficient verified restock history",
@@ -64,6 +64,16 @@
     "game": "Pokemon",
     "reported_sighting_days": 2,
     "last_reported_sighting": "2026-11-11T22:11:27.990438+00:00",
+    "source_url": "https://restockd.app/pokemon-in-store?retailer=walmart",
+    "predicted_restock_date": null,
+    "confidence": "Insufficient verified restock history",
+    "inventory_status": "Unknown"
+  },
+  {
+    "store_id": "store-3230",
+    "game": "Pokemon",
+    "reported_sighting_days": 1,
+    "last_reported_sighting": "2026-11-13T19:02:15.212877+00:00",
     "source_url": "https://restockd.app/pokemon-in-store?retailer=walmart",
     "predicted_restock_date": null,
     "confidence": "Insufficient verified restock history",
