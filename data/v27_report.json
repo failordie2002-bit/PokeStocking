@@ -1,318 +1,317 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-13T11:20:34.118580+00:00",
-  "source_online_candidates": 1667,
+  "checked_at": "2026-11-13T17:14:34.819620+00:00",
+  "source_online_candidates": 1587,
   "checked_this_run": 60,
-  "verified_this_run": 38,
-  "fresh_online_observations": 1509,
-  "online_in_stock": 152,
-  "online_out_of_stock": 1357,
-  "verified_store_observations": 1,
+  "verified_this_run": 60,
+  "fresh_online_observations": 620,
+  "online_in_stock": 174,
+  "online_out_of_stock": 446,
+  "verified_store_observations": 13,
   "store_in_stock": 1,
-  "next_cursor": 275,
+  "next_cursor": 335,
   "check_outcomes": {
-    "verified": 38,
-    "http_404": 22
+    "verified": 60
   },
   "checks": [
     {
-      "retailer": "Mamba Collectibles",
-      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Play Booster Display",
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
       "result": "verified"
     },
     {
-      "retailer": "Mamba Collectibles",
-      "product": "Starter Deck: Ace & Newgate ST-22",
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Mamba Collectibles",
-      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Kayou Official Store",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case (24 Boxes) My Little Pony-Friendship Eternal Cards-Fun Moments Edition-001A-NA-Series 1",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-002",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition(16 Boxes)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Booster Collector",
+      "retailer": "Games and Stuff",
+      "product": "FLESH AND BLOOD OMENS OF THE THIRD AGE BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Booster Collector",
+      "retailer": "Games and Stuff",
+      "product": "FLESH AND BLOOD OMENS OF THE THIRD AGE BOOSTER PACK",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Booster Jumpstart",
+      "retailer": "Games and Stuff",
+      "product": "FLESH AND BLOOD SUPER SLAM BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Booster Jumpstart",
+      "retailer": "Games and Stuff",
+      "product": "LUMIOSE CITY MINI TIN (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Booster Play",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING AVATAR: THE LAST AIRBENDER JUMPSTART BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Booster Play",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING MARVEL SUPER HEROES BUNDLE",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Bundle",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING MARVEL SUPER HEROES COLLECTOR BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Avatar: The Last Airbender (TLA) Bundle",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING MARVEL SUPER HEROES JUMPSTART BOOSTER BOX PREORDER",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Box Collector (12ct) Edge of Eternities (EOE)",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING MARVEL SUPER HEROES PLAY BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Marvel's Spider-Man (SPM) Booster Collector",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING TEENAGE MUTANT NINJA TURTLES PLAY BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Marvel's Spider-Man (SPM) Booster Collector",
+      "retailer": "Games and Stuff",
+      "product": "MY LITTLE PONY HEARTH'S WARMING EVE BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Secrets of Strixhaven (SOS)",
+      "retailer": "Games and Stuff",
+      "product": "MY LITTLE PONY HEARTH'S WARMING EVE BOOSTER PACK",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Secrets of Strixhaven (SOS)",
+      "retailer": "Games and Stuff",
+      "product": "MY LITTLE PONY TCG HEARTH'S WARMING EVE COLLECTOR BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Teenage Mutant Ninja Turtles (TMT)",
+      "retailer": "Games and Stuff",
+      "product": "MY LITTLE PONY TCG HEARTH'S WARMING EVE GIFT BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Teenage Mutant Ninja Turtles (TMT)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON CHAOS RISING BOOSTER BOX (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Pack Collector Edge of Eternities (EOE)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON CHAOS RISING BOOSTER BUNDLE (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Pack Collector Final Fantasy (FIN)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON CHAOS RISING BOOSTER PACK",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Pack Collector Omega : Dominaria United (DMU)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON CHAOS RISING ELITE TRAINER BOX (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Lorwyn Eclipsed (ECL)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON DELTA REIGN BOOSTER BOX *LIMIT ONE PER CUSTOMER*",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Lorwyn Eclipsed (ECL)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON DELTA REIGN BOOSTER BUNDLE *LIMIT ONE PER CUSTOMER*",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Marvel's Spider-Man (SPM)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON DELTA REIGN ELITE TRAINER BOX *LIMIT ONE PER CUSTOMER*",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Marvel's Spider-Man (SPM)",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON MEGA MOONLIT TIN (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Modern Horizons 3 (MH3) [Japanese]",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON MEGA MOONLIT TIN (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Modern Horizons 3 (MH3) [Japanese]",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITED TWILIGHT OF THE REPUBLIC BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Secrets of Strixhaven (SOS)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05 TD) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Secrets of Strixhaven (SOS)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05 TD) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Teenage Mutant Ninja Turtles (TMT)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05 TD) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Teenage Mutant Ninja Turtles (TMT)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05 TD) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Bundle Edge of Eternities (EOE)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05 TD) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Bundle Lorwyn Eclipsed (ECL)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05R RRR) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Bundle Marvel's Spider-Man (SPM)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05R RRR) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Bundle Marvel's Spider-Man (SPM)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05R RRR) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Bundle Secrets of Strixhaven (SOS)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05R RRR) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Bundle Teenage Mutant Ninja Turtles (TMT)",
+      "retailer": "Gaming Giant",
+      "product": "A Place to Return to, Tomo (GCR/SE48-TE05R RRR) [Girls Band Cry Premium Booster]",
       "result": "verified"
     },
     {
-      "retailer": "Twenty Sided Store",
-      "product": "SWU Secrets of Power Booster",
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40SP SP) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40SP SP) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40SP SP) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40SP SP) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage Not Stood On Alone, Rupa (GCR/SE48-E40SP SP) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13 N) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "verified"
+    },
+    {
+      "retailer": "Gaming Giant",
+      "product": "A Stage to Stand on Seriously, Tomo (GCR/SE48-E13GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "verified"
     }
   ],
