@@ -1,13 +1,12 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-13T05:36:01.618820+00:00",
+  "checked_at": "2026-11-13T13:49:50.259584+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
     "Cardfight!! Vanguard",
     "Digimon",
     "Disney Lorcana",
-    "Final Fantasy TCG",
     "Flesh and Blood",
     "Gundam",
     "Kayou",
@@ -21,7 +20,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 729,
+  "online_candidates": 1509,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -35,7 +34,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Target",
@@ -44,7 +43,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -53,7 +52,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -62,7 +61,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Kohls",
@@ -71,7 +70,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Lowes",
@@ -80,7 +79,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "GameStop",
@@ -89,7 +88,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Ross",
@@ -98,7 +97,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Burlington",
@@ -107,7 +106,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Five Below",
@@ -116,7 +115,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -125,7 +124,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "CVS",
@@ -134,7 +133,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -143,572 +142,572 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-13T05:36:01.618820+00:00"
+      "checked_at": "2026-11-13T13:49:50.259584+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 35,
-    "product_http_429": 35,
-    "no_explicit_pickup_evidence:http_429,http_404": 10
+    "no_explicit_pickup_evidence:http_404,http_404": 36,
+    "no_explicit_pickup_evidence:http_429,http_404": 1,
+    "product_http_429": 43
   },
   "checks": [
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 01- Enhanced Booster Display (36 Packs)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Cycle Of Sorrow (GCR/SE48-E68GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 01- Non-Enhanced Booster Display",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Cycle Of Sorrow (GCR/SE48-E68GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 02 Phantasmal Flames - 3-Pack Blister",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Cycle Of Sorrow (GCR/SE48-E68GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 02 Phantasmal Flames - Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Cycle Of Sorrow (GCR/SE48-E68GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 02 Phantasmal Flames - Booster Display (36 Packs)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 02 Phantasmal Flames - Checklane Blister",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Evolution 02 Phantasmal Flames - Sleeved Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Mega Symphonia M1S - Booster Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Night Wanderer SV6a Booster Box JP",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Nihil Zero Booster Box - M3",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Paradigm Trigger S12 Booster Box JP",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Paradox Rift Elite Trainer Box (Pokemon Center) [Roaring Moon]",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Ruler Of The Black Flame SV3 Booster Box JP",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paldea Evolved Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Ai (GCR/SE48-E64GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet - Paldea Evolved Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 01- 3-Booster Blister (Arcanine)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 01- 3-Booster Blister (Dondozo)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 01- Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 06 Twilight Masquerade - Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 06 Twilight Masquerade - Sleeved Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown - 3 Pack Blister",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown - Sleeved Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks - Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks- Sleeved Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Hina (GCR/SE48-E63GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together - Enhanced Booster Display 36 Packs",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together - Sleeved Booster Pack",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together- Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10 Destined Rivals- Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10 Destined Rivals- Booster Display 36 Packs",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10 Destined Rivals- Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 Black Bolt- Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 Black Bolt- Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 White Flare- Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 10.5 White Flare- Elite Trainer Box",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Nana (GCR/SE48-E67GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 151- Booster Bundle",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates- Booster Bundle",
-      "result": "product_http_429",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65 N) [Girls Band Cry Premium Booster]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates- Sealed Booster Bundle Case",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Journey Together - 3 Pack Blisters",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Obsidian Flames- Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions - Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions - Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions- Booster Bundle",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet & Violet Surging Sparks - 3 Pack Blisters",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 01 - Checklane Blister Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 01 - Sleeved Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 03 Obsidian Flames - Sleeved Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 04 Paradox Rift - Checklane Blister Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 05 Temporal Forces - Checklane Blister Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 05 Temporal Forces - Sleeved Booster Packs",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet 151 - Mini Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Obsidian Flames - Checklane Blister Pack [1 Promo]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Obsidian Flames - Checklane Blister Pack [3 Promo]",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Paradox Rift - 3-Pack Blister",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Twilight Masquerade - Checklane Blister Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Scarlet and Violet Twilight Masquerade - Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Space Juggler s10P Booster Box JP",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Star Birth S9 Booster Box JP",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Start Deck 100 Battle Collection JP (CASE FRESH)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Starter Deck Generations Special Battle Set",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sun & Moon Crimson Invasion - Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword & Shield 10 Astral Radiance - Booster Display 36 Packs",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword & Shield 12 Silver Tempest - Elite Trainer Box (Pokémon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65 N) [Girls Band Cry Premium Booster]",
       "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword & Shield Chilling Reign - Elite Trainer Box (Pokemon Center) [Ice Rider Calyrex]",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65 N) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword & Shield Chilling Reign - Elite Trainer Box (Pokemon Center) [Shadow Rider Calyrex]",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword & Shield-Brilliant Stars- Booster Display Box (36 Packs)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65 N) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield 04 Vivid Voltage - Sleeved Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield 10 Astral Radiance - Elite Trainer Box (Pokemon Center)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield 11 Lost Origin - Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield 12 Silver Tempest - Sleeved Booster Pack",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield Evolving Skies - 3-Pack Blister (Eiscue)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield Fusion Strike & Vivid Voltage - 2-Pack Blister",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield Fusion Strike - Elite Trainer Box (Pokemon Center)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Sword and Shield Lost Origin - Checklane Blister Pack",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Tag Team Tin (Celebi & Venusaur GX)",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Tag Team Tin (Eevee & Snorlax GX)",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Team Rocket's Mewtwo ex - League Battle Deck",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "DIAMOND DUST, Rin (GCR/SE48-E65GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Terastal Festival SV8A Booster Box JP",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Triple Whammy Tin [Darkrai, Slaking, Tyranitar]",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32 N) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: White Flare Booster Box SV11W",
-      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
       "observations": 0
     },
     {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Ultra Pro Deck Case: Alcove Flip Box Pokemon - Elite Series Lucario",
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Doing What She Likes Seriously, Subaru (GCR/SE48-E32GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Dream Girl? Subaru (GCR/SE48-E22GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "ETERNAL FLAME ~VOID~ (GCR/SE48-E69GBC GBCR) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Emptiness and Catharsis (GCR/SE48-E51 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Emptiness and Catharsis (GCR/SE48-E51 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Emptiness and Catharsis (GCR/SE48-E51 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Emptiness and Catharsis (GCR/SE48-E51 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Emptiness and Catharsis (GCR/SE48-E51 N) [Girls Band Cry Premium Booster]",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "Gaming Giant",
+      "game": "Weiß Schwarz",
+      "product": "Emptiness and Catharsis (GCR/SE48-E51GBC GBCR) [Girls Band Cry Premium Booster]",
       "result": "product_http_429",
       "observations": 0
     }
