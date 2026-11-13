@@ -1,8 +1,25 @@
 {
-  "generated_utc": "2026-11-13T05:59:52.698868+00:00",
+  "generated_utc": "2026-11-13T09:59:19.880691+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 5,
-  "feed_failures": [],
+  "feeds_succeeded": 1,
+  "feed_failures": [
+    {
+      "feed": "Google News: Lorcana trading card restock retail",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Magic the Gathering booster store restock",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Yu Gi Oh booster restock retail",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Gundam trading card game booster restock",
+      "type": "HTTPError"
+    }
+  ],
   "public_mentions": 45,
   "status": "OK - feed coverage may be partial"
 }
