@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-5d81d4772be5253ddfe4bd9dfb",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokémon TCG: Glory of Team Rocket Booster Pack",
+    "game": "Pokémon",
+    "retailer": "The Eternal Forge",
+    "price_reported": "8.00",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-13T21:19:52.934448+00:00",
+    "reported_at": "2026-11-13T21:19:52.934448+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/pokemon-tcg-glory-of-team-rocket-booster-pack",
+    "source_url": "https://www.theeternalforge.com/products/pokemon-tcg-glory-of-team-rocket-booster-pack",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-cfec86c42d48cf8a9cafb79f98",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
