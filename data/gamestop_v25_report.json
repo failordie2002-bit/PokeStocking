@@ -1,36 +1,22 @@
 {
   "version": "25.0",
   "engine_version": "26.0",
-  "checked_at": "2026-11-13T16:11:09.344533+00:00",
+  "checked_at": "2026-11-13T19:19:38.656706+00:00",
   "retailer": "GameStop",
   "searches_attempted": 10,
-  "products_discovered_this_run": 163,
+  "products_discovered_this_run": 162,
   "products_checked": 18,
-  "store_responses": 12,
-  "variation_responses": 15,
-  "store_observations": 13,
-  "in_stock": 1,
-  "out_of_stock": 12,
+  "store_responses": 14,
+  "variation_responses": 17,
+  "store_observations": 26,
+  "in_stock": 7,
+  "out_of_stock": 19,
   "near_staunton_confirmed": 0,
   "errors": [],
   "checks": [
     {
-      "product": "2026 Union Arena Ue17bt/slg Solo Leveling 051 Lee Joohee 2 Star Signature PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-ue17bt-slg-solo-leveling-051-lee-joohee-2-star-signature-psa-10/PSA167948232.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Uepr-promos 042 Asuna Rare Battle-2nd-4th Place PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-042-asuna-rare-battle-2nd-4th-place-psa-10/PSA160294290.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Uepr-promos 047 Sung Jinwoo Release Event PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-047-sung-jinwoo-release-event-psa-10/PSA165650174.html",
+      "product": "2026 Union Arena Uepr-promos 079 Evangelion Test Type-01 Pseudo Dms Phase Rare Battle-2nd-4th Place PSA 10",
+      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-079-evangelion-test-type-01-pseudo-dms-phase-rare-battle-2nd-4th-place-psa-10/PSA160294289.html",
       "http_status": 200,
       "store_responses": 0,
       "observations": 0
@@ -139,9 +125,23 @@
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
+    },
+    {
+      "product": "Disney Lorcana Attack of the Vine Chapter 13 Illumineer's Trove Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-attack-of-the-vine-chapter-13-illumineers-trove-box/448082.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Attack of the Vine! Collection Starter Set - Rapunzel Edition",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-attack-of-the-vine-collection-starter-set---rapunzel-edition/450538.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
     }
   ],
-  "catalog_seeded": 166,
+  "catalog_seeded": 168,
   "discovery_diagnostics": [
     {
       "query": "pokemon trading card",
@@ -192,11 +192,11 @@
       "search_url": "https://www.gamestop.com/search/?q=magic%20the%20gathering",
       "product_links": 47,
       "tiles": 34,
-      "accepted": 10,
+      "accepted": 9,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=magic%20the%20gathering",
       "page_title": "magic the gathering | Search Results | GameStop",
-      "total_accepted_after_fallback": 87
+      "total_accepted_after_fallback": 86
     },
     {
       "query": "lorcana",
@@ -207,7 +207,7 @@
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=lorcana",
       "page_title": "lorcana | Search Results | GameStop",
-      "total_accepted_after_fallback": 107
+      "total_accepted_after_fallback": 106
     },
     {
       "query": "gundam card game",
@@ -218,7 +218,7 @@
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=gundam%20card%20game",
       "page_title": "gundam card game | Search Results | GameStop",
-      "total_accepted_after_fallback": 121
+      "total_accepted_after_fallback": 120
     },
     {
       "query": "digimon card game",
@@ -229,7 +229,7 @@
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=digimon%20card%20game",
       "page_title": "digimon card game | Search Results | GameStop",
-      "total_accepted_after_fallback": 135
+      "total_accepted_after_fallback": 134
     },
     {
       "query": "dragon ball super cards",
@@ -240,7 +240,7 @@
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=dragon%20ball%20super%20cards",
       "page_title": "dragon ball super cards | Search Results | GameStop",
-      "total_accepted_after_fallback": 155
+      "total_accepted_after_fallback": 154
     },
     {
       "query": "star wars unlimited",
@@ -251,11 +251,11 @@
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=star%20wars%20unlimited",
       "page_title": "star wars unlimited | Search Results | GameStop",
-      "total_accepted_after_fallback": 163
+      "total_accepted_after_fallback": 162
     }
   ],
-  "next_cursor": 54,
-  "catalog_size": 168,
+  "next_cursor": 72,
+  "catalog_size": 188,
   "integration_verified_this_run": true,
   "integration_status": "store_response_captured",
   "note": "Store-specific availability is not proof of shelf quantity or pickup. Unknown responses are never converted to out of stock. A successful workflow is not proof of a working retailer integration."
