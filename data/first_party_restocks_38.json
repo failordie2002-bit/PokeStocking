@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-6cf56a27b8d1a2ae5e2b64a4e7",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "MTG Bundle Teenage Mutant Ninja Turtles (TMT)",
+    "game": "Magic: The Gathering",
+    "retailer": "Twenty Sided Store",
+    "price_reported": "69.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-13T03:22:33.350428+00:00",
+    "reported_at": "2026-11-13T03:22:33.350428+00:00",
+    "retailer_url": "https://twentysidedstore.com/products/mtg-bundle-teenage-mutant-ninja-turtles-tmt",
+    "source_url": "https://twentysidedstore.com/products/mtg-bundle-teenage-mutant-ninja-turtles-tmt",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-d8cb41d1af74431807eaa4eefe",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
