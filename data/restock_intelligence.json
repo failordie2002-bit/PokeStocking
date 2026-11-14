@@ -1,6 +1,54 @@
 {
-  "generated_at": "2026-11-13T12:02:41.498642+00:00",
+  "generated_at": "2026-11-14T11:48:45.465290+00:00",
   "forecasts": [
+    {
+      "store_id": "store-3230",
+      "retailer": "Walmart",
+      "city": "Clarksburg",
+      "state": "WV",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-13",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
+    {
+      "store_id": "store-1834",
+      "retailer": "Target",
+      "city": "Charlottesville",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-13",
+      "observation_count": 2,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
+    {
+      "store_id": "store-4345",
+      "retailer": "Target",
+      "city": "Owings Mills",
+      "state": "MD",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-12",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
     {
       "store_id": "store-4305",
       "retailer": "Target",
@@ -56,22 +104,6 @@
       "state": "VA",
       "game": "pokemon",
       "last_observed_date": "2026-11-09",
-      "observation_count": 1,
-      "forecast_type": "insufficient_evidence",
-      "confidence": "insufficient",
-      "earliest_date": null,
-      "latest_date": null,
-      "source_urls": [
-        "https://restockd.app/pokemon-in-store?retailer=target"
-      ]
-    },
-    {
-      "store_id": "store-1834",
-      "retailer": "Target",
-      "city": "Charlottesville",
-      "state": "VA",
-      "game": "pokemon",
-      "last_observed_date": "2026-11-08",
       "observation_count": 1,
       "forecast_type": "insufficient_evidence",
       "confidence": "insufficient",
