@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-14T01:43:27.690664+00:00",
+  "checked_at": "2026-11-14T05:27:11.234446+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -22,7 +22,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 681,
+  "online_candidates": 747,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,22 +144,16 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-14T01:43:27.690664+00:00"
+      "checked_at": "2026-11-14T05:27:11.234446+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 48,
+    "no_explicit_pickup_evidence:http_404,http_404": 50,
     "no_explicit_pickup_evidence:http_200,http_200": 10,
-    "product_http_429": 22
+    "product_http_429": 15,
+    "no_explicit_pickup_evidence:http_429,http_404": 5
   },
   "checks": [
-    {
-      "retailer": "PixelThat TCG",
-      "game": "Kayou",
-      "product": "NARUTO Mythos - Set 2 Shinobi Shiren 1st Edition - Booster Pack Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
     {
       "retailer": "PixelThat TCG",
       "game": "Kayou",
@@ -317,7 +311,28 @@
     {
       "retailer": "The Eternal Forge",
       "game": "Disney Lorcana",
+      "product": "Disney Lorcana: - Beast Gift Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: 2-Player Deck Display - Technically Terrific and Madcap Whimsy",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
       "product": "Disney Lorcana: Attack of the Vine! - Sleeved Booster Pack",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Attack of the Vine! Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
@@ -339,6 +354,13 @@
       "retailer": "The Eternal Forge",
       "game": "Disney Lorcana",
       "product": "Disney Lorcana: Into the Inkdark - Collector Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Reign of Jafar - Sleeved Booster",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
@@ -402,6 +424,13 @@
       "retailer": "The Eternal Forge",
       "game": "Dragon Ball Super",
       "product": "Dragon Ball Super TCG: Fusion World: The Saiyan Raised on Earth - Starter Deck 13",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Kayou",
+      "product": "Kayou Naruto TCG: Smriti Collectible Cards - Earth Scroll 01 Collector Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
@@ -549,14 +578,14 @@
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Dominaria United - Draft Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Double Masters 2022 - Collector Booster Display",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "result": "product_http_429",
       "observations": 0
     },
     {
@@ -577,7 +606,7 @@
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Double Masters 2022 - Draft Booster Pack",
-      "result": "product_http_429",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     },
     {
@@ -591,7 +620,7 @@
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Eighth Edition 10th Anniversary - Booster Pack",
-      "result": "product_http_429",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     },
     {
@@ -626,13 +655,20 @@
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Kamigawa: Neon Dynasty - Collector Display",
-      "result": "product_http_429",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Kamigawa: Neon Dynasty - Draft Booster Display",
+      "result": "product_http_429",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "MTG TCG: Lorwyn Eclipsed - Collector Booster Omega Pack",
       "result": "product_http_429",
       "observations": 0
     },
@@ -661,7 +697,7 @@
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Marvel Darkhold Destiny - Arcanum Bundle",
-      "result": "product_http_429",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     },
     {
@@ -675,42 +711,7 @@
       "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
       "product": "MTG TCG: Marvel Darkhold Destiny - Bundle",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Darkhold Destiny - Collector Booster Display",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Super Heroes - Play Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Super Heroes - Sleeved Play Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Murders at Karlov Manor - Play Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Bundle",
-      "result": "product_http_429",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     }
   ],
