@@ -1,131 +1,19 @@
 {
   "version": "25.0",
   "engine_version": "26.0",
-  "checked_at": "2026-11-14T04:14:23.827493+00:00",
+  "checked_at": "2026-11-14T07:28:14.092150+00:00",
   "retailer": "GameStop",
   "searches_attempted": 10,
-  "products_discovered_this_run": 164,
+  "products_discovered_this_run": 160,
   "products_checked": 18,
   "store_responses": 17,
   "variation_responses": 17,
-  "store_observations": 52,
-  "in_stock": 13,
-  "out_of_stock": 39,
+  "store_observations": 51,
+  "in_stock": 17,
+  "out_of_stock": 34,
   "near_staunton_confirmed": 0,
   "errors": [],
   "checks": [
-    {
-      "product": "Magic: The Gathering Nauctis The Sunken Realm Collector Booster Omega Box",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-nauctis-the-sunken-realm-collector-booster-omega-box/454612.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Magic: The Gathering Nauctis The Sunken Realm Play Booster Box",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-nauctis-the-sunken-realm-play-booster-box/454606.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Magic: The Gathering Nauctis The Sunken Realm Sleeved Play Booster",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-nauctis-the-sunken-realm-sleeved-play-booster/454608.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Magic: The Gathering Ravnica Remastered Draft Booster Multipack Blister",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-ravnica-remastered-draft-booster-multipack-blister/402497.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Magic: The Gathering Reality Fracture Collector Booster Omega",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-reality-fracture-collector-booster-omega/450574.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Magic: The Gathering The Hobbit Collector Booster Omega",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-the-hobbit-collector-booster-omega/446233.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Magic: The Gathering The Hobbit Play Booster Pack",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/magic-the-gathering-the-hobbit-play-booster-pack/446231.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Azure Sea's Seven Booster Pack (OP-14)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-azure-seas-seven-booster-pack-op-14/435562.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Heroines Edition Extra Booster Pack (EB-03)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-heroines-edition-extra-booster-pack-eb-03/441895.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Heroines Edition Vol. 2 Extra Booster (EB-05) - 2 Pack Bundle",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-heroines-edition-vol.-2-extra-booster-eb-05---2-pack-bundle/453370.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Heroines Edition Vol. 2 Extra Booster Pack (EB-05)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-heroines-edition-vol.-2-extra-booster-pack-eb-05/448929.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Illustration Box Volume 10 (IB-10)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-illustration-box-volume-10-ib-10/451632.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Illustration Box Volume 7 (IB-07)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-illustration-box-volume-7-ib-07/444146.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Illustration Box Volume 8 (IB-08)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-illustration-box-volume-8-ib-08/444148.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Illustration Box Volume 9 (IB-09)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-illustration-box-volume-9-ib-09/451631.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "One Piece Card Game: Luffy and Ace Starter Deck (ST-30)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-luffy-and-ace-starter-deck-st-30/444165.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
     {
       "product": "One Piece Card Game: The Dominance of God Booster - 2 Pack Bundle (OP-18)",
       "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-the-dominance-of-god-booster---2-pack-bundle-op-18/453528.html",
@@ -139,123 +27,235 @@
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
+    },
+    {
+      "product": "One Piece Card Game: The Time of Battle Booster Pack (OP-16)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-the-time-of-battle-booster-pack-op-16/444163.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "One Piece Card Game: World's Strongest Warriors Booster Pack (OP-17)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-card-game-worlds-strongest-warriors-booster-pack-op-17/444149.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "One Piece Cybercel Collectible Art Card Foil Pack Series 1",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-cybercel-collectible-art-card-foil-pack-series-1/407062.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "One Piece Cybercel Collectible Art Card Foil Pack Series 1",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-cybercel-collectible-art-card-foil-pack-series-1/449054.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "One Piece Cybercel Collectible Art Card Foil Pack Series 2",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/one-piece-cybercel-collectible-art-card-foil-pack-series-2/412158.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Lime Special Pack",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-lime-special-pack/424488.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: 30th Celebration Booster Bundle",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-booster-bundle/452105.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: 30th Celebration Figure Collection (Styles May Vary)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-figure-collection-styles-may-vary/448636.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: 30th Celebration Knock Out Collection",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-knock-out-collection/452277.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: 30th Celebration Tin (Styles May Vary)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-tin-styles-may-vary/453350.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: Ascended Heroes Elite Trainer Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-ascended-heroes-elite-trainer-box/437099.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: Charizard ex Special Collection",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-charizard-ex-special-collection/421027.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: Delta Reign Elite Trainer Box and Clear Display Acrylic Case Bundle",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-elite-trainer-box-and-clear-display-acrylic-case-bundle/454502.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: Delta Reign Elite Trainer Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-elite-trainer-box/450739.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: Delta Reign Three-Booster Blister",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-three-booster-blister/450743.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Pokemon Trading Card Game: Mega Moonlit Tin (Styles May Vary)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-mega-moonlit-tin-styles-may-vary/444059.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
     }
   ],
-  "catalog_seeded": 188,
+  "catalog_seeded": 192,
   "discovery_diagnostics": [
     {
       "query": "pokemon trading card",
       "search_url": "https://www.gamestop.com/search/?q=pokemon%20trading%20card",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 19,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 17,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=pokemon%20trading%20card",
       "page_title": "pokemon trading card | Search Results | GameStop",
-      "total_accepted_after_fallback": 19
+      "total_accepted_after_fallback": 17
     },
     {
       "query": "union arena",
       "search_url": "https://www.gamestop.com/search/?q=union%20arena",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=union%20arena",
       "page_title": "union arena | Search Results | GameStop",
-      "total_accepted_after_fallback": 39
+      "total_accepted_after_fallback": 37
     },
     {
       "query": "one piece trading card",
       "search_url": "https://www.gamestop.com/search/?q=one%20piece%20trading%20card",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=one%20piece%20trading%20card",
       "page_title": "one piece trading card | Search Results | GameStop",
-      "total_accepted_after_fallback": 59
+      "total_accepted_after_fallback": 57
     },
     {
       "query": "yu gi oh cards",
       "search_url": "https://www.gamestop.com/search/?q=yu%20gi%20oh%20cards",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=yu%20gi%20oh%20cards",
       "page_title": "yu gi oh cards | Search Results | GameStop",
-      "total_accepted_after_fallback": 79
+      "total_accepted_after_fallback": 77
     },
     {
       "query": "magic the gathering",
       "search_url": "https://www.gamestop.com/search/?q=magic%20the%20gathering",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 11,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 7,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=magic%20the%20gathering",
       "page_title": "magic the gathering | Search Results | GameStop",
-      "total_accepted_after_fallback": 88
+      "total_accepted_after_fallback": 84
     },
     {
       "query": "lorcana",
       "search_url": "https://www.gamestop.com/search/?q=lorcana",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=lorcana",
       "page_title": "lorcana | Search Results | GameStop",
-      "total_accepted_after_fallback": 108
+      "total_accepted_after_fallback": 104
     },
     {
       "query": "gundam card game",
       "search_url": "https://www.gamestop.com/search/?q=gundam%20card%20game",
-      "product_links": 42,
-      "tiles": 29,
-      "accepted": 16,
+      "product_links": 41,
+      "tiles": 28,
+      "accepted": 14,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=gundam%20card%20game",
       "page_title": "gundam card game | Search Results | GameStop",
-      "total_accepted_after_fallback": 122
+      "total_accepted_after_fallback": 118
     },
     {
       "query": "digimon card game",
       "search_url": "https://www.gamestop.com/search/?q=digimon%20card%20game",
-      "product_links": 42,
-      "tiles": 29,
-      "accepted": 16,
+      "product_links": 41,
+      "tiles": 28,
+      "accepted": 14,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=digimon%20card%20game",
       "page_title": "digimon card game | Search Results | GameStop",
-      "total_accepted_after_fallback": 136
+      "total_accepted_after_fallback": 132
     },
     {
       "query": "dragon ball super cards",
       "search_url": "https://www.gamestop.com/search/?q=dragon%20ball%20super%20cards",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=dragon%20ball%20super%20cards",
       "page_title": "dragon ball super cards | Search Results | GameStop",
-      "total_accepted_after_fallback": 156
+      "total_accepted_after_fallback": 152
     },
     {
       "query": "star wars unlimited",
       "search_url": "https://www.gamestop.com/search/?q=star%20wars%20unlimited",
-      "product_links": 43,
-      "tiles": 30,
-      "accepted": 10,
+      "product_links": 42,
+      "tiles": 29,
+      "accepted": 8,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=star%20wars%20unlimited",
       "page_title": "star wars unlimited | Search Results | GameStop",
-      "total_accepted_after_fallback": 164
+      "total_accepted_after_fallback": 160
     }
   ],
-  "next_cursor": 126,
-  "catalog_size": 192,
+  "next_cursor": 144,
+  "catalog_size": 194,
   "integration_verified_this_run": true,
   "integration_status": "store_response_captured",
   "note": "Store-specific availability is not proof of shelf quantity or pickup. Unknown responses are never converted to out of stock. A successful workflow is not proof of a working retailer integration."
