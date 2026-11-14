@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-be0f2f32b0d1230a1c08f32718",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "MTG TCG: Lorwyn Eclipsed Play Booster Display",
+    "game": "Magic: The Gathering",
+    "retailer": "The Eternal Forge",
+    "price_reported": "104.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-14T07:37:12.155435+00:00",
+    "reported_at": "2026-11-14T07:37:12.155435+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/mtg-tcg-lorwyn-eclipsed-play-booster-display",
+    "source_url": "https://www.theeternalforge.com/products/mtg-tcg-lorwyn-eclipsed-play-booster-display",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-3cb129f62e68bd4e5ea181907c",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
