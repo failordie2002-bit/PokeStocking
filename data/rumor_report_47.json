@@ -1,8 +1,40 @@
 {
-  "generated_utc": "2026-11-14T16:53:43.078057+00:00",
+  "generated_utc": "2026-11-14T20:51:59.661235+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 9,
+  "feeds_succeeded": 1,
   "feed_errors": [
+    {
+      "source": "Google News: Sam's Club trading cards Virginia restock",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: Costco trading cards Virginia restock",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: CVS Pokemon packs restock",
+      "error": "HTTPError"
+    },
+    {
+      "source": "Google News: small independent TCG stores sealed booster restock",
+      "error": "HTTPError"
+    },
+    {
+      "source": "Google News: new trading card game booster retail availability",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: TCG specialty shop restock announcements",
+      "error": "HTTPError"
+    },
+    {
+      "source": "Google News: trading card games new release November 2026",
+      "error": "HTTPError"
+    },
+    {
+      "source": "Google News: sealed TCG booster store allocation November 2026",
+      "error": "TimeoutError"
+    },
     {
       "source": "Reddit public search",
       "error": "HTTPError"
