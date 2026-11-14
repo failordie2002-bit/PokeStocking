@@ -1,36 +1,36 @@
 {
   "version": "34",
-  "checked_at": "2026-11-14T13:17:18.014682+00:00",
+  "checked_at": "2026-11-14T22:55:22.718424+00:00",
   "source_results": {
     "Walmart": {
       "http_status": 200,
-      "bytes": 468090,
+      "bytes": 472743,
       "table_rows": 25,
       "parsed": 25,
       "unparsed": 0
     },
     "Target": {
       "http_status": 200,
-      "bytes": 472359,
+      "bytes": 471703,
       "table_rows": 25,
       "parsed": 25,
       "unparsed": 0
     },
     "Best Buy": {
       "http_status": 200,
-      "bytes": 462793,
-      "table_rows": 25,
-      "parsed": 25,
+      "bytes": 446277,
+      "table_rows": 21,
+      "parsed": 21,
       "unparsed": 0
     }
   },
-  "new_reports": 32,
-  "total_reports_retained": 869,
-  "matched_store_reports": 28,
-  "unmatched_reports": 841,
-  "provisional_store_matches": 28,
+  "new_reports": 60,
+  "total_reports_retained": 929,
+  "matched_store_reports": 30,
+  "unmatched_reports": 899,
+  "provisional_store_matches": 30,
   "verified_store_matches": 0,
-  "store_game_pairs_with_evidence": 14,
+  "store_game_pairs_with_evidence": 15,
   "notes": [
     "Community shelf sightings are not shipment confirmations.",
     "Relative timestamps are approximate; do not treat as precise shipment dates.",
