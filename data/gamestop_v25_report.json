@@ -1,61 +1,19 @@
 {
   "version": "25.0",
   "engine_version": "26.0",
-  "checked_at": "2026-11-14T13:16:01.391356+00:00",
+  "checked_at": "2026-11-14T15:58:18.621921+00:00",
   "retailer": "GameStop",
   "searches_attempted": 10,
   "products_discovered_this_run": 163,
   "products_checked": 18,
   "store_responses": 18,
   "variation_responses": 18,
-  "store_observations": 52,
-  "in_stock": 21,
-  "out_of_stock": 31,
+  "store_observations": 53,
+  "in_stock": 16,
+  "out_of_stock": 37,
   "near_staunton_confirmed": 0,
   "errors": [],
   "checks": [
-    {
-      "product": "Star Wars: Unlimited: Secrets of Power: Booster Box (24 Boosters)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/star-wars-unlimited-secrets-of-power-booster-box-24-boosters/433424.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Star Wars: Unlimited: Secrets of Power: Sleeved Booster Pack",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/star-wars-unlimited-secrets-of-power-sleeved-booster-pack/433423.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Star Wars: Unlimited: Twilight of the Republic Booster Pack (Styles May Vary)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/star-wars-unlimited-twilight-of-the-republic-booster-pack-styles-may-vary/425134.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Union Arena Card Game: Black Clover Starter Deck (UE08ST)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/union-arena-card-game-black-clover-starter-deck-ue08st/422303.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Union Arena Card Game: Bleach Thousand Year Blood War Volume 2 Booster Pack (EX07BT)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/union-arena-card-game-bleach-thousand-year-blood-war-volume-2-booster-pack-ex07bt/422304.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
-    {
-      "product": "Union Arena Card Game: Goddess of Victory: Nikke Booster Pack (UE14BT)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/union-arena-card-game-goddess-of-victory-nikke-booster-pack-ue14bt/428493.html",
-      "http_status": 200,
-      "store_responses": 1,
-      "observations": 1
-    },
     {
       "product": "Union Arena Card Game: Jujutsu Kaisen Starter Deck (UA02ST)",
       "url": "https://www.gamestop.com/toys-games/trading-cards/products/union-arena-card-game-jujutsu-kaisen-starter-deck-ua02st/416387.html",
@@ -139,6 +97,48 @@
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
+    },
+    {
+      "product": "Yu-Gi-Oh! Trading Card Game: Duelist's Advance Sleeved Booster Pack (10 Cards per Pack)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/yu-gi-oh-trading-card-game-duelists-advance-sleeved-booster-pack-10-cards-per-pack/424970.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Yu-Gi-Oh! Trading Card Game: Duelist's Advance Token Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/yu-gi-oh-trading-card-game-duelists-advance-token-box/424968.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Yu-Gi-Oh! Trading Card Game: Justice Hunters Booster Display Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/yu-gi-oh-trading-card-game-justice-hunters-booster-display-box/426132.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Yu-Gi-Oh! Trading Card Game: Justice Hunters Sleeved Booster Pack",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/yu-gi-oh-trading-card-game-justice-hunters-sleeved-booster-pack/426133.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Yu-Gi-Oh! Trading Card Game: Legendary 5D's Decks",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/yu-gi-oh-trading-card-game-legendary-5ds-decks/435961.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Yu-Gi-Oh! Trading Card Game: Legendary Collection Kaiba Box Set",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/yu-gi-oh-trading-card-game-legendary-collection-kaiba-box-set/428156.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
     }
   ],
   "catalog_seeded": 199,
@@ -146,53 +146,53 @@
     {
       "query": "pokemon trading card",
       "search_url": "https://www.gamestop.com/search/?q=pokemon%20trading%20card",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 19,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 16,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=pokemon%20trading%20card",
       "page_title": "pokemon trading card | Search Results | GameStop",
-      "total_accepted_after_fallback": 19
+      "total_accepted_after_fallback": 16
     },
     {
       "query": "union arena",
       "search_url": "https://www.gamestop.com/search/?q=union%20arena",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=union%20arena",
       "page_title": "union arena | Search Results | GameStop",
-      "total_accepted_after_fallback": 39
+      "total_accepted_after_fallback": 36
     },
     {
       "query": "one piece trading card",
       "search_url": "https://www.gamestop.com/search/?q=one%20piece%20trading%20card",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=one%20piece%20trading%20card",
       "page_title": "one piece trading card | Search Results | GameStop",
-      "total_accepted_after_fallback": 59
+      "total_accepted_after_fallback": 56
     },
     {
       "query": "yu gi oh cards",
       "search_url": "https://www.gamestop.com/search/?q=yu%20gi%20oh%20cards",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=yu%20gi%20oh%20cards",
       "page_title": "yu gi oh cards | Search Results | GameStop",
-      "total_accepted_after_fallback": 79
+      "total_accepted_after_fallback": 76
     },
     {
       "query": "magic the gathering",
       "search_url": "https://www.gamestop.com/search/?q=magic%20the%20gathering",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 10,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 11,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=magic%20the%20gathering",
       "page_title": "magic the gathering | Search Results | GameStop",
@@ -201,9 +201,9 @@
     {
       "query": "lorcana",
       "search_url": "https://www.gamestop.com/search/?q=lorcana",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=lorcana",
       "page_title": "lorcana | Search Results | GameStop",
@@ -212,9 +212,9 @@
     {
       "query": "gundam card game",
       "search_url": "https://www.gamestop.com/search/?q=gundam%20card%20game",
-      "product_links": 42,
-      "tiles": 29,
-      "accepted": 16,
+      "product_links": 41,
+      "tiles": 28,
+      "accepted": 14,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=gundam%20card%20game",
       "page_title": "gundam card game | Search Results | GameStop",
@@ -223,9 +223,9 @@
     {
       "query": "digimon card game",
       "search_url": "https://www.gamestop.com/search/?q=digimon%20card%20game",
-      "product_links": 42,
-      "tiles": 29,
-      "accepted": 16,
+      "product_links": 41,
+      "tiles": 28,
+      "accepted": 14,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=digimon%20card%20game",
       "page_title": "digimon card game | Search Results | GameStop",
@@ -234,9 +234,9 @@
     {
       "query": "dragon ball super cards",
       "search_url": "https://www.gamestop.com/search/?q=dragon%20ball%20super%20cards",
-      "product_links": 48,
-      "tiles": 35,
-      "accepted": 22,
+      "product_links": 47,
+      "tiles": 34,
+      "accepted": 20,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=dragon%20ball%20super%20cards",
       "page_title": "dragon ball super cards | Search Results | GameStop",
@@ -245,17 +245,17 @@
     {
       "query": "star wars unlimited",
       "search_url": "https://www.gamestop.com/search/?q=star%20wars%20unlimited",
-      "product_links": 43,
-      "tiles": 30,
-      "accepted": 10,
+      "product_links": 42,
+      "tiles": 29,
+      "accepted": 8,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=star%20wars%20unlimited",
       "page_title": "star wars unlimited | Search Results | GameStop",
       "total_accepted_after_fallback": 163
     }
   ],
-  "next_cursor": 180,
-  "catalog_size": 199,
+  "next_cursor": 198,
+  "catalog_size": 211,
   "integration_verified_this_run": true,
   "integration_status": "store_response_captured",
   "note": "Store-specific availability is not proof of shelf quantity or pickup. Unknown responses are never converted to out of stock. A successful workflow is not proof of a working retailer integration."
