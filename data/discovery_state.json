@@ -42,10 +42,10 @@
   "v822_completed_states": [],
   "v822_completed_count": 0,
   "v822_inventory_claims_created": 0,
-  "v83_bulk_status": "success",
-  "v83_bulk_last_state": "MD",
-  "v83_bulk_last_attempt": "2026-11-04T19:04:45.223807+00:00",
-  "v83_bulk_last_error": null,
+  "v83_bulk_status": "failed",
+  "v83_bulk_last_state": "NC",
+  "v83_bulk_last_attempt": "2026-11-14T12:59:32.398001+00:00",
+  "v83_bulk_last_error": "ConnectionError: HTTPSConnectionPool(host='download.geofabrik.de', port=443): Max retries exceeded with url: /north-america/us/north-carolina-latest.osm.pbf (Caused by NewConnectionError(\"HTTPSConnection(host='download.geofabrik.de', port=443): Failed to establish a ",
   "v83_bulk_completed_states": [
     "VA",
     "WV",
@@ -58,7 +58,7 @@
   "v83_bulk_total_stores": 4838,
   "v83_bulk_last_success": "2026-11-04T19:11:00.419774+00:00",
   "v83_bulk_inventory_claims_created": 0,
-  "v84_retail_status": "success",
+  "v84_retail_status": "failed",
   "v84_tracked_games": [
     "Pokémon",
     "Union Arena",
@@ -78,6 +78,6 @@
   "v84_retail_completed_count": 3,
   "v84_retail_total_states": 51,
   "v84_retail_last_success": "2026-11-04T19:11:00.419802+00:00",
-  "v84_retail_last_error": null,
-  "v84_retail_last_failure": "2026-11-04T11:25:08.799189+00:00"
+  "v84_retail_last_error": "ConnectionError: HTTPSConnectionPool(host='download.geofabrik.de', port=443): Max retries exceeded with url: /north-america/us/north-carolina-latest.osm.pbf (Caused by NewConnectionError(\"HTTPSConnection(host='download.geofabrik.de', port=443): Failed to establish a ",
+  "v84_retail_last_failure": "2026-11-14T12:59:33.086037+00:00"
 }
