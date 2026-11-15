@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-15T13:32:45.695077+00:00",
+  "checked_at": "2026-11-15T17:15:54.149836+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -22,7 +22,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 860,
+  "online_candidates": 712,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -36,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Target",
@@ -45,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -54,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -63,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Kohls",
@@ -72,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Lowes",
@@ -81,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "GameStop",
@@ -90,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Ross",
@@ -99,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Burlington",
@@ -108,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Five Below",
@@ -117,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -126,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "CVS",
@@ -135,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -144,572 +144,573 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-15T13:32:45.695077+00:00"
+      "checked_at": "2026-11-15T17:15:54.149836+00:00"
     }
   ],
   "check_outcomes": {
-    "no_explicit_pickup_evidence:http_404,http_404": 50,
-    "product_http_429": 30
+    "no_explicit_pickup_evidence:http_404,http_404": 62,
+    "no_explicit_pickup_evidence:http_429,http_404": 8,
+    "product_http_429": 10
   },
   "checks": [
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Innistrad: Crimson Vow - Collector Booster Omega Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Kamigawa: Neon Dynasty - Collector Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Checklane Blister",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Kamigawa: Neon Dynasty - Collector Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Checklane Blister [3-Promo]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Kamigawa: Neon Dynasty - Draft Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Lorwyn Eclipsed - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Evolution 05 Pitch Black - Pokemon Center Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Lorwyn Eclipsed Collector Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Forces Tin",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: March of the Machine - Set Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Lucario ex League Battle Deck",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Darkhold Destiny - Arcanum Bundle",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Mega Moonlit Tin",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Darkhold Destiny - Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Ninja Spinner M4 - Booster Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Darkhold Destiny - Bundle",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Obsidian Flames Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Darkhold Destiny - Collector Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Obsidian Flames Elite Trainer Box (Pokemon Center) Case",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Super Heroes - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Paldean Fates Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Marvel Super Heroes - Sleeved Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Paradox Rift Elite Trainer Box (Pokemon Center) [Iron Valiant]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Murders at Karlov Manor - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Phantasmal Flames - Elite Trainer Box (Pokémon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Bundle",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Pitch Black & Chaos Rising - 2-Pack Blister [Zarude]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Collector Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Pokémon Go - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Collector Booster Omega Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Prize Pack Series Four Booster Pack",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Collector Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Prize Pack Series One Booster Pack",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Play Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Prize Pack Series Three Booster Pack",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Prize Pack Series Two Booster Pack",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Secret Lair Bundle",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Rival Battle Deck (Marnie)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Reality Fracture - Sleeved Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet - Paldea Evolved Booster Bundle",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Secret of Strixhaven - Collector Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 01 - Elite Trainer Box (Styles May Vary)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Secret of Strixhaven - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 05 Temporal Forces- Elite Trainer Box (Styles May Vary)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Star Trek - Collector Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 06 Twilight Masquerade- Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Star Trek - Collector Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Strixhaven School of Mages - Set Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Strixhaven School of Mages - Set Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks- Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: The Brothers Wars Set Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together - Non-Enhanced Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: The Brothers Wars Set Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 09 Journey Together- Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: The Hobbit - Collector Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 10.5 Black Bolt- Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: The Hobbit - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 10.5 White Flare - Elite Trainer Box (Pokemon Center)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: The Hobbit - Sleeved Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 151- Zapdos ex Collection Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond - Avatar The Last Airbender - Battle Box Bundle",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet 6.5 Shrouded Fable - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond - Avatar The Last Airbender - Collector Booster Omega Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet & Violet Paldean Fates - Retail Exclusive Pokemon Paldean Fates Mini Tins + Poke Ball Tin",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond - Avatar The Last Airbender - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet And Violet 01 - Elite Trainer Box (Pokemon Center) [Koraidon]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond - Avatar The Last Airbender - Play Booster Sleeved Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet And Violet 01 - Elite Trainer Box (Pokemon Center) [Miraidon]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond The Lord of the Rings: Tales of Middle-earth - Collector Booster Omega Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Scarlet and Violet 151 - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Final Fantasy Collector Booster Omega Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Shining Fates - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Final Fantasy Sleeved Play Booster",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Silver Tempest - Checklane Blister (Basculin)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles - Play Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Silver Tempest - Checklane Blister (Cranidos)",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles Booster Tin Collection",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Slashing Legends Tin",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles Donatello Tin",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Storm Emeralda M6 - Booster Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles Leonardo Tin",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sun & Moon - 3-Pack Blister [Litten]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles Michelangelo Tin",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sun & Moon - 3-Pack Blister [Togedemaru]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles Raphael Tin",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sun & Moon Burning Shadows - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond- Teenage Mutant Ninja Turtles Shredder Tin",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sun & Moon Cosmic Eclipse - Blister Pack [Growlithe & Arcanine]",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Universes Beyond: Assassin's Creed - Bundle",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sun and Moon Ultra Prism - 3-Pack Blister",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Wilds of Eldraine Draft Booster Display",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield - Lost Origin Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Wilds of Eldraine Draft Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield Brilliant Stars - Elite Trainer Box",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Zendikar Rising Set Booster Display",
-      "result": "product_http_429",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield Brilliant Stars - Elite Trainer Box (Pokemon Center)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Magic: The Gathering",
-      "product": "MTG TCG: Zendikar Rising Set Booster Pack",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield Rebel Clash - Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword & Shield-Brilliant Stars- Booster Display Box Case (6 Booster boxes)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield 01 - Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield 04 Vivid Voltage - Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield 06 Chilling Reign - Elite Trainer Box (Styles May Vary)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Astral Radiance - 3-Pack Blister [Eevee]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Battle Styles - Elite Trainer Box (Styles May Vary)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Evolving Skies - 3-Pack Blister (Umbreon)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Evolving Skies - Mini Portfolio Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Fusion Strike & Chilling Reign - 2-Pack Blister [Snorlax, Morpeko, Applin]",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Fusion Strike - 2-Pack Blister",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Sword and Shield Silver Tempest - 3-Pack Blister [Togetic]",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Team Rocket Tin",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "2-Pack Blister Pack [Oddish, Gloom, & Vileplume]",
+      "product": "Pokémon TCG: Temporal Forces Pokemon Center - Elite Trainer Box [Walking Wake]",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Terastal Grand Gathering CSV9.5C Booster Box Chinese",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "2-Pack Blister Pack [Team Rocket's Articuno, Zapdos & Tyranitar]",
+      "product": "Pokémon TCG: Terastal Grand Gathering CSV9.5C Quicksand Card Display Set Chinese",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: Unbroken Bonds - Blister Pack [Wailmer & Wailord]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "Pokemon TCG: Japanese Fossil Booster Pack",
+      "product": "Pokémon TCG: V Battle Deck (Blastoise & Venusaur) Case",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Pokémon",
+      "product": "Pokémon TCG: XY BREAKthrough - 3-Pack Blister (Mega Swampert)",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "Pokemon TCG: Japanese Jungle Booster Pack",
-      "result": "product_http_429",
+      "product": "Pokémon TCG: XY Evolutions - 3-Pack Blister (Black Kyurem)",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
       "game": "Pokémon",
-      "product": "Pokemon TCG: Japanese Leaders Stadium Booster Pack",
+      "product": "Pokémon TCG: XY Evolutions Blister Pack [Weezing]",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokemon TCG: Legendary Battle Decks [Lugia] - SM - Guardians Rising",
+      "game": "Riftbound",
+      "product": "Riftbound - League of Legends TCG: Gift of the Rift Bundle",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Riftbound",
+      "product": "Riftbound - League of Legends TCG: Legacy - Vault Bundle",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokemon TCG: Rocket Gang Japanese Booster Pack",
+      "game": "Riftbound",
+      "product": "Riftbound - League of Legends TCG: Legacy Booster Display",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Riftbound",
+      "product": "Riftbound - League of Legends TCG: SpiritForged Booster Display",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG Paldea Evolved Booster Pack",
+      "game": "Riftbound",
+      "product": "Riftbound - League of Legends TCG: Vendetta - Vault Bundle",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 151 Gather - Booster Pack",
+      "game": "Weiß Schwarz",
+      "product": "Weiss Schwarz TCG: Persona: 30th Anniversary - Booster Display",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 25th Anniversary JP - Booster Pack",
+      "game": "Yu-Gi-Oh!",
+      "product": "Yu-Gi-Oh! TCG: Battle of Legends: Glorious Gallery Booster Box",
       "result": "product_http_429",
       "observations": 0
     },
     {
       "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Battle Deck Espeon ex",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Battle Deck Umbreon ex",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Booster Bundle",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Elite Trainer Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Elite Trainer Box (Pokemon Center)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Mini Tin (Styles May Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: 30th Celebration Tin",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Abyss Eye M5 - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Ascended Heroes Tin (Styles May Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Astral Radiance Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Azure Legends - International Tin (Styles May Vary)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Azure Legends Tin (Dialga)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Battle Partners - Booster Pack",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Battle Region S9a - Booster Box",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Battle Styles - Checklane Blister (Arrokuda)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Battle Styles - Checklane Blister (Golisopod)",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Black Bolt Booster Pack ENG",
-      "result": "product_http_429",
-      "observations": 0
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "game": "Pokémon",
-      "product": "Pokémon TCG: Black Bolt Booster Pack JP",
-      "result": "product_http_429",
+      "game": "Yu-Gi-Oh!",
+      "product": "Yu-Gi-Oh! TCG: Beyond the Brave - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_429,http_404",
       "observations": 0
     }
   ],
