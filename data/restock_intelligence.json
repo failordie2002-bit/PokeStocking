@@ -1,6 +1,54 @@
 {
-  "generated_at": "2026-11-14T11:48:45.465290+00:00",
+  "generated_at": "2026-11-15T11:50:36.560278+00:00",
   "forecasts": [
+    {
+      "store_id": "store-1487",
+      "retailer": "Target",
+      "city": "Woodbridge",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-14",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
+    {
+      "store_id": "store-1820",
+      "retailer": "Best Buy",
+      "city": "Charlottesville",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-14",
+      "observation_count": 2,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=best-buy"
+      ]
+    },
+    {
+      "store_id": "store-3990",
+      "retailer": "Walmart",
+      "city": "Cockeysville",
+      "state": "MD",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-13",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
     {
       "store_id": "store-3230",
       "retailer": "Walmart",
@@ -191,22 +239,6 @@
       "latest_date": null,
       "source_urls": [
         "https://restockd.app/pokemon-in-store?retailer=walmart"
-      ]
-    },
-    {
-      "store_id": "store-1820",
-      "retailer": "Best Buy",
-      "city": "Charlottesville",
-      "state": "VA",
-      "game": "pokemon",
-      "last_observed_date": "2026-11-03",
-      "observation_count": 1,
-      "forecast_type": "insufficient_evidence",
-      "confidence": "insufficient",
-      "earliest_date": null,
-      "latest_date": null,
-      "source_urls": [
-        "https://restockd.app/pokemon-in-store?retailer=best-buy"
       ]
     }
   ]
