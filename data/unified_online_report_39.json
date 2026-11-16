@@ -3,26 +3,27 @@
   "source": "Pokestock direct merchant observations",
   "sources": {
     "v34_inventory.json": 1623,
-    "online_offers.json": 429
+    "online_offers.json": 433
   },
-  "merged_offers": 429,
-  "in_stock_at_last_observation": 151,
+  "merged_offers": 433,
+  "in_stock_at_last_observation": 170,
   "retailers": {
-    "Big Pack Hobby Shop": 75,
-    "Bleecker Trading": 112,
-    "Cardrade": 4,
+    "Big Pack Hobby Shop": 98,
+    "Bleecker Trading": 111,
+    "Cardrade": 9,
+    "Child’s Play Toys and Books": 1,
     "Curio Cavern": 15,
-    "Games and Stuff": 6,
-    "Kayou Official Store": 17,
+    "Games and Stuff": 13,
+    "Kayou Official Store": 21,
     "Mamba Collectibles": 13,
     "PixelThat TCG": 25,
     "The Compleat Strategist": 10,
-    "The Eternal Forge": 40,
-    "The Trainer Court": 38,
-    "Twenty Sided Store": 9,
-    "Waterloo Games": 65
+    "The Eternal Forge": 37,
+    "The Trainer Court": 22,
+    "Twenty Sided Store": 10,
+    "Waterloo Games": 48
   },
-  "newest_observation": "2026-11-16T11:47:18.296072+00:00",
+  "newest_observation": "2026-11-16T15:35:24.603304+00:00",
   "confirmed_shelf_stock": 0,
   "confirmed_checkout_success": 0,
   "note": "Availability is historical storefront evidence, not guaranteed live inventory."
