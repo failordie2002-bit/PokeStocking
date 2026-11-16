@@ -1,290 +1,19 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-16T01:44:48.173988+00:00",
-  "source_online_candidates": 700,
+  "checked_at": "2026-11-16T03:16:59.079470+00:00",
+  "source_online_candidates": 579,
   "checked_this_run": 60,
-  "verified_this_run": 59,
-  "fresh_online_observations": 537,
-  "online_in_stock": 177,
-  "online_out_of_stock": 360,
-  "verified_store_observations": 16,
-  "store_in_stock": 9,
-  "next_cursor": 54,
+  "verified_this_run": 60,
+  "fresh_online_observations": 634,
+  "online_in_stock": 196,
+  "online_out_of_stock": 438,
+  "verified_store_observations": 33,
+  "store_in_stock": 17,
+  "next_cursor": 114,
   "check_outcomes": {
-    "verified": 59,
-    "ambiguous_variant": 1
+    "verified": 60
   },
   "checks": [
-    {
-      "retailer": "Waterloo Games",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "verified"
-    },
-    {
-      "retailer": "Waterloo Games",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "ambiguous_variant"
-    },
-    {
-      "retailer": "Waterloo Games",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "verified"
-    },
-    {
-      "retailer": "Waterloo Games",
-      "product": "Universes Beyond: Final Fantasy - Boosters",
-      "result": "verified"
-    },
-    {
-      "retailer": "Waterloo Games",
-      "product": "Yu-Gi-Oh! 2025 Mega-Pack Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Waterloo Games",
-      "product": "Yu-Gi-Oh! - 25th Anniversary Rarity Collection II Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: Black Bolt Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Paldean Fates Booster Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Chinese Pokemon 5th Anniversary Gift Box (Exclusive Pikachu promo)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Crown Zenith Morpeko V Union Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Digimon: Hackers' Slumber Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Anime 25th Collection Booster Box (EB02)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Final Fantasy Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Magic the Gathering: Final Fantasy Collector Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Final Fantasy Gift Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Lost Caverns of Ixalan Set Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: March of the Machine Draft Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Outlaws of Thunder Junction Play Boosters Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Tarkir Dragonstorm Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Avatar The Last Airbender Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Lorwyn Eclipsed Bundle Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Lost Caverns of Ixalan Draft Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Marvel's Spider-Man Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Marvel's Spider-Man Collector Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Marvel's Spider-Man Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Murders at Karlov Manor Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Ravnica Allegiance Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Secrets of Strixhaven Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Teenage Mutant Ninja Turtles Bundle Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "MTG: Teenage Mutant Ninja Turtles Play Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Carrying On His Will Booster Box (OP13)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Egghead Starter Deck (ST29)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Romance Dawn Booster Box (OP01 Wave 2)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: A Fist of Divine Speed Booster Box (OP-11)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Legacy of the Master Booster Box (OP-12)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Two Legends Booster Box (OP08)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: The Best Vol. 1 Japanese Booster Box (PRB-01)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: The Best Vol. 2 Japanese Booster Box (PRB-02)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: The Seven Heroes of the Blue Sea Japanese Booster Box (OP14)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Tin Set Vol. 2",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece: Royal Blood Booster Box (OP-10)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Archaludon ex Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Ascended Heroes 2-Pack Blister",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Ascended Heroes Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Ascended Heroes Mini Tin",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Ascended Heroes Pokemon Center Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Base Set Sleeved Booster Pack #8 (Charizard)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Black Bolt and White Flare Mini Tin Collection",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Celebrations 25th Anniversary Elite Trainer Box Pokemon Center(ETB)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Center: Journey Together Elite Trainer Box ETB",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Chinese: Eeveelution Family Terastal Festival Gift Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Crimson Invasion Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Deluxe Battle Deck (Lucario EX / Ampharos Ex)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Destined Rivals Booster Box",
-      "result": "verified"
-    },
     {
       "retailer": "Bleecker Trading",
       "product": "Pokemon: Destined Rivals Booster Bundle",
@@ -307,12 +36,282 @@
     },
     {
       "retailer": "Bleecker Trading",
-      "product": "Pokemon: Evolving Skies Elite Trainer Box and Tin Bundle",
+      "product": "Pokemon: Fusion Strike Pokemon Center Elite Trainer Box (ETB)",
       "result": "verified"
     },
     {
       "retailer": "Bleecker Trading",
-      "product": "Pokemon: Evolving Skies Elite Trainer Box (Flareon/Jolteon/Umbreon/Leafeon)",
+      "product": "Pokemon: Gallade V Hidden Potential Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Infernape V Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Hisuian Zoroark VStar Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Japanese Battle Partners Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Japanese: Mega Brave Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Japanese: Night Wanderer Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Japanese: Nihil Zero Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Japanese: Violet EX Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Japanese: Scarlet ex Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Japanese: The Glory of Team Rocket Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon Jirachi V Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Journey Together 3-Pack Blister",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Journey Together Non-Enhanced Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Journey Together Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Journey Together Elite Trainer Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Journey Together Enhanced Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Kleavor VSTAR Special Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Elite Trainer Box (Gardevoir)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Elite Trainer Box (Lucario)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Mega Latias EX Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Pokemon Center Elite Trainer Box (Gardevoir)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Pokemon Center Elite Trainer Box (Lucario)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Evolution Mini Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Kangaskhan EX Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Venusaur EX Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mewtwo V-Union Special Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mimikyu ex & Alcremie ex Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Obsidian Flames Build & Battle Bundle Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Paldea Evolved Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Paldean Fates Pokemon Center Elite Trainer Box (ETB)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Paradox Clash Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Phantasmal Flames Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Phantasmal Flames Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Phantasmal Flames Build & Battle Deck",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Phantasmal Flames Elite Trainer Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Phantasmal Flames Pokemon Center Elite Trainer Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Phantasmal Flames Three Pack Blister",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Charizard X ex Ultra Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Mega Charizard X ex Ultra Premium Collection Box Case",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokeball Tin (Q4 2025)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokemon Day 2026 Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokemon Go Alolan Exeggutor V Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokemon GO Melmetal V Battle Deck",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokemon Go Pin Collection Box (Bulbasaur)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokemon Go Pin Collection Box (Charmander)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Pokemon Go Pin Collection Box (Squirtle)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Masks of Ogerpon Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Prismatic Evolutions Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Prismatic Evolutions Elite Trainer Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Prismatic Evolutions Lucario EX & Tyranitar EX Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Prismatic Evolutions Mini Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Reshiram ex Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "Pokemon: Salamence and Reshiram EX Collection Box",
       "result": "verified"
     }
   ],
