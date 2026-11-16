@@ -1,14 +1,18 @@
 {
-  "generated_utc": "2026-11-16T15:21:37.177996+00:00",
+  "generated_utc": "2026-11-16T17:27:31.801674+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 9,
+  "feeds_succeeded": 8,
   "feed_errors": [
+    {
+      "source": "Reddit PKMNTCGDeals",
+      "error": "HTTPError"
+    },
     {
       "source": "Reddit public search",
       "error": "HTTPError"
     }
   ],
-  "mentions_this_run": 3,
+  "mentions_this_run": 0,
   "unique_mentions_retained": 33,
   "games_observed": {
     "Pokémon": 29,
