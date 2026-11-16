@@ -1,259 +1,20 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-16T05:42:54.868777+00:00",
-  "source_online_candidates": 514,
+  "checked_at": "2026-11-16T21:09:50.349852+00:00",
+  "source_online_candidates": 532,
   "checked_this_run": 60,
-  "verified_this_run": 60,
-  "fresh_online_observations": 514,
-  "online_in_stock": 158,
-  "online_out_of_stock": 356,
-  "verified_store_observations": 50,
-  "store_in_stock": 20,
-  "next_cursor": 174,
+  "verified_this_run": 37,
+  "fresh_online_observations": 402,
+  "online_in_stock": 116,
+  "online_out_of_stock": 286,
+  "verified_store_observations": 35,
+  "store_in_stock": 7,
+  "next_cursor": 234,
   "check_outcomes": {
-    "verified": 60
+    "verified": 37,
+    "http_404": 23
   },
   "checks": [
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Stellar Crown Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Stellar Crown Booster Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Stellar Crown Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Stellar Crown Pokemon Center Elite Trainer Box ETB",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: 2017 Sun & Moon Elite Trainer Box (ETB) Solgaleo",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Super Burst Impact Japanese Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Surging Sparks 3 Pack Blister",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Surging Sparks Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Surging Sparks Booster Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Surging Sparks Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Surging Sparks Elite Trainer Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Evolving Skies Elite Trainer Box (Glaceon/Vaporeon/Sylveon/Espeon)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Sword and Shield Rebel Clash Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Astral Radiance Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Sword & Shield Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Sword & Shield Brilliant Stars Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Darkness Ablaze Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Sword & Shield Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Sword & Shield Elite Trainer Box Plus - Zacian & Zamazenta",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Sword & Shield - Evolving Skies - Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Sword & Shield - Lost Origin Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Silver Tempest Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Scarlet & Violet: Charizard EX Super Premium Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Charizard ex Special Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Ice Rider Calyrex VMAX League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Paldea Partners Skeledirge EX Tin",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Shadow Rider Calyrex VMAX League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Shining Fates Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG Sun & Moon Guardians Rising Elite Trainer Box ETB",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Tapu Koko/Iron Leaves EX League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Team Rocket Destined Rivals Tin",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Temporal Forces Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Trick or Trade 2025 Booster Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade Booster Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade (Build and Battle Case)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade Pokemon Center Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Unova Victini Illustration Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: White Flare Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: XY - Ancient Origins - Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: XY Evolutions Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "One Piece TCG: Premium Booster Box The Best OP (PRB01)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: Stellar Miracle Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: Remix Bout Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: Super Electric Breaker Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: Terastal Festival Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Unified Minds Pokemon Sun & Moon Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "Digimon TCG - BT08 Booster Box - New Awakening",
-      "result": "verified"
-    },
     {
       "retailer": "Cardrade",
       "product": "Digimon TCG -EX04 Booster Box - Alternative Being",
@@ -305,6 +66,11 @@
       "result": "verified"
     },
     {
+      "retailer": "Child’s Play Toys and Books",
+      "product": "MTG HOBBIT PLAY BOOSTERS",
+      "result": "verified"
+    },
+    {
       "retailer": "Mamba Collectibles",
       "product": "2024 Disney Star Wars Unlimited Shadows of the Galaxy Booster Box",
       "result": "verified"
@@ -312,6 +78,241 @@
     {
       "retailer": "Mamba Collectibles",
       "product": "2024 Star Wars Unlimited Twilight of the Republic Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "2025 Cardfight Vanguard Festival Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Aetherdrift Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Delta Reign Pokémon Center Elite Trainer Box",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Digimon Advanced Starter Deck Amethyst Mandala (ST-22)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amber & Sapphire",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amethyst & Steel",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Magic The Gathering Avatar The Last Airbender Jumpstart Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Starter Deck: Ace & Newgate ST-22",
+      "result": "verified"
+    },
+    {
+      "retailer": "Mamba Collectibles",
+      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
+      "result": "verified"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case (24 Boxes) My Little Pony-Friendship Eternal Cards-Fun Moments Edition-001A-NA-Series 1",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-002",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition(16 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box (24ct) Iconic Masters (IMA)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box (36ct) Eldritch Moon (EMN)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box (36ct) Gatecrash (GTC)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box Draft (36ct) Hour of Devastation (HOU)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box Draft (36ct) Ixalan (XLN)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box (36ct) Rivals of Ixalan (RIX)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Draft : Hour of Devastation (HOU)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Draft : Ixalan (XLN)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack : Oath of the Gatewatch (OGW)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack : Rivals of Ixalan (RIX)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Hour of Devastation (HOU)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Bundle : Ixalan (XLN)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Battle Spirits Saga - Dawn of History Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Battle Spirits Saga - False Gods Booster Box",
       "result": "verified"
     }
   ],
