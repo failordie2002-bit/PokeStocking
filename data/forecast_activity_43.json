@@ -1,8 +1,25 @@
 {
   "version": "43.0",
-  "public_sighting_feed_checked": "2026-11-15T22:57:18.742007+00:00",
-  "social_feed_checked": "2026-11-16T10:26:01.719866+00:00",
+  "public_sighting_feed_checked": "2026-11-16T15:30:26.712944+00:00",
+  "social_feed_checked": "2026-11-16T15:42:03.015702+00:00",
   "events": [
+    {
+      "id": "sighting:90695fe5857148de1b81f0e9",
+      "kind": "community_sighting",
+      "title": "Reported near store Cynthia's Garchomp ex Premium Collection Posted from the store",
+      "retailer": "Walmart",
+      "game": "Pokemon",
+      "city": "Colonial Heights",
+      "state": "VA",
+      "lat": 37.2505696,
+      "lon": -77.3890311,
+      "reported_at": "2026-11-15T22:30:26.712944+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=walmart",
+      "store_id": "store-1865",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
     {
       "id": "sighting:55f065b80058d20b1e53fc57",
       "kind": "community_sighting",
@@ -72,6 +89,23 @@
       "location_precision": "approximate_city"
     },
     {
+      "id": "sighting:6198f770569a776e86d70484",
+      "kind": "community_sighting",
+      "title": "Reported near store Delta Reign Sleeved Booster Pack Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Cockeysville",
+      "state": "MD",
+      "lat": 39.47150185,
+      "lon": -76.639139,
+      "reported_at": "2026-11-15T15:30:26.712944+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-4323",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
       "id": "sighting:3596e11c7bf6a0c1703c0929",
       "kind": "community_sighting",
       "title": "Reported near store Delta Reign Sleeved Booster Pack Posted from the store",
@@ -84,6 +118,23 @@
       "reported_at": "2026-11-15T14:57:18.742007+00:00",
       "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
       "store_id": "store-4323",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:b9e2ecf116a52286892a605d",
+      "kind": "community_sighting",
+      "title": "Delta Reign Sleeved Booster Pack",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Germantown",
+      "state": "MD",
+      "lat": 39.198397,
+      "lon": -77.2517805,
+      "reported_at": "2026-11-15T05:30:26.712944+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-4402",
       "store_match_verified": false,
       "stock_verified_now": false,
       "location_precision": "approximate_city"
@@ -1260,26 +1311,9 @@
       "store_match_verified": false,
       "stock_verified_now": false,
       "location_precision": "source_tagged_approximate"
-    },
-    {
-      "id": "social:d4210fb022b01db4e6fa3d75",
-      "kind": "social_research_lead",
-      "title": "Hello, wastelanders and vault dwellers! A fresh restock of Magic the Gathering Fallout Commander decks are available at the Norfolk store! Available for in-store pickup only. - Instagram",
-      "retailer": "",
-      "game": "Magic: The Gathering",
-      "city": "Norfolk",
-      "state": "VA",
-      "lat": 36.8508,
-      "lon": -76.2859,
-      "reported_at": "2026-10-09T07:00:00+00:00",
-      "source_url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBOMkkxTE5mcXg4REVpRW8yQUFhLTl1aUQtam9zbXZObzFfTjNFcXpEZWZ3b0VZUmJkVkgwS3hKR0dvdF8xVTVOUTVobDhIX3FwTFE?oc=5",
-      "store_id": "",
-      "store_match_verified": false,
-      "stock_verified_now": false,
-      "location_precision": "source_tagged_approximate"
     }
   ],
-  "community_sighting_count": 70,
-  "location_tagged_social_leads": 5,
+  "community_sighting_count": 73,
+  "location_tagged_social_leads": 4,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
