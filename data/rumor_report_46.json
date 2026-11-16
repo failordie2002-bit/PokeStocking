@@ -1,8 +1,25 @@
 {
-  "generated_utc": "2026-11-16T18:02:29.994981+00:00",
+  "generated_utc": "2026-11-16T21:50:29.161955+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 5,
-  "feed_failures": [],
+  "feeds_succeeded": 1,
+  "feed_failures": [
+    {
+      "feed": "Google News: new trading card games sealed products restock",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Pokemon cards Staunton Waynesboro Harrisonburg Charlottesville restock",
+      "type": "HTTPError"
+    },
+    {
+      "feed": "Google News: new TCG product release retailer allocations",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Pokemon cards Walmart Thursday stocking rumors",
+      "type": "TimeoutError"
+    }
+  ],
   "public_mentions": 47,
   "status": "OK - feed coverage may be partial"
 }
