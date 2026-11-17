@@ -1,24 +1,28 @@
 {
-  "generated_utc": "2026-11-17T17:17:49.350069+00:00",
+  "generated_utc": "2026-11-17T21:04:40.757503+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 9,
+  "feeds_succeeded": 8,
   "feed_errors": [
+    {
+      "source": "Reddit PKMNTCGDeals",
+      "error": "HTTPError"
+    },
     {
       "source": "Reddit public search",
       "error": "HTTPError"
     }
   ],
-  "mentions_this_run": 3,
-  "unique_mentions_retained": 33,
+  "mentions_this_run": 16,
+  "unique_mentions_retained": 36,
   "games_observed": {
-    "Pokémon": 29,
-    "Other / emerging TCG": 4
+    "Pokémon": 31,
+    "Other / emerging TCG": 5
   },
   "retailers_observed": {
-    "Unspecified": 23,
+    "Unspecified": 24,
+    "Amazon": 7,
     "Walmart": 1,
-    "Target": 4,
-    "Amazon": 5
+    "Target": 4
   },
   "local_explicit_mentions": 0,
   "status": "Research complete; public mentions only"
