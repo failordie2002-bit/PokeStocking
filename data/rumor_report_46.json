@@ -1,8 +1,13 @@
 {
-  "generated_utc": "2026-11-17T14:20:54.644143+00:00",
+  "generated_utc": "2026-11-17T18:00:50.091755+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 5,
-  "feed_failures": [],
+  "feeds_succeeded": 4,
+  "feed_failures": [
+    {
+      "feed": "Reddit PKMNTCGDeals",
+      "type": "HTTPError"
+    }
+  ],
   "public_mentions": 48,
   "status": "OK - feed coverage may be partial"
 }
