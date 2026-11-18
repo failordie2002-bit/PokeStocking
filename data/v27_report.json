@@ -1,100 +1,20 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-18T17:26:18.465450+00:00",
-  "source_online_candidates": 910,
+  "checked_at": "2026-11-18T19:17:11.231674+00:00",
+  "source_online_candidates": 974,
   "checked_this_run": 60,
-  "verified_this_run": 27,
-  "fresh_online_observations": 834,
-  "online_in_stock": 370,
-  "online_out_of_stock": 464,
-  "verified_store_observations": 51,
+  "verified_this_run": 42,
+  "fresh_online_observations": 853,
+  "online_in_stock": 359,
+  "online_out_of_stock": 494,
+  "verified_store_observations": 33,
   "store_in_stock": 12,
-  "next_cursor": 438,
+  "next_cursor": 498,
   "check_outcomes": {
-    "http_301": 33,
-    "verified": 27
+    "http_301": 18,
+    "verified": 42
   },
   "checks": [
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Mega Evolution Pokemon Center Elite Trainer Box (Exclusive) [Mega Gardevoir]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign 3 Pack Blister [Seel]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Unified Minds Premium Checklane Blister [Espeon]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "One Piece Tin Pack Set Vol. 1 -Gol.D.Roger-",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Single Pack Blister [Spritzee]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Mini Tin Display",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Sword & Shield Elite Trainer Box Plus [Zamazenta]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Carrying On His Will Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Chilling Reign Pokemon Center Elite Trainer Box [Ice Rider Calyrex] (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Phantasmal Flames Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "2-Pack Blister [Zarude] (3-Tab)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Booster Box Case",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Phantasmal Flames Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Black Bolt Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Perfect Order Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals Sleeved Booster Pack",
-      "result": "http_301"
-    },
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "FINAL FANTASY - Gift Bundle",
@@ -102,7 +22,22 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "Paldea Evolved Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin [Lapras]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "30th Celebration Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
       "result": "http_301"
     },
     {
@@ -123,11 +58,6 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Brilliant Stars Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Team Rocket Booster Pack [Unlimited Edition]",
       "result": "http_301"
     },
     {
@@ -173,11 +103,6 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Greninja EX & Kingdra EX Special Collection Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Journey Together Booster Bundle",
       "result": "http_301"
     },
     {
@@ -252,6 +177,16 @@
     },
     {
       "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: 2-Player Deck Display - Technically Terrific and Madcap Whimsy",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: Attack of the Vine! Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
       "product": "Disney Lorcana: Attack of the Vine! - Sleeved Booster Pack",
       "result": "verified"
     },
@@ -302,6 +237,11 @@
     },
     {
       "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: - Beast Gift Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
       "product": "Dragon Ball Super TCG: Fusion World: Brightness of Hope - Booster Display",
       "result": "verified"
     },
@@ -313,6 +253,66 @@
     {
       "retailer": "The Eternal Forge",
       "product": "Dragon Ball Super TCG: Fusion World: The Saiyan Raised on Earth - Starter Deck 13",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: BNA02 Discord - Booster Display FOIL EDITION",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou Naruto TCG: Smriti Collectible Cards - Earth Scroll 01 Collector Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: KPop Demon Hunters: Series 2 - Classic Edition Horizontal Collector Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: KPop Demon Hunters: Series 2 - Classic Edition Collector Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S03 Nightmare Night - 5-Pack Collector Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S03 Nightmare Night - Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S03 Nightmare Night - Gift Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S04 Hearth's Warming - 10-Pack Collector Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S04 Hearth's Warming - 5-Pack Collector Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S04 Hearth's Warming - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: My Little Pony: S04 Hearth's Warming Eve - Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Kayou TCG: Naruto Smriti - Earth Scroll 003 - Display Box",
       "result": "verified"
     }
   ],
