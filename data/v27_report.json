@@ -1,104 +1,23 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-18T03:16:06.092574+00:00",
-  "source_online_candidates": 544,
+  "checked_at": "2026-11-18T05:19:45.994899+00:00",
+  "source_online_candidates": 655,
   "checked_this_run": 60,
-  "verified_this_run": 45,
-  "fresh_online_observations": 529,
-  "online_in_stock": 161,
-  "online_out_of_stock": 368,
-  "verified_store_observations": 34,
-  "store_in_stock": 0,
-  "next_cursor": 198,
+  "verified_this_run": 38,
+  "fresh_online_observations": 534,
+  "online_in_stock": 168,
+  "online_out_of_stock": 366,
+  "verified_store_observations": 50,
+  "store_in_stock": 2,
+  "next_cursor": 258,
   "check_outcomes": {
-    "verified": 45,
-    "http_404": 11,
-    "http_429": 4
+    "verified": 38,
+    "http_404": 22
   },
   "checks": [
     {
       "retailer": "Bleecker Trading",
-      "product": "Pokemon: Fusion Strike Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Silver Tempest Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Charizard ex Special Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Ice Rider Calyrex VMAX League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Paldea Partners Skeledirge EX Tin",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Shadow Rider Calyrex VMAX League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG Sun & Moon Guardians Rising Elite Trainer Box ETB",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon TCG: Tapu Koko/Iron Leaves EX League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Team Rocket’s Mewtwo ex League Battle Deck",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Team Rocket Destined Rivals Tin",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Temporal Forces Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade Booster Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Twilight Masquerade Pokemon Center Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Unova Victini Illustration Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: White Flare Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: XY - Ancient Origins - Booster Box",
+      "product": "Pokemon Japanese: Stellar Miracle Booster Box",
       "result": "verified"
     },
     {
@@ -174,6 +93,16 @@
     {
       "retailer": "Cardrade",
       "product": "Flesh and Blood - Dusk Till Dawn - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Cardrade",
+      "product": "Gundam Card Game - GD02 Dual Impact - Booster Display (24 packs)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Cardrade",
+      "product": "Yu-Gi-Oh! - Blazing Dominion (1st Edition) - Booster Display",
       "result": "verified"
     },
     {
@@ -274,7 +203,7 @@
     {
       "retailer": "Kayou Official Store",
       "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_429"
+      "result": "http_404"
     },
     {
       "retailer": "Kayou Official Store",
@@ -284,7 +213,7 @@
     {
       "retailer": "Kayou Official Store",
       "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_429"
+      "result": "http_404"
     },
     {
       "retailer": "Kayou Official Store",
@@ -294,7 +223,7 @@
     {
       "retailer": "Kayou Official Store",
       "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
-      "result": "http_429"
+      "result": "http_404"
     },
     {
       "retailer": "Kayou Official Store",
@@ -314,7 +243,77 @@
     {
       "retailer": "Kayou Official Store",
       "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
-      "result": "http_429"
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Booster Collector",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Booster Collector",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Booster Jumpstart",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Booster Jumpstart",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Booster Play",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Booster Play",
+      "result": "verified"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Avatar: The Last Airbender (TLA) Bundle",
+      "result": "verified"
     }
   ],
   "gamestop_status": "No access to blocked search pages; only verified existing store data",
