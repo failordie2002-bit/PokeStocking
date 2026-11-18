@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-bb4b13802cb286ae275faa60a0",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokemon: Prismatic Evolutions Booster Bundle",
+    "game": "Pokémon",
+    "retailer": "Bleecker Trading",
+    "price_reported": "95.00",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-18T21:24:01.607735+00:00",
+    "reported_at": "2026-11-18T21:24:01.607735+00:00",
+    "retailer_url": "https://bleeckertrading.com/products/pokemon-prismatic-evolutions-booster-bundle-box",
+    "source_url": "https://bleeckertrading.com/products/pokemon-prismatic-evolutions-booster-bundle-box",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-18a4febb903c05391df52bc6f1",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
