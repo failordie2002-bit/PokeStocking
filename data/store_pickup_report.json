@@ -1,9 +1,9 @@
 {
   "version": "22.0",
-  "checked_at": "2026-11-19T19:45:07.173390+00:00",
-  "candidate_online_offers": 473,
+  "checked_at": "2026-11-19T21:30:29.044808+00:00",
+  "candidate_online_offers": 555,
   "checked_this_run": 30,
-  "next_cursor": 127,
+  "next_cursor": 157,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
   "pickup_unavailable": 0,
@@ -21,7 +21,17 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-edd64dd27c0a8a38fa0bf96d",
+      "status": "product_data_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "big-pack-eeab233928bc08e583907b97",
+      "status": "product_data_unavailable"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "big-pack-f3aae5452ac92fd31c18648b",
       "status": "product_data_unavailable"
     },
     {
@@ -77,6 +87,27 @@
     },
     {
       "retailer": "Bleecker Trading",
+      "product": "copy-pokemon-paradox-rift-booster-bundle",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "copy-pokemon-sword-shield-battle-styles-sealed-booster-box",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "crown-zenith-morpeko-v-union-box",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
       "product": "digimon-hackers-slumber-booster-box",
       "status": "no_parseable_pickup_evidence",
       "pickup_rows": 0,
@@ -85,6 +116,20 @@
     {
       "retailer": "Bleecker Trading",
       "product": "eb02-one-piece-tcg-extra-booster-anime-25th-collection-sealed-booster-box",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "magic-the-gathering-assassins-creed-beyond-booster-box",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "magic-the-gathering-assassins-creed-beyond-collectors-booster-box",
       "status": "no_parseable_pickup_evidence",
       "pickup_rows": 0,
       "section_retrieved": false
@@ -112,6 +157,27 @@
     },
     {
       "retailer": "Bleecker Trading",
+      "product": "magic-the-gathering-foundations-booster-bundle-box-mtg",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "magic-the-gathering-foundations-jumpstart-booster-box",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
+      "product": "magic-the-gathering-foundations-play-booster-box-mtg",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Bleecker Trading",
       "product": "magic-the-gathering-lost-caverns-of-ixalan-booster-box",
       "status": "no_parseable_pickup_evidence",
       "pickup_rows": 0,
@@ -126,77 +192,7 @@
     },
     {
       "retailer": "Bleecker Trading",
-      "product": "magic-the-gathering-outlaws-of-thunder-junction-play-boosters-box-1",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "magic-the-gathering-tarkir-dragonstorm-play-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-avatar-the-last-airbender-play-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-lorwyn-eclipsed-bundle-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-lost-caverns-of-ixalan-draft-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-marvels-spider-man-bundle",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-marvels-spider-man-collector-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-marvels-spider-man-play-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-murders-at-karlov-manor-play-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "mtg-ravnica-allegiance-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "one-piece-carrying-on-his-will-booster-box-op13",
+      "product": "magic-the-gathering-modern-horizons-iii-booster-bundle-box-mtg",
       "status": "no_parseable_pickup_evidence",
       "pickup_rows": 0,
       "section_retrieved": false
