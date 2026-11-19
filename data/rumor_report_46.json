@@ -1,8 +1,12 @@
 {
-  "generated_utc": "2026-11-19T02:16:11.247281+00:00",
+  "generated_utc": "2026-11-19T06:03:58.979553+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 4,
+  "feeds_succeeded": 3,
   "feed_failures": [
+    {
+      "feed": "Google News: Target One Piece TCG booster restock",
+      "type": "HTTPError"
+    },
     {
       "feed": "Reddit PKMNTCGDeals",
       "type": "HTTPError"
