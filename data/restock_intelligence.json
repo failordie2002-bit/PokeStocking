@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-11-18T12:07:58.849627+00:00",
+  "generated_at": "2026-11-19T12:07:52.457194+00:00",
   "forecasts": [
+    {
+      "store_id": "store-1499",
+      "retailer": "Target",
+      "city": "Newport News",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-18",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
     {
       "store_id": "store-1772",
       "retailer": "Walmart",
