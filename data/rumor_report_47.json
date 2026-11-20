@@ -1,8 +1,40 @@
 {
-  "generated_utc": "2026-11-20T13:28:41.217900+00:00",
+  "generated_utc": "2026-11-20T17:12:58.916531+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 8,
+  "feeds_succeeded": 0,
   "feed_errors": [
+    {
+      "source": "Google News: TCG stocking days Northern Virginia retailers",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: Pokemon cards Shenandoah Valley store shipment",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: Five Below TCG booster cards restock",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: Walgreens trading card restock",
+      "error": "HTTPError"
+    },
+    {
+      "source": "Google News: Altered trading card booster restock",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: Shadowverse Evolve TCG restock",
+      "error": "HTTPError"
+    },
+    {
+      "source": "Google News: Battle Spirits Saga booster restock",
+      "error": "TimeoutError"
+    },
+    {
+      "source": "Google News: Naruto trading card game booster restock",
+      "error": "TimeoutError"
+    },
     {
       "source": "Reddit PKMNTCGDeals",
       "error": "HTTPError"
@@ -12,7 +44,7 @@
       "error": "HTTPError"
     }
   ],
-  "mentions_this_run": 1,
+  "mentions_this_run": 0,
   "unique_mentions_retained": 37,
   "games_observed": {
     "Pokémon": 32,
