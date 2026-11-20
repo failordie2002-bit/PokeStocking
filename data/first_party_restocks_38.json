@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-75a9065fdb3f10dc3dc2d6bb3d",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Magic: The Gathering TCG: Reality Fracture - Collector Booster Omega Pack",
+    "game": "Magic: The Gathering",
+    "retailer": "The Eternal Forge",
+    "price_reported": "44.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-20T03:17:34.273817+00:00",
+    "reported_at": "2026-11-20T03:17:34.273817+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/mtg-tcg-reality-fracture-collector-booster-omega-pack",
+    "source_url": "https://www.theeternalforge.com/products/mtg-tcg-reality-fracture-collector-booster-omega-pack",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-ef2badf4e9d7684f461e5f012f",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
