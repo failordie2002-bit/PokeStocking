@@ -1,260 +1,260 @@
 {
   "version": "25.0",
   "engine_version": "26.0",
-  "checked_at": "2026-11-19T22:11:41.567616+00:00",
+  "checked_at": "2026-11-20T01:34:01.284228+00:00",
   "retailer": "GameStop",
   "searches_attempted": 10,
-  "products_discovered_this_run": 163,
+  "products_discovered_this_run": 164,
   "products_checked": 18,
-  "store_responses": 8,
-  "variation_responses": 10,
-  "store_observations": 8,
-  "in_stock": 0,
-  "out_of_stock": 8,
+  "store_responses": 18,
+  "variation_responses": 18,
+  "store_observations": 26,
+  "in_stock": 3,
+  "out_of_stock": 23,
   "near_staunton_confirmed": 0,
   "errors": [],
   "checks": [
     {
-      "product": "2026 Union Arena Ue15bt/eva Evangelion: New Theatrical Edition 017 Mari Makinami Illustrious 1 Star PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-ue15bt-eva-evangelion-new-theatrical-edition-017-mari-makinami-illustrious-1-star-psa-10/PSA157081802.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Ue16bt/kgr Kagurabachi 059 Chihiro Rokuhira 1 Star PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-ue16bt-kgr-kagurabachi-059-chihiro-rokuhira-1-star-psa-10/PSA160041359.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Ue17bt/slg Solo Leveling 048 Sung Jinwoo 1 Star PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-ue17bt-slg-solo-leveling-048-sung-jinwoo-1-star-psa-10/PSA172220194.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Ue17bt/slg Solo Leveling 051 Lee Joohee 2 Star Signature PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-ue17bt-slg-solo-leveling-051-lee-joohee-2-star-signature-psa-10/PSA167948232.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Uepr-promos 022 Taro Sakamoto Store Tournament April-june 2026-winner Card PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-022-taro-sakamoto-store-tournament-april-june-2026-winner-card-psa-10/PSA164803639.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Uepr-promos 042 Asuna Rare Battle-2nd-4th Place PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-042-asuna-rare-battle-2nd-4th-place-psa-10/PSA160294290.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Uepr-promos 047 Sung Jinwoo Release Event PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-047-sung-jinwoo-release-event-psa-10/PSA165650174.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "2026 Union Arena Uepr-promos 079 Evangelion Test Type-01 Pseudo Dms Phase Rare Battle-2nd-4th Place PSA 10",
-      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/2026-union-arena-uepr-promos-079-evangelion-test-type-01-pseudo-dms-phase-rare-battle-2nd-4th-place-psa-10/PSA160294289.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "Yu-Gi-Oh! Playing Cards",
-      "url": "https://www.gamestop.com/toys-games/board-games/products/yu-gi-oh-playing-cards/454505.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "Cybercel Dragon Ball Super Trading Cards Blaster Box with Promo",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/cybercel-dragon-ball-super-trading-cards-blaster-box-with-promo/454582.html",
-      "http_status": 200,
-      "store_responses": 0,
-      "observations": 0
-    },
-    {
-      "product": "Digimon Card Game: Beat Break Starter Advance Deck (ST-23)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-beat-break-starter-advance-deck-st-23/440328.html",
+      "product": "Digimon Card Game: Protector of Light Starter Deck (ST-20)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-protector-of-light-starter-deck-st-20/421680.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: Chivalrous XIII Extra Booster Pack (EX-13)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-chivalrous-xiii-extra-booster-pack-ex-13/C200742.html",
+      "product": "Digimon Card Game: Time Stranger Booster Pack (BT-24)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-time-stranger-booster-pack-bt-24/431584.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: Data Squad Starter Deck (ST-24)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-data-squad-starter-deck-st-24/440329.html",
+      "product": "Digimon Card Game: Timeless Bonds Booster Pack (BT-26)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-timeless-bonds-booster-pack-bt-26/448928.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: DIGIMON ALYSION Rubeusdramon Starter Deck (ST-25)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-digimon-alysion-rubeusdramon-starter-deck-st-25/449039.html",
+      "product": "Disney Lorcana: Archazia's Island Chapter 7 Booster Pack",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-archazias-island-chapter-7-booster-pack/421129.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: DIGIMON ALYSION Yukinamon Starter Deck (ST-26)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-digimon-alysion-yukinamon-starter-deck-st-26/449040.html",
+      "product": "Disney Lorcana: Archazia's Island Chapter 7 Starter Deck (Amethyst and Steel)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-archazias-island-chapter-7-starter-deck-amethyst-and-steel/421128.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: Dual Revolution Booster Pack (BT-25)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-dual-revolution-booster-pack-bt-25/440295.html",
+      "product": "Disney Lorcana: Archazia's Island Chapter 7 Starter Deck (Ruby and Sapphire)",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-archazias-island-chapter-7-starter-deck-ruby-and-sapphire/421127.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: Hero Of Hope Starter Deck (ST-21)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-hero-of-hope-starter-deck-st-21/421681.html",
+      "product": "Disney Lorcana Attack of the Vine Chapter 13 Booster Pack",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-attack-of-the-vine-chapter-13-booster-pack/448073.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     },
     {
-      "product": "Digimon Card Game: Ignition of X Booster Pack (BT-27)",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/products/digimon-card-game-ignition-of-x-booster-pack-bt-27/448956.html",
+      "product": "Disney Lorcana Attack of the Vine Chapter 13 Illumineer's Trove Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-attack-of-the-vine-chapter-13-illumineers-trove-box/448082.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Attack of the Vine! Collection Starter Set - Rapunzel Edition",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-attack-of-the-vine-collection-starter-set---rapunzel-edition/450538.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Azurite Sea Chapter 6 Gift Set",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-azurite-sea-chapter-6-gift-set/417337.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Azurite Sea Chapter 6 Single-Player Starter Deck",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-azurite-sea-chapter-6-single-player-starter-deck/417341.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Hyperia City Chapter 14 Beast Gift Set",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-hyperia-city-chapter-14-beast-gift-set/450658.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Hyperia City Chapter 14 Booster Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-hyperia-city-chapter-14-booster-box/450673.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Hyperia City Chapter 14 Booster Pack",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-hyperia-city-chapter-14-booster-pack/450660.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Hyperia City Chapter 14 Illumineer's Trove Box",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-hyperia-city-chapter-14-illumineers-trove-box/450674.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Hyperia City Chapter 14 Sleeved Booster Pack - 3-Pack Bundle",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-hyperia-city-chapter-14-sleeved-booster-pack---3-pack-bundle/453145.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Hyperia City Chapter 14 Two-Player Starter Deck",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-hyperia-city-chapter-14-two-player-starter-deck/450672.html",
+      "http_status": 200,
+      "store_responses": 1,
+      "observations": 1
+    },
+    {
+      "product": "Disney Lorcana: Reign of Jafar Chapter 8 Illumineer's Quest: Palace Heist",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/products/disney-lorcana-reign-of-jafar-chapter-8-illumineers-quest-palace-heist/425858.html",
       "http_status": 200,
       "store_responses": 1,
       "observations": 1
     }
   ],
-  "catalog_seeded": 271,
+  "catalog_seeded": 272,
   "discovery_diagnostics": [
     {
       "query": "pokemon trading card",
       "search_url": "https://www.gamestop.com/search/?q=pokemon%20trading%20card",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 17,
+      "accepted": 19,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=pokemon%20trading%20card",
       "page_title": "pokemon trading card | Search Results | GameStop",
-      "total_accepted_after_fallback": 16
+      "total_accepted_after_fallback": 17
     },
     {
       "query": "union arena",
       "search_url": "https://www.gamestop.com/search/?q=union%20arena",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 21,
+      "accepted": 22,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=union%20arena",
       "page_title": "union arena | Search Results | GameStop",
-      "total_accepted_after_fallback": 36
+      "total_accepted_after_fallback": 37
     },
     {
       "query": "one piece trading card",
       "search_url": "https://www.gamestop.com/search/?q=one%20piece%20trading%20card",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 20,
+      "accepted": 21,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=one%20piece%20trading%20card",
       "page_title": "one piece trading card | Search Results | GameStop",
-      "total_accepted_after_fallback": 55
+      "total_accepted_after_fallback": 56
     },
     {
       "query": "yu gi oh cards",
       "search_url": "https://www.gamestop.com/search/?q=yu%20gi%20oh%20cards",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 21,
+      "accepted": 22,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=yu%20gi%20oh%20cards",
       "page_title": "yu gi oh cards | Search Results | GameStop",
-      "total_accepted_after_fallback": 75
+      "total_accepted_after_fallback": 76
     },
     {
       "query": "magic the gathering",
       "search_url": "https://www.gamestop.com/search/?q=magic%20the%20gathering",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 16,
+      "accepted": 17,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=magic%20the%20gathering",
       "page_title": "magic the gathering | Search Results | GameStop",
-      "total_accepted_after_fallback": 90
+      "total_accepted_after_fallback": 91
     },
     {
       "query": "lorcana",
       "search_url": "https://www.gamestop.com/search/?q=lorcana",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 21,
+      "accepted": 22,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=lorcana",
       "page_title": "lorcana | Search Results | GameStop",
-      "total_accepted_after_fallback": 110
+      "total_accepted_after_fallback": 111
     },
     {
       "query": "gundam card game",
       "search_url": "https://www.gamestop.com/search/?q=gundam%20card%20game",
       "product_links": 36,
       "tiles": 23,
-      "accepted": 12,
+      "accepted": 13,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=gundam%20card%20game",
       "page_title": "gundam card game | Search Results | GameStop",
-      "total_accepted_after_fallback": 121
+      "total_accepted_after_fallback": 122
     },
     {
       "query": "digimon card game",
       "search_url": "https://www.gamestop.com/search/?q=digimon%20card%20game",
       "product_links": 39,
       "tiles": 26,
-      "accepted": 15,
+      "accepted": 16,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=digimon%20card%20game",
       "page_title": "digimon card game | Search Results | GameStop",
-      "total_accepted_after_fallback": 135
+      "total_accepted_after_fallback": 136
     },
     {
       "query": "dragon ball super cards",
       "search_url": "https://www.gamestop.com/search/?q=dragon%20ball%20super%20cards",
       "product_links": 45,
       "tiles": 32,
-      "accepted": 21,
+      "accepted": 22,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=dragon%20ball%20super%20cards",
       "page_title": "dragon ball super cards | Search Results | GameStop",
-      "total_accepted_after_fallback": 155
+      "total_accepted_after_fallback": 156
     },
     {
       "query": "star wars unlimited",
       "search_url": "https://www.gamestop.com/search/?q=star%20wars%20unlimited",
       "product_links": 40,
       "tiles": 27,
-      "accepted": 9,
+      "accepted": 10,
       "http_status": 200,
       "final_url": "https://www.gamestop.com/search-new/?q=star%20wars%20unlimited",
       "page_title": "star wars unlimited | Search Results | GameStop",
-      "total_accepted_after_fallback": 163
+      "total_accepted_after_fallback": 164
     }
   ],
-  "next_cursor": 93,
+  "next_cursor": 111,
   "catalog_size": 272,
   "integration_verified_this_run": true,
   "integration_status": "store_response_captured",
