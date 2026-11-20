@@ -44,8 +44,8 @@
   "v822_inventory_claims_created": 0,
   "v83_bulk_status": "failed",
   "v83_bulk_last_state": "NC",
-  "v83_bulk_last_attempt": "2026-11-20T07:27:13.663590+00:00",
-  "v83_bulk_last_error": "ReadTimeout: HTTPSConnectionPool(host='download.geofabrik.de', port=443): Read timed out. (read timeout=60)",
+  "v83_bulk_last_attempt": "2026-11-20T11:12:21.007921+00:00",
+  "v83_bulk_last_error": "HTTPError: 502 Server Error: Bad Gateway for url: https://download.geofabrik.de/north-america/us/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina",
   "v83_bulk_completed_states": [
     "VA",
     "WV",
@@ -78,6 +78,6 @@
   "v84_retail_completed_count": 3,
   "v84_retail_total_states": 51,
   "v84_retail_last_success": "2026-11-04T19:11:00.419802+00:00",
-  "v84_retail_last_error": "ReadTimeout: HTTPSConnectionPool(host='download.geofabrik.de', port=443): Read timed out. (read timeout=60)",
-  "v84_retail_last_failure": "2026-11-20T07:28:14.170172+00:00"
+  "v84_retail_last_error": "HTTPError: 502 Server Error: Bad Gateway for url: https://download.geofabrik.de/north-america/us/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina/north-carolina",
+  "v84_retail_last_failure": "2026-11-20T11:12:24.026367+00:00"
 }
