@@ -1,256 +1,20 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-19T17:25:12.684861+00:00",
-  "source_online_candidates": 724,
+  "checked_at": "2026-11-20T01:28:35.503364+00:00",
+  "source_online_candidates": 602,
   "checked_this_run": 60,
-  "verified_this_run": 25,
-  "fresh_online_observations": 552,
-  "online_in_stock": 218,
-  "online_out_of_stock": 334,
-  "verified_store_observations": 0,
+  "verified_this_run": 17,
+  "fresh_online_observations": 346,
+  "online_in_stock": 122,
+  "online_out_of_stock": 224,
+  "verified_store_observations": 8,
   "store_in_stock": 0,
-  "next_cursor": 374,
+  "next_cursor": 434,
   "check_outcomes": {
-    "http_301": 34,
-    "verified": 25,
-    "ambiguous_variant": 1
+    "verified": 17,
+    "http_301": 43
   },
   "checks": [
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Bleach: Thousand-Year Blood War Vol. 3 Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Chainsaw Man Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Chainsaw Man Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Goddess of Victory: Nikke Precious Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Goddess of Victory: Nikke Precious Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Inuyasha Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Inuyasha Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Re:ZERO Starting Life in Another World Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Re:ZERO Starting Life in Another World Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Re:ZERO Starting Life in Another World Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Sakamoto Days Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - Sakamoto Days Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - That Time I Got Reincarnated as a Slime Special Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Union Arena TCG - That Time I Got Reincarnated as a Slime Special Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - BanG Dream! 10th Anniversary Premium Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - BanG Dream! 10th Anniversary Premium Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Blue Archive: The Animation Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Blue Archive: The Animation Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Goddess of Victory: Nikke Vol. 2 Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Goddess of Victory: Nikke Vol. 2 Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Nazarick: Tomb of the Undead Vol. 3 Extra Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Nazarick: Tomb of the Undead Vol. 3 Extra Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Re:Zero -Starting Life in Another World- Vol. 3 Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Re:Zero -Starting Life in Another World- Vol. 3 Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Umamusume: Pretty Derby Race 1 Trial Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Weiss Schwarz TCG - Umamusume: Pretty Derby Race 2 Trial Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Battles of Legend: Glorious Gallery Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Battles of Legend: Glorious Gallery Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Beyond the Brave Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Beyond the Brave Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Blazing Dominion Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Blazing Dominion Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Chaos Origins Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Yu-Gi-Oh! TCG - Chaos Origins Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "2026 Pokemon S-Chinese 30th Anniv Futuristic Commemorative Gift Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Union Arena Bleach Thousand Year Blood War Vol 3 Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Disney Lorcana TCG: The First Chapter Booster Box - Japanese",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Dragon Ball // Shenron - Manga Booster 02 (SB02)",
-      "result": "ambiguous_variant"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - Demon Slayer Infinity Castle: Daybreak Collection Booster Box (20 Packs) - Breath Edition Series 1",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - My Little Pony Friendship Eternal Cards Collector Box (5 Packs) - Moon Edition",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - My Little Pony - Friendship Eternal Cards - Moon Edition 4 Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou - My Little Pony - Friendship Eternal Cards - Moon Edition Collector Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Kayou My Little Pony Nightmare Nights TCG Booster Box Trading Card Game",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "KAYOU Naruto Earth Scroll Series 3 Collectible Card Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "Lisia Exclusive Shiny Collection Gift Box Pokémon TCG Chinese 2026",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "My Little Pony Discord Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "PixelThat TCG",
-      "product": "My Little Pony TCG: Hearth's Warming Eve - Booster Box",
-      "result": "verified"
-    },
     {
       "retailer": "PixelThat TCG",
       "product": "My Little Pony Trading Card Game Collector Box Hearth's Warming Eve",
@@ -315,6 +79,241 @@
       "retailer": "PixelThat TCG",
       "product": "Union Arena: HUNTER×HUNTER Starter Deck",
       "result": "verified"
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "product": "Union Arena: JUJUTSU KAISEN Starter Deck",
+      "result": "verified"
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "product": "Union Arena Re:ZERO - Starting Life in Another World - Starter Deck",
+      "result": "verified"
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "product": "Weiss Schwarz: Azur Lane Vol.2 Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "product": "Weiss Schwarz: KONOSUBA - God’s blessing on this wonderful world! Re:Edit - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Obsidian Flames Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Ascended Heroes Tin [Mega Emboar ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Brave Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Celebrations Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Azure Legends Tin [Dialga ex] (International Version)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together Enhanced Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Battle Partners Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "White Flare Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Paradox Rift Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Darkness Ablaze Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Charizard Tin (Mega Charizard Y)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "League Battle Deck [Zacian V]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "V Heroes Tin [Umbreon V] (International Version)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "White Flare Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Battle Partner Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Dream ex Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Brave Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Stellar Crown Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Brilliant Stars Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Twilight Masquerade Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Black Bolt Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Ascended Heroes Tin [Mega Feraligatr ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Battle Styles Elite Trainer Box [Single Strike Urshifu] (Red)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Dream ex Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pitch Black Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Temporal Forces Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Inferno X Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Black Bolt Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Ascended Heroes Tin [Mega Meganium ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Paldea Partners Tin [Quaquaval ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Moonlit Tin [Mega Clefable ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Surging Sparks Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Destined Rivals Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Battle Styles Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration ex Tin [Sylveon ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Perfect Order Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Evolution Elite Trainer Box [Mega Lucario]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Fusion Strike Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Evolution Pokemon Center Elite Trainer Box (Exclusive) [Mega Lucario]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration ex Tin [Greninja ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Phantasmal Flames Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Unified Minds Premium Checklane Blister [Umbreon]",
+      "result": "http_301"
     }
   ],
   "gamestop_status": "No access to blocked search pages; only verified existing store data",
