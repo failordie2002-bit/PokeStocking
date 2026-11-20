@@ -1,8 +1,24 @@
 {
-  "generated_utc": "2026-11-19T21:52:36.544309+00:00",
+  "generated_utc": "2026-11-20T02:12:33.152349+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 4,
+  "feeds_succeeded": 0,
   "feed_failures": [
+    {
+      "feed": "Google News: Pokemon TCG Walmart restock Virginia",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Sam's Club Pokemon cards shipment",
+      "type": "HTTPError"
+    },
+    {
+      "feed": "Google News: Costco Pokemon TCG sealed cards restock",
+      "type": "TimeoutError"
+    },
+    {
+      "feed": "Google News: Lowes Pokemon cards restock",
+      "type": "TimeoutError"
+    },
     {
       "feed": "Reddit PKMNTCGDeals",
       "type": "HTTPError"
