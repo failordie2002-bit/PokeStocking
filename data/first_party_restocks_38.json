@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-be63082ae25109b57f30923149",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokémon TCG: Sword & Shield Brilliant Stars - Elite Trainer Box",
+    "game": "Pokémon",
+    "retailer": "The Eternal Forge",
+    "price_reported": "164.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-20T13:46:43.708419+00:00",
+    "reported_at": "2026-11-20T13:46:43.708419+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/pokemon-tcg-sword-shield-09-brilliant-stars-elite-trainer-box",
+    "source_url": "https://www.theeternalforge.com/products/pokemon-tcg-sword-shield-09-brilliant-stars-elite-trainer-box",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-d66dec2c0ba61bc4449f7e76cc",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
