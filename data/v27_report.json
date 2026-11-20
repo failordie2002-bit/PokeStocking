@@ -1,46 +1,21 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-20T21:07:16.087241+00:00",
-  "source_online_candidates": 620,
+  "checked_at": "2026-11-20T23:03:43.737343+00:00",
+  "source_online_candidates": 780,
   "checked_this_run": 60,
-  "verified_this_run": 25,
-  "fresh_online_observations": 684,
-  "online_in_stock": 235,
-  "online_out_of_stock": 449,
-  "verified_store_observations": 52,
-  "store_in_stock": 18,
-  "next_cursor": 280,
+  "verified_this_run": 21,
+  "fresh_online_observations": 733,
+  "online_in_stock": 248,
+  "online_out_of_stock": 485,
+  "verified_store_observations": 53,
+  "store_in_stock": 22,
+  "next_cursor": 340,
   "check_outcomes": {
-    "verified": 25,
     "ambiguous_variant": 1,
-    "http_301": 34
+    "verified": 21,
+    "http_301": 38
   },
   "checks": [
-    {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Dimensional Transcendence Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Fated Clash Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Lorcana: Floodborn Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Magic the Gathering: March of the Machines Epilogue Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Magic the Gathering: Murders at Karlov Manor Play Booster Box",
-      "result": "verified"
-    },
     {
       "retailer": "Curio Cavern",
       "product": "ONE PIECE TCG Starter Deck",
@@ -99,6 +74,11 @@
     {
       "retailer": "Games and Stuff",
       "product": "MY LITTLE PONY TCG: DISCORD !!!!! BOOSTER PACK",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "MY LITTLE PONY TCG NIGHTMARE NIGHT BOOSTER BOX",
       "result": "verified"
     },
     {
@@ -223,12 +203,32 @@
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Shimmering Skies Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Shimmering Skies Starter Deck - Amethyst & Ruby",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Shimmering Skies Starter Deck - Emerald & Steel",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
       "product": "Dragon Ball Super Card Game - Fusion World - New Adventure (FB05) Booster Pack",
       "result": "http_301"
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
       "product": "Dragon Ball Super Card Game - Fusion World - Rivals Clash (FB06) Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Son Goku (Mini) Starter Deck (FS06)",
       "result": "http_301"
     },
     {
@@ -243,7 +243,17 @@
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Vegeta (Mini) Starter Deck (FS07)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
       "product": "Dragon Ball Super Card Game Masters - History of Z Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game Masters - Zenkai Series 09 - Ultimate Advent Booster Pack",
       "result": "http_301"
     },
     {
@@ -288,32 +298,22 @@
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Innistrad Remastered Collector Booster Pack",
+      "product": "Magic: The Gathering - Dominaria United Set Booster Pack",
       "result": "http_301"
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Innistrad Remastered Play Booster Pack",
+      "product": "Magic: The Gathering - Duskmourn Collector Booster Pack",
       "result": "http_301"
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Jumpstart 2022 Booster Pack",
+      "product": "Magic: The Gathering - Duskmourn Play Booster Display Box",
       "result": "http_301"
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Tarkir: Dragonstorm Collector Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Tarkir: Dragonstorm Play Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Tarkir: Dragonstorm Play Booster Pack",
+      "product": "Magic: The Gathering - Duskmourn Play Booster Pack",
       "result": "http_301"
     }
   ],
