@@ -1,6 +1,6 @@
 {
   "version": "29.0",
-  "checked_at": "2026-11-20T17:34:27.596555+00:00",
+  "checked_at": "2026-11-20T21:25:53.596642+00:00",
   "api_keys_required": false,
   "games": [
     "Battle Spirits Saga",
@@ -10,7 +10,6 @@
     "Dragon Ball Super",
     "Final Fantasy TCG",
     "Flesh and Blood",
-    "Grand Archive",
     "Gundam",
     "Kayou",
     "Magic: The Gathering",
@@ -23,7 +22,7 @@
     "Weiß Schwarz",
     "Yu-Gi-Oh!"
   ],
-  "online_candidates": 735,
+  "online_candidates": 684,
   "products_checked": 80,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
@@ -37,7 +36,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Target",
@@ -46,7 +45,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Best Buy",
@@ -55,7 +54,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Barnes & Noble",
@@ -64,7 +63,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Kohls",
@@ -73,7 +72,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Lowes",
@@ -82,7 +81,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "GameStop",
@@ -91,7 +90,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Ross",
@@ -100,7 +99,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Burlington",
@@ -109,7 +108,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Five Below",
@@ -118,7 +117,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Walgreens",
@@ -127,7 +126,7 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "CVS",
@@ -136,7 +135,7 @@
       "public_page_accessible": false,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     },
     {
       "retailer": "Dollar General",
@@ -145,572 +144,571 @@
       "public_page_accessible": true,
       "inventory_verified": false,
       "reason": "Homepage access is not product/store inventory evidence",
-      "checked_at": "2026-11-20T17:34:27.596555+00:00"
+      "checked_at": "2026-11-20T21:25:53.596642+00:00"
     }
   ],
   "check_outcomes": {
-    "product_http_301": 47,
-    "product_http_404": 22,
-    "no_explicit_pickup_evidence:http_404,http_404": 11
+    "no_explicit_pickup_evidence:http_404,http_404": 70,
+    "no_explicit_pickup_evidence:http_200,http_200": 10
   },
   "checks": [
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy TCG - Gunslinger in the Abyss Booster Pack",
-      "result": "product_http_301",
+      "retailer": "PixelThat TCG",
+      "game": "Kayou",
+      "product": "Naruto Kayou Smriti Earth Scroll Pearl Collector Box Sealed English 5 Packs",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Final Fantasy TCG",
-      "product": "Final Fantasy TCG - Tears of the Planet Booster Pack",
-      "result": "product_http_301",
+      "retailer": "PixelThat TCG",
+      "game": "Kayou",
+      "product": "Naruto Smriti Collectible Cards: Chapter Jin Collector Box Series 4 (5 Packs)",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Grand Archive",
-      "product": "Grand Archive TCG - Distorted Reflections 1st Edition Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Grand Archive",
-      "product": "Grand Archive TCG - Distorted Reflections 1st Edition Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Grand Archive",
-      "product": "Grand Archive TCG - Distorted Reflections Starter Deck - Ciel, Mirage's Grave",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Magic: The Gathering",
-      "product": "Magic: The Gathering - Edge of Eternities Collector Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Magic: The Gathering",
-      "product": "Magic: The Gathering - Edge of Eternities Play Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Magic: The Gathering",
-      "product": "Magic: The Gathering - Edge of Eternities Play Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Magic: The Gathering",
-      "product": "Magic: The Gathering - Final Fantasy Play Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Magic: The Gathering",
-      "product": "Magic: The Gathering - Marvel's Spider-Man Bundle",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Magic: The Gathering",
-      "product": "Magic: The Gathering - Marvel's Spider-Man Play Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
+      "retailer": "PixelThat TCG",
       "game": "One Piece",
-      "product": "One Piece Card Game - Anime 25th Collection (EB-02) Booster Pack",
-      "result": "product_http_301",
+      "product": "One Piece TCG: OP18 Dominance of God Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "2026 Pokemon S-Chinese 30th Anniv Futuristic Commemorative Gift Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "Lisia Exclusive Shiny Collection Gift Box Pokémon TCG Chinese 2026",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "Pokemon Chinese 30th Celebration Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "Pokemon TCG S-Chinese Dragon Return Advance Gift Box Exclusive Rayquaza",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "Pokemon TCG: ME04 Chaos Rising Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "Pokemon TCG: SV10 Destined Rivals Elite Trainer Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Pokémon",
+      "product": "Pokémon Simplified Chinese 2026 Dragon Boat Festival Gift Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Riftbound",
+      "product": "Riftbound - League of Legends TCG: Origins Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Union Arena",
+      "product": "Union Arena - GODDESS OF VICTORY: NIKKE - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Union Arena",
+      "product": "Union Arena Bleach Thousand Year Blood War Vol 3 Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Union Arena",
+      "product": "Union Arena Re:ZERO - Starting Life in Another World - Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Union Arena",
+      "product": "Union Arena: Demon Slayer: Kimetsu no Yaiba Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Union Arena",
+      "product": "Union Arena: HUNTER×HUNTER Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Union Arena",
+      "product": "Union Arena: JUJUTSU KAISEN Starter Deck",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Weiß Schwarz",
+      "product": "Weiss Schwarz: Azur Lane Vol.2 Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "PixelThat TCG",
+      "game": "Weiß Schwarz",
+      "product": "Weiss Schwarz: KONOSUBA - God’s blessing on this wonderful world! Re:Edit - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering 2015 Core Set Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering Born of the Gods - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering Teenage Mutant Ninja Turtles Pizza Bundle",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "game": "Magic: The Gathering",
+      "product": "Magic: the Gathering Core Set 2020 - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "game": "Magic: The Gathering",
+      "product": "Magic: the Gathering Ravnica Allegiance - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
+      "observations": 0
+    },
+    {
+      "retailer": "The Compleat Strategist",
       "game": "Star Wars: Unlimited",
-      "product": "Star Wars: Unlimited TCG - Legends of the Force Booster Pack",
-      "result": "product_http_301",
+      "product": "Star Wars Unlimited Jump to Lightspeed Booster Display",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
+      "retailer": "The Compleat Strategist",
       "game": "Star Wars: Unlimited",
-      "product": "Star Wars: Unlimited TCG - Legends of the Force Carbonite Edition Booster Pack",
-      "result": "product_http_301",
+      "product": "Star Wars Unlimited Shadows of the Galaxy Booster Display",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Attack on Titan - Booster Display Box",
-      "result": "product_http_301",
+      "retailer": "The Compleat Strategist",
+      "game": "Star Wars: Unlimited",
+      "product": "Star Wars: Unlimited - Legends of the Force: Booster Display",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Attack on Titan - Booster Pack",
-      "result": "product_http_301",
+      "retailer": "The Compleat Strategist",
+      "game": "Star Wars: Unlimited",
+      "product": "Star Wars: Unlimited - Spark of Rebellion Booster Display",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Attack on Titan - Starter Deck",
-      "result": "product_http_301",
+      "retailer": "The Compleat Strategist",
+      "game": "Star Wars: Unlimited",
+      "product": "Star Wars: Unlimited – Twilight of the Republic: Booster Display",
+      "result": "no_explicit_pickup_evidence:http_200,http_200",
       "observations": 0
     },
     {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Black Clover Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Black Clover Starter Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Bleach -Thousand-Year Blood War Starter Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Bleach: Thousand-Year Blood War Vol. 2 Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Code Geass: Lelouch of the Rebellion Vol. 2 Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Fullmetal Alchemist Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Fullmetal Alchemist Starter Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Jujutsu Kaisen Vol. 2 Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Jujutsu Kaisen Vol. 2 Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Rurouni Kenshin - Starter Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Union Arena",
-      "product": "Union Arena TCG - Sword Art Online Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Avatar the Last Airbender Trial Deck+",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - BanG Dream MyGO!!!!! x Ave Mujica Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - BanG! Dream MyGO!!!!! x Ave Mujica Trial Deck+",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Goddess of Victory: Nikke (Reprint) Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Goddess of Victory: Nikke (Reprint) Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Hatsune Miku Leo/Need Trial Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Hatsune Miku MORE MORE JUMP! Trial Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Hatsune Miku Nightcord at 25:00 Trial Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Hatsune Miku Vivid Bad Squad Trial Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Hatsune Miku Wonderlands x Showtime Trial Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Lycoris Recoil Premium Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Rurouni Kenshin Booster Display Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Rurouni Kenshin Trial Deck",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Sword Art Online Alternative - Gun Gale Online 2 Extra Booster Box",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Weiß Schwarz",
-      "product": "Weiss Schwarz TCG - Sword Art Online Alternative - Gun Gale Online 2 Extra Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG - 2025 Mega-Pack Bundle",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG - Battles of Legend: Monster Mayhem Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG - Duelist's Advance Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "game": "Yu-Gi-Oh!",
-      "product": "Yu-Gi-Oh! TCG - Justice Hunters Booster Pack",
-      "result": "product_http_301",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments Edition-Card Album Collector Box-004",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Friendship Eternal Cards-Fun Moments-Collector Box(10 packs)-004",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Trading Card Game-Hearth's Warming Eve, Premium Bundle",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "My Little Pony-Trading Card Game-Nightmare Night, Premium Bundle",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case (24 Boxes) My Little Pony-Friendship Eternal Cards-Fun Moments Edition-001A-NA-Series 1",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-002",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition(16 Boxes)",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "game": "Kayou",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "product_http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "game": "Cardfight!! Vanguard",
-      "product": "2025 Cardfight Vanguard Festival Booster Box",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "game": "Cardfight!! Vanguard",
-      "product": "Cardfight Vanguard Onslaught of Dragon Souls Blister",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Mamba Collectibles",
-      "game": "Digimon",
-      "product": "Digimon Advanced Starter Deck Amethyst Mandala (ST-22)",
-      "result": "no_explicit_pickup_evidence:http_404,http_404",
-      "observations": 0
-    },
-    {
-      "retailer": "Mamba Collectibles",
+      "retailer": "The Eternal Forge",
       "game": "Disney Lorcana",
-      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amber & Sapphire",
+      "product": "Disney Lorcana: 2-Player Deck Display - Elastigirl & Buzz Lightyear",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
+      "retailer": "The Eternal Forge",
       "game": "Disney Lorcana",
-      "product": "Disney Lorcana Rise of The Floodborn Starter Deck Amethyst & Steel",
+      "product": "Disney Lorcana: Fabled - Sleeved Booster",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Into the Inklands - Sleeved Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Rise of the Floodborn - Sleeved Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Shimmering Skies - Sleeved Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: The First Chapter Booster Box JP",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Whispers In The Well - Booster Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Wilds Unknown Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Winterspell - Scrooge McDuck Gift Box",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Disney Lorcana",
+      "product": "Disney Lorcana: Winterspell Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Dragon Ball Super",
+      "product": "Dragon Ball Super TCG: Fusion World: Vegeta (Mini) - Starter Deck 08",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "Aetherdrift Play Booster Display",
+      "product": "Magic The Gathering TCG: Aetherdrift - Collector's Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "Magic The Gathering Avatar The Last Airbender Jumpstart Booster Display",
+      "product": "Magic The Gathering TCG: Aetherdrift - Play Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Bundle",
+      "product": "Magic The Gathering TCG: Commander Legends: Battle for Baldur's Gate - Collector Booster Dispaly",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
+      "retailer": "The Eternal Forge",
       "game": "Magic: The Gathering",
-      "product": "Magic The Gathering Teenage Mutant Ninja Turtles Play Booster Display",
+      "product": "Magic The Gathering TCG: Dominaria United - Collector Booster Omega Pack",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
-      "game": "One Piece",
-      "product": "Starter Deck: Ace & Newgate ST-22",
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Duskmourn: House of Horror - Play Booster Display",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     },
     {
-      "retailer": "Mamba Collectibles",
-      "game": "Star Wars: Unlimited",
-      "product": "2024 Disney Star Wars Unlimited Shadows of the Galaxy Booster Box",
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Modern Horizons III - Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Murders at Karlov Manor - Collector's Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Streets of New Capenna - Set Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Universes Beyond - Marvel's Spider-Man Collector Booster Omega Pack",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Universes Beyond - Marvel's Spider-Man Play Booster Sleeved Pack",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic The Gathering TCG: Universes Beyond: Assassin's Creed - Beyond Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Adventures in the Forgotten Realms - Collector Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Bloomburrow - Play Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Commander Masters - Set Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Commander Masters Draft - Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Dominaria United - Collector Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Edge of Eternities - Play Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Foundations Jumpstart Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Foundations Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Innistrad Remastered - Collector Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Lorwyn Eclipsed - Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Lorwyn Eclipsed Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Marvel Super Heroes - Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Marvel Super Heroes - Gift Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Marvel Super Heroes - Jumpstart Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Marvel Super Heroes - Play Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Modern Horizons II - Sleeved Draft Booster",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Murders at Karlov Manor - Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Outlaws of Thunder Junction - Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Secret of Strixhaven - Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Secret of Strixhaven - Codex Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Secret of Strixhaven - Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Tarkir Dragonstorm Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond - Marvel Spider-Man Gift Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond The Lord of the Rings: Tales of Middle-earth - Collector Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond- Final Fantasy Chocobo Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond- Final Fantasy Play Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Bundle",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Collector's Booster Display",
+      "result": "no_explicit_pickup_evidence:http_404,http_404",
+      "observations": 0
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "game": "Magic: The Gathering",
+      "product": "Magic: The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Pizza Bundle",
       "result": "no_explicit_pickup_evidence:http_404,http_404",
       "observations": 0
     }
