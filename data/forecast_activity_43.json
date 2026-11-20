@@ -1,8 +1,42 @@
 {
   "version": "43.0",
-  "public_sighting_feed_checked": "2026-11-19T13:41:11.260249+00:00",
+  "public_sighting_feed_checked": "2026-11-19T23:06:32.932518+00:00",
   "social_feed_checked": "2026-11-19T21:00:28.223760+00:00",
   "events": [
+    {
+      "id": "sighting:4e8331d0eebd8877417d1b74",
+      "kind": "community_sighting",
+      "title": "Reported near store 30th Celebration Mini Tin Posted from the store",
+      "retailer": "Walmart",
+      "game": "Pokemon",
+      "city": "Manassas",
+      "state": "VA",
+      "lat": 38.76989035,
+      "lon": -77.5013462,
+      "reported_at": "2026-11-19T20:06:32.932518+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=walmart",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:5ff48e555106f608b2d554f4",
+      "kind": "community_sighting",
+      "title": "Reported near store Chaos Rising Sleeved Booster Pack Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Cockeysville",
+      "state": "MD",
+      "lat": 39.47150185,
+      "lon": -76.639139,
+      "reported_at": "2026-11-19T13:06:32.932518+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-4323",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
     {
       "id": "sighting:0b7a50b2448a9bd27226df50",
       "kind": "community_sighting",
@@ -1466,7 +1500,7 @@
       "location_precision": "source_tagged_approximate"
     }
   ],
-  "community_sighting_count": 84,
+  "community_sighting_count": 86,
   "location_tagged_social_leads": 2,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
