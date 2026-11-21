@@ -5852,7 +5852,7 @@
   ],
   "drawings": [],
   "history": [],
-  "last_updated": "2026-11-21T18:57:28.699918+00:00",
+  "last_updated": "2026-11-21T20:51:15.325653+00:00",
   "check_interval_minutes": 5,
   "release_sources": [
     "https://press.pokemon.com/en/Items/Schedule?period=All&types=3&sortAsc=False&sortBy=Date",
@@ -5860,34 +5860,32 @@
     "https://www.unionarena-tcg.com/na/products/"
   ],
   "retailer_stock_checks": "not_connected",
-  "monitor_errors": [
-    "Official One Piece: HTTPError: 502 Server Error: Bad Gateway for url: https://en.onepiece-cardgame.com/products/"
-  ],
+  "monitor_errors": [],
   "catalogue_source_status": {
     "Official Pokémon": {
       "status": "ok",
       "count": 41,
-      "checked_at": "2026-11-21T18:57:28.699918+00:00"
+      "checked_at": "2026-11-21T20:51:15.325653+00:00"
     },
     "Official Union Arena": {
       "status": "ok",
       "count": 57,
-      "checked_at": "2026-11-21T18:57:28.699918+00:00"
+      "checked_at": "2026-11-21T20:51:15.325653+00:00"
     },
     "Official Gundam": {
       "status": "ok",
       "count": 4,
-      "checked_at": "2026-11-21T18:57:28.699918+00:00"
+      "checked_at": "2026-11-21T20:51:15.325653+00:00"
     },
     "Official One Piece": {
-      "status": "error",
-      "error": "HTTPError: 502 Server Error: Bad Gateway for url: https://en.onepiece-cardgame.com/products/",
-      "checked_at": "2026-11-21T18:57:28.699918+00:00"
+      "status": "ok",
+      "count": 12,
+      "checked_at": "2026-11-21T20:51:15.325653+00:00"
     },
     "Shop directory": {
       "status": "not_configured",
       "count": 0,
-      "checked_at": "2026-11-21T18:57:28.699918+00:00"
+      "checked_at": "2026-11-21T20:51:15.325653+00:00"
     }
   },
   "discovery_candidates": [
@@ -5904,8 +5902,8 @@
     "shop_checks": 0,
     "store_sources": 0,
     "verified_in_stock_locations": 0,
-    "source_errors": 1,
-    "updated_at": "2026-11-21T18:57:28.699918+00:00"
+    "source_errors": 0,
+    "updated_at": "2026-11-21T20:51:15.325653+00:00"
   },
   "v6_press_cursor": 12,
   "v6_stock_checks": [],
@@ -6025,10 +6023,10 @@
   "v8_store_checks": [],
   "v8_store_count": 4838,
   "v8_shipment_schema": "data/shipments.json",
-  "v83_image_cursor": 324,
+  "v83_image_cursor": 336,
   "v83_image_enrichment": {
     "version": "8.3",
-    "checked_at": "2026-11-21T18:57:37.375744+00:00",
+    "checked_at": "2026-11-21T20:51:27.156933+00:00",
     "products_inspected": 12,
     "images_added": 0,
     "total_products": 341,
