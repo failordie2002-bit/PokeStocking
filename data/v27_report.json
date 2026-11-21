@@ -1,19 +1,295 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-21T20:57:58.267073+00:00",
-  "source_online_candidates": 767,
+  "checked_at": "2026-11-21T22:56:41.019000+00:00",
+  "source_online_candidates": 890,
   "checked_this_run": 60,
-  "verified_this_run": 60,
-  "fresh_online_observations": 811,
-  "online_in_stock": 328,
-  "online_out_of_stock": 483,
-  "verified_store_observations": 0,
-  "store_in_stock": 0,
-  "next_cursor": 518,
+  "verified_this_run": 59,
+  "fresh_online_observations": 808,
+  "online_in_stock": 332,
+  "online_out_of_stock": 476,
+  "verified_store_observations": 6,
+  "store_in_stock": 2,
+  "next_cursor": 578,
   "check_outcomes": {
-    "verified": 60
+    "verified": 59,
+    "ambiguous_variant": 1
   },
   "checks": [
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Nauctis: The Sunken Realm - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Nauctis: The Sunken Realm - Collector Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Nauctis: The Sunken Realm - Secret Lair Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Collector Booster Omega Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Collector Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Secret Lair Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Sleeved Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Secret of Strixhaven - Collector Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Secret of Strixhaven - Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Star Trek - Collector Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Star Trek - Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Strixhaven School of Mages - Set Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Strixhaven School of Mages - Set Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: The Brothers Wars Set Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: The Brothers Wars Set Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Reality Fracture - Collector Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Star Trek - Collector Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: The Hobbit - Collector Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: The Hobbit - Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: The Hobbit - Sleeved Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond: Assassin's Creed - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Avatar The Last Airbender - Battle Box Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Avatar The Last Airbender - Collector Booster Omega Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Avatar The Last Airbender - Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Avatar The Last Airbender - Play Booster Sleeved Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Final Fantasy Collector Booster Omega Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Final Fantasy Sleeved Play Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Donatello Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Michelangelo Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Booster Tin Collection",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Leonardo Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles - Play Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Raphael Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Shredder Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond The Lord of the Rings: Tales of Middle-earth - Collector Booster Omega Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Wilds of Eldraine Draft Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Wilds of Eldraine Draft Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Zendikar Rising Set Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Zendikar Rising Set Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet and Violet Paldean Fates - Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokemon TCG: Rocket Gang Japanese Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 151 Gather - Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 151- Zapdos ex Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 25th Anniversary JP - Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 30th Celebration Battle Deck Espeon ex",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 30th Celebration Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 30th Celebration Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 30th Celebration Mini Tin (Styles May Vary)",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 30th Celebration Tin",
+      "result": "ambiguous_variant"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Abyss Eye M5 - Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Astral Radiance Booster Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Azure Legends - International Tin (Styles May Vary)",
+      "result": "verified"
+    },
     {
       "retailer": "The Eternal Forge",
       "product": "Pokémon TCG: Azure Legends Tin (Dialga)",
@@ -37,281 +313,6 @@
     {
       "retailer": "The Eternal Forge",
       "product": "Pokémon TCG: Battle Styles - Checklane Blister (Arrokuda)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Battle Styles - Checklane Blister (Golisopod)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Black Bolt Booster Pack JP",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Black Bolt Booster Pack ENG",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Black Bolt CSV10.5C Simplified Chinese - Slim Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Brilliant Stars 3 Pack Blister [Glaceon]",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Brilliant Stars - Sleeved Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Celebrations - Dark Sylveon V Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Celebrations - Prime Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Celebrations Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Celebrations - International Tin [Lance's Charizard V]",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Celebrations Mini Tin (Styles May Vary)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Champion's Path - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Champion's Path - Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Champion's Road SM6b - Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Chilling Reign Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Chinese 5th Anniversary Gift Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Chinese Horizons Gem Pack Vol. 7 - Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Chinese Horizons Gem Pack Vol. 7 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Chinese V-Union Pikachu Gift Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Crimson Haze SV5A Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Crown Zenith Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Crown Zenith Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Crown Zenith Elite Trainer Box case (10 ETBs)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Crown Zenith - Mini Tin (Styles May Vary)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Darkness Ablaze - Checklane Blister (Hatenna)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Darkness Ablaze - Checklane Blister (Pikachu)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Scarlet and Violet Destined Rivals - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Detective Pikachu - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Detective Pikachu - Charizard GX Case File",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Detective Pikachu - Greninja GX Case File",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Dragon Majesty - Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Eevee Evolutions Tin [Vaporeon V]",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Elite Trainer Deck Shield [Mega Charizard]",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Evolving Skies Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: First Partner Series 2 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Fusion Arts Booster Box - S8: Fusion Arts (JP)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Fusion Strike Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Gem Pack 1 Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Gem Pack Vol. 2 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Gem Pack Vol. 3 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Gem Vol. 4 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Reward Round CSV4 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Glory of Team Rocket Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Guardians Rising - Elite Trainer Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Guardians Rising Sleeved Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Gym Challenge - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Heat Wave Arena Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Hidden Potential Tin (Styles May Vary)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Incandescent Arcana Booster Box - S11a",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Inferno X M2 - Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokemon TCG: Japanese Fossil Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokemon TCG: Japanese Leaders Stadium Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Terastal Festival Booster Pack",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokemon TCG: Legendary Battle Decks [Lugia] - SM - Guardians Rising",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Pokémon TCG: Sword and Shield Lost Origin - Booster Pack",
       "result": "verified"
     }
   ],
