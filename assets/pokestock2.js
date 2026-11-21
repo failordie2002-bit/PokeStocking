@@ -119,6 +119,7 @@ function matchingArea(store){const c=chain(store).toLowerCase();const city=Strin
 /* Script 43: honest, location-aware forecast. */
 /* Script 43: honest, location-aware forecast. */
 /* Script 43: honest, location-aware forecast. */
+/* Script 43: honest, location-aware forecast. */
 function renderForecast(){
  const select=$('ps2ForecastStore');
  const candidates=nearby().filter(s=>String(s.city||s.address||'').trim());
@@ -390,7 +391,7 @@ $('ps2ForecastStore').onchange=e=>{selectedForecast=findStore(e.target.value);re
  stores=Array.isArray(a)?a.filter(coords):[];offers=Array.isArray(b)?b:[];social=Array.isArray(c.posts)?c.posts:[];sightings=Array.isArray(d)?d:[];outlook=new Map(Array.isArray(f.stores)?f.stores.map(x=>[String(x.store_id),x]):[]);
  releases=(Array.isArray(g)?g:[]).filter(x=>x.status==='Official release date'&&/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')).map(x=>({...x,official:true})).filter(x=>new Date(x.date+'T23:59:59Z').getTime()>=Date.now()-86400000).sort((a,b)=>a.date.localeCompare(b.date));
  news=(Array.isArray(h.announcements)?h.announcements:[]).filter(x=>x.source_type==='news_index').map(x=>({...x,name:x.title,official:false,date:x.release_date||null,source_url:x.url})).slice(0,25);
- renderHome();renderNear();renderSocial();renderForecast();get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});
+ renderHome();renderNear();renderSocial();renderForecast();get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});get('data/forecast_activity_43.json',{}).then(v=>{forecast43Records=Array.isArray(v.events)?v.events:[];renderForecast();});
  }catch(e){console.error('Pokestock 2.0 load:',e);$('ps2Products').innerHTML='<div class="ps2empty">Inventory currently unavailable. Existing tools are still available under Advanced & legacy tools.</div>';}
 })();
 })();
