@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-11-20T12:05:51.589424+00:00",
+  "generated_at": "2026-11-21T11:53:27.444062+00:00",
   "forecasts": [
+    {
+      "store_id": "store-3067",
+      "retailer": "Walmart",
+      "city": "Fairmont",
+      "state": "WV",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-20",
+      "observation_count": 5,
+      "forecast_type": "historical_estimate",
+      "confidence": "medium",
+      "earliest_date": "2026-11-21",
+      "latest_date": "2026-11-25",
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
     {
       "store_id": "store-4323",
       "retailer": "Target",
@@ -15,22 +31,6 @@
       "latest_date": "2026-11-25",
       "source_urls": [
         "https://restockd.app/pokemon-in-store?retailer=target"
-      ]
-    },
-    {
-      "store_id": "store-3067",
-      "retailer": "Walmart",
-      "city": "Fairmont",
-      "state": "WV",
-      "game": "pokemon",
-      "last_observed_date": "2026-11-18",
-      "observation_count": 4,
-      "forecast_type": "historical_estimate",
-      "confidence": "low",
-      "earliest_date": "2026-11-20",
-      "latest_date": "2026-11-24",
-      "source_urls": [
-        "https://restockd.app/pokemon-in-store?retailer=walmart"
       ]
     },
     {
