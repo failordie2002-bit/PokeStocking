@@ -73,6 +73,7 @@ function renderNear(){
  }).join(''):'<div class="ps2empty">No mapped candidates found within this radius. This does not mean there are no TCG retailers nearby.</div>';
 }
 function findStore(id){return stores.find(s=>String(s.id)===String(id));}
+window.ps44RouteTo=(id)=>{const s=findStore(id);if(s)routeTo(s);};
 $('ps2StoreCards').addEventListener('click',e=>{const fb=e.target.closest('[data-store-forecast]'), rb=e.target.closest('[data-store-route]');if(fb){selectedForecast=findStore(fb.dataset.storeForecast);view('forecast');}if(rb){selected=findStore(rb.dataset.storeRoute);routeTo(selected);}});
 let routeBusy=false;async function routeTo(store){
  if(routeBusy||!store||!coords(store))return;routeBusy=true;selected=store;view('near');$('ps2Route').hidden=false;$('ps2RouteTitle').textContent='Route to '+labelStore(store);$('ps2RouteInfo').textContent='Getting GPS and road directions…';$('ps2Steps').replaceChildren();
