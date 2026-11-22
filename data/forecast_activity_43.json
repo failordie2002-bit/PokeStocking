@@ -1,8 +1,76 @@
 {
   "version": "43.0",
-  "public_sighting_feed_checked": "2026-11-21T13:23:56.698248+00:00",
+  "public_sighting_feed_checked": "2026-11-21T22:59:35.568832+00:00",
   "social_feed_checked": "2026-11-21T13:05:29.010148+00:00",
   "events": [
+    {
+      "id": "sighting:04743012a1384cb69bbf5ecc",
+      "kind": "community_sighting",
+      "title": "Reported near store Cynthia's Garchomp ex Premium Collection Posted from the store",
+      "retailer": "Walmart",
+      "game": "Pokemon",
+      "city": "Berlin",
+      "state": "MD",
+      "lat": 38.34064845,
+      "lon": -75.16632555000001,
+      "reported_at": "2026-11-21T21:59:35.568832+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=walmart",
+      "store_id": "store-4416",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:cce21cbd246cfaa9c42ec13c",
+      "kind": "community_sighting",
+      "title": "Reported near store Pokémon TCG Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Reston",
+      "state": "VA",
+      "lat": 38.9520445,
+      "lon": -77.3555643,
+      "reported_at": "2026-11-21T20:59:35.568832+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-1470",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:1f46207ec96b8ce7d5c1ac6f",
+      "kind": "community_sighting",
+      "title": "Reported near store 30th Celebration Battle Deck Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Bel Air",
+      "state": "MD",
+      "lat": 39.542065550000004,
+      "lon": -76.32604225,
+      "reported_at": "2026-11-21T19:59:35.568832+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-4625",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:4581dcdfa5cc305650bab871",
+      "kind": "community_sighting",
+      "title": "Reported near store Pokémon TCG Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Sterling",
+      "state": "VA",
+      "lat": 39.0201559,
+      "lon": -77.40390450000001,
+      "reported_at": "2026-11-21T12:59:35.568832+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
     {
       "id": "sighting:539bc12825789ebd3b809ad2",
       "kind": "community_sighting",
@@ -1568,7 +1636,7 @@
       "location_precision": "source_tagged_approximate"
     }
   ],
-  "community_sighting_count": 90,
+  "community_sighting_count": 94,
   "location_tagged_social_leads": 2,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
