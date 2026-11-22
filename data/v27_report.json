@@ -1,117 +1,28 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-22T11:00:22.398422+00:00",
-  "source_online_candidates": 640,
+  "checked_at": "2026-11-22T13:16:28.938967+00:00",
+  "source_online_candidates": 673,
   "checked_this_run": 60,
-  "verified_this_run": 0,
-  "fresh_online_observations": 586,
-  "online_in_stock": 222,
-  "online_out_of_stock": 364,
-  "verified_store_observations": 51,
-  "store_in_stock": 18,
-  "next_cursor": 343,
+  "verified_this_run": 6,
+  "fresh_online_observations": 528,
+  "online_in_stock": 199,
+  "online_out_of_stock": 329,
+  "verified_store_observations": 33,
+  "store_in_stock": 16,
+  "next_cursor": 403,
   "check_outcomes": {
-    "http_301": 60
+    "http_301": 54,
+    "verified": 6
   },
   "checks": [
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "FINAL FANTASY - Bundle",
+      "product": "Destined Rivals Booster Bundle",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Pokemon Card 151 Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Ascended Heroes Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "White Flare Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Shrouded Fable Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Meowth - 013 (EX Series Collector's Tin)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Mega Evolution 3 Pack Blister [Psyduck]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "151 Mini Tin [Magneton & Ekans]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Crown Zenith Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Chaos Rising Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "2-Pack Blister [Raikou] (3-tab)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Paradox Clash Tin [Iron Leaves ex]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "One Piece Tin Pack Set Vol. 1 -Monkey.D.Luffy-",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Wings of the Captain - Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Chaos Rising Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Enhanced 2-Pack Blister Pack [Latios, Zekrom & Palkia]",
+      "product": "Pitch Black Booster Bundle",
       "result": "http_301"
     },
     {
@@ -121,22 +32,17 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "League Battle Decks [Reshiram & Charizard GX]",
+      "product": "Pokemon GO Pokemon Center Elite Trainer Box Plus (Exclusive)",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Slashing Legends Tin [Zacian ex]",
+      "product": "Prismatic Evolutions Booster Pack",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "30th Celebration Pokemon Center Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration ex Tin [Greninja ex] (Retail Version)",
       "result": "http_301"
     },
     {
@@ -152,11 +58,6 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Phantasmal Flames Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Enhanced 2-Pack Blister Pack [Gengar, Marshadow, Team Rocket's Mimikyu]",
       "result": "http_301"
     },
     {
@@ -181,7 +82,7 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Prismatic Evolutions Mini Tin [Jolteon]",
+      "product": "Journey Together Pokemon Center Elite Trainer Box (Exclusive)",
       "result": "http_301"
     },
     {
@@ -192,6 +93,11 @@
     {
       "retailer": "Big Pack Hobby Shop",
       "product": "Mega Evolution Pokemon Center Elite Trainer Box (Exclusive) [Mega Gardevoir]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together Booster Pack",
       "result": "http_301"
     },
     {
@@ -211,7 +117,22 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "Lost Origin Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Silver Tempest Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Delta Reign Single Pack Blister [Spritzee]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin Display",
       "result": "http_301"
     },
     {
@@ -241,7 +162,17 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "2-Pack Blister [Zarude] (3-Tab)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "Pitch Black Booster Box Case",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Darkness Ablaze Sleeved Booster Pack",
       "result": "http_301"
     },
     {
@@ -261,7 +192,7 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals Sleeved Booster Pack",
+      "product": "Black Bolt Pokemon Center Elite Trainer Box (Exclusive)",
       "result": "http_301"
     },
     {
@@ -271,7 +202,22 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
+      "product": "Paldea Evolved Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin [Lapras]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
       "product": "30th Celebration Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
       "result": "http_301"
     },
     {
@@ -296,11 +242,6 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Team Rocket Booster Pack [Unlimited Edition]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
       "product": "30th Celebration Battle Deck [Espeon ex]",
       "result": "http_301"
     },
@@ -313,6 +254,66 @@
       "retailer": "Big Pack Hobby Shop",
       "product": "Delta Reign Booster Bundle",
       "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Scarlet & Violet Elite Trainer Box [Miraidon]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Silver Tempest Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Champion's Path Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "N'S ZEKROM [ASCENDED HEROES ETB] · #031 · POKEMON MEP EN-MEGA EVOLUTION BLACK STAR PROMOS · PSA 9",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Greninja EX & Kingdra EX Special Collection Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: the Gathering Core Set 2020 - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: The Gathering 2015 Core Set Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: The Gathering Born of the Gods - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: The Gathering Teenage Mutant Ninja Turtles Pizza Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: the Gathering Ravnica Allegiance - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Star Wars Unlimited Jump to Lightspeed Booster Display",
+      "result": "verified"
     }
   ],
   "gamestop_status": "No access to blocked search pages; only verified existing store data",
