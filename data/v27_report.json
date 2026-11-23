@@ -1,260 +1,19 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-23T05:35:07.115615+00:00",
-  "source_online_candidates": 513,
+  "checked_at": "2026-11-23T07:55:42.180284+00:00",
+  "source_online_candidates": 627,
   "checked_this_run": 60,
-  "verified_this_run": 21,
-  "fresh_online_observations": 399,
-  "online_in_stock": 185,
-  "online_out_of_stock": 214,
-  "verified_store_observations": 53,
-  "store_in_stock": 10,
-  "next_cursor": 239,
+  "verified_this_run": 0,
+  "fresh_online_observations": 550,
+  "online_in_stock": 232,
+  "online_out_of_stock": 318,
+  "verified_store_observations": 35,
+  "store_in_stock": 5,
+  "next_cursor": 299,
   "check_outcomes": {
-    "verified": 21,
-    "http_301": 39
+    "http_301": 60
   },
   "checks": [
-    {
-      "retailer": "Curio Cavern",
-      "product": "Sorcery: Contested Realm Beta Starter Decks",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "DISNEY LORCANA HYPERIA CITY BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "DISNEY LORCANA HYPERIA CITY BOOSTER PACK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "GUNDAM TCG STARDUST TRAILS BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY HEARTH'S WARMING EVE BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY HEARTH'S WARMING EVE BOOSTER PACK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY TCG: DISCORD!!!!! BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY TCG: DISCORD !!!!! BOOSTER PACK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY TCG NIGHTMARE NIGHT BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MY LITTLE PONY TCG NIGHTMARE NIGHT BOOSTER PACK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "ONE PIECE HEROINES EDITION VOL. 2 BOOSTER BOX *LIMIT 2 PER PERSON*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "ONE PIECE MINI CASE",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON DELTA REIGN BOOSTER BOX *LIMIT ONE PER CUSTOMER*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON DELTA REIGN BOOSTER BUNDLE *LIMIT ONE PER CUSTOMER*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON DELTA REIGN ELITE TRAINER BOX *LIMIT ONE PER CUSTOMER*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON 30TH CELEBRATION BATTLE DECKS *LIMIT 1 PER CUSTOMER*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON 30TH CELEBRATION BATTLE DECKS *LIMIT 1 PER CUSTOMER*",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "RIFTBOUND RADIANCE VAULT BUNDLE",
-      "result": "verified"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - BanG Dream! Girls Band Party! (DZ-TBP01) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - BanG Dream! Girls Band Party! (DZ-TBP01) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - Parallactic Dawn (BT16) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - Parallactic Dawn (BT16) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - The Legendary Vanguards (SS15) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - The Legendary Vanguards (SS15) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Digimon Card Game - Timeless Bonds (BT-26) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Digimon Card Game - Timeless Bonds (BT-26) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Blissful Eternity Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Blissful Eternity Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Heavensward Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Memories of Life Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Memories of Life Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Asphodel/Paradise (1st Edition) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Asphodel/Paradise (1st Edition) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Lorraine, Arclight Saber Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Dante, Hemomancer Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Distorted Reflections (Alter Edition) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Distorted Reflections (Alter Edition) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Mortal Ambition 1st Edition Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Eternal Nexus (EB01) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Freedom Ascension (GD05) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Generation Pulse (ST10) Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Phantom Aria (GD04) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Destiny Ignition (ST09) Ultimate Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Stardust Trails (GD06) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Bundle",
-      "result": "http_301"
-    },
     {
       "retailer": "Jersey's Cards & Comics LLC",
       "product": "Magic: The Gathering - Marvel Super Heroes Collector Booster Display Box",
@@ -313,6 +72,246 @@
     {
       "retailer": "Jersey's Cards & Comics LLC",
       "product": "Magic: The Gathering - Reality Fracture Play Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Collector Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Collector Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Gift Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Play Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Play Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Charlotte Katakuri (ST-34)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Eustass \"Captain\" Kid (ST-36)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Kuzan (ST-33)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Monkey.D.Luffy (ST-31)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Roronoa Zoro (ST-32)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Sabo (ST-35)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece TCG - Carrying On His Will (OP-13) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Riftbound: League of Legends TCG - Unleashed Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Riftbound: League of Legends TCG - Unleashed Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Riftbound: League of Legends TCG - Unleashed Vault Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Riftbound: League of Legends TCG - Vendetta Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Riftbound: League of Legends TCG - Vendetta Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Shadowverse Evolve TCG - Neometropolis (BP18) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Shadowverse Evolve TCG - Neometropolis (BP18) Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Attack on Titan Vol. 2 Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Attack on Titan Vol. 2 Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Chainsaw Man Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Chainsaw Man Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Inuyasha Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Inuyasha Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Re:ZERO Starting Life in Another World Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Re:ZERO Starting Life in Another World Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Re:ZERO Starting Life in Another World Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Sakamoto Days Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - Sakamoto Days Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - That Time I Got Reincarnated as a Slime Special Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Union Arena TCG - That Time I Got Reincarnated as a Slime Special Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - BanG Dream! 10th Anniversary Premium Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - BanG Dream! 10th Anniversary Premium Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Blue Archive: The Animation Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Blue Archive: The Animation Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Goddess of Victory: Nikke Vol. 2 Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Goddess of Victory: Nikke Vol. 2 Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Nazarick: Tomb of the Undead Vol. 3 Extra Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Nazarick: Tomb of the Undead Vol. 3 Extra Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Re:Zero -Starting Life in Another World- Vol. 3 Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Re:Zero -Starting Life in Another World- Vol. 3 Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Umamusume: Pretty Derby Race 1 Trial Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Weiss Schwarz TCG - Umamusume: Pretty Derby Race 2 Trial Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Yu-Gi-Oh! TCG - Battles of Legend: Glorious Gallery Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Yu-Gi-Oh! TCG - Battles of Legend: Glorious Gallery Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Yu-Gi-Oh! TCG - Beyond the Brave Booster Pack",
       "result": "http_301"
     }
   ],
