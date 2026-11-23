@@ -1,13 +1,17 @@
 {
-  "generated_utc": "2026-11-23T02:18:35.705821+00:00",
+  "generated_utc": "2026-11-23T06:06:49.176242+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 4,
+  "feeds_succeeded": 3,
   "feed_failures": [
+    {
+      "feed": "Google News: Best Buy trading cards back in stock",
+      "type": "HTTPError"
+    },
     {
       "feed": "Reddit PKMNTCGDeals",
       "type": "HTTPError"
     }
   ],
-  "public_mentions": 50,
+  "public_mentions": 51,
   "status": "OK - feed coverage may be partial"
 }
