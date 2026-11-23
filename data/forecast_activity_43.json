@@ -1,6 +1,6 @@
 {
   "version": "43.0",
-  "public_sighting_feed_checked": "2026-11-22T13:22:14.584832+00:00",
+  "public_sighting_feed_checked": "2026-11-22T23:01:48.950974+00:00",
   "social_feed_checked": "2026-11-22T20:52:43.503268+00:00",
   "events": [
     {
@@ -55,6 +55,23 @@
       "location_precision": "approximate_city"
     },
     {
+      "id": "sighting:f46b6f37eb3f5924a8f56d00",
+      "kind": "community_sighting",
+      "title": "Reported near store 30th Celebration Battle Deck Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Chantilly",
+      "state": "VA",
+      "lat": 38.8948112,
+      "lon": -77.4429366,
+      "reported_at": "2026-11-21T22:01:48.950974+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-1560",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
       "id": "sighting:04743012a1384cb69bbf5ecc",
       "kind": "community_sighting",
       "title": "Reported near store Cynthia's Garchomp ex Premium Collection Posted from the store",
@@ -72,6 +89,23 @@
       "location_precision": "approximate_city"
     },
     {
+      "id": "sighting:eed1f4cefc4b17d4923dcb07",
+      "kind": "community_sighting",
+      "title": "Reported near store Pokémon TCG Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Reston",
+      "state": "VA",
+      "lat": 38.9520445,
+      "lon": -77.3555643,
+      "reported_at": "2026-11-21T21:01:48.950974+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-1470",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
       "id": "sighting:cce21cbd246cfaa9c42ec13c",
       "kind": "community_sighting",
       "title": "Reported near store Pokémon TCG Posted from the store",
@@ -84,6 +118,23 @@
       "reported_at": "2026-11-21T20:59:35.568832+00:00",
       "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
       "store_id": "store-1470",
+      "store_match_verified": false,
+      "stock_verified_now": false,
+      "location_precision": "approximate_city"
+    },
+    {
+      "id": "sighting:f3b9c5ae3880719f0232c063",
+      "kind": "community_sighting",
+      "title": "Reported near store 30th Celebration Battle Deck Posted from the store",
+      "retailer": "Target",
+      "game": "Pokemon",
+      "city": "Bel Air",
+      "state": "MD",
+      "lat": 39.542065550000004,
+      "lon": -76.32604225,
+      "reported_at": "2026-11-21T20:01:48.950974+00:00",
+      "source_url": "https://restockd.app/pokemon-in-store?retailer=target",
+      "store_id": "store-4625",
       "store_match_verified": false,
       "stock_verified_now": false,
       "location_precision": "approximate_city"
@@ -1704,7 +1755,7 @@
       "location_precision": "source_tagged_approximate"
     }
   ],
-  "community_sighting_count": 98,
+  "community_sighting_count": 101,
   "location_tagged_social_leads": 2,
   "note": "City locations are approximate; social posts and sightings do not prove shelf stock. Only repeated verified exact-store reports support weekday watch patterns."
 }
