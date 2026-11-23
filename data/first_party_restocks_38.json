@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-c87c26f0c3b997cc65119122c7",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokémon TCG: 30th Celebration Tin",
+    "game": "Pokémon",
+    "retailer": "The Eternal Forge",
+    "price_reported": "59.99",
+    "currency": "Unverified",
+    "variant": "Greninja ex",
+    "checked_at": "2026-11-23T13:55:58.007891+00:00",
+    "reported_at": "2026-11-23T13:55:58.007891+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/pokemon-tcg-30th-celebration-tin-retail-version",
+    "source_url": "https://www.theeternalforge.com/products/pokemon-tcg-30th-celebration-tin-retail-version",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-5dcd8032e2dad1dd37cb17a654",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
