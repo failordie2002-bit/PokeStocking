@@ -1,40 +1,8 @@
 {
-  "generated_utc": "2026-11-23T13:37:50.464370+00:00",
+  "generated_utc": "2026-11-23T17:17:08.609669+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 0,
+  "feeds_succeeded": 8,
   "feed_errors": [
-    {
-      "source": "Google News: Union Arena trading cards Charlottesville Virginia",
-      "error": "HTTPError"
-    },
-    {
-      "source": "Google News: trading card restock Richmond Virginia stores",
-      "error": "HTTPError"
-    },
-    {
-      "source": "Google News: Lowes Pokemon cards display stocked",
-      "error": "HTTPError"
-    },
-    {
-      "source": "Google News: Barnes and Noble trading cards restock",
-      "error": "TimeoutError"
-    },
-    {
-      "source": "Google News: Star Wars Unlimited TCG booster restock",
-      "error": "HTTPError"
-    },
-    {
-      "source": "Google News: Final Fantasy TCG booster restock",
-      "error": "HTTPError"
-    },
-    {
-      "source": "Google News: Cardfight Vanguard booster restock",
-      "error": "HTTPError"
-    },
-    {
-      "source": "Google News: Grand Archive TCG new stock",
-      "error": "TimeoutError"
-    },
     {
       "source": "Reddit PKMNTCGDeals",
       "error": "HTTPError"
@@ -44,7 +12,7 @@
       "error": "HTTPError"
     }
   ],
-  "mentions_this_run": 0,
+  "mentions_this_run": 1,
   "unique_mentions_retained": 36,
   "games_observed": {
     "Pokémon": 30,
