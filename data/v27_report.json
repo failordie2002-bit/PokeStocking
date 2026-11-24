@@ -1,318 +1,321 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-24T11:18:50.420081+00:00",
-  "source_online_candidates": 720,
+  "checked_at": "2026-11-24T15:29:36.248861+00:00",
+  "source_online_candidates": 584,
   "checked_this_run": 60,
-  "verified_this_run": 60,
-  "fresh_online_observations": 722,
-  "online_in_stock": 246,
-  "online_out_of_stock": 476,
+  "verified_this_run": 22,
+  "fresh_online_observations": 662,
+  "online_in_stock": 202,
+  "online_out_of_stock": 460,
   "verified_store_observations": 35,
   "store_in_stock": 10,
-  "next_cursor": 179,
+  "next_cursor": 239,
   "check_outcomes": {
-    "verified": 60
+    "http_404": 10,
+    "verified": 22,
+    "ambiguous_variant": 1,
+    "http_301": 27
   },
   "checks": [
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mega Moonlit Tin",
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition(16 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
+      "result": "http_404"
+    },
+    {
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Box (24ct) Mystery Booster Convention Edition (MB1)",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mega Venusaur EX Premium Collection Box",
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack : Mystery Booster Convention Edition (MB1)",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mega Zygarde Premium Collection Box",
+      "retailer": "Twenty Sided Store",
+      "product": "MTG Booster Pack Draft : Theros Beyond Death (THB)",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mewtwo V-Union Special Collection Box",
+      "retailer": "Curio Cavern",
+      "product": "Battle Spirits Saga - Dawn of History Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mimikyu ex & Alcremie ex Premium Collection Box",
+      "retailer": "Curio Cavern",
+      "product": "Battle Spirits Saga - False Gods Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Obisian Flames Pokemon Center Elite Trainer Box",
+      "retailer": "Curio Cavern",
+      "product": "Cardfight!! Vanguard: Knights of Rebirth Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Obsidian Flames Pokemon Center Elite Trainer Box",
+      "retailer": "Curio Cavern",
+      "product": "Cardfight!! Vanguard: Dimensional Transcendence Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Paradox Clash Tin",
+      "retailer": "Curio Cavern",
+      "product": "Cardfight!! Vanguard: Fated Clash Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Paradox Destinies Tin",
+      "retailer": "Curio Cavern",
+      "product": "Lorcana: Floodborn Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Paradox Rift Elite Trainer Box",
+      "retailer": "Curio Cavern",
+      "product": "Magic the Gathering: March of the Machines Epilogue Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Perfect Order 3-Pack Blister",
+      "retailer": "Curio Cavern",
+      "product": "Magic the Gathering: Murders at Karlov Manor Play Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Perfect Order Booster Box",
+      "retailer": "Curio Cavern",
+      "product": "ONE PIECE TCG Starter Deck",
+      "result": "ambiguous_variant"
+    },
+    {
+      "retailer": "Curio Cavern",
+      "product": "Sorcery: Contested Realm Beta Starter Decks",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Perfect Order Booster Bundle",
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Perfect Order Elite Trainer Box",
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Perfect Order Pokemon Center Elite Trainer Box",
+      "retailer": "Curio Cavern",
+      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Phantasmal Flames Booster Box",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING THE HOBBIT BUNDLE",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Phantasmal Flames Build & Battle Deck",
+      "retailer": "Games and Stuff",
+      "product": "MAGIC THE GATHERING THE HOBBIT COLLECTOR BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Phantasmal Flames Elite Trainer Box",
+      "retailer": "Games and Stuff",
+      "product": "POKEMON PITCH BLACK BOOSTER BUNDLE (LIMIT 1 PER CUSTOMER)",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Phantasmal Flames Pokemon Center Elite Trainer Box",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Phantasmal Flames Three Pack Blister",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE BOOSTER PACK",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mega Charizard X ex Ultra Premium Collection Box",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE CARBONITE BOOSTER BOX",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Mega Charizard X ex Ultra Premium Collection Box Case",
+      "retailer": "Games and Stuff",
+      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE CARBONITE BOOSTER PACK",
       "result": "verified"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Pitch Black 3-Pack Blister",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Battle Spirits Saga - Inverted World Chronicle - Generational Link Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Pitch Black Checklane Blister Pack",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Battle Spirits Saga - Inverted World Chronicle - Generational Link Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Pokeball Tin (Q4 2025)",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Cardfight!! Vanguard Divinez - Special Series 05 - CoroCoro Start Deck Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Pokemon Day 2026 Collection Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Cardfight!! Vanguard Divinez - Special Series 05 - CoroCoro Start Deck Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Pokemon Go Elite Trainer Box (ETB)",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Chains of Liberation (EX08) Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Prismatic Evolutions Elite Trainer Box Sealed Case",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Hero of Hope Starter Deck",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Reshiram ex Collection Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Protector of Light Starter Deck",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Roaring Moon Ex Collection Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Archazia's Island Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: 151 Alakazam Ex Collection Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Archazia's Island Gift Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: 151 Booster Bundle",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Archazia's Island Starter Deck - Amethyst & Steel",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: 151 Elite Trainer Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Azurite Sea Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: 151 Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Azurite Sea Starter Deck - Amber & Ruby",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: 151 Zapdos Ex Collection Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Azurite Sea Starter Deck - Emerald & Sapphire",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Scarlet & Violet Base Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Reign of Jafar Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Obsidian Flames Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Reign of Jafar Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Scarlet & Violet: Raging Surf Booster Box (Japanese Paradox Rift)",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Shimmering Skies Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese Scarlet & Violet: Shiny Treasure Booster Box (Paldean Fates)",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Shimmering Skies Starter Deck - Amethyst & Ruby",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Japanese: Snow Hazard Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Disney Lorcana TCG - Shimmering Skies Starter Deck - Emerald & Steel",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Silver Tempest Three Pack Blister",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Giblet Starter Deck (FS10)",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Strong Bonds Tin",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - New Adventure (FB05) Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Vivid Voltage Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Rivals Clash (FB06) Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon Sword & Shield Brilliant Stars Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Son Goku (Mini) Starter Deck (FS06)",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Sword & Shield - Darkness Ablaze - Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Ultra Limit (FB04) Booster Display Box",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Fusion Strike Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Ultra Limit (FB04) Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Team Rocket’s Mewtwo ex League Battle Deck",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game - Fusion World - Vegeta (Mini) Starter Deck (FS07)",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Team Rocket’s Mewtwo ex League Battle Deck Case",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game Masters - History of Z Booster Pack",
+      "result": "http_301"
     },
     {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Team Up Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Toxtricity V Collection Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Triple Whammy Collector Tin",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Ultra Pro Neon Kanto One Touch Edge 3-Card Display",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Pokemon: Paldea Evolved Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh! Battles of Legend Glorious Gallery Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh! Beyond the Brave Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh: Blazing Dominion Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh: Burst Protocol Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh! Chaos Origins Booster Box",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh! Magnificent Monsters Bundle",
-      "result": "verified"
-    },
-    {
-      "retailer": "Bleecker Trading",
-      "product": "Yu-Gi-Oh: Maze of Muertos Booster Box",
-      "result": "verified"
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Dragon Ball Super Card Game Masters - Zenkai Series 09 - Ultimate Advent Booster Pack",
+      "result": "http_301"
     }
   ],
   "gamestop_status": "No access to blocked search pages; only verified existing store data",
