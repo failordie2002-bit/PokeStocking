@@ -1,8 +1,12 @@
 {
-  "generated_utc": "2026-11-24T10:11:59.067863+00:00",
+  "generated_utc": "2026-11-24T14:23:28.853729+00:00",
   "feeds_attempted": 5,
-  "feeds_succeeded": 4,
+  "feeds_succeeded": 3,
   "feed_failures": [
+    {
+      "feed": "Google News: Riftbound TCG restock stores",
+      "type": "HTTPError"
+    },
     {
       "feed": "Reddit PKMNTCGDeals",
       "type": "HTTPError"
