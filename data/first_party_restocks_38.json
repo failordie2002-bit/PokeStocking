@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-c87b115955537add3a6c481fcc",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "MTG: The Hobbit Collector Booster",
+    "game": "Magic: The Gathering",
+    "retailer": "Bleecker Trading",
+    "price_reported": "60.00",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-24T03:26:36.847176+00:00",
+    "reported_at": "2026-11-24T03:26:36.847176+00:00",
+    "retailer_url": "https://bleeckertrading.com/products/mtg-the-hobbit-collector-booster",
+    "source_url": "https://bleeckertrading.com/products/mtg-the-hobbit-collector-booster",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-3a7e2ac6e744d1fd592cf36173",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
