@@ -1,9 +1,9 @@
 {
   "version": "22.0",
-  "checked_at": "2026-11-24T09:47:10.910870+00:00",
-  "candidate_online_offers": 678,
+  "checked_at": "2026-11-24T11:38:04.390203+00:00",
+  "candidate_online_offers": 718,
   "checked_this_run": 30,
-  "next_cursor": 358,
+  "next_cursor": 388,
   "verified_pickup_observations": 0,
   "pickup_available": 0,
   "pickup_unavailable": 0,
@@ -11,21 +11,14 @@
   "checks": [
     {
       "retailer": "Cardrade",
-      "product": "gundam-card-game-gd02-dual-impact-booster-display-24-packs",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Cardrade",
-      "product": "yu-gi-oh-blazing-dominion-1st-edition-booster-display",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": false
-    },
-    {
-      "retailer": "Cardrade",
       "product": "yugioh-cyberstorm-access-booster-box",
+      "status": "no_parseable_pickup_evidence",
+      "pickup_rows": 0,
+      "section_retrieved": false
+    },
+    {
+      "retailer": "Child’s Play Toys and Books",
+      "product": "mtg-hobbit-play-boosters",
       "status": "no_parseable_pickup_evidence",
       "pickup_rows": 0,
       "section_retrieved": false
@@ -144,20 +137,6 @@
     },
     {
       "retailer": "Games and Stuff",
-      "product": "flesh-and-blood-mastery-pack-warrior-booster-box",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": true
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "flesh-and-blood-mastery-pack-warrior-booster-pack",
-      "status": "no_parseable_pickup_evidence",
-      "pickup_rows": 0,
-      "section_retrieved": true
-    },
-    {
-      "retailer": "Games and Stuff",
       "product": "pokemon-pitch-black-booster-bundle-limit-1-per-customer",
       "status": "no_parseable_pickup_evidence",
       "pickup_rows": 0,
@@ -193,6 +172,16 @@
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
+      "product": "battle-spirits-saga-inverted-world-chronicle-generational-link-booster-display-box",
+      "status": "product_data_unavailable"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "battle-spirits-saga-inverted-world-chronicle-generational-link-booster-pack",
+      "status": "product_data_unavailable"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
       "product": "cardfight-vanguard-divinez-festival-booster-2025-ss08-booster-display-box",
       "status": "product_data_unavailable"
     },
@@ -209,6 +198,11 @@
     {
       "retailer": "Jersey's Cards & Comics LLC",
       "product": "cardfight-vanguard-divinez-knights-of-rebirth-bt08-booster-pack",
+      "status": "product_data_unavailable"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "cardfight-vanguard-divinez-special-series-05-corocoro-start-deck-booster-pack",
       "status": "product_data_unavailable"
     }
   ],
