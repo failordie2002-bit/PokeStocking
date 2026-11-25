@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-2ea40758523caf3ee15f1b1ad4",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokémon TCG: Scarlet & Violet Prismatic Evolutions - Elite Trainer Box",
+    "game": "Pokémon",
+    "retailer": "The Eternal Forge",
+    "price_reported": "119.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-25T21:28:57.022287+00:00",
+    "reported_at": "2026-11-25T21:28:57.022287+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-elite-trainer-box",
+    "source_url": "https://www.theeternalforge.com/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-elite-trainer-box",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-fa1ae3d32ad0694996e95ee65d",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
