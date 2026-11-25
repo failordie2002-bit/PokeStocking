@@ -1,10 +1,12 @@
 {
   "version": "10.2",
-  "checked_at": "2026-11-25T11:28:57.365991+00:00",
+  "checked_at": "2026-11-25T13:52:13.592159+00:00",
   "candidate_products": 70,
   "checked_this_run": 20,
   "retailers_integrated": [
     "Kayou Official Store",
+    "Waterloo Games",
+    "Atlantis Games & Comics",
     "Bleecker Trading",
     "Cardrade",
     "Child’s Play Toys and Books",
@@ -17,150 +19,34 @@
     "Jersey's Cards & Comics LLC",
     "PixelThat TCG",
     "Big Pack Hobby Shop",
-    "The Compleat Strategist",
-    "The Eternal Forge",
-    "The Trainer Court"
+    "The Compleat Strategist"
   ],
   "retailers_checked_this_run": 15,
   "retailers_configured": 17,
-  "offers_with_explicit_evidence": 181,
-  "total_fresh_offers": 630,
-  "next_cursor": 64,
-  "shop_cursor": 16,
+  "offers_with_explicit_evidence": 124,
+  "total_fresh_offers": 516,
+  "next_cursor": 14,
+  "shop_cursor": 14,
   "shop_next_pages": {
     "knavetcg.com": 1,
-    "www.pixelthattcg.com": 2,
+    "www.pixelthattcg.com": 1,
     "atlantis-comics.com": 101,
     "www.curiocavern.com": 1,
-    "www.shopbigpack.com": 2,
-    "www.thecompleatstrategist.com": 3,
+    "www.shopbigpack.com": 3,
+    "www.thecompleatstrategist.com": 1,
     "www.theeternalforge.com": 7,
-    "bleeckertrading.com": 5,
-    "twentysidedstore.com": 1,
-    "www.waterloogames.com": 1,
-    "mambacollectibles.com": 1,
+    "bleeckertrading.com": 6,
+    "twentysidedstore.com": 2,
+    "www.waterloogames.com": 2,
+    "mambacollectibles.com": 2,
     "www.gaminggiant.com": 101,
-    "cardrade.com": 3,
-    "childsplaytoysandbooks.com": 7,
-    "www.gamesandstuffonline.com": 5,
+    "cardrade.com": 4,
+    "childsplaytoysandbooks.com": 8,
+    "www.gamesandstuffonline.com": 6,
     "www.thetrainercourt.com": 101,
-    "www.jerseyscc.com": 28
+    "www.jerseyscc.com": 29
   },
   "checks": [
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-001",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "no_explicit_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-002",
-      "offers": 0
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case (24 Boxes) My Little Pony-Friendship Eternal Cards-Fun Moments Edition-001A-NA-Series 1",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "error",
-      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
-      "reason": "429 Client Error: Too Many Requests for url: https://shop.kayouofficial.com/products/one-sealed-case-my-little-pony-friendship-eternal-cards"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "offers": 1
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "status": "verified_online_evidence",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "offers": 1
-    },
     {
       "retailer": "Kayou Official Store",
       "status": "no_explicit_evidence",
@@ -168,17 +54,145 @@
       "offers": 0
     },
     {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "error",
+      "product": "NARUTO-Smriti Collectible Cards-Chapter Jin-003-NA-Series 3",
+      "reason": "404 Client Error: Not Found for url: https://shop.kayouofficial.com/products/winx-club-fairy-diary-collectible-cards-daily-edition-001"
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Winx Club-Fairy Diary Collectible Cards-Daily Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Winx Club-Fairy Diary Collectible Cards-Magic Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Demon Slayer: Kimetsu no Yaiba Infinity Castle Movie-Collectible Cards-Infinity Castle Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "Demon Slayer: Kimetsu no Yaiba Infinity Castle Movie-Daybreak Collectible Cards-Breath Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-001",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "verified_online_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 1
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Kayou Official Store",
+      "status": "no_explicit_evidence",
+      "product": "KPop Demon Hunters-Collectible Trading Cards-Energy Edition-Collector Box(5 packs)-002",
+      "offers": 0
+    },
+    {
+      "retailer": "Waterloo Games",
+      "status": "ok",
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 3,
+      "offers": 8
+    },
+    {
+      "retailer": "Atlantis Games & Comics",
+      "status": "error",
+      "page": 101,
+      "reason": "400 Client Error: Bad Request for url: https://atlantis-comics.com/products.json?limit=250&page=101"
+    },
+    {
       "retailer": "Bleecker Trading",
       "status": "ok",
-      "page": 4,
+      "page": 5,
       "feed_items": 250,
-      "matching_products": 42,
-      "offers": 42
+      "matching_products": 41,
+      "offers": 41
     },
     {
       "retailer": "Cardrade",
       "status": "ok",
-      "page": 2,
+      "page": 3,
       "feed_items": 250,
       "matching_products": 0,
       "offers": 0
@@ -186,7 +200,7 @@
     {
       "retailer": "Child’s Play Toys and Books",
       "status": "ok",
-      "page": 6,
+      "page": 7,
       "feed_items": 250,
       "matching_products": 0,
       "offers": 0
@@ -200,18 +214,18 @@
     {
       "retailer": "Mamba Collectibles",
       "status": "ok",
-      "page": 2,
-      "feed_items": 118,
+      "page": 1,
+      "feed_items": 250,
       "matching_products": 6,
       "offers": 6
     },
     {
       "retailer": "Twenty Sided Store",
       "status": "ok",
-      "page": 28,
-      "feed_items": 244,
-      "matching_products": 0,
-      "offers": 0
+      "page": 1,
+      "feed_items": 250,
+      "matching_products": 8,
+      "offers": 12
     },
     {
       "retailer": "Curio Cavern",
@@ -224,10 +238,10 @@
     {
       "retailer": "Games and Stuff",
       "status": "ok",
-      "page": 4,
+      "page": 5,
       "feed_items": 250,
-      "matching_products": 6,
-      "offers": 7
+      "matching_products": 0,
+      "offers": 0
     },
     {
       "retailer": "Gaming Giant",
@@ -238,48 +252,34 @@
     {
       "retailer": "Jersey's Cards & Comics LLC",
       "status": "ok",
-      "page": 27,
+      "page": 28,
       "feed_items": 250,
-      "matching_products": 2,
-      "offers": 2
+      "matching_products": 0,
+      "offers": 0
     },
     {
       "retailer": "PixelThat TCG",
       "status": "ok",
-      "page": 1,
-      "feed_items": 250,
-      "matching_products": 27,
-      "offers": 27
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "status": "ok",
-      "page": 1,
-      "feed_items": 250,
-      "matching_products": 11,
-      "offers": 11
-    },
-    {
-      "retailer": "The Compleat Strategist",
-      "status": "ok",
       "page": 2,
-      "feed_items": 250,
+      "feed_items": 37,
       "matching_products": 5,
       "offers": 5
     },
     {
-      "retailer": "The Eternal Forge",
+      "retailer": "Big Pack Hobby Shop",
       "status": "ok",
-      "page": 6,
+      "page": 2,
       "feed_items": 250,
-      "matching_products": 46,
-      "offers": 50
+      "matching_products": 36,
+      "offers": 36
     },
     {
-      "retailer": "The Trainer Court",
-      "status": "error",
-      "page": 101,
-      "reason": "400 Client Error: Bad Request for url: https://www.thetrainercourt.com/products.json?limit=250&page=101"
+      "retailer": "The Compleat Strategist",
+      "status": "ok",
+      "page": 3,
+      "feed_items": 36,
+      "matching_products": 0,
+      "offers": 0
     }
   ],
   "physical_store_stock_claims": 0
