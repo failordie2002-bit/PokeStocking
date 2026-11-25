@@ -1,6 +1,6 @@
 {
   "version": "44.0",
-  "checked_at": "2026-11-25T01:32:02.887594+00:00",
+  "checked_at": "2026-11-25T07:38:43.601789+00:00",
   "products": [
     {
       "retailer": "Costco",
@@ -9,7 +9,7 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-25T01:32:02.887594+00:00",
+      "checked_at": "2026-11-25T07:38:43.601789+00:00",
       "last_accessible_at": "2026-11-24T13:29:58.231624+00:00",
       "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
@@ -24,7 +24,7 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-25T01:32:02.887594+00:00",
+      "checked_at": "2026-11-25T07:38:43.601789+00:00",
       "last_accessible_at": "2026-11-24T19:13:33.941191+00:00",
       "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
@@ -36,16 +36,16 @@
       "retailer": "Costco",
       "url": "https://www.costco.com/p/-/pokmon-collectors-chest--great-ball--ultra-ball--3-eevee-promo-cards/100791463",
       "title": "Pokémon Collector's Chest + Great Ball + Ultra Ball + 3 Eevee Promo Cards",
-      "shipping_status": "shipping_unavailable_observed",
-      "price": "38.99",
-      "currency": "USD",
-      "checked_at": "2026-11-25T01:32:02.887594+00:00",
+      "shipping_status": "access_unavailable",
+      "price": null,
+      "currency": null,
+      "checked_at": "2026-11-25T07:38:43.601789+00:00",
       "last_accessible_at": "2026-11-25T01:32:02.887594+00:00",
-      "evidence": "Product structured data explicitly reported OutOfStock",
+      "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "ok"
+      "access_result": "access_restricted_429"
     },
     {
       "retailer": "Sam's Club",
@@ -54,7 +54,7 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-25T01:32:02.887594+00:00",
+      "checked_at": "2026-11-25T07:38:43.601789+00:00",
       "last_accessible_at": null,
       "evidence": "No trustworthy TCG product title in the page",
       "member_club_required": true,
@@ -69,7 +69,7 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-25T01:32:02.887594+00:00",
+      "checked_at": "2026-11-25T07:38:43.601789+00:00",
       "last_accessible_at": null,
       "evidence": "No trustworthy TCG product title in the page",
       "member_club_required": true,
@@ -84,19 +84,19 @@
       "shipping_status": "access_unavailable",
       "price": null,
       "currency": null,
-      "checked_at": "2026-11-25T01:32:02.887594+00:00",
+      "checked_at": "2026-11-25T07:38:43.601789+00:00",
       "last_accessible_at": null,
       "evidence": "The public product page could not be confirmed during this scan; not a stock result",
       "member_club_required": true,
       "local_pickup_verified": false,
       "shelf_inventory_verified": false,
-      "access_result": "not_found"
+      "access_result": "network_unavailable"
     }
   ],
   "allocations": [],
   "allocation_reported_as_of": null,
   "summary": {
-    "checked_at": "2026-11-25T01:32:02.887594+00:00",
+    "checked_at": "2026-11-25T07:38:43.601789+00:00",
     "sources": {
       "https://www.samsclub.com/s/pokemon%20trading%20cards": "ok",
       "https://www.samsclub.com/s/pokemon%20elite%20trainer": "ok",
@@ -114,9 +114,9 @@
     },
     "notes": [],
     "explicit_shipping_available": 0,
-    "explicit_shipping_unavailable": 1,
+    "explicit_shipping_unavailable": 0,
     "status_unknown": 0,
-    "access_restricted": 5,
+    "access_restricted": 6,
     "official_products_checked": 6,
     "third_party_allocation_rows": 0
   },
