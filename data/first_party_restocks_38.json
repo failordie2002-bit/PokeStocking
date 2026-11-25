@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-fa1ae3d32ad0694996e95ee65d",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Pokémon TCG: Mega Evolution 01- Booster Bundle",
+    "game": "Pokémon",
+    "retailer": "The Eternal Forge",
+    "price_reported": "64.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-25T19:29:06.879346+00:00",
+    "reported_at": "2026-11-25T19:29:06.879346+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/pokemon-tcg-mega-evolution-01-booster-bundle",
+    "source_url": "https://www.theeternalforge.com/products/pokemon-tcg-mega-evolution-01-booster-bundle",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-0a854500a720e7685e289bf288",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
