@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-11-24T12:07:24.601165+00:00",
+  "generated_at": "2026-11-25T12:13:11.620409+00:00",
   "forecasts": [
+    {
+      "store_id": "store-2130",
+      "retailer": "Walmart",
+      "city": "Pearisburg",
+      "state": "VA",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-24",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
+    {
+      "store_id": "store-4501",
+      "retailer": "Walmart",
+      "city": "Aberdeen",
+      "state": "MD",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-24",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
     {
       "store_id": "store-3115",
       "retailer": "Walmart",
