@@ -1,12 +1,8 @@
 {
-  "generated_utc": "2026-11-25T17:16:07.792129+00:00",
+  "generated_utc": "2026-11-25T21:11:51.471058+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 7,
+  "feeds_succeeded": 8,
   "feed_errors": [
-    {
-      "source": "Google News: Pokemon cards Shenandoah Valley store shipment",
-      "error": "HTTPError"
-    },
     {
       "source": "Reddit PKMNTCGDeals",
       "error": "HTTPError"
@@ -16,15 +12,15 @@
       "error": "HTTPError"
     }
   ],
-  "mentions_this_run": 2,
-  "unique_mentions_retained": 37,
+  "mentions_this_run": 35,
+  "unique_mentions_retained": 49,
   "games_observed": {
-    "Pokémon": 31,
-    "Other / emerging TCG": 6
+    "Other / emerging TCG": 13,
+    "Pokémon": 36
   },
   "retailers_observed": {
+    "Unspecified": 39,
     "Walmart": 3,
-    "Unspecified": 27,
     "Amazon": 4,
     "Target": 3
   },
