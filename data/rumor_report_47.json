@@ -1,8 +1,12 @@
 {
-  "generated_utc": "2026-11-25T13:38:56.692839+00:00",
+  "generated_utc": "2026-11-25T17:16:07.792129+00:00",
   "feeds_attempted": 10,
-  "feeds_succeeded": 8,
+  "feeds_succeeded": 7,
   "feed_errors": [
+    {
+      "source": "Google News: Pokemon cards Shenandoah Valley store shipment",
+      "error": "HTTPError"
+    },
     {
       "source": "Reddit PKMNTCGDeals",
       "error": "HTTPError"
@@ -12,7 +16,7 @@
       "error": "HTTPError"
     }
   ],
-  "mentions_this_run": 1,
+  "mentions_this_run": 2,
   "unique_mentions_retained": 37,
   "games_observed": {
     "Pokémon": 31,
