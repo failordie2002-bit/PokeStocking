@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-808b8711d6e2b45c2dd259d01f",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "Magic The Gathering TCG: The Hobbit - Gift Bundle",
+    "game": "Magic: The Gathering",
+    "retailer": "The Eternal Forge",
+    "price_reported": "79.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-25T07:57:12.029265+00:00",
+    "reported_at": "2026-11-25T07:57:12.029265+00:00",
+    "retailer_url": "https://www.theeternalforge.com/products/mtg-tcg-the-hobbit-gift-bundle",
+    "source_url": "https://www.theeternalforge.com/products/mtg-tcg-the-hobbit-gift-bundle",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-b7dfde27a4ea872e87614a36d9",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
