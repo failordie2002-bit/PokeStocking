@@ -1,158 +1,29 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-26T11:19:07.617249+00:00",
-  "source_online_candidates": 442,
+  "checked_at": "2026-11-26T15:24:58.722686+00:00",
+  "source_online_candidates": 431,
   "checked_this_run": 60,
-  "verified_this_run": 27,
-  "fresh_online_observations": 328,
-  "online_in_stock": 136,
-  "online_out_of_stock": 192,
-  "verified_store_observations": 3,
+  "verified_this_run": 53,
+  "fresh_online_observations": 431,
+  "online_in_stock": 141,
+  "online_out_of_stock": 290,
+  "verified_store_observations": 0,
   "store_in_stock": 0,
-  "next_cursor": 342,
+  "next_cursor": 402,
   "check_outcomes": {
-    "http_301": 33,
-    "verified": 27
+    "http_301": 6,
+    "verified": 53,
+    "ambiguous_variant": 1
   },
   "checks": [
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Scarlet & Violet Pokemon Center Elite Trainer Box (Exclusive) [Koraidon]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "League Battle Decks [Reshiram & Charizard GX]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Slashing Legends Tin [Zacian ex]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Pokemon Center Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration ex Tin [Greninja ex] (Retail Version)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Phantasmal Flames Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Enhanced 2-Pack Blister Pack [Gengar, Marshadow, Team Rocket's Mimikyu]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Perfect Order Pokemon Center Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Sword & Shield Elite Trainer Box [Zacian]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Prismatic Evolutions Mini Tin [Jolteon]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Mega Evolution Pokemon Center Elite Trainer Box (Exclusive) [Mega Gardevoir]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign 3 Pack Blister [Seel]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Unified Minds Premium Checklane Blister [Espeon]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Single Pack Blister [Spritzee]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals 3 Pack Blister [Zebstrika]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Sword & Shield Elite Trainer Box Plus [Zamazenta]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Chilling Reign Pokemon Center Elite Trainer Box [Ice Rider Calyrex] (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Phantasmal Flames Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Booster Box Case",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Phantasmal Flames Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Perfect Order Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Ascended Heroes Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Brilliant Stars Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Team Rocket Booster Pack [Unlimited Edition]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
       "product": "Scarlet & Violet Elite Trainer Box [Koraidon]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Booster Bundle",
       "result": "http_301"
     },
     {
@@ -162,22 +33,17 @@
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Silver Tempest Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Champion's Path Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
       "product": "N'S ZEKROM [ASCENDED HEROES ETB] · #031 · POKEMON MEP EN-MEGA EVOLUTION BLACK STAR PROMOS · PSA 9",
       "result": "http_301"
     },
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Journey Together Booster Bundle",
+      "product": "Delta Reign Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Greninja EX & Kingdra EX Special Collection Box",
       "result": "http_301"
     },
     {
@@ -232,21 +98,6 @@
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Archazia's Island Booster Box (24 Packs)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Archazia's Island Starter Deck (Amethyst & Steel)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Archazia's Island Starter Deck (Ruby & Sapphire)",
-      "result": "verified"
-    },
-    {
-      "retailer": "The Eternal Forge",
       "product": "Disney Lorcana: Azurite Sea Booster Box (24 Packs)",
       "result": "verified"
     },
@@ -267,17 +118,27 @@
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Reign of Jafar Booster Box (24 Packs)",
+      "product": "Disney Lorcana: Into the Inklands Starter Deck (Amber & Emerald)",
       "result": "verified"
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Reign of Jafar Starter Deck (Amber & Amethyst)",
+      "product": "Disney Lorcana: Into the Inklands Starter Deck (Ruby & Sapphire)",
       "result": "verified"
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Reign of Jafar Starter Deck (Ruby & Steel)",
+      "product": "Disney Lorcana: Rise of the Floodborn Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: Rise of the Floodborn Starter Deck (Amber & Sapphire) - Rise of the Floodborn (2)",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: Rise of the Floodborn Starter Deck (Amethyst & Steel) - Rise of the Floodborn (2)",
       "result": "verified"
     },
     {
@@ -297,6 +158,26 @@
     },
     {
       "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: The First Chapter Booster Box - The First Chapter",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: The First Chapter TCG Starter Deck Ruby & Emerald",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: The First Chapter TCG Starter Deck Amber & Amethyst",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: The First Chapter TCG Starter Deck Sapphire & Steel",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
       "product": "Disney Lorcana: Ursula's Return - Booster Box",
       "result": "verified"
     },
@@ -312,7 +193,127 @@
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Magic The Gathering TCG: Tarkir Dragonstorm Collector's Booster Display",
+      "product": "Pokémon TCG: Evolution Celebration Tin [Sylveon GX]",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Sword & Shield-Lost Origin Booster Display Box (36 Packs)",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Power Partnership Tin [Mewtwo & Mew GX] - SM - Unified Minds (SM11)",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 03 Obsidian Flames- Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 04 Paradox Rift- Booster Display 36 Packs",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 05 Temporal Forces- Booster Display 36 Packs",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 02 Paldea Evolved- Booster Display 36 Packs",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 03 Obsidian Flames- Booster Display 36 Packs",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 06 Twilight Masquerade- Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Booster Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 07 Stellar Crown- Booster Display 36 Packs",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 08 Surging Sparks- Elite Trainer Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 4.5 Paldean Fates - Skeledirge ex Premium Collection Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet 6.5 Shrouded Fable - Mini Tin",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Scarlet & Violet Paldean Fates- Elite Trainer Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Sword & Shield - Battle Styles Booster Display Box (36 Packs)",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: V Forces Tin [Mew V]",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: V Powers Tin [Pikachu V] (International Version)",
+      "result": "verified"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Battle Decks",
+      "result": "verified"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Battle Decks",
+      "result": "verified"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Battle Decks",
+      "result": "ambiguous_variant"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Battle Decks",
+      "result": "verified"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Gundam Card Game - Eternal Nexus Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Gundam Card Game - Eternal Nexus Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "Waterloo Games",
+      "product": "Gundam Card Game - Phantom Aria Boosters",
       "result": "verified"
     }
   ],
