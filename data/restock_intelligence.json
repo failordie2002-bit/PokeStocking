@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-11-25T12:13:11.620409+00:00",
+  "generated_at": "2026-11-26T12:10:56.085764+00:00",
   "forecasts": [
+    {
+      "store_id": "store-4597",
+      "retailer": "Walmart",
+      "city": "Randallstown",
+      "state": "MD",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-25",
+      "observation_count": 1,
+      "forecast_type": "insufficient_evidence",
+      "confidence": "insufficient",
+      "earliest_date": null,
+      "latest_date": null,
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=walmart"
+      ]
+    },
+    {
+      "store_id": "store-4323",
+      "retailer": "Target",
+      "city": "Cockeysville",
+      "state": "MD",
+      "game": "pokemon",
+      "last_observed_date": "2026-11-25",
+      "observation_count": 4,
+      "forecast_type": "historical_estimate",
+      "confidence": "low",
+      "earliest_date": "2026-11-27",
+      "latest_date": "2026-12-01",
+      "source_urls": [
+        "https://restockd.app/pokemon-in-store?retailer=target"
+      ]
+    },
     {
       "store_id": "store-2130",
       "retailer": "Walmart",
@@ -127,22 +159,6 @@
       "latest_date": "2026-11-28",
       "source_urls": [
         "https://restockd.app/pokemon-in-store?retailer=walmart"
-      ]
-    },
-    {
-      "store_id": "store-4323",
-      "retailer": "Target",
-      "city": "Cockeysville",
-      "state": "MD",
-      "game": "pokemon",
-      "last_observed_date": "2026-11-19",
-      "observation_count": 3,
-      "forecast_type": "historical_estimate",
-      "confidence": "low",
-      "earliest_date": "2026-11-25",
-      "latest_date": "2026-11-29",
-      "source_urls": [
-        "https://restockd.app/pokemon-in-store?retailer=target"
       ]
     },
     {
