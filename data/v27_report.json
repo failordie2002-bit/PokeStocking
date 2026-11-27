@@ -1,253 +1,23 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-27T15:17:13.539000+00:00",
-  "source_online_candidates": 516,
+  "checked_at": "2026-11-27T21:23:02.777835+00:00",
+  "source_online_candidates": 496,
   "checked_this_run": 60,
-  "verified_this_run": 13,
-  "fresh_online_observations": 475,
-  "online_in_stock": 199,
-  "online_out_of_stock": 276,
-  "verified_store_observations": 35,
-  "store_in_stock": 5,
-  "next_cursor": 329,
+  "verified_this_run": 59,
+  "fresh_online_observations": 498,
+  "online_in_stock": 182,
+  "online_out_of_stock": 316,
+  "verified_store_observations": 16,
+  "store_in_stock": 7,
+  "next_cursor": 389,
   "check_outcomes": {
-    "http_301": 47,
-    "verified": 13
+    "http_301": 1,
+    "verified": 59
   },
   "checks": [
     {
       "retailer": "Big Pack Hobby Shop",
-      "product": "Scarlet & Violet Pokemon Center Elite Trainer Box (Exclusive) [Miraidon]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pokemon - Poke Ball Tin - Repeat Ball (Q4 2025)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "FINAL FANTASY - Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pokemon Card 151 Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Mega Evolution 3 Pack Blister [Psyduck]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Crown Zenith Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Chaos Rising Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Chilling Reign Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Paradox Clash Tin [Iron Leaves ex]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Cosmic Eclipse Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "One Piece Tin Pack Set Vol. 1 -Monkey.D.Luffy-",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Wings of the Captain - Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pitch Black Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Pokemon GO Pokemon Center Elite Trainer Box Plus (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Prismatic Evolutions Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "FINAL FANTASY - Play Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Mega Evolution Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "500 Years in the Future - Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Journey Together Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "V Battle Deck [Rayquaza V]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Journey Together Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign 3 Pack Blister [Seel]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "One Piece Tin Pack Set Vol. 1 -Gol.D.Roger-",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Lost Origin Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Silver Tempest Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Single Pack Blister [Spritzee]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Mini Tin Display",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Destined Rivals 3 Pack Blister [Zebstrika]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Carrying On His Will Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "2-Pack Blister [Zarude] (3-Tab)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Darkness Ablaze Sleeved Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Black Bolt Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Black Bolt Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "FINAL FANTASY - Gift Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Paldea Evolved Elite Trainer Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Mini Tin [Lapras]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Battle Deck [Umbreon ex]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Premium Booster - Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "30th Celebration Battle Deck [Espeon ex]",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Booster Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "N'S ZEKROM [ASCENDED HEROES ETB] · #031 · POKEMON MEP EN-MEGA EVOLUTION BLACK STAR PROMOS · PSA 9",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Delta Reign Booster Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Big Pack Hobby Shop",
-      "product": "Greninja EX & Kingdra EX Special Collection Box",
+      "product": "Inferno X Booster Pack",
       "result": "http_301"
     },
     {
@@ -302,17 +72,247 @@
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: 2-Player Deck Display - Elastigirl & Buzz Lightyear",
+      "product": "Disney Lorcana: Into the Inklands - Sleeved Booster",
       "result": "verified"
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: 2-Player Deck Display - Technically Terrific and Madcap Whimsy",
+      "product": "Disney Lorcana: Rise of the Floodborn - Sleeved Booster",
       "result": "verified"
     },
     {
       "retailer": "The Eternal Forge",
-      "product": "Disney Lorcana: Fabled - Sleeved Booster",
+      "product": "Disney Lorcana: Shimmering Skies - Sleeved Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: The First Chapter Booster Box JP",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: Whispers In The Well - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Dragon Ball Super TCG: Fusion World: Vegeta (Mini) - Starter Deck 08",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Mega Evolution 01 - Elite Trainer Box (Pokémon Center) [Gardevoir]",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Mega Evolution 01 - Elite Trainer Box (Pokémon Center) [Lucario]",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Aetherdrift - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Bloomburrow - Play Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Commander Legends: Battle for Baldur's Gate - Collector Booster Dispaly",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Commander Masters Draft - Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Duskmourn: House of Horror - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Edge of Eternities - Play Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Foundations Jumpstart Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Lorwyn Eclipsed - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Lorwyn Eclipsed Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Marvel Super Heroes - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Marvel Super Heroes - Gift Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Marvel Super Heroes - Jumpstart Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Marvel Super Heroes - Play Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Modern Horizons II - Sleeved Draft Booster",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Modern Horizons III - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Murders at Karlov Manor - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Outlaws of Thunder Junction - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Secret of Strixhaven - Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Secret of Strixhaven - Codex Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Secret of Strixhaven - Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Streets of New Capenna - Set Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Tarkir Dragonstorm Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond: Assassin's Creed - Beyond Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Final Fantasy Chocobo Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Final Fantasy Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Marvel Spider-Man Gift Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Marvel's Spider-Man Play Booster Sleeved Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond - Marvel's Spider-Man Collector Booster Omega Pack",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Collector's Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Pizza Bundle",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Magic The Gathering TCG: Universes Beyond- Teenage Mutant Ninja Turtles Play Booster Display",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 151 SV2A Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 151 Surprise Vol. 3 - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: 2-Pack Blister [Phantasmal Flames & Mega Evolution]",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Amazing Volt Tackle S4 Booster Box JP",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Chinese 151 Gather Vol. 4 - Slim Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Chinese Horizons Gem Pack Vol. 1 - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Chinese Horizons Gem Pack Vol. 2 - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Chinese Horizons Gem Pack Vol. 3 - Booster Box",
+      "result": "verified"
+    },
+    {
+      "retailer": "The Eternal Forge",
+      "product": "Pokémon TCG: Chinese Horizons Gem Pack Vol. 4 - Booster Box",
       "result": "verified"
     }
   ],
