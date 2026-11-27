@@ -1,212 +1,21 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-27T05:29:33.541165+00:00",
-  "source_online_candidates": 926,
+  "checked_at": "2026-11-27T11:13:53.573570+00:00",
+  "source_online_candidates": 808,
   "checked_this_run": 60,
-  "verified_this_run": 41,
-  "fresh_online_observations": 569,
-  "online_in_stock": 254,
-  "online_out_of_stock": 315,
-  "verified_store_observations": 22,
-  "store_in_stock": 7,
-  "next_cursor": 209,
+  "verified_this_run": 20,
+  "fresh_online_observations": 578,
+  "online_in_stock": 242,
+  "online_out_of_stock": 336,
+  "verified_store_observations": 53,
+  "store_in_stock": 12,
+  "next_cursor": 269,
   "check_outcomes": {
-    "http_404": 16,
-    "verified": 41,
+    "verified": 20,
     "ambiguous_variant": 1,
-    "http_301": 2
+    "http_301": 39
   },
   "checks": [
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One sealed box-NARUTO-Smriti Collectible Cards-Earth Scroll-Collector Box(10 packs)-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case (24 Boxes) My Little Pony-Friendship Eternal Cards-Fun Moments Edition-001A-NA-Series 1",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-001-NA-Series 1-A(24 Boxes, 20 Packs per Box)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Classic Edition-002",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition-002",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-KPop Demon Hunters-Collectible Trading Cards-Energy Edition(16 Boxes)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Moon Edition-002A-NA-Series 2(16 boxes, 12 packs per box)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case - My Little Pony-Friendship Eternal Cards-Moon Edition-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-My Little Pony-Friendship Eternal Cards-Rainbow Edition(24 Boxes)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-My Little Pony Trading Card Game-FantasyWonderlands-001-NA-Series1(32 Boxes)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Chapter Jin-004",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-002A-NA(24 Boxes, 20 Packs per Box)",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-Earth Scroll-003",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Kayou Official Store",
-      "product": "One Sealed Case-NARUTO-Smriti Collectible Cards-NINJA AGE-Premium Collector Box-001",
-      "result": "http_404"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Box Collector (12ct) Wilds of Eldraine (WOE)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Box Collector (12ct) Wilds of Eldraine (WOE)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Box Set (30ct) The Lost Caverns of Ixalan (LCI)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Outlaws of Thunder Junction (OTJ)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Collector Outlaws of Thunder Junction (OTJ)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Pack Draft : The Lost Caverns of Ixalan (LCI)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Pack Set : The Lost Caverns of Ixalan (LCI)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Murders at Karlov Manor (MKM)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Booster Play Murders at Karlov Manor (MKM)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Outlaws of Thunder Junction (OTJ) Booster Play",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Outlaws of Thunder Junction (OTJ) Booster Play",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Phyrexia All Will Be One (ONE) Booster Set",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "MTG Phyrexia All Will Be One (ONE) Booster Set",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "Pokemon Mega Construx Pokeball Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "Pokemon Mega Construx Pokeball Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "Pokemon Mega Construx Pokeball Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "Pokemon Mega Construx Pokeball Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "Pokemon Mega Construx Pokeball Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "Pokemon Mega Construx Pokeball Case",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "SWU Booster Pack : Spark of Rebellion",
-      "result": "verified"
-    },
-    {
-      "retailer": "Twenty Sided Store",
-      "product": "SWU Booster Pack : Spark of Rebellion",
-      "result": "verified"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Battle Spirits Saga - Dawn of History Booster Box",
-      "result": "verified"
-    },
     {
       "retailer": "Curio Cavern",
       "product": "Battle Spirits Saga - False Gods Booster Box",
@@ -274,12 +83,17 @@
     },
     {
       "retailer": "Games and Stuff",
-      "product": "FLESH AND BLOOD MASTERY PACK WARRIOR BOOSTER BOX",
+      "product": "MAGIC THE GATHERING THE HOBBIT BUNDLE",
       "result": "verified"
     },
     {
       "retailer": "Games and Stuff",
-      "product": "FLESH AND BLOOD MASTERY PACK WARRIOR BOOSTER PACK",
+      "product": "MAGIC THE GATHERING THE HOBBIT COLLECTOR BOOSTER BOX",
+      "result": "verified"
+    },
+    {
+      "retailer": "Games and Stuff",
+      "product": "MEGA LUCARIO ex LEAGUE BATTLE DECK",
       "result": "verified"
     },
     {
@@ -309,12 +123,197 @@
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - BanG Dream! Girls Band Party! (DZ-TBP01) Booster Display Box",
+      "product": "Cardfight!! Vanguard Divinez - Parallactic Clash (BT13) Booster Display Box",
       "result": "http_301"
     },
     {
       "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - BanG Dream! Girls Band Party! (DZ-TBP01) Booster Pack",
+      "product": "Cardfight!! Vanguard Divinez - Parallactic Clash (BT13) Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Beatbreak (ST-23) Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Data Squad (ST-24) Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Dual Revolution (BT-25) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Digimon Card Game - Dual Revolution (BT-25) Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Final Fantasy TCG - Blissful Eternity Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Final Fantasy TCG - Blissful Eternity Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Final Fantasy TCG - Heavensward Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Grand Archive TCG - Asphodel/Paradise (1st Edition) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Grand Archive TCG - Asphodel/Paradise (1st Edition) Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Grand Archive TCG - Lorraine, Arclight Saber Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Grand Archive TCG - Dante, Hemomancer Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Grand Archive TCG - Mortal Ambition 1st Edition Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Gundam Card Game - Eternal Nexus (EB01) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Gundam Card Game - Freedom Ascension (GD05) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Gundam Card Game - Generation Pulse (ST10) Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Gundam Card Game - Phantom Aria (GD04) Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Gundam Card Game - Destiny Ignition (ST09) Ultimate Starter Deck",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Collector Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Collector Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Gift Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Jumpstart Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Jumpstart Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Play Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - Marvel Super Heroes Play Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Collector Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Collector Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Play Booster Display Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "Magic: The Gathering - The Hobbit Play Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Charlotte Katakuri (ST-34)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Eustass \"Captain\" Kid (ST-36)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Kuzan (ST-33)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Monkey.D.Luffy (ST-31)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Roronoa Zoro (ST-32)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece Card Game - Starter Deck - Sabo (ST-35)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Jersey's Cards & Comics LLC",
+      "product": "One Piece TCG - Carrying On His Will (OP-13) Booster Display Box",
       "result": "http_301"
     }
   ],
