@@ -1,5 +1,26 @@
 [
   {
+    "id": "merchant-b31403ef63133a3fbddc166278",
+    "source_kind": "first_party_storefront",
+    "event_type": "out_to_in_stock",
+    "inventory_scope": "online",
+    "stock_verified_now": false,
+    "physical_store_verified": false,
+    "availability": "Storefront showed available at observation time",
+    "product_name": "MAGIC THE GATHERING THE HOBBIT BUNDLE",
+    "game": "Magic: The Gathering",
+    "retailer": "Games and Stuff",
+    "price_reported": "59.99",
+    "currency": "Unverified",
+    "variant": "Product listing",
+    "checked_at": "2026-11-27T07:54:41.239701+00:00",
+    "reported_at": "2026-11-27T07:54:41.239701+00:00",
+    "retailer_url": "https://www.gamesandstuffonline.com/products/magic-the-gathering-the-hobbit-bundle",
+    "source_url": "https://www.gamesandstuffonline.com/products/magic-the-gathering-the-hobbit-bundle",
+    "evidence_type": "shopify_public_variant",
+    "evidence_quality": "direct_public_storefront_at_observation_time"
+  },
+  {
     "id": "merchant-aa6037a0301c3a1d9112fcde28",
     "source_kind": "first_party_storefront",
     "event_type": "out_to_in_stock",
