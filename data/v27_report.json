@@ -1,320 +1,319 @@
 {
   "version": "27.0",
-  "checked_at": "2026-11-27T11:13:53.573570+00:00",
-  "source_online_candidates": 808,
+  "checked_at": "2026-11-27T15:17:13.539000+00:00",
+  "source_online_candidates": 516,
   "checked_this_run": 60,
-  "verified_this_run": 20,
-  "fresh_online_observations": 578,
-  "online_in_stock": 242,
-  "online_out_of_stock": 336,
-  "verified_store_observations": 53,
-  "store_in_stock": 12,
-  "next_cursor": 269,
+  "verified_this_run": 13,
+  "fresh_online_observations": 475,
+  "online_in_stock": 199,
+  "online_out_of_stock": 276,
+  "verified_store_observations": 35,
+  "store_in_stock": 5,
+  "next_cursor": 329,
   "check_outcomes": {
-    "verified": 20,
-    "ambiguous_variant": 1,
-    "http_301": 39
+    "http_301": 47,
+    "verified": 13
   },
   "checks": [
     {
-      "retailer": "Curio Cavern",
-      "product": "Battle Spirits Saga - False Gods Booster Box",
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Scarlet & Violet Pokemon Center Elite Trainer Box (Exclusive) [Miraidon]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pokemon - Poke Ball Tin - Repeat Ball (Q4 2025)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "FINAL FANTASY - Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pokemon Card 151 Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Evolution 3 Pack Blister [Psyduck]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Crown Zenith Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Chaos Rising Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Chilling Reign Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Paradox Clash Tin [Iron Leaves ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Cosmic Eclipse Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "One Piece Tin Pack Set Vol. 1 -Monkey.D.Luffy-",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Wings of the Captain - Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Destined Rivals Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pitch Black Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Pokemon GO Pokemon Center Elite Trainer Box Plus (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "FINAL FANTASY - Play Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Mega Evolution Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "500 Years in the Future - Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "V Battle Deck [Rayquaza V]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Journey Together Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign 3 Pack Blister [Seel]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "One Piece Tin Pack Set Vol. 1 -Gol.D.Roger-",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Lost Origin Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Silver Tempest Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Single Pack Blister [Spritzee]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin Display",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Destined Rivals 3 Pack Blister [Zebstrika]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Carrying On His Will Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "2-Pack Blister [Zarude] (3-Tab)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Darkness Ablaze Sleeved Booster Pack",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Black Bolt Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Black Bolt Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "FINAL FANTASY - Gift Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Paldea Evolved Elite Trainer Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Mini Tin [Lapras]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Prismatic Evolutions Pokemon Center Elite Trainer Box (Exclusive)",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Battle Deck [Umbreon ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Premium Booster - Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "30th Celebration Battle Deck [Espeon ex]",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Booster Bundle",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "N'S ZEKROM [ASCENDED HEROES ETB] · #031 · POKEMON MEP EN-MEGA EVOLUTION BLACK STAR PROMOS · PSA 9",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Delta Reign Booster Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "Big Pack Hobby Shop",
+      "product": "Greninja EX & Kingdra EX Special Collection Box",
+      "result": "http_301"
+    },
+    {
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: the Gathering Core Set 2020 - Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Knights of Rebirth Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: The Gathering 2015 Core Set Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Dimensional Transcendence Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: The Gathering Born of the Gods - Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Cardfight!! Vanguard: Fated Clash Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: The Gathering Teenage Mutant Ninja Turtles Pizza Bundle",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Lorcana: Floodborn Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Magic: the Gathering Ravnica Allegiance - Booster Box",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Magic the Gathering: March of the Machines Epilogue Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Star Wars Unlimited Jump to Lightspeed Booster Display",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Magic the Gathering: Murders at Karlov Manor Play Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Star Wars: Unlimited - Legends of the Force: Booster Display",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "ONE PIECE TCG Starter Deck",
-      "result": "ambiguous_variant"
-    },
-    {
-      "retailer": "Curio Cavern",
-      "product": "Sorcery: Contested Realm Beta Starter Decks",
+      "retailer": "The Compleat Strategist",
+      "product": "Star Wars Unlimited Shadows of the Galaxy Booster Display",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz 30th Anniversary Trial Deck: Dengeki Bunko [English Edition]",
+      "retailer": "The Compleat Strategist",
+      "product": "Star Wars: Unlimited - Spark of Rebellion Booster Display",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz: Avatar the Last Airbender Booster Box",
+      "retailer": "The Compleat Strategist",
+      "product": "Star Wars: Unlimited – Twilight of the Republic: Booster Display",
       "result": "verified"
     },
     {
-      "retailer": "Curio Cavern",
-      "product": "Weiss Schwarz: That Time I Got Reincarnated as a Slime Booster Box",
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: 2-Player Deck Display - Elastigirl & Buzz Lightyear",
       "result": "verified"
     },
     {
-      "retailer": "Games and Stuff",
-      "product": "DISNEY LORCANA ATTACK OF THE VINE! BOOSTER BOX (LIMIT 1 PER CUSTOMER)",
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: 2-Player Deck Display - Technically Terrific and Madcap Whimsy",
       "result": "verified"
     },
     {
-      "retailer": "Games and Stuff",
-      "product": "MAGIC THE GATHERING THE HOBBIT BUNDLE",
+      "retailer": "The Eternal Forge",
+      "product": "Disney Lorcana: Fabled - Sleeved Booster",
       "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MAGIC THE GATHERING THE HOBBIT COLLECTOR BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "MEGA LUCARIO ex LEAGUE BATTLE DECK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "POKEMON PITCH BLACK BOOSTER BUNDLE (LIMIT 1 PER CUSTOMER)",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE BOOSTER PACK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE CARBONITE BOOSTER BOX",
-      "result": "verified"
-    },
-    {
-      "retailer": "Games and Stuff",
-      "product": "STAR WARS UNLIMITIED: ASHES OF THE EMPIRE CARBONITE BOOSTER PACK",
-      "result": "verified"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - Parallactic Clash (BT13) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Cardfight!! Vanguard Divinez - Parallactic Clash (BT13) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Digimon Card Game - Beatbreak (ST-23) Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Digimon Card Game - Data Squad (ST-24) Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Digimon Card Game - Dual Revolution (BT-25) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Digimon Card Game - Dual Revolution (BT-25) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Blissful Eternity Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Blissful Eternity Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Final Fantasy TCG - Heavensward Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Asphodel/Paradise (1st Edition) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Asphodel/Paradise (1st Edition) Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Lorraine, Arclight Saber Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Dante, Hemomancer Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Grand Archive TCG - Mortal Ambition 1st Edition Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Eternal Nexus (EB01) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Freedom Ascension (GD05) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Generation Pulse (ST10) Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Phantom Aria (GD04) Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Gundam Card Game - Destiny Ignition (ST09) Ultimate Starter Deck",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Collector Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Collector Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Gift Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Jumpstart Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Jumpstart Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Play Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - Marvel Super Heroes Play Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - The Hobbit Bundle",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - The Hobbit Collector Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - The Hobbit Collector Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - The Hobbit Play Booster Display Box",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "Magic: The Gathering - The Hobbit Play Booster Pack",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece Card Game - Starter Deck - Charlotte Katakuri (ST-34)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece Card Game - Starter Deck - Eustass \"Captain\" Kid (ST-36)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece Card Game - Starter Deck - Kuzan (ST-33)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece Card Game - Starter Deck - Monkey.D.Luffy (ST-31)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece Card Game - Starter Deck - Roronoa Zoro (ST-32)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece Card Game - Starter Deck - Sabo (ST-35)",
-      "result": "http_301"
-    },
-    {
-      "retailer": "Jersey's Cards & Comics LLC",
-      "product": "One Piece TCG - Carrying On His Will (OP-13) Booster Display Box",
-      "result": "http_301"
     }
   ],
   "gamestop_status": "No access to blocked search pages; only verified existing store data",
